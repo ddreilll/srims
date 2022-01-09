@@ -102,21 +102,27 @@ class AdmissionCriteriaController extends Controller
         }
 
 
+
         $diff_requirements_1 = array_diff($orig_requirements, $requirements);
         $diff_requirements_2 = array_diff($requirements, $orig_requirements);
 
         $diff_requirements = array_merge($diff_requirements_1, $diff_requirements_2);
 
-        $k = 0;
+
         for ($a = 0; $a < sizeOf($diff_requirements); $a++) {
-            if (array_search($diff_requirements[$a], $orig_requirements)) {
-                $this->removeRequirement($diff_requirements[$a], $criteria['adcr_id']);
-                array_splice($diff_requirements, $a, 1);
+            for ($b = 0; $b < sizeOf($orig_requirements); $b++) {
+
+                if (sizeOf($diff_requirements) >= 1) {
+                    if ($diff_requirements[$a] == $orig_requirements[$b]) {
+                        $this->removeRequirement($diff_requirements[$a], $criteria['adcr_id']);
+                        \array_splice($diff_requirements, $a, 1);
+                    }
+                }
             }
         }
 
-        for ($b=0; $b < sizeOf($diff_requirements); $b++) { 
-            $this->addRequirement($diff_requirements[$b], $criteria['adcr_id']);
+        for ($c = 0; $c < sizeOf($diff_requirements); $c++) {
+            $this->addRequirement($diff_requirements[$c], $criteria['adcr_id']);
         }
 
     }
@@ -131,7 +137,8 @@ class AdmissionCriteriaController extends Controller
         (new AdReqCriteria)->insert(["adcr_arcr_id" => $criteriaId, "adre_arcr_id" => $requirementId]);
     }
 
-    public function removeCriteria($md5Id){
+    public function removeCriteria($md5Id)
+    {
         (new AdCriteria)->remove($md5Id);
     }
 

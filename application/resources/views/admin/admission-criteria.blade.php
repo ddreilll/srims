@@ -637,6 +637,7 @@
                     }).done(function(response) {
                         response = JSON.parse(response);
 
+                        console.log(response);
                         if (response['status'] == 200) {
 
                             edit_submitBtn.removeAttribute('data-kt-indicator'),
