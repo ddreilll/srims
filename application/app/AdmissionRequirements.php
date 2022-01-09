@@ -15,13 +15,12 @@ class AdmissionRequirements extends Model
     public function fetchAll($filter)
     {
 
-        $Req = $this;
-        $data = $Req->where($filter)
+        $data = $this->where($filter)
             ->where(["adre_isDeleted" => "0"])
             ->get();
 
         for ($i = 0; $i < sizeOf($data); $i++) {
-            $data[$i]['adre_id'] = md5($data[$i]['adre_id']);
+            $data[$i]['adre_id_md5'] = md5($data[$i]['adre_id']);
         }
 
         return $data;
@@ -40,7 +39,7 @@ class AdmissionRequirements extends Model
     }
 
 
-    public function insert($data)
+    public function insertOne($data)
     {
 
         $Req = $this;
@@ -51,11 +50,10 @@ class AdmissionRequirements extends Model
         $Req->save();
     }
 
-    public function edit($data)
+    public function edit($md5Id, $data)
     {
 
-        $Req = $this;
-        $Req->whereRaw('md5(adre_id) = "' . $data['id'] . '"')
+        $this->whereRaw('md5(adre_id) = "' . $md5Id . '"')
             ->update([
                 'adre_docuName' => $data['name'], 'adre_docuCode' => $data['code'], 'adre_docuDescription' => $data['description']
             ]);
@@ -64,8 +62,7 @@ class AdmissionRequirements extends Model
     public function remove($md5Id)
     {
 
-        $Req = $this;
-        $Req->whereRaw('md5(adre_id) = "' . $md5Id . '"')
+        $this->whereRaw('md5(adre_id) = "' . $md5Id . '"')
             ->update(['adre_isDeleted' => '1']);
     }
 }

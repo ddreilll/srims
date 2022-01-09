@@ -1,5 +1,13 @@
 @extends('layouts.default')
 
+@section('styles')
+<style>
+    .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) .select2-search.select2-search--inline .select2-search__field {
+        font-family: Poppins, Helvetica, sans-serif;
+    }
+</style>
+@endsection
+
 @section('content')
 
 <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -7,20 +15,23 @@
         <div class="card mb-5 mb-xl-8">
             <div class="card-header border-0 pt-6">
                 <div class="card-title">
+                    <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                         <span class="svg-icon svg-icon-1 position-absolute ms-6">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
                                 <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
                             </svg>
                         </span>
-                        <input type="text" data-kt-requirement-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Requirements" />
+                        <!--end::Svg Icon-->
+                        <input type="text" data-kt-requirement-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Criteria" />
                     </div>
+                    <!--end::Search-->
                 </div>
                 <div class="card-toolbar">
-                    <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                       
+
                         <!--begin::Export-->
                         <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
@@ -35,35 +46,33 @@
                         </button>
                         <!--end::Export-->
                         <!--begin::Add customer-->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_requirement">Add Requirement</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_criteria">Add Criteria</button>
                         <!--end::Add customer-->
                     </div>
-                    <!--end::Toolbar-->
-                    <!--begin::Group actions-->
                     <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
                         <div class="fw-bolder me-5">
                             <span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected
                         </div>
                         <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">Delete Selected</button>
                     </div>
-                    <!--end::Group actions-->
                 </div>
             </div>
 
             <div class="card-body py-3">
 
-                <table id="kt_requirement_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+                <table id="kt_criteria_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
                     <thead>
                         <tr class="fw-bolder fs-6 text-gray-800 px-7">
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th></th>
+                            <th colspan="2" class="border-bottom">Academic Year Coverage</th>
+                            <th rowspan="2" class="align-middle border-start border-bottom">No. of Requirements</th>
+                            <th rowspan="2" class="align-middle border-start border-bottom"></th>
+                        </tr>
+                        <tr class="fw-bolder fs-6 text-gray-800 px-7">
+                            <th>Start</th>
+                            <th>End</th>
                         </tr>
                     </thead>
                     <tbody>
-
-
                     </tbody>
                 </table>
             </div>
@@ -71,106 +80,116 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="kt_modal_add_requirement" tabindex="-1">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
+<div class="modal fade" id="kt_modal_view_criteria" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog mw-650px">
         <div class="modal-content">
-            <!--begin::Form-->
-            <form class="form" action="#" id="kt_modal_add_requirement_form">
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+                <div class="text-center mb-13">
+                    <h2 class="mb-3">Admission Requirement Criteria</h2>
+                    <div class="text-muted fw-bold fs-3" id="kt_modal_view_criteria_year">2003-2010
+                    </div>
+                </div>
+                <div class="mb-15">
+                    <div class="mh-375px scroll-y me-n7 pe-7" id="kt_modal_view_criteria_list">
 
-                <!--begin::Modal header-->
-                <div class="modal-header" id="kt_modal_add_customer_header">
-                    <!--begin::Modal title-->
-                    <h2 class="fw-bolder">Add Requirement</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div id="kt_modal_add_requirement_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="kt_modal_add_criteria" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-content">
+            <form class="form" action="#" id="kt_modal_add_criteria_form">
+                <div class="modal-header" id="kt_modal_add_criteria_header">
+                    <h2 class="fw-bolder">Add Criteria</h2>
+                    <div id="kt_modal_add_criteria_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                                 <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                             </svg>
                         </span>
-                        <!--end::Svg Icon-->
                     </div>
-                    <!--end::Close-->
                 </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
                 <div class="modal-body py-10 px-lg-17">
-                    <!--begin::Scroll-->
-                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
-                            <!--end::Input-->
-                        </div>
+                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_criteria_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
 
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
-                            <!--end::Input-->
+                            <label class="required form-label fs-5 fw-bold mb-3">Start Year</label>
+                            <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select a year" data-dropdown-parent="#kt_modal_add_criteria_form" name="yearStart">
+                                <option></option>
+                                @foreach ($formData_acadYears as $year)
+                                <option value="{{ $year->year }}">{{ $year->year }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="fv-row mb-15">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Description</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="description" />
-                            <!--end::Input-->
+                            <label class="required form-label fs-5 fw-bold mb-3">End Year</label>
+                            <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select a year" data-dropdown-parent="#kt_modal_add_criteria_form" name="yearEnd">
+                                <option></option>
+                                @foreach ($formData_acadYears as $year)
+                                <option value="{{ $year->year }}">{{ $year->year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="required form-label fs-5 fw-bold mb-3">Requirements</label>
+                            <div class="input-group input-group-solid">
+                                <span class="input-group-text"><i class="bi bi-card-checklist fs-4"></i></span>
+                                <div class="flex-grow-1">
+                                    <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Select a requirements" multiple="multiple" data-dropdown-parent="#kt_modal_add_criteria_form" name="requirements[]">
+                                        <option></option>
+                                        @foreach ($formData_admissionRed as $admissionReq)
+                                        <option value="{{ $admissionReq->adre_id }}">{{ $admissionReq->adre_docuName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-                    <!--end::Scroll-->
                 </div>
-                <!--end::Modal body-->
-                <!--begin::Modal footer-->
                 <div class="modal-footer flex-center">
                     <!--begin::Button-->
-                    <button type="reset" id="kt_modal_add_requirement_cancel" class="btn btn-light me-3">Discard</button>
+                    <button type="reset" id="kt_modal_add_criteria_cancel" class="btn btn-light me-3">Discard</button>
                     <!--end::Button-->
                     <!--begin::Button-->
-                    <button type="submit" id="kt_modal_add_requirement_submit" class="btn btn-primary">
+                    <button type="submit" id="kt_modal_add_criteria_submit" class="btn btn-primary">
                         <span class="indicator-label">Submit</span>
                         <span class="indicator-progress">Please wait...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                     <!--end::Button-->
                 </div>
-                <!--end::Modal footer-->
             </form>
-            <!--end::Form-->
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="kt_modal_edit_requirement" tabindex="-1">
-    <!--begin::Modal dialog-->
+<div class="modal fade" id="kt_modal_edit_criteria" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
         <div class="modal-content">
-            <!--begin::Form-->
-            <form class="form" action="#" id="kt_modal_edit_requirement_form">
+            <form class="form" action="#" id="kt_modal_edit_criteria_form">
                 <input type="text" name="id" hidden />
 
-                <!--begin::Modal header-->
-                <div class="modal-header" id="kt_modal_edit_requirement_header">
-                    <!--begin::Modal title-->
-                    <h2 class="fw-bolder">Edit Requirement</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div id="kt_modal_edit_requirement_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                <div class="modal-header" id="kt_modal_edit_criteria_header">
+                    <h2 class="fw-bolder">Edit Criteria</h2>
+                    <div id="kt_modal_edit_criteria_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -180,61 +199,56 @@
                         </span>
                         <!--end::Svg Icon-->
                     </div>
-                    <!--end::Close-->
                 </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
                 <div class="modal-body py-10 px-lg-17">
-                    <!--begin::Scroll-->
-                    <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_requirement_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_requirement_header" data-kt-scroll-wrappers="#kt_modal_edit_requirement_scroll" data-kt-scroll-offset="300px">
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
-                            <!--end::Input-->
-                        </div>
+                    <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_criteria_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_criteria_header" data-kt-scroll-wrappers="#kt_modal_edit_criteria_scroll" data-kt-scroll-offset="300px">
 
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
-                            <!--end::Input-->
+                            <label class="required form-label fs-5 fw-bold mb-3">Start Year</label>
+                            <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select a year" data-dropdown-parent="#kt_modal_edit_criteria" name="yearStart">
+                                <option></option>
+                                @foreach ($formData_acadYears as $year)
+                                <option value="{{ $year->year }}">{{ $year->year }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="fv-row mb-15">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Description</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="description" />
-                            <!--end::Input-->
+                            <label class="required form-label fs-5 fw-bold mb-3">End Year</label>
+                            <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select a year" data-dropdown-parent="#kt_modal_edit_criteria" name="yearEnd">
+                                <option></option>
+                                @foreach ($formData_acadYears as $year)
+                                <option value="{{ $year->year }}">{{ $year->year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="required form-label fs-5 fw-bold mb-3">Requirements</label>
+                            <div class="input-group input-group-solid">
+                                <span class="input-group-text"><i class="bi bi-card-checklist fs-4"></i></span>
+                                <div class="flex-grow-1">
+                                    <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Select a requirements" multiple="multiple" data-dropdown-parent="#kt_modal_edit_criteria" name="requirements[]">
+                                        <option></option>
+                                        @foreach ($formData_admissionRed as $admissionReq)
+                                        <option value="{{ $admissionReq->adre_id }}">{{ $admissionReq->adre_docuName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-                    <!--end::Scroll-->
                 </div>
-                <!--end::Modal body-->
-                <!--begin::Modal footer-->
                 <div class="modal-footer flex-center">
-                    <!--begin::Button-->
-                    <button type="reset" id="kt_modal_edit_requirement_cancel" class="btn btn-light me-3">Discard</button>
-                    <!--end::Button-->
-                    <!--begin::Button-->
-                    <button type="submit" id="kt_modal_edit_requirement_submit" class="btn btn-primary">
+                    <button type="reset" id="kt_modal_edit_criteria_cancel" class="btn btn-light me-3">Discard</button>
+                    <button type="submit" id="kt_modal_edit_criteria_submit" class="btn btn-primary">
                         <span class="indicator-label">Update</span>
                         <span class="indicator-progress">Please wait...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-                    <!--end::Button-->
                 </div>
-                <!--end::Modal footer-->
             </form>
-            <!--end::Form-->
         </div>
     </div>
 </div>
@@ -242,11 +256,10 @@
 
 @section('scripts')
 <script type="text/javascript">
-
-    var table = $("#kt_requirement_table").DataTable({ // Retrieve all the data
+    var table = $("#kt_criteria_table").DataTable({ // Retrieve all the data
         processing: true,
         ajax: {
-            url: "{{ url('/admission-requirements/retrieveAll') }}",
+            url: "{{ url('/admission-criteria/retrieveAll') }}",
             dataSrc: function(data) {
                 var return_data = new Array();
 
@@ -256,14 +269,16 @@
                     for (let i = 0; i < d.length; i++) {
 
                         return_data.push({
-                            DT_RowId: d[i]["adre_id_md5"],
-                            Code: d[i]["adre_docuCode"],
-                            Name: d[i]["adre_docuName"],
-                            Description: d[i]["adre_docuDescription"],
-                            Action: `<div class="text-center"><a href="javascript:void(0)" kt_table_requirement_edit
+                            DT_RowId: d[i]["adcr_id_md5"],
+                            StartYear: d[i]["adcr_yearStart"],
+                            EndYear: d[i]["adcr_yearEnd"],
+                            TotRequirements: `<div class="text-center"><span class="badge badge-square badge-dark">${d[i]["adcr_requirements"].length}</span></div>`,
+                            Action: `<div class="text-center"><a href="javascript:void(0)" kt_table_criteria_view
                                     class="btn btn-icon btn-success"><i style="padding-left: 0.5rem;"
+                                        class="las la-eye fs-2 me-2"></i></a> <a href="javascript:void(0)" kt_table_criteria_edit
+                                    class="btn btn-icon btn-warning"><i style="padding-left: 0.5rem;"
                                         class="las la-edit fs-2 me-2"></i></a> <a href="javascript:void(0)"
-                                    kt_table_requirement_delete class="btn btn-icon btn-danger"><i
+                                    kt_table_criteria_delete class="btn btn-icon btn-danger"><i
                                         style="padding-left: 0.5rem;" class="las la-trash fs-2 me-2"></i></a></div>`,
                         });
 
@@ -276,13 +291,13 @@
             }
         },
         columns: [{
-                data: 'Code'
+                data: 'StartYear'
             },
             {
-                data: 'Name'
+                data: 'EndYear'
             },
             {
-                data: 'Description'
+                data: 'TotRequirements'
             },
             {
                 data: 'Action'
@@ -295,25 +310,96 @@
         table.search(e.target.value).draw();
     });
 
+
+    //-- begin:View Modal --//
+
+    var view_modal = new bootstrap.Modal(document.querySelector('#kt_modal_view_criteria'));
+
+    $("#kt_criteria_table").on("click", "[kt_table_criteria_view]", function() {
+
+        const id = $(this).closest("tr").attr("id");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "{{ url('/admission-criteria/retrieve') }}",
+            data: {
+                id: id
+            }
+        }).done(function(response) {
+            response = JSON.parse(response);
+
+            if (response['data'].length == 1) {
+
+                data = response['data'][0];
+
+                $("#kt_modal_view_criteria_year").empty().text(data['adcr_yearStart'] + " - " + data['adcr_yearEnd']);
+
+                $("#kt_modal_view_criteria_list").empty();
+                requirements = data['adcr_requirements'];
+                for (let i = 0; i < requirements.length; i++) {
+
+                    $(`<div class="d-flex flex-stack py-5 border-bottom border-gray-300 border-bottom-dashed">
+                            <div class="d-flex align-items-center">
+                                <div class="symbol symbol-35px symbol-circle">
+                                    <span class="symbol-label bg-light-danger text-danger fw-bold">${i + 1}</span>
+                                </div>
+                                <div class="ms-6">
+                                    <div class="fw-bold text-muted fs-8">${requirements[i]['adre_docuCode']}</div>
+                                    <span class="d-flex align-items-center fs-4 fw-bolder text-dark">${requirements[i]['adre_docuName']}</span>
+                                </div>
+                            </div>
+                        </div>`).appendTo('#kt_modal_view_criteria_list');
+                }
+
+                view_modal.show();
+
+            } else {
+                Swal.fire({
+                    text: "{{ __('modal.error') }}",
+                    icon: 'error',
+                    buttonsStyling: !1,
+                    confirmButtonText: 'Ok, got it!',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                });
+            }
+
+        });
+    });
+
+    //-- end::View Modal --//
+
+
     //--begin::Add Modal--//
 
-    var add_modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_requirement'));
-    var add_submitBtn = document.getElementById('kt_modal_add_requirement_submit');
+    var add_modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_criteria'));
+    var add_submitBtn = document.getElementById('kt_modal_add_criteria_submit');
 
-    var add_form = document.getElementById('kt_modal_add_requirement_form');
-    var add_formValidation = FormValidation.formValidation(document.getElementById('kt_modal_add_requirement_form'), { // Add Form Validation
+    var add_form = document.getElementById('kt_modal_add_criteria_form');
+    var add_formValidation = FormValidation.formValidation(document.getElementById('kt_modal_add_criteria_form'), { // Add Form Validation
         fields: {
-            'code': {
+            'yearStart': {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Code is required'
+                        message: 'Criteria Start Year is required'
                     },
                 },
             },
-            name: {
+            'yearEnd': {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Name is required'
+                        message: 'Criteria End Year is required'
+                    },
+                },
+            },
+            'requirements[]': {
+                validators: {
+                    notEmpty: {
+                        message: 'Requirements is required'
                     },
                 },
             },
@@ -329,7 +415,7 @@
     })
 
 
-    $('#kt_modal_add_requirement_cancel, #kt_modal_add_requirement_close').on("click", function( // X and Discard Button
+    $('#kt_modal_add_criteria_cancel, #kt_modal_add_criteria_close').on("click", function( // X and Discard Button
         t) { // "X" and Discard button
         t.preventDefault(),
             Swal.fire({
@@ -349,7 +435,7 @@
     });
 
 
-    $("#kt_modal_add_requirement_form").on("submit", function(e) { // Add Form Submission
+    $("#kt_modal_add_criteria_form").on("submit", function(e) { // Add Form Submission
         e.preventDefault(),
             add_formValidation &&
             add_formValidation.validate().then(function(e) {
@@ -358,16 +444,16 @@
                     add_submitBtn.setAttribute('data-kt-indicator', 'on');
                     add_submitBtn.disabled = !0;
 
-
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         type: "POST",
-                        data: $("#kt_modal_add_requirement_form").serialize(),
-                        url: "{{ url('/admission-requirements/add') }}",
+                        data: $("#kt_modal_add_criteria_form").serialize(),
+                        url: "{{ url('/admission-criteria/add') }}",
                         datatype: "html",
                     }).done(function(response) {
+
                         response = JSON.parse(response);
 
                         if (response['status'] == 200) {
@@ -387,8 +473,6 @@
                                     if (e.isConfirmed) {
                                         add_modal.hide();
                                         add_submitBtn.disabled = !1;
-                                        add_form.reset();
-                                        table.ajax.reload();
                                     }
                                 });
                         } else {
@@ -401,16 +485,17 @@
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
                                 },
-                            }).then(function(e) {
-                                if (e.isConfirmed)
-                                    table.ajax.reload();
-                            });
+                            })
                         }
+
+                        $('#kt_modal_add_criteria_form .form-select-solid').val('').trigger('change');
+                        table.ajax.reload();
+
 
                     });
                 } else {
                     Swal.fire({
-                        text: "{{ __('modal.error') }}",
+                        text: "{{ __('modal.error_validation') }}",
                         icon: 'error',
                         buttonsStyling: !1,
                         confirmButtonText: 'Ok, got it!',
@@ -427,23 +512,30 @@
 
 
     //--begin::Edit Modal--//
-    var edit_modal = new bootstrap.Modal(document.querySelector('#kt_modal_edit_requirement'));
-    var edit_submitBtn = document.getElementById('kt_modal_edit_requirement_submit');
+    var edit_modal = new bootstrap.Modal(document.querySelector('#kt_modal_edit_criteria'));
+    var edit_submitBtn = document.getElementById('kt_modal_edit_criteria_submit');
 
-    var edit_form = document.getElementById('kt_modal_edit_requirement_form');
+    var edit_form = document.getElementById('kt_modal_edit_criteria_form');
     var edit_formValidation = FormValidation.formValidation(edit_form, {
         fields: {
-            'code': {
+            'yearStart': {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Code is required'
+                        message: 'Criteria Start Year is required'
                     },
                 },
             },
-            name: {
+            'yearEnd': {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Name is required'
+                        message: 'Criteria End Year is required'
+                    },
+                },
+            },
+            'requirements[]': {
+                validators: {
+                    notEmpty: {
+                        message: 'Requirements is required'
                     },
                 },
             },
@@ -458,7 +550,7 @@
         },
     })
 
-    $("#kt_requirement_table").on("click", "[kt_table_requirement_edit]", function() { // Once the Edit button on the DataTable is clicked
+    $("#kt_criteria_table").on("click", "[kt_table_criteria_edit]", function() { // Once the Edit button on the DataTable is clicked
 
         const id = $(this).closest("tr").attr("id");
 
@@ -467,7 +559,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            url: "{{ url('/admission-requirements/retrieve') }}",
+            url: "{{ url('/admission-criteria/retrieve') }}",
             data: {
                 id: id
             }
@@ -477,12 +569,19 @@
             if (response['data'].length == 1) {
 
                 data = response['data'][0];
-                edit_modal.show();
 
-                $("#kt_modal_edit_requirement_form [name='id']").val(data['adre_id']);
-                $("#kt_modal_edit_requirement_form [name='code']").val(data['adre_docuCode']);
-                $("#kt_modal_edit_requirement_form [name='name']").val(data['adre_docuName']);
-                $("#kt_modal_edit_requirement_form [name='description']").val(data['adre_docuDescription']);
+                requirements_new = [];
+                requirements = data['adcr_requirements'];
+                for (let i = 0; i < requirements.length; i++) {
+                    requirements_new.push(requirements[i]['adre_id']);
+                }
+
+                $("#kt_modal_edit_criteria_form [name='id']").val(data['adcr_id_md5']);
+                $("#kt_modal_edit_criteria_form [name='yearStart']").val(data['adcr_yearStart']).trigger('change');
+                $("#kt_modal_edit_criteria_form [name='yearEnd']").val(data['adcr_yearEnd']).trigger('change');
+                $("#kt_modal_edit_criteria_form [name='requirements[]']").val(requirements_new).trigger('change');
+
+                edit_modal.show();
 
             } else {
                 Swal.fire({
@@ -499,9 +598,8 @@
         });
     })
 
-
-    $('#kt_modal_edit_requirement_cancel, #kt_modal_edit_requirement_close').on("click", function( // X and Discard Button
-        t) { // "X" and Discard button
+    $('#kt_modal_edit_criteria_cancel, #kt_modal_edit_criteria_close').on("click", function( // X and Discard Button
+        t) {
         t.preventDefault(),
             Swal.fire({
                 text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
@@ -519,7 +617,7 @@
             });
     });
 
-    $("#kt_modal_edit_requirement_form").on("submit", function(e) { // Edit Form Submission
+    $("#kt_modal_edit_criteria_form").on("submit", function(e) { // Edit Form Submission
         e.preventDefault(),
             edit_formValidation &&
             edit_formValidation.validate().then(function(e) {
@@ -533,11 +631,12 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         type: "POST",
-                        data: $("#kt_modal_edit_requirement_form").serialize(),
-                        url: "{{ url('/admission-requirements/update') }}",
+                        data: $("#kt_modal_edit_criteria_form").serialize(),
+                        url: "{{ url('/admission-criteria/update') }}",
                         datatype: "html",
                     }).done(function(response) {
                         response = JSON.parse(response);
+
                         if (response['status'] == 200) {
 
                             edit_submitBtn.removeAttribute('data-kt-indicator'),
@@ -555,7 +654,6 @@
                                     if (e.isConfirmed) {
                                         edit_modal.hide();
                                         edit_submitBtn.disabled = !1;
-                                        table.ajax.reload();
                                     }
                                 });
                         } else {
@@ -575,6 +673,7 @@
                             });
                         }
 
+                        table.ajax.reload();
                     });
                 } else {
                     Swal.fire({
@@ -594,7 +693,7 @@
 
     //--begin::Delete--//
 
-    $("#kt_requirement_table").on("click", "[kt_table_requirement_delete]", function() { // Once the Delete Button on the DataTable is clicked
+    $("#kt_criteria_table").on("click", "[kt_table_criteria_delete]", function() { // Once the Delete Button on the DataTable is clicked
 
         const id = $(this).closest("tr").attr("id");
 
@@ -618,7 +717,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "POST",
-                    url: "{{ url('/admission-requirements/delete') }}",
+                    url: "{{ url('/admission-criteria/delete') }}",
                     data: {
                         id: id
                     }
@@ -626,7 +725,7 @@
                     response = JSON.parse(response);
 
                     if (response['status'] == 401) {
-                        toastr.info("{{ __('modal.deleted_success', ['attribute' => 'Requirement']) }}");
+                        toastr.info(response['message']);
                     } else {
                         Swal.fire({
                             text: "{{ __('modal.error') }}",
@@ -645,7 +744,6 @@
         });
 
     });
-
 
     //--end::Delete--//
 </script>

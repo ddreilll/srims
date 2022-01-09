@@ -18,9 +18,9 @@ class AdmissionRequirementsController extends Controller
 
     // ===== Begin::Views ===== //
 
-    public function index(Request $request) 
-    {       
-       
+    public function index(Request $request)
+    {
+
         return view('admin.admission-requirements', ['sides' => 'admission-requirements', 'title' => "Admission Requirements"]);
     }
 
@@ -30,46 +30,67 @@ class AdmissionRequirementsController extends Controller
 
 
     // ===== Begin::Functions ===== //
-   
+
+    public function getAllRequirements($filter)
+    {
+        return (new AdReq)->fetchAll($filter);
+    }
+
+    public function getOneRequirement($md5Id)
+    {
+        return (new AdReq)->fetchOne($md5Id);
+    }
+
+    public function createRequirement($data)
+    {
+        (new AdReq)->insertOne($data);
+    }
+
+    public function updateRequirement($md5Id, $details)
+    {
+        (new AdReq)->edit($md5Id, $details);
+    }
+
+    public function removeRequirement($md5Id)
+    {
+        (new AdReq)->remove($md5Id);
+    }
+
+
     // -- Begin::Ajax Requests -- //
 
-    public function ajax_retrieveAll(){
-
-        $Req = new AdReq;
-
+    public function ajax_retrieveAll()
+    {
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $Req->fetchAll([])
+            'data' => $this->getAllRequirements([])
         ]);
-
     }
 
-    public function ajax_retrieve(Request $request){
+    public function ajax_retrieve(Request $request)
+    {
 
         $request->validate([
             'id' => 'required'
         ]);
- 
-        $Req = new AdReq;
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $Req->fetchOne($request->id)
+            'data' => $this->getOneRequirement($request->id)
         ]);
-
     }
 
-    public function ajax_insert(Request $request){
+    public function ajax_insert(Request $request)
+    {
 
         $request->validate([
             'code' => 'required|max:15',
             'name' => 'required|max:255'
         ]);
 
-        $Req = new AdReq;
-        $Req->insert($request);
+        $this->createRequirement($request);
 
         header('Content-Type: application/json');
         echo json_encode([
@@ -78,43 +99,42 @@ class AdmissionRequirementsController extends Controller
         ]);
     }
 
-    public function ajax_update(Request $request){
-        
+    public function ajax_update(Request $request)
+    {
+
         $request->validate([
+            'id' => 'required',
             'code' => 'required|max:15',
             'name' => 'required|max:255'
         ]);
 
-        $Req = new AdReq;
-        $Req->edit($request);
+        $details = ["code" => $request['code'], "name" => $request['name'], "description" => $request['description']];
+        $this->updateRequirement($request->id, $details);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
             'message' => __('modal.updated_success', ['attribute' => 'Requirement'])
         ]);
-
-
     }
 
-    public function ajax_delete(Request $request){
-        
+    public function ajax_delete(Request $request)
+    {
+
         $request->validate([
             'id' => 'required'
         ]);
 
-        $Req = new AdReq;
-        $Req->remove($request->id);
+        $this->removeRequirement($request->id);
 
         header('Content-Type: application/json');
         echo json_encode([
-            'status' => "401"
+            'status' => "401",
+            'message' => __('modal.deleted_success', ['attribute' => 'Requirement'])
         ]);
-
-
     }
 
-        // -- End::Ajax Requests -- //
+    // -- End::Ajax Requests -- //
 
     // ===== End::Functions ===== //
 

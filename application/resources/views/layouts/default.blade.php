@@ -316,7 +316,7 @@
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">System Setup</span>
                                 </div>
                             </div>
-                            <div data-kt-menu-trigger="click" class="menu-item {{  $sides === 'admission-requirements' ? 'here show' : '' }} menu-accordion">
+                            <div data-kt-menu-trigger="click" class="menu-item {{  $sides === 'admission-requirements' || $sides === 'admission-criteria' ? 'here show' : '' }} menu-accordion">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -341,7 +341,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="#">
+                                        <a class="menu-link {{  $sides === 'admission-criteria' ? 'active' : '' }}" href="{{ url('/admission-criteria/list') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>

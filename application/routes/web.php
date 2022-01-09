@@ -1,6 +1,7 @@
 <?php
 
 
+
 /*
 |--------------------------------------------------------------------------
 |                       Admission Requirements
@@ -16,7 +17,19 @@ Route::post('admission-requirements/update', 'Admin\AdmissionRequirementsControl
 Route::post('admission-requirements/delete', 'Admin\AdmissionRequirementsController@ajax_delete');
 
 
+/*
+|--------------------------------------------------------------------------
+|                       Admission Criteria
+|--------------------------------------------------------------------------
+|
+*/
 
+Route::get('admission-criteria/list', 'Admin\AdmissionCriteriaController@index')->name('admission-criteria');
+Route::get('admission-criteria/retrieveAll', 'Admin\AdmissionCriteriaController@ajax_retrieveAll');
+Route::post('admission-criteria/add', 'Admin\AdmissionCriteriaController@ajax_insert');
+Route::post('admission-criteria/retrieve', 'Admin\AdmissionCriteriaController@ajax_retrieve');
+Route::post('admission-criteria/update', 'Admin\AdmissionCriteriaController@ajax_update');
+Route::post('admission-criteria/delete', 'Admin\AdmissionCriteriaController@ajax_delete');
 
 
 
