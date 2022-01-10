@@ -36,9 +36,8 @@ class AdmissionCriteria extends Model
 
         $adCriteria = $this;
         $data = $adCriteria->whereRaw('md5(adcr_id) = "' . $md5Id . '"')
+        ->selectRaw('s_admission_criteria.*, md5(adcr_id) AS `adcr_id_md5`')
             ->get();
-
-        $data['0']['adcr_id_md5'] = md5($data['0']['adcr_id']);
 
         return $data;
     }
@@ -49,11 +48,8 @@ class AdmissionCriteria extends Model
         $adCriteria = $this;
         $data = $adCriteria->where($filter)
             ->where(["adcr_isDeleted" => "0"])
+            ->selectRaw('s_admission_criteria.*, md5(adcr_id) AS `adcr_id_md5`')
             ->get();
-
-        for ($i = 0; $i < sizeOf($data); $i++) {
-            $data[$i]['adcr_id_md5'] = md5($data[$i]['adcr_id']);
-        }
 
         return $data;
     }
@@ -61,13 +57,11 @@ class AdmissionCriteria extends Model
     public function insertOne($data)
     {
 
-        $adCriteria = $this;
+        $this->adcr_yearStart = $data['yearStart'];
+        $this->adcr_yearEnd = $data['yearEnd'];
+        $this->save();
 
-        $adCriteria->adcr_yearStart = $data['yearStart'];
-        $adCriteria->adcr_yearEnd = $data['yearEnd'];
-        $adCriteria->save();
-
-        return $adCriteria->id;
+        return $this->id;
     }
 
     public function edit($md5Id, $data)

@@ -124,8 +124,14 @@ class AdmissionCriteriaController extends Controller
         for ($c = 0; $c < sizeOf($diff_requirements); $c++) {
             $this->addRequirement($diff_requirements[$c], $criteria['adcr_id']);
         }
-
     }
+
+    public function removeCriteria($md5Id)
+    {
+        (new AdCriteria)->remove($md5Id);
+    }
+
+    // Criteria Requirements
 
     public function removeRequirement($requirementId, $criteriaId)
     {
@@ -137,10 +143,6 @@ class AdmissionCriteriaController extends Controller
         (new AdReqCriteria)->insert(["adcr_arcr_id" => $criteriaId, "adre_arcr_id" => $requirementId]);
     }
 
-    public function removeCriteria($md5Id)
-    {
-        (new AdCriteria)->remove($md5Id);
-    }
 
     // -- Begin::Ajax Requests -- //
 

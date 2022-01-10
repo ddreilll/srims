@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-
-use DB;
-use App\Classes\permission;
-use App\Http\Requests;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 // Models
-use App\AdmissionRequirements as AdReq;
+use App\Course;
 
-
-class AdmissionRequirementsController extends Controller
+class CourseController extends Controller
 {
-
     /*
 |--------------------------------------------------------------------------
 |    Begin::Views
@@ -25,10 +19,10 @@ class AdmissionRequirementsController extends Controller
 |
 */
 
-    public function index(Request $request)
+    public function index()
     {
 
-        return view('admin.admission-requirements', ['sides' => 'admission-requirements', 'title' => "Admission Requirements"]);
+        return view('admin.course', ['sides' => 'course', 'title' => "Course"]);
     }
 
     /*
@@ -36,9 +30,7 @@ class AdmissionRequirementsController extends Controller
 |    End::Views
 |--------------------------------------------------------------------------
 |
-|
 */
-
 
 
 
@@ -49,40 +41,60 @@ class AdmissionRequirementsController extends Controller
 |
 */
 
-    public function getAllRequirements($filter)
+
+    public function createCourse($data)
     {
-        return (new AdReq)->fetchAll($filter);
+        (new Course)->insertOne($data);
     }
 
-    public function getOneRequirement($md5Id)
+    public function getAllCourses($filter)
     {
-        return (new AdReq)->fetchOne($md5Id);
+        return (new Course)->fetchAll($filter);
     }
 
-    public function createRequirement($data)
+    public function getOneCourse($md5Id)
     {
-        (new AdReq)->insertOne($data);
+        return (new Course)->fetchOne($md5Id);
     }
 
-    public function updateRequirement($md5Id, $details)
+    public function updateCourse($md5Id, $details)
     {
-        (new AdReq)->edit($md5Id, $details);
+        (new Course)->edit($md5Id, $details);
     }
 
-    public function removeRequirement($md5Id)
+    public function removeCourse($md5Id)
     {
-        (new AdReq)->remove($md5Id);
+        (new Course)->remove($md5Id);
     }
 
 
     // -- Begin::Ajax Requests -- //
 
-    public function ajax_retrieveAll()
+    public function ajax_insert(Request $request)
     {
+
+        $request->validate([
+            'code' => 'required|max:15',
+            'name' => 'required|max:255'
+        ]);
+
+
+        $this->createCourse($request);
+
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $this->getAllRequirements([])
+            'message' => __('modal.added_success', ['attribute' => 'Course'])
+        ]);
+    }
+
+    public function ajax_retrieveAll()
+    {
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'status' => "200",
+            'data' => $this->getAllCourses([])
         ]);
     }
 
@@ -96,24 +108,7 @@ class AdmissionRequirementsController extends Controller
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $this->getOneRequirement($request->id)
-        ]);
-    }
-
-    public function ajax_insert(Request $request)
-    {
-
-        $request->validate([
-            'code' => 'required|max:15',
-            'name' => 'required|max:255'
-        ]);
-
-        $this->createRequirement($request);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'status' => "200",
-            'message' => __('modal.added_success', ['attribute' => 'Requirement'])
+            'data' => $this->getOneCourse($request->id)
         ]);
     }
 
@@ -126,13 +121,14 @@ class AdmissionRequirementsController extends Controller
             'name' => 'required|max:255'
         ]);
 
-        $details = ["code" => $request['code'], "name" => $request['name'], "description" => $request['description']];
-        $this->updateRequirement($request->id, $details);
+        $details = ['code' => $request['code'], 'name' => $request['name'], 'description' => $request['description']];
+
+        $this->updateCourse($request['id'], $details);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'message' => __('modal.updated_success', ['attribute' => 'Requirement'])
+            'message' => __('modal.updated_success', ['attribute' => 'Course'])
         ]);
     }
 
@@ -143,16 +139,19 @@ class AdmissionRequirementsController extends Controller
             'id' => 'required'
         ]);
 
-        $this->removeRequirement($request->id);
+        $this->removeCourse($request['id']);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "401",
-            'message' => __('modal.deleted_success', ['attribute' => 'Requirement'])
+            'message' => __('modal.deleted_success', ['attribute' => 'Course'])
         ]);
     }
-
     // -- End::Ajax Requests -- //
+
+
+
+
 
     /*
 |--------------------------------------------------------------------------

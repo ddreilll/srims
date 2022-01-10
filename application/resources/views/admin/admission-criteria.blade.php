@@ -25,7 +25,7 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                        <input type="text" data-kt-requirement-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Criteria" />
+                        <input type="text" data-kt-criteria-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Criteria" />
                     </div>
                     <!--end::Search-->
                 </div>
@@ -256,6 +256,7 @@
 
 @section('scripts')
 <script type="text/javascript">
+    
     var table = $("#kt_criteria_table").DataTable({ // Retrieve all the data
         processing: true,
         ajax: {
@@ -273,12 +274,12 @@
                             StartYear: d[i]["adcr_yearStart"],
                             EndYear: d[i]["adcr_yearEnd"],
                             TotRequirements: `<div class="text-center"><span class="badge badge-square badge-dark">${d[i]["adcr_requirements"].length}</span></div>`,
-                            Action: `<div class="text-center"><a href="javascript:void(0)" kt_table_criteria_view
+                            Action: `<div class="text-center"><a href="javascript:void(0)" kt_criteria_table_view
                                     class="btn btn-icon btn-success"><i style="padding-left: 0.5rem;"
-                                        class="las la-eye fs-2 me-2"></i></a> <a href="javascript:void(0)" kt_table_criteria_edit
+                                        class="las la-eye fs-2 me-2"></i></a> <a href="javascript:void(0)" kt_criteria_table_edit
                                     class="btn btn-icon btn-warning"><i style="padding-left: 0.5rem;"
                                         class="las la-edit fs-2 me-2"></i></a> <a href="javascript:void(0)"
-                                    kt_table_criteria_delete class="btn btn-icon btn-danger"><i
+                                    kt_criteria_table_delete class="btn btn-icon btn-danger"><i
                                         style="padding-left: 0.5rem;" class="las la-trash fs-2 me-2"></i></a></div>`,
                         });
 
@@ -305,17 +306,15 @@
         ],
     });
 
-
-    $('[data-kt-requirement-table-filter="search"]').on('keyup', function(e) { // Search bar 
+    $('[data-kt-criteria-table-filter="search"]').on('keyup', function(e) { // Search bar 
         table.search(e.target.value).draw();
     });
-
 
     //-- begin:View Modal --//
 
     var view_modal = new bootstrap.Modal(document.querySelector('#kt_modal_view_criteria'));
 
-    $("#kt_criteria_table").on("click", "[kt_table_criteria_view]", function() {
+    $("#kt_criteria_table").on("click", "[kt_criteria_table_view]", function() {
 
         const id = $(this).closest("tr").attr("id");
 
@@ -550,7 +549,7 @@
         },
     })
 
-    $("#kt_criteria_table").on("click", "[kt_table_criteria_edit]", function() { // Once the Edit button on the DataTable is clicked
+    $("#kt_criteria_table").on("click", "[kt_criteria_table_edit]", function() { // Once the Edit button on the DataTable is clicked
 
         const id = $(this).closest("tr").attr("id");
 
@@ -694,7 +693,7 @@
 
     //--begin::Delete--//
 
-    $("#kt_criteria_table").on("click", "[kt_table_criteria_delete]", function() { // Once the Delete Button on the DataTable is clicked
+    $("#kt_criteria_table").on("click", "[kt_criteria_table_delete]", function() { // Once the Delete Button on the DataTable is clicked
 
         const id = $(this).closest("tr").attr("id");
 

@@ -32,6 +32,19 @@ Route::post('admission-criteria/update', 'Admin\AdmissionCriteriaController@ajax
 Route::post('admission-criteria/delete', 'Admin\AdmissionCriteriaController@ajax_delete');
 
 
+/*
+|--------------------------------------------------------------------------
+|                       Course
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('course', 'Admin\CourseController@index')->name('course');
+Route::post('course/add', 'Admin\CourseController@ajax_insert');
+Route::get('course/retrieveAll', 'Admin\CourseController@ajax_retrieveAll');
+Route::post('course/retrieve', 'Admin\CourseController@ajax_retrieve');
+Route::post('course/update', 'Admin\CourseController@ajax_update');
+Route::post('course/delete', 'Admin\CourseController@ajax_delete');
 
 
 
