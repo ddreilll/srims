@@ -22,7 +22,7 @@ class CourseController extends Controller
     public function index()
     {
 
-        return view('admin.course', ['sides' => 'course', 'title' => "Course"]);
+        return view('admin.course', ['title' => "Course", "menu"=> "course-curiculum", "sub_menu" => "course"]);
     }
 
     /*

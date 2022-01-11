@@ -34,7 +34,7 @@ class AdmissionCriteriaController extends Controller
         $acadYears = (new AcadYear)->getAllYears();
 
 
-        return view('admin.admission-criteria', ['sides' => 'admission-criteria', 'title' => "Admission Criteria", "formData_acadYears" => $acadYears, "formData_admissionRed" => $admissionReq]);
+        return view('admin.admission-criteria', ['menu' => 'admission-requirements', 'sub_menu' => 'requirements-criteria', 'title' => "Admission Criteria", "formData_acadYears" => $acadYears, "formData_admissionRed" => $admissionReq]);
     }
 
     /*
@@ -140,7 +140,7 @@ class AdmissionCriteriaController extends Controller
 
     public function addRequirement($requirementId, $criteriaId)
     {
-        (new AdReqCriteria)->insert(["adcr_arcr_id" => $criteriaId, "adre_arcr_id" => $requirementId]);
+        (new AdReqCriteria)->insertOne($criteriaId, $requirementId);
     }
 
 

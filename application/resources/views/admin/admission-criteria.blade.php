@@ -1,12 +1,5 @@
 @extends('layouts.default')
 
-@section('styles')
-<style>
-    .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) .select2-search.select2-search--inline .select2-search__field {
-        font-family: Poppins, Helvetica, sans-serif;
-    }
-</style>
-@endsection
 
 @section('content')
 

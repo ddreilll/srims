@@ -23,8 +23,11 @@
     <link href="{{ asset('/new_assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
 
-
-
+    <style>
+        .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) .select2-search.select2-search--inline .select2-search__field {
+            font-family: Poppins, Helvetica, sans-serif;
+        }
+    </style>
     @yield('styles')
 
 </head>
@@ -316,7 +319,7 @@
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">System Setup</span>
                                 </div>
                             </div>
-                            <div data-kt-menu-trigger="click" class="menu-item {{  $sides === 'admission-requirements' || $sides === 'admission-criteria' ? 'here show' : '' }} menu-accordion">
+                            <div data-kt-menu-trigger="click" class="menu-item {{  $menu === 'admission-requirements' ? 'here show' : '' }} menu-accordion">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -333,7 +336,7 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
-                                        <a class="menu-link {{  $sides === 'admission-requirements' ? 'active' : '' }}" href="{{ url('/admission-requirements/list') }}">
+                                        <a class="menu-link {{  $sub_menu === 'requirements' ? 'active' : '' }}" href="{{ url('/admission-requirements/list') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -341,7 +344,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{  $sides === 'admission-criteria' ? 'active' : '' }}" href="{{ url('/admission-criteria/list') }}">
+                                        <a class="menu-link {{  $sub_menu === 'requirements-criteria' ? 'active' : '' }}" href="{{ url('/admission-criteria/list') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -351,7 +354,7 @@
                                 </div>
                             </div>
 
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{  $sides === 'course' ? 'here show' : '' }}">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{  $menu == 'course-curiculum' ? 'here show' : '' }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -377,7 +380,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link {{  $sides === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">
+                                        <a class="menu-link {{  $sub_menu === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -385,7 +388,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="#">
+                                        <a class="menu-link {{  $sub_menu === 'subject' ? 'active' : '' }}" href="{{ url('/subject') }} ">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -584,8 +587,6 @@
         </div>
         <!--end::Page-->
     </div>
-
-
 
 
     <!--begin::Global Javascript Bundle(used by all pages)-->

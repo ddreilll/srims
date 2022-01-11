@@ -13,6 +13,11 @@ class AdmissionRequirementsCriteria extends Model
     const UPDATED_AT = 'arcr_dateUpdated';
 
 
+    public function insertOne($criteriaId, $requirementId)
+    {
+        $this->insert(["adcr_arcr_id" => $criteriaId, "adre_arcr_id" => $requirementId]);
+    }
+
     public function fetchAll($filter)
     {
         $data = $this->where($filter)
@@ -25,7 +30,6 @@ class AdmissionRequirementsCriteria extends Model
 
         return $data;
     }
-
 
     public function remove($requirementId, $criteriaId)
     {

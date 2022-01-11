@@ -52,7 +52,6 @@ class AdmissionRequirements extends Model
 
     public function remove($md5Id)
     {
-
         $this->whereRaw('md5(adre_id) = "' . $md5Id . '"')
             ->update(['adre_isDeleted' => '1']);
     }

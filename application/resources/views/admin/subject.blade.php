@@ -15,14 +15,12 @@
                                 <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
                             </svg>
                         </span>
-                        <input type="text" data-kt-requirement-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Requirements" />
+                        <input type="text" data-kt-subject-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Subject" />
                     </div>
                 </div>
                 <div class="card-toolbar">
-                    <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
 
-                        <!--begin::Export-->
                         <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -34,31 +32,26 @@
                             </span>
                             <!--end::Svg Icon-->Export
                         </button>
-                        <!--end::Export-->
-                        <!--begin::Add customer-->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_requirement">Add Requirement</button>
-                        <!--end::Add customer-->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_subject">Add Subject</button>
                     </div>
-                    <!--end::Toolbar-->
-                    <!--begin::Group actions-->
                     <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
                         <div class="fw-bolder me-5">
                             <span class="me-2" data-kt-customer-table-select="selected_count"></span>Selected
                         </div>
                         <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">Delete Selected</button>
                     </div>
-                    <!--end::Group actions-->
                 </div>
             </div>
 
             <div class="card-body py-3">
 
-                <table id="kt_requirement_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+                <table id="kt_subject_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
                     <thead>
                         <tr class="fw-bolder fs-6 text-gray-800 px-7">
                             <th>Code</th>
+                            <th>Prerequisite</th>
                             <th>Name</th>
-                            <th>Description</th>
+                            <th>Units</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -72,105 +65,80 @@
     </div>
 </div>
 
-<div class="modal fade" id="kt_modal_add_requirement" tabindex="-1">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
-        <div class="modal-content">
-            <!--begin::Form-->
-            <form class="form" action="#" id="kt_modal_add_requirement_form">
 
-                <!--begin::Modal header-->
-                <div class="modal-header" id="kt_modal_add_customer_header">
-                    <!--begin::Modal title-->
-                    <h2 class="fw-bolder">Add Requirement</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div id="kt_modal_add_requirement_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+<div class="modal fade" id="kt_modal_add_subject" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-content">
+            <form class="form" action="#" id="kt_modal_add_subject_form">
+
+                <div class="modal-header" id="kt_modal_add_subject_header">
+                    <h2 class="fw-bolder">Add Subject</h2>
+                    <div id="kt_modal_add_subject_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
                                 <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
                             </svg>
                         </span>
-                        <!--end::Svg Icon-->
                     </div>
-                    <!--end::Close-->
                 </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
                 <div class="modal-body py-10 px-lg-17">
-                    <!--begin::Scroll-->
-                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
-                        <!--begin::Input group-->
+                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_subject_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_subject_header" data-kt-scroll-wrappers="#kt_modal_add_subject_scroll" data-kt-scroll-offset="300px">
+
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
-                            <!--end::Input-->
                         </div>
 
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
-                            <!--end::Input-->
                         </div>
 
                         <div class="fv-row mb-15">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Description</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="description" />
-                            <!--end::Input-->
+                            <label class="required fs-6 fw-bold mb-2">Units</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="" name="units" />
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="form-label fs-5 fw-bold mb-3">Prerequisite</label>
+                            <div class="input-group input-group-solid">
+                                <span class="input-group-text"><i class="bi bi-card-checklist fs-4"></i></span>
+                                <div class="flex-grow-1">
+                                    <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Select a Prerequisite" multiple="multiple" data-dropdown-parent="#kt_modal_add_subject_form" name="prerequisite[]" data-allow-clear="true">
+                                        <option></option>
+                                        @foreach ($formData_subjects as $subject)
+                                        <option value="{{ $subject->subj_id }}">{{ $subject->subj_code . ' ― '. $subject->subj_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-                    <!--end::Scroll-->
                 </div>
-                <!--end::Modal body-->
-                <!--begin::Modal footer-->
                 <div class="modal-footer flex-center">
-                    <!--begin::Button-->
-                    <button type="reset" id="kt_modal_add_requirement_cancel" class="btn btn-light me-3">Discard</button>
-                    <!--end::Button-->
-                    <!--begin::Button-->
-                    <button type="submit" id="kt_modal_add_requirement_submit" class="btn btn-primary">
+                    <button type="reset" id="kt_modal_add_subject_cancel" class="btn btn-light me-3">Discard</button>
+                    <button type="submit" id="kt_modal_add_subject_submit" class="btn btn-primary">
                         <span class="indicator-label">Submit</span>
                         <span class="indicator-progress">Please wait...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-                    <!--end::Button-->
                 </div>
-                <!--end::Modal footer-->
             </form>
-            <!--end::Form-->
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="kt_modal_edit_requirement" tabindex="-1">
-    <!--begin::Modal dialog-->
+<div class="modal fade" id="kt_modal_edit_subject" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
         <div class="modal-content">
-            <!--begin::Form-->
-            <form class="form" action="#" id="kt_modal_edit_requirement_form">
+            <form class="form" action="#" id="kt_modal_edit_subject_form">
                 <input type="text" name="id" hidden />
 
-                <!--begin::Modal header-->
-                <div class="modal-header" id="kt_modal_edit_requirement_header">
-                    <!--begin::Modal title-->
-                    <h2 class="fw-bolder">Edit Requirement</h2>
-                    <!--end::Modal title-->
-                    <!--begin::Close-->
-                    <div id="kt_modal_edit_requirement_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                <div class="modal-header" id="kt_modal_edit_subject_header">
+                    <h2 class="fw-bolder">Edit Subject</h2>
+                    <div id="kt_modal_edit_subject_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -180,61 +148,51 @@
                         </span>
                         <!--end::Svg Icon-->
                     </div>
-                    <!--end::Close-->
                 </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
                 <div class="modal-body py-10 px-lg-17">
-                    <!--begin::Scroll-->
-                    <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_requirement_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_requirement_header" data-kt-scroll-wrappers="#kt_modal_edit_requirement_scroll" data-kt-scroll-offset="300px">
-                        <!--begin::Input group-->
+                    <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_subject_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_subject_header" data-kt-scroll-wrappers="#kt_modal_edit_subject_scroll" data-kt-scroll-offset="300px">
+
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
-                            <!--end::Input-->
                         </div>
 
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
-                            <!--end::Input-->
                         </div>
 
                         <div class="fv-row mb-15">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Description</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="description" />
-                            <!--end::Input-->
+                            <label class="required fs-6 fw-bold mb-2">Units</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="" name="units" />
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="form-label fs-5 fw-bold mb-3">Prerequisite</label>
+                            <div class="input-group input-group-solid">
+                                <span class="input-group-text"><i class="bi bi-card-checklist fs-4"></i></span>
+                                <div class="flex-grow-1">
+                                    <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Select a Prerequisite" multiple="multiple" data-dropdown-parent="#kt_modal_edit_subject_form" name="prerequisite[]" data-allow-clear="true">
+                                        <option></option>
+                                        @foreach ($formData_subjects as $subject)
+                                        <option value="{{ $subject->subj_id }}">{{ $subject->subj_code . ' ― '. $subject->subj_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
-                    <!--end::Scroll-->
                 </div>
-                <!--end::Modal body-->
-                <!--begin::Modal footer-->
                 <div class="modal-footer flex-center">
-                    <!--begin::Button-->
-                    <button type="reset" id="kt_modal_edit_requirement_cancel" class="btn btn-light me-3">Discard</button>
-                    <!--end::Button-->
-                    <!--begin::Button-->
-                    <button type="submit" id="kt_modal_edit_requirement_submit" class="btn btn-primary">
+                    <button type="reset" id="kt_modal_edit_subject_cancel" class="btn btn-light me-3">Discard</button>
+                    <button type="submit" id="kt_modal_edit_subject_submit" class="btn btn-primary">
                         <span class="indicator-label">Update</span>
                         <span class="indicator-progress">Please wait...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-                    <!--end::Button-->
                 </div>
-                <!--end::Modal footer-->
             </form>
-            <!--end::Form-->
         </div>
     </div>
 </div>
@@ -242,10 +200,10 @@
 
 @section('scripts')
 <script type="text/javascript">
-    var table = $("#kt_requirement_table").DataTable({ // Retrieve all the data
+    var table = $("#kt_subject_table").DataTable({ // Retrieve all the data
         processing: true,
         ajax: {
-            url: "{{ url('/admission-requirements/retrieveAll') }}",
+            url: "{{ url('/subject/retrieveAll') }}",
             dataSrc: function(data) {
                 var return_data = new Array();
 
@@ -254,15 +212,22 @@
 
                     for (let i = 0; i < d.length; i++) {
 
+                        subj_prereq = d[i]['subj_prerequisite'];
+                        prereq = '';
+                        for (let p = 0; p < subj_prereq.length; p++) {
+                            prereq += subj_prereq[p]['subjpreq_subjectCode'] + '<br>';
+                        }
+
                         return_data.push({
-                            DT_RowId: d[i]["adre_id_md5"],
-                            Code: d[i]["adre_docuCode"],
-                            Name: d[i]["adre_docuName"],
-                            Description: d[i]["adre_docuDescription"],
-                            Action: `<div class="text-center"><a href="javascript:void(0)" kt_table_requirement_edit
+                            DT_RowId: d[i]["subj_id_md5"],
+                            Code: d[i]["subj_code"],
+                            Prerequisite: prereq,
+                            Name: d[i]["subj_name"],
+                            Units: d[i]["subj_units"],
+                            Action: `<div class="text-center"><a href="javascript:void(0)" kt_subject_table_edit
                                     class="btn btn-icon btn-success"><i style="padding-left: 0.5rem;"
                                         class="las la-edit fs-2 me-2"></i></a> <a href="javascript:void(0)"
-                                    kt_table_requirement_delete class="btn btn-icon btn-danger"><i
+                                    kt_subject_table_delete class="btn btn-icon btn-danger"><i
                                         style="padding-left: 0.5rem;" class="las la-trash fs-2 me-2"></i></a></div>`,
                         });
 
@@ -278,10 +243,13 @@
                 data: 'Code'
             },
             {
+                data: 'Prerequisite'
+            },
+            {
                 data: 'Name'
             },
             {
-                data: 'Description'
+                data: 'Units'
             },
             {
                 data: 'Action'
@@ -289,30 +257,43 @@
         ],
     });
 
-
-    $('[data-kt-requirement-table-filter="search"]').on('keyup', function(e) { // Search bar 
+    $('[data-kt-subject-table-filter="search"]').on('keyup', function(e) { // Search bar 
         table.search(e.target.value).draw();
     });
 
     //--begin::Add Modal--//
 
-    var add_modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_requirement'));
-    var add_submitBtn = document.getElementById('kt_modal_add_requirement_submit');
+    Inputmask({
+        'groupSeparator': '.',
+        'autoGroup': true,
+        'alias': 'decimal',
+        rightAlign: false,
+    }).mask("#kt_modal_add_subject_form input[name='units']");
 
-    var add_form = document.getElementById('kt_modal_add_requirement_form');
-    var add_formValidation = FormValidation.formValidation(document.getElementById('kt_modal_add_requirement_form'), { // Add Form Validation
+    var add_modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_subject'));
+    var add_submitBtn = document.getElementById('kt_modal_add_subject_submit');
+
+    var add_form = document.getElementById('kt_modal_add_subject_form');
+    var add_formValidation = FormValidation.formValidation(document.getElementById('kt_modal_add_subject_form'), { // Add Form Validation
         fields: {
             'code': {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Code is required'
+                        message: 'Subject Code is required'
                     },
                 },
             },
             name: {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Name is required'
+                        message: 'Subject Name is required'
+                    },
+                },
+            },
+            units: {
+                validators: {
+                    notEmpty: {
+                        message: 'Subject Units is required'
                     },
                 },
             },
@@ -327,8 +308,7 @@
         },
     })
 
-
-    $('#kt_modal_add_requirement_cancel, #kt_modal_add_requirement_close').on("click", function( // X and Discard Button
+    $('#kt_modal_add_subject_cancel, #kt_modal_add_subject_close').on("click", function( // X and Discard Button
         t) { // "X" and Discard button
         t.preventDefault(),
             Swal.fire({
@@ -347,8 +327,7 @@
             });
     });
 
-
-    $("#kt_modal_add_requirement_form").on("submit", function(e) { // Add Form Submission
+    $("#kt_modal_add_subject_form").on("submit", function(e) { // Add Form Submission
         e.preventDefault(),
             add_formValidation &&
             add_formValidation.validate().then(function(e) {
@@ -357,14 +336,13 @@
                     add_submitBtn.setAttribute('data-kt-indicator', 'on');
                     add_submitBtn.disabled = !0;
 
-
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         type: "POST",
-                        data: $("#kt_modal_add_requirement_form").serialize(),
-                        url: "{{ url('/admission-requirements/add') }}",
+                        data: $("#kt_modal_add_subject_form").serialize(),
+                        url: "{{ url('/subject/add') }}",
                         datatype: "html",
                     }).done(function(response) {
                         response = JSON.parse(response);
@@ -382,7 +360,6 @@
                                         confirmButton: 'btn btn-primary'
                                     },
                                 }).then(function(e) {
-
                                     if (e.isConfirmed) {
                                         add_modal.hide();
                                         add_submitBtn.disabled = !1;
@@ -427,23 +404,31 @@
 
 
     //--begin::Edit Modal--//
-    var edit_modal = new bootstrap.Modal(document.querySelector('#kt_modal_edit_requirement'));
-    var edit_submitBtn = document.getElementById('kt_modal_edit_requirement_submit');
 
-    var edit_form = document.getElementById('kt_modal_edit_requirement_form');
+    Inputmask({
+        'groupSeparator': '.',
+        'autoGroup': true,
+        'alias': 'decimal',
+        rightAlign: false,
+    }).mask("#kt_modal_edit_subject_form input[name='units']");
+
+    var edit_modal = new bootstrap.Modal(document.querySelector('#kt_modal_edit_subject'));
+    var edit_submitBtn = document.getElementById('kt_modal_edit_subject_submit');
+
+    var edit_form = document.getElementById('kt_modal_edit_subject_form');
     var edit_formValidation = FormValidation.formValidation(edit_form, {
         fields: {
             'code': {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Code is required'
+                        message: 'Course Code is required'
                     },
                 },
             },
             name: {
                 validators: {
                     notEmpty: {
-                        message: 'Requirement Name is required'
+                        message: 'Course Name is required'
                     },
                 },
             },
@@ -458,7 +443,7 @@
         },
     })
 
-    $("#kt_requirement_table").on("click", "[kt_table_requirement_edit]", function() { // Once the Edit button on the DataTable is clicked
+    $("#kt_subject_table").on("click", "[kt_subject_table_edit]", function() { // Once the Edit button on the DataTable is clicked
 
         const id = $(this).closest("tr").attr("id");
 
@@ -467,23 +452,30 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            url: "{{ url('/admission-requirements/retrieve') }}",
+            url: "{{ url('/subject/retrieve') }}",
             data: {
                 id: id
             }
         }).done(function(response) {
             response = JSON.parse(response);
-
+            console.log(response);
             if (response['data'].length == 1) {
 
                 data = response['data'][0];
+
+                prerequisite_new = [];
+                prerequisite = data['subj_prerequisite'];
+                for (let i = 0; i < prerequisite.length; i++) {
+                    prerequisite_new.push(prerequisite[i]['subjpreq_subjectId']);
+                }
+
+                $("#kt_modal_edit_subject_form [name='id']").val(data['subj_id_md5']);
+                $("#kt_modal_edit_subject_form [name='code']").val(data['subj_code']);
+                $("#kt_modal_edit_subject_form [name='name']").val(data['subj_name']);
+                $("#kt_modal_edit_subject_form [name='units']").val(data['subj_units']);
+                $("#kt_modal_edit_subject_form [name='prerequisite[]']").val(prerequisite_new).trigger('change');
+
                 edit_modal.show();
-
-                $("#kt_modal_edit_requirement_form [name='id']").val(data['adre_id_md5']);
-                $("#kt_modal_edit_requirement_form [name='code']").val(data['adre_docuCode']);
-                $("#kt_modal_edit_requirement_form [name='name']").val(data['adre_docuName']);
-                $("#kt_modal_edit_requirement_form [name='description']").val(data['adre_docuDescription']);
-
             } else {
                 Swal.fire({
                     text: "{{ __('modal.error') }}",
@@ -499,7 +491,7 @@
         });
     })
 
-    $('#kt_modal_edit_requirement_cancel, #kt_modal_edit_requirement_close').on("click", function( // X and Discard Button
+    $('#kt_modal_edit_subject_cancel, #kt_modal_edit_subject_close').on("click", function( // X and Discard Button
         t) { // "X" and Discard button
         t.preventDefault(),
             Swal.fire({
@@ -518,7 +510,7 @@
             });
     });
 
-    $("#kt_modal_edit_requirement_form").on("submit", function(e) { // Edit Form Submission
+    $("#kt_modal_edit_subject_form").on("submit", function(e) { // Edit Form Submission
         e.preventDefault(),
             edit_formValidation &&
             edit_formValidation.validate().then(function(e) {
@@ -532,11 +524,13 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         type: "POST",
-                        data: $("#kt_modal_edit_requirement_form").serialize(),
-                        url: "{{ url('/admission-requirements/update') }}",
+                        data: $("#kt_modal_edit_subject_form").serialize(),
+                        url: "{{ url('/subject/update') }}",
                         datatype: "html",
                     }).done(function(response) {
+
                         response = JSON.parse(response);
+
                         if (response['status'] == 200) {
 
                             edit_submitBtn.removeAttribute('data-kt-indicator'),
@@ -566,11 +560,7 @@
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
                                 },
-                            }).then(function(e) {
-                                if (e.isConfirmed)
-                                    table.ajax.reload();
-
-                            });
+                            })
                         }
                         table.ajax.reload();
                     });
@@ -592,59 +582,97 @@
 
     //--begin::Delete--//
 
-    $("#kt_requirement_table").on("click", "[kt_table_requirement_delete]", function() { // Once the Delete Button on the DataTable is clicked
+    $("#kt_subject_table").on("click", "[kt_subject_table_delete]", function() { // Once the Delete Button on the DataTable is clicked
 
         const id = $(this).closest("tr").attr("id");
 
-        Swal.fire({
-            text: "{{ __('modal.confirmation', ['action' => 'delete']) }}",
-            icon: 'warning',
-            showCancelButton: !0,
-            buttonsStyling: !1,
-            allowOutsideClick: false,
-            confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'delete']) }}",
-            cancelButtonText: "{{ __('modal.cancel_btn') }}",
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-active-light',
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-        }).then(function(t) {
-            if (t.isConfirmed) {
+            type: "POST",
+            url: "{{ url('/subject/checkDelete') }}",
+            data: {
+                id: id
+            }
+        }).done(function(response) {
+            response = JSON.parse(response);
 
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            if (response['status'] == 200) {
+                if (response['data'] == true) {
+                    Swal.fire({
+                        text: "{{ __('modal.confirmation', ['action' => 'delete']) }}",
+                        icon: 'warning',
+                        showCancelButton: !0,
+                        buttonsStyling: !1,
+                        allowOutsideClick: false,
+                        confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'delete']) }}",
+                        cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                        customClass: {
+                            confirmButton: 'btn btn-primary',
+                            cancelButton: 'btn btn-active-light',
+                        },
+                    }).then(function(t) {
+                        if (t.isConfirmed) {
+
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                type: "POST",
+                                url: "{{ url('/subject/delete') }}",
+                                data: {
+                                    id: id
+                                }
+                            }).done(function(response) {
+                                response = JSON.parse(response);
+
+                                if (response['status'] == 401) {
+                                    toastr.info(response['message']);
+                                } else {
+                                    Swal.fire({
+                                        text: "{{ __('modal.error') }}",
+                                        icon: 'error',
+                                        buttonsStyling: !1,
+                                        confirmButtonText: 'Ok, got it!',
+                                        customClass: {
+                                            confirmButton: 'btn btn-primary'
+                                        },
+                                    });
+                                }
+                                table.ajax.reload();
+                            });
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        text: "{{ __('modal.error_delete', ['reason' => 'this subject is a prerequisite']) }}",
+                        icon: 'error',
+                        buttonsStyling: !1,
+                        confirmButtonText: 'Ok, got it!',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                    });
+                }
+
+            } else {
+                Swal.fire({
+                    text: "{{ __('modal.error') }}",
+                    icon: 'error',
+                    buttonsStyling: !1,
+                    confirmButtonText: 'Ok, got it!',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
                     },
-                    type: "POST",
-                    url: "{{ url('/admission-requirements/delete') }}",
-                    data: {
-                        id: id
-                    }
-                }).done(function(response) {
-                    response = JSON.parse(response);
-
-                    if (response['status'] == 401) {
-                        toastr.info(response['message']);
-                    } else {
-                        Swal.fire({
-                            text: "{{ __('modal.error') }}",
-                            icon: 'error',
-                            buttonsStyling: !1,
-                            confirmButtonText: 'Ok, got it!',
-                            customClass: {
-                                confirmButton: 'btn btn-primary'
-                            },
-                        });
-                    }
-                    table.ajax.reload();
-
                 });
             }
+
         });
 
+
+
     });
-
-
     //--end::Delete--//
 </script>
 

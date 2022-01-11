@@ -511,7 +511,6 @@
                                     if (e.isConfirmed) {
                                         edit_modal.hide();
                                         edit_submitBtn.disabled = !1;
-                                        table.ajax.reload();
                                     }
                                 });
                         } else {
@@ -524,13 +523,9 @@
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
                                 },
-                            }).then(function(e) {
-                                if (e.isConfirmed)
-                                    table.ajax.reload();
-
-                            });
+                            })
                         }
-
+                        table.ajax.reload();
                     });
                 } else {
                     Swal.fire({

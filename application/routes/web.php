@@ -46,6 +46,22 @@ Route::post('course/retrieve', 'Admin\CourseController@ajax_retrieve');
 Route::post('course/update', 'Admin\CourseController@ajax_update');
 Route::post('course/delete', 'Admin\CourseController@ajax_delete');
 
+/*
+|--------------------------------------------------------------------------
+|                       Subject
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('subject', 'Admin\SubjectController@index')->name('subject');
+Route::post('subject/add', 'Admin\SubjectController@ajax_insert');
+Route::get('subject/retrieveAll', 'Admin\SubjectController@ajax_retrieveAll');
+Route::post('subject/retrieve', 'Admin\SubjectController@ajax_retrieve');
+Route::post('subject/update', 'Admin\SubjectController@ajax_update');
+Route::post('subject/delete', 'Admin\SubjectController@ajax_delete');
+Route::post('subject/checkDelete', 'Admin\SubjectController@ajax_checkDelete');
+
+
 
 
 
