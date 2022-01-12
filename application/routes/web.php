@@ -73,6 +73,24 @@ Route::get('settings', 'Admin\SystemSettingsController@index')->name('system-set
 Route::post('settings/year-level/add', 'Admin\YearLevelController@ajax_insert');
 
 
+/*
+|--------------------------------------------------------------------------
+|                       Room Setup
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('room', 'Admin\RoomController@index')->name('room');
+Route::post('room/add', 'Admin\RoomController@ajax_insert');
+Route::get('room/retrieveAll', 'Admin\RoomController@ajax_retrieveAll');
+Route::post('room/retrieve', 'Admin\RoomController@ajax_retrieve');
+Route::post('room/update', 'Admin\RoomController@ajax_update');
+Route::post('room/delete', 'Admin\RoomController@ajax_delete');
+
+
+
+
+
 
 
 
