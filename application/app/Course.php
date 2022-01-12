@@ -48,7 +48,9 @@ class Course extends Model
 
         $this->whereRaw('md5(cour_id) = "' . $md5Id . '"')
             ->update([
-                'cour_name' => $data['name'], 'cour_code' => $data['code'], 'cour_description' => $data['description']
+                'cour_name' => $data['name'],
+                'cour_code' => $data['code'],
+                'cour_description' => $data['description']
             ]);
     }
 

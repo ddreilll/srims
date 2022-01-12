@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 // Models
-use App\Course;
+use App\Instructor;
 
-class CourseController extends Controller
+class InstructorController extends Controller
 {
     /*
 |--------------------------------------------------------------------------
@@ -18,11 +18,10 @@ class CourseController extends Controller
 |    All functions that renders or display a page
 |
 */
-
     public function index()
     {
 
-        return view('admin.course', ['menu_header' => 'System Setup', 'title' => "Course", "menu" => "course-curiculum", "sub_menu" => "course"]);
+        return view('admin.instructor', ['menu_header' => 'System Setup', 'title' => "Instructor", "menu" => "schedules-menu", "sub_menu" => "instructor"]);
     }
 
     /*
@@ -40,32 +39,31 @@ class CourseController extends Controller
 |-------------------------------------------------------------------------- 
 |
 */
-
-
-    public function createCourse($data)
+    public function createInstructor($data)
     {
-        (new Course)->insertOne($data);
+        (new Instructor)->insertOne($data);
     }
 
-    public function getAllCourses($filter)
+    public function getAllInstructors($filter)
     {
-        return (new Course)->fetchAll($filter);
+        return (new Instructor)->fetchAll($filter);
     }
 
-    public function getOneCourse($md5Id)
+    public function getOneInstructor($md5Id)
     {
-        return (new Course)->fetchOne($md5Id);
+        return (new Instructor)->fetchOne($md5Id);
     }
 
-    public function updateCourse($md5Id, $details)
+    public function updateInstructor($md5Id, $details)
     {
-        (new Course)->edit($md5Id, $details);
+        (new Instructor)->edit($md5Id, $details);
     }
 
-    public function removeCourse($md5Id)
+    public function removeInstructor($md5Id)
     {
-        (new Course)->remove($md5Id);
+        (new Instructor)->remove($md5Id);
     }
+
 
 
     // -- Begin::Ajax Requests -- //
@@ -74,33 +72,30 @@ class CourseController extends Controller
     {
 
         $request->validate([
-            'code' => 'required|max:15',
+            'empNo' => 'required|max:50',
             'name' => 'required|max:255'
         ]);
 
-
-        $this->createCourse($request);
+        $this->createInstructor($request);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'message' => __('modal.added_success', ['attribute' => 'Course'])
+            'message' => __('modal.added_success', ['attribute' => 'Instructor'])
         ]);
     }
 
     public function ajax_retrieveAll()
     {
-
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $this->getAllCourses([])
+            'data' => $this->getAllInstructors([])
         ]);
     }
 
     public function ajax_retrieve(Request $request)
     {
-
         $request->validate([
             'id' => 'required'
         ]);
@@ -108,27 +103,29 @@ class CourseController extends Controller
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $this->getOneCourse($request->id)
+            'data' => $this->getOneInstructor($request->id)
         ]);
     }
 
     public function ajax_update(Request $request)
     {
-
         $request->validate([
             'id' => 'required',
-            'code' => 'required|max:15',
+            'empNo' => 'required|max:50',
             'name' => 'required|max:255'
         ]);
 
-        $details = ['code' => $request['code'], 'name' => $request['name'], 'description' => $request['description']];
+        $details = [
+            'empNo' => $request['empNo'],
+            'name' => $request['name']
+        ];
 
-        $this->updateCourse($request['id'], $details);
+        $this->updateInstructor($request['id'], $details);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'message' => __('modal.updated_success', ['attribute' => 'Course'])
+            'message' => __('modal.updated_success', ['attribute' => 'Room'])
         ]);
     }
 
@@ -139,20 +136,14 @@ class CourseController extends Controller
             'id' => 'required'
         ]);
 
-        $this->removeCourse($request['id']);
+        $this->removeInstructor($request['id']);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "401",
-            'message' => __('modal.deleted_success', ['attribute' => 'Course'])
+            'message' => __('modal.deleted_success', ['attribute' => 'Room'])
         ]);
     }
-    // -- End::Ajax Requests -- //
-
-
-
-
-
     /*
 |--------------------------------------------------------------------------
 |    End::Functions
