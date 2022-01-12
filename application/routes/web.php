@@ -62,6 +62,22 @@ Route::post('subject/delete', 'Admin\SubjectController@ajax_delete');
 Route::post('subject/checkDelete', 'Admin\SubjectController@ajax_checkDelete');
 
 
+/*
+|--------------------------------------------------------------------------
+|                       Room
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('room', 'Admin\RoomController@index')->name('room');
+Route::post('room/add', 'Admin\RoomController@ajax_insert');
+Route::get('room/retrieveAll', 'Admin\RoomController@ajax_retrieveAll');
+Route::post('room/retrieve', 'Admin\RoomController@ajax_retrieve');
+Route::post('room/update', 'Admin\RoomController@ajax_update');
+Route::post('room/delete', 'Admin\RoomController@ajax_delete');
+
+
+
 
 
 

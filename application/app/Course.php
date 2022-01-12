@@ -14,15 +14,12 @@ class Course extends Model
 
     public function insertOne($data)
     {
+        $this->cour_code = $data['code'];
+        $this->cour_name = $data['name'];
+        $this->cour_description = $data['description'];
+        $this->save();
 
-        $course = $this;
-
-        $course->cour_code = $data['code'];
-        $course->cour_name = $data['name'];
-        $course->cour_description = $data['description'];
-        $course->save();
-
-        return $course->id;
+        return $this->id;
     }
 
     public function fetchAll($filter)
