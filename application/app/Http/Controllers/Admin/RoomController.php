@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-// Models
-use App\Course;
+// Model
+use App\Room;
 
-class CourseController extends Controller
+class RoomController extends Controller
 {
     /*
 |--------------------------------------------------------------------------
@@ -21,11 +21,11 @@ class CourseController extends Controller
 
     public function index()
     {
-
-        return view('admin.course', ['title' => "Course", "menu" => "course-curiculum", "sub_menu" => "course"]);
+        return view('admin.room', ['title' => "Room", "menu" => "schedules-menu", "sub_menu" => "room", "menu_header" => "System Setup"]);
     }
 
     /*
+|
 |--------------------------------------------------------------------------
 |    End::Views
 |--------------------------------------------------------------------------
@@ -41,31 +41,31 @@ class CourseController extends Controller
 |
 */
 
-
-    public function createCourse($data)
+    public function createRoom($data)
     {
-        (new Course)->insertOne($data);
+        (new Room)->insertOne($data);
     }
 
-    public function getAllCourses($filter)
+    public function getAllRooms($filter)
     {
-        return (new Course)->fetchAll($filter);
+        return (new Room)->fetchAll($filter);
     }
 
-    public function getOneCourse($md5Id)
+    public function getOneRoom($md5Id)
     {
-        return (new Course)->fetchOne($md5Id);
+        return (new Room)->fetchOne($md5Id);
     }
 
-    public function updateCourse($md5Id, $details)
+    public function updateRoom($md5Id, $details)
     {
-        (new Course)->edit($md5Id, $details);
+        (new Room)->edit($md5Id, $details);
     }
 
-    public function removeCourse($md5Id)
+    public function removeRoom($md5Id)
     {
-        (new Course)->remove($md5Id);
+        (new Room)->remove($md5Id);
     }
+
 
 
     // -- Begin::Ajax Requests -- //
@@ -74,33 +74,29 @@ class CourseController extends Controller
     {
 
         $request->validate([
-            'code' => 'required|max:15',
-            'name' => 'required|max:255'
+            'name' => 'required|max:50'
         ]);
 
-
-        $this->createCourse($request);
+        $this->createRoom($request);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'message' => __('modal.added_success', ['attribute' => 'Course'])
+            'message' => __('modal.added_success', ['attribute' => 'Room'])
         ]);
     }
 
     public function ajax_retrieveAll()
     {
-
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $this->getAllCourses([])
+            'data' => $this->getAllRooms([])
         ]);
     }
 
     public function ajax_retrieve(Request $request)
     {
-
         $request->validate([
             'id' => 'required'
         ]);
@@ -108,27 +104,25 @@ class CourseController extends Controller
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'data' => $this->getOneCourse($request->id)
+            'data' => $this->getOneRoom($request->id)
         ]);
     }
 
     public function ajax_update(Request $request)
     {
-
         $request->validate([
             'id' => 'required',
-            'code' => 'required|max:15',
-            'name' => 'required|max:255'
+            'name' => 'required|max:50'
         ]);
 
-        $details = ['code' => $request['code'], 'name' => $request['name'], 'description' => $request['description']];
+        $details = ['name' => $request['name']];
 
-        $this->updateCourse($request['id'], $details);
+        $this->updateRoom($request['id'], $details);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'message' => __('modal.updated_success', ['attribute' => 'Course'])
+            'message' => __('modal.updated_success', ['attribute' => 'Room'])
         ]);
     }
 
@@ -139,20 +133,14 @@ class CourseController extends Controller
             'id' => 'required'
         ]);
 
-        $this->removeCourse($request['id']);
+        $this->removeRoom($request['id']);
 
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "401",
-            'message' => __('modal.deleted_success', ['attribute' => 'Course'])
+            'message' => __('modal.deleted_success', ['attribute' => 'Room'])
         ]);
     }
-    // -- End::Ajax Requests -- //
-
-
-
-
-
     /*
 |--------------------------------------------------------------------------
 |    End::Functions

@@ -398,7 +398,7 @@
                                 </div>
                             </div>
 
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion" {{  $menu == 'schedules-menu' ? 'here show' : '' }}> 
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -425,7 +425,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="#">
+                                        <a class="menu-link {{  $sub_menu === 'room' ? 'active' : '' }}" href="{{ url('/room') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
