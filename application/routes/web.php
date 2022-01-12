@@ -88,8 +88,19 @@ Route::post('room/update', 'Admin\RoomController@ajax_update');
 Route::post('room/delete', 'Admin\RoomController@ajax_delete');
 
 
+/*
+|--------------------------------------------------------------------------
+|                       Instructor Setup
+|--------------------------------------------------------------------------
+|
+*/
 
-
+Route::get('instructor', 'Admin\InstructorController@index')->name('instructor');
+Route::post('instructor/add', 'Admin\InstructorController@ajax_insert');
+Route::get('instructor/retrieveAll', 'Admin\InstructorController@ajax_retrieveAll');
+Route::post('instructor/retrieve', 'Admin\InstructorController@ajax_retrieve');
+Route::post('instructor/update', 'Admin\InstructorController@ajax_update');
+Route::post('instructor/delete', 'Admin\InstructorController@ajax_delete');
 
 
 
