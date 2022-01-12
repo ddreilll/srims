@@ -557,7 +557,6 @@
     //--begin::Delete--//
 
     $("#kt_course_table").on("click", "[kt_course_table_delete]", function() { // Once the Delete Button on the DataTable is clicked
-
         const id = $(this).closest("tr").attr("id");
 
         Swal.fire({

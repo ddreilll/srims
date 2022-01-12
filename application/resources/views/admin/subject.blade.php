@@ -391,9 +391,6 @@
                                 customClass: {
                                     confirmButton: 'btn btn-primary'
                                 },
-                            }).then(function(e) {
-                                if (e.isConfirmed)
-                                    table.ajax.reload();
                             });
                         }
 
@@ -474,7 +471,6 @@
             }
         }).done(function(response) {
             response = JSON.parse(response);
-            console.log(response);
             if (response['data'].length == 1) {
 
                 data = response['data'][0];
@@ -685,9 +681,6 @@
             }
 
         });
-
-
-
     });
     //--end::Delete--//
 </script>
