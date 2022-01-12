@@ -13,15 +13,11 @@
     <link rel="manifest" href="{{ asset('/new_assets/media/logo/favicon/site.webmanifest') }}">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- begin::Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <!--end::Fonts-->
 
     <link href="{{ asset('/new_assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('/new_assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/new_assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <!--end::Global Stylesheets Bundle-->
 
     <style>
         .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) .select2-search.select2-search--inline .select2-search__field {
@@ -33,16 +29,10 @@
 </head>
 
 <body id="kt_body" class="header-tablet-and-mobile-fixed aside-enabled">
-    <!--begin::Main-->
-    <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
-        <!--begin::Page-->
         <div class="page d-flex flex-row flex-column-fluid">
-            <!--begin::Aside-->
             <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
-                <!--begin::Aside Toolbarl-->
                 <div class="aside-toolbar flex-column-auto" id="kt_aside_toolbar">
-                    <!--begin::User-->
                     <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
                         <!--begin::Symbol-->
                         <div class="symbol symbol-50px">
@@ -264,19 +254,10 @@
                         </div>
                         <!--end::Wrapper-->
                     </div>
-                    <!--end::User-->
-                    <!--end::Aside user-->
                 </div>
-                <!--end::Aside Toolbarl-->
-                <!--begin::Aside menu-->
                 <div class="aside-menu flex-column-fluid">
-                    <!--begin::Aside Menu-->
                     <div class="hover-scroll-overlay-y px-2 my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="{default: '#kt_aside_toolbar, #kt_aside_footer', lg: '#kt_header, #kt_aside_toolbar, #kt_aside_footer'}" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="5px">
-                        <!--begin::Menu-->
                         <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
-
-
-
                             <div class="menu-item">
                                 <div class="menu-content pt-8 pb-2">
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
@@ -443,7 +424,6 @@
                                 </div>
                             </div>
 
-
                             <div class="menu-item">
                                 <div class="menu-content pt-8 pb-2">
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">Settings</span>
@@ -487,14 +467,24 @@
                                 </div>
                             </div>
 
+                            <div class="menu-item">
+                                <a class="menu-link {{  $sub_menu === 'system-settings' ? 'active' : '' }}" href="{{ url('/settings') }}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                                    <span class="menu-icon">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="black" />
+                                                <path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="black" />
+                                            </svg></span>
+                                        </svg>
+                                    </span>
+                                    </span>
+                                    <span class="menu-title">System Settings</span>
+                                </a>
+                            </div>
 
                         </div>
-                        <!--end::Menu-->
                     </div>
-                    <!--end::Aside Menu-->
                 </div>
-                <!--end::Aside menu-->
-                <!--begin::Footer-->
                 <div class="aside-footer flex-column-auto py-5" id="kt_aside_footer">
                     <a href="#" class="btn btn-custom btn-primary w-100">
                         <span class="btn-label">Encode Student</span>
@@ -508,14 +498,9 @@
                         <!--end::Svg Icon-->
                     </a>
                 </div>
-                <!--end::Footer-->
             </div>
-            <!--end::Aside-->
-            <!--begin::Wrapper-->
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-                <!--begin::Header-->
-                <div id="kt_header" style="" class="header align-items-stretch">
-                    <!--begin::Brand-->
+                <div id="kt_header" class="header align-items-stretch">
                     <div class="header-brand">
                         <!--begin::Logo-->
                         <a href="../../demo8/dist/index.html">
@@ -560,14 +545,20 @@
                         <!--end::Aside toggle-->
                     </div>
 
+                    <div class="toolbar">
+                        <div class="container-fluid py-6 py-lg-0 d-flex flex-column flex-lg-row align-items-lg-stretch justify-content-lg-between">
+                            <div class="page-title d-flex flex-column me-5">
+                                <ol class="breadcrumb text-muted fs-7 fw-bold">
+                                    <li class="breadcrumb-item text-muted">{{ $menu_header }}</li>
+                                </ol>
+                                <h1 class="d-flex flex-column text-dark fw-bolder fs-2 mb-0">{{$title}}</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!--end::Header-->
-                <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                     @yield('content')
                 </div>
-                <!--end::Content-->
-                <!--begin::Footer-->
                 <div class="footer py-6 d-flex flex-lg-column" id="kt_footer">
                     <!--begin::Container-->
                     <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
@@ -581,20 +572,15 @@
                     </div>
                     <!--end::Container-->
                 </div>
-                <!--end::Footer-->
             </div>
-            <!--end::Wrapper-->
         </div>
-        <!--end::Page-->
     </div>
 
-
-    <!--begin::Global Javascript Bundle(used by all pages)-->
     <script src="{{ asset('/new_assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('/new_assets/js/scripts.bundle.js') }}"></script>
-    <!--end::Global Javascript Bundle-->
 
     <script src="{{ asset('/new_assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script src="{{ asset('/new_assets/plugins/custom/draggable/draggable.bundle.js') }}"></script>
 
     <script>
         toastr.options = {

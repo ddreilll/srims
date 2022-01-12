@@ -25,7 +25,7 @@ class SubjectController extends Controller
     {
         $subjects = (new Subject)->fetchAll([]);
 
-        return view('admin.subject', ["title" => 'Subject', "menu" => "course-curiculum", "sub_menu" => "subject", "formData_subjects" => $subjects]);
+        return view('admin.subject', ['menu_header'=> 'System Setup', "title" => 'Subjects', "menu" => "course-curiculum", "sub_menu" => "subject", "formData_subjects" => $subjects]);
     }
 
     /*

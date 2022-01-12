@@ -28,7 +28,7 @@ class AdmissionRequirementsController extends Controller
     public function index()
     {
 
-        return view('admin.admission-requirements', ['menu' => 'admission-requirements', 'sub_menu' => 'requirements', 'title' => "Admission Requirements"]);
+        return view('admin.admission-requirements', ['menu_header'=> 'System Setup', 'menu' => 'admission-requirements', 'sub_menu' => 'requirements', 'title' => "Admission Requirements"]);
     }
 
     /*

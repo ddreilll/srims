@@ -62,6 +62,15 @@ Route::post('subject/delete', 'Admin\SubjectController@ajax_delete');
 Route::post('subject/checkDelete', 'Admin\SubjectController@ajax_checkDelete');
 
 
+/*
+|--------------------------------------------------------------------------
+|                       System Settings
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('settings', 'Admin\SystemSettingsController@index')->name('system-settings');
+Route::post('settings/year-level/add', 'Admin\YearLevelController@ajax_insert');
 
 
 
