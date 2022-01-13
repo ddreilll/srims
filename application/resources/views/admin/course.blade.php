@@ -27,7 +27,6 @@
 
                             <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
                                 data-bs-target="#kt_customers_export_modal">
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                                 <span class="svg-icon svg-icon-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none">
@@ -41,7 +40,7 @@
                                             fill="#C4C4C4" />
                                     </svg>
                                 </span>
-                                <!--end::Svg Icon-->Export
+                                Export
                             </button>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#kt_modal_add_course">Add Course</button>
@@ -58,7 +57,6 @@
                 </div>
 
                 <div class="card-body py-3">
-
                     <table id="kt_course_table" class="table table-row-bordered gy-5 gs-7 ">
                         <thead>
                             <tr class="fw-bolder fs-6 text-gray-800 px-7">
@@ -263,8 +261,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                        </div>
-                                        `,
+                                        </div>`,
                             });
                         };
                         return return_data;
@@ -640,5 +637,4 @@
         });
         //--end::Delete--//
     </script>
-
 @endsection

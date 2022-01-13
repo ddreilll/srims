@@ -125,7 +125,7 @@ class InstructorController extends Controller
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'message' => __('modal.updated_success', ['attribute' => 'Room'])
+            'message' => __('modal.updated_success', ['attribute' => 'Instructor'])
         ]);
     }
 
@@ -141,7 +141,7 @@ class InstructorController extends Controller
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "401",
-            'message' => __('modal.deleted_success', ['attribute' => 'Room'])
+            'message' => __('modal.deleted_success', ['attribute' => 'Instructor'])
         ]);
     }
     /*

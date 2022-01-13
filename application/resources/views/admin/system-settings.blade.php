@@ -105,7 +105,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder" data-bs-toggle="tab" href="#kt_sys_settings_curriculum_terms">
+                                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder" data-bs-toggle="tab" href="#settings_curriculum_terms">
                                     <span class="d-flex flex-column align-items-start">
                                         <span class="fs-5">Terms</span>
                                     </span>
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="kt_sys_settings_curriculum_terms" role="tabpanel">
+                    <div class="tab-pane fade" id="settings_curriculum_terms" role="tabpanel">
                         <div class="card pt-4 mb-6 mb-xl-9">
                             <div class="card-header border-0">
                                 <div class="card-title">
@@ -163,52 +163,8 @@
                                 </div>
                             </div>
                             <div class="card-body pt-0 pb-5">
-                                <div class="rounded border p-10 d-flex flex-column draggable-zone">
-                                    <div class="alert alert-dark d-flex align-items-center p-2 mb-5 draggable">
-                                        <span class="svg-icon svg-icon-dark me-4">
-                                            <a href="#" class="btn btn-icon draggable-handle">
-                                                <span class="svg-icon svg-icon-2x">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="black" />
-                                                        <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="black" />
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </span>
-                                        <div class="d-flex flex-column">
-                                            <h4 class="mb-1">1st Semester</h4>
-                                        </div>
-                                    </div>
-                                    <div class="alert alert-dark d-flex align-items-center p-2 mb-5 draggable">
-                                        <span class="svg-icon svg-icon-dark me-4">
-                                            <a href="#" class="btn btn-icon draggable-handle">
-                                                <span class="svg-icon svg-icon-2x">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="black" />
-                                                        <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="black" />
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </span>
-                                        <div class="d-flex flex-column">
-                                            <h4 class="mb-1">2nd Semester</h4>
-                                        </div>
-                                    </div>
-                                    <div class="alert alert-dark d-flex align-items-center p-2 mb-5 draggable">
-                                        <span class="svg-icon svg-icon-dark me-4">
-                                            <a href="#" class="btn btn-icon draggable-handle">
-                                                <span class="svg-icon svg-icon-2x">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="black" />
-                                                        <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="black" />
-                                                    </svg>
-                                                </span>
-                                            </a>
-                                        </span>
-                                        <div class="d-flex flex-column">
-                                            <h4 class="mb-1">Summer Semester</h4>
-                                        </div>
-                                    </div>
+                                <div id="settings_curriculum_terms_list" class="rounded p-10 d-flex flex-column draggable-zone">
+
                                 </div>
                             </div>
                         </div>
@@ -226,7 +182,7 @@
     KTUtil.onDOMContentLoaded((function() {
 
         var e = document.querySelectorAll('.draggable-zone');
-        var sort = new Sortable.default(e, {
+        new Sortable.default(e, {
             draggable: '.draggable',
             handle: '.draggable .draggable-handle',
             mirror: {
