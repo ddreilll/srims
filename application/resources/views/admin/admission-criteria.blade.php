@@ -121,9 +121,9 @@
                             <label class="required form-label fs-5 fw-bold mb-3">Start Year</label>
                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select a year" data-dropdown-parent="#kt_modal_add_criteria_form" name="yearStart">
                                 <option></option>
-                                @foreach ($formData_acadYears as $year)
-                                <option value="{{ $year->year }}">{{ $year->year }}</option>
-                                @endforeach
+                                @for ($i = 0; $i < sizeOf($formData_acadYears); $i++) 
+                                <option value="{{ $formData_acadYears[$i]['year'] }}">{{ $formData_acadYears[$i]['year'] }}</option>
+                                @endfor
                             </select>
                         </div>
 
@@ -197,9 +197,9 @@
                             <label class="required form-label fs-5 fw-bold mb-3">Start Year</label>
                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select a year" data-dropdown-parent="#kt_modal_edit_criteria" name="yearStart">
                                 <option></option>
-                                @foreach ($formData_acadYears as $year)
-                                <option value="{{ $year->year }}">{{ $year->year }}</option>
-                                @endforeach
+                                @for ($i = 0; $i < sizeOf($formData_acadYears); $i++) 
+                                <option value="{{ $formData_acadYears[$i]['year'] }}">{{ $formData_acadYears[$i]['year'] }}</option>
+                                @endfor
                             </select>
                         </div>
 
@@ -207,9 +207,9 @@
                             <label class="required form-label fs-5 fw-bold mb-3">End Year</label>
                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select a year" data-dropdown-parent="#kt_modal_edit_criteria" name="yearEnd">
                                 <option></option>
-                                @foreach ($formData_acadYears as $year)
-                                <option value="{{ $year->year }}">{{ $year->year }}</option>
-                                @endforeach
+                                @for ($i = 0; $i < sizeOf($formData_acadYears); $i++) 
+                                <option value="{{ $formData_acadYears[$i]['year'] }}">{{ $formData_acadYears[$i]['year'] }}</option>
+                                @endfor
                             </select>
                         </div>
 

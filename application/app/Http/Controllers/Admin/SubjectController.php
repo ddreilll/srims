@@ -120,7 +120,7 @@ class SubjectController extends Controller
 
     public function removeSubject($md5Id)
     {
-        (new Subject())->remove($md5Id);
+        (new Subject)->remove($md5Id);
     }
 
     // Subject Prerequisite

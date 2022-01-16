@@ -15,8 +15,14 @@ class TimeSlot extends Model
 
     public function insertOne($scheduleId, $data)
     {
-        $this->insert(["sche_time_id" => $scheduleId
-        , "time_day" => $data['day']
-        , "time_duration" => $data['time']]);
+        $this->insert([
+            "sche_time_id" => $scheduleId, "time_day" => $data['day'], "time_duration" => $data['time']
+        ]);
+    }
+
+    public function massDelete($where)
+    {
+        $this->where($where)
+            ->update(['time_isDeleted' => '1']);
     }
 }
