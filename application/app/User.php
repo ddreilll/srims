@@ -6,6 +6,7 @@
 * Author: Brian Luna
 * Copyright 2020 Codefactor
 */
+
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
