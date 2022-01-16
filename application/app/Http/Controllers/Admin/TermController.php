@@ -10,6 +10,7 @@ use App\Term;
 
 class TermController extends Controller
 {
+
     /*
 |--------------------------------------------------------------------------
 |    Begin::Functions
@@ -41,7 +42,7 @@ class TermController extends Controller
         }
     }
 
-    public function updateTermName($md5Id, $details)
+    public function updateTerm($md5Id, $details)
     {
         (new Term)->edit($md5Id, ["term_name" => $details['name']]);
     }
@@ -66,7 +67,7 @@ class TermController extends Controller
         header('Content-Type: application/json');
         echo json_encode([
             'status' => "200",
-            'message' => __('modal.added_success', ['attribute' => 'Term '])
+            'message' => __('modal.added_success', ['attribute' => 'Term'])
         ]);
     }
 
@@ -115,7 +116,7 @@ class TermController extends Controller
             'name' => 'required|max:50',
         ]);
 
-        $this->updateTermName($request['id'], ['name' => $request['name']]);
+        $this->updateTerm($request['id'], ['name' => $request['name']]);
 
         header('Content-Type: application/json');
         echo json_encode([

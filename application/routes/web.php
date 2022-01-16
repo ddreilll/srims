@@ -83,6 +83,25 @@ Route::post('schedules/add', 'Admin\ScheduleController@ajax_insert');
 Route::get('schedules/retrieveAll', 'Admin\ScheduleController@ajax_retrieveAll');
 
 
+// System Setting
+Route::get('settings', 'Admin\SystemSettingsController@index')->name('system-settings');
+
+// Year Level
+Route::post('settings/year-level/add', 'Admin\YearLevelController@ajax_insert');
+Route::get('settings/year-level/retrieveAll', 'Admin\YearLevelController@ajax_retrieveAll');
+Route::post('settings/year-level/retrieve', 'Admin\YearLevelController@ajax_retrieve');
+Route::post('settings/year-level/updateOrder', 'Admin\YearLevelController@ajax_reorder');
+Route::post('settings/year-level/update', 'Admin\YearLevelController@ajax_update');
+Route::post('settings/year-level/delete', 'Admin\YearLevelController@ajax_delete');
+
+// Term
+Route::post('settings/term/add', 'Admin\TermController@ajax_insert');
+Route::get('settings/term/retrieveAll', 'Admin\TermController@ajax_retrieveAll');
+Route::post('settings/term/retrieve', 'Admin\TermController@ajax_retrieve');
+Route::post('settings/term/updateOrder', 'Admin\TermController@ajax_reorder');
+Route::post('settings/term/update', 'Admin\TermController@ajax_update');
+Route::post('settings/term/delete', 'Admin\TermController@ajax_delete');
+
 /*
 |--------------------------------------------------------------------------
 |                       Room Setup
