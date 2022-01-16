@@ -223,7 +223,7 @@
                             <select class="form-select form-select-solid" data-control="select2" data-placeholder="Select an academic year" data-dropdown-parent="#kt_modal_edit_schedule_form" name="year">
                                 <option></option>
                                 @for ($i = 0; $i < sizeOf($formData_acadYears); $i++) <option value="{{ $formData_acadYears[$i]['year'] }}">{{ $formData_acadYears[$i]['year_acad'] }}</option>
-                                @endfor
+                                    @endfor
                             </select>
                         </div>
                     </div>
@@ -786,7 +786,7 @@
                         } else {
                             display_modal_error("{{ __('modal.error') }}");
                         }
-                        
+
                         table.ajax.reload();
                     }).catch(function(error) {
                         display_axios_error(error);
