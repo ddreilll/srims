@@ -1,11 +1,5 @@
 <?php
-/*
-* Workday - A time clock application for employees
-* Email: official.codefactor@gmail.com
-* Version: 1.1
-* Author: Brian Luna
-* Copyright 2020 Codefactor
-*/
+
 namespace App\Classes;
 
 use App\Permissions;

@@ -31,6 +31,15 @@ Route::post('admission-criteria/retrieve', 'Admin\AdmissionCriteriaController@aj
 Route::post('admission-criteria/update', 'Admin\AdmissionCriteriaController@ajax_update');
 Route::post('admission-criteria/delete', 'Admin\AdmissionCriteriaController@ajax_delete');
 
+/*
+|--------------------------------------------------------------------------
+|                       Curriculum
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('curriculum', 'Admin\CurriculumController@index')->name('curriculum');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -64,18 +73,14 @@ Route::post('subject/checkDelete', 'Admin\SubjectController@ajax_checkDelete');
 
 /*
 |--------------------------------------------------------------------------
-|                       System Settings
+|                       Schedule Setup
 |--------------------------------------------------------------------------
 |
 */
 
-Route::get('settings', 'Admin\SystemSettingsController@index')->name('system-settings');
-Route::post('settings/year-level/add', 'Admin\YearLevelController@ajax_insert');
-Route::get('settings/year-level/retrieveAll', 'Admin\YearLevelController@ajax_retrieveAll');
-Route::post('settings/year-level/retrieve', 'Admin\YearLevelController@ajax_retrieve');
-Route::post('settings/year-level/updateOrder', 'Admin\YearLevelController@ajax_reorder');
-Route::post('settings/year-level/update', 'Admin\YearLevelController@ajax_update');
-Route::post('settings/year-level/delete', 'Admin\YearLevelController@ajax_delete');
+Route::get('schedules', 'Admin\ScheduleController@index')->name('schedules');
+Route::post('schedules/add', 'Admin\ScheduleController@ajax_insert');
+Route::get('schedules/retrieveAll', 'Admin\ScheduleController@ajax_retrieveAll');
 
 
 /*
@@ -109,8 +114,20 @@ Route::post('instructor/delete', 'Admin\InstructorController@ajax_delete');
 
 
 
+/*
+|--------------------------------------------------------------------------
+|                       System Settings
+|--------------------------------------------------------------------------
+|
+*/
 
-
+Route::get('settings', 'Admin\SystemSettingsController@index')->name('system-settings');
+Route::post('settings/year-level/add', 'Admin\YearLevelController@ajax_insert');
+Route::get('settings/year-level/retrieveAll', 'Admin\YearLevelController@ajax_retrieveAll');
+Route::post('settings/year-level/retrieve', 'Admin\YearLevelController@ajax_retrieve');
+Route::post('settings/year-level/updateOrder', 'Admin\YearLevelController@ajax_reorder');
+Route::post('settings/year-level/update', 'Admin\YearLevelController@ajax_update');
+Route::post('settings/year-level/delete', 'Admin\YearLevelController@ajax_delete');
 
 
 

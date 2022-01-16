@@ -22,15 +22,16 @@ class AcadYearController extends Controller
 */
 
 
-
-
-
 // -- Begin::Ajax Requests -- //
 
 public function getAllYears(){
 
     try{
-        $acadYears = Storage::disk('data')->exists('year.json') ? json_decode(Storage::disk('data')->get('year.json')) : [];
+        $acadYears = Storage::disk('data')->exists('year.json') ? json_decode(Storage::disk('data')->get('year.json'), true) : [];
+
+        for ($i = 0; $i < sizeof($acadYears); $i++) {
+          $acadYears[$i]["year_acad"] = $acadYears[$i]['year'] . " - " . ($acadYears[$i]['year'] + 1);
+        }
 
         return $acadYears;
     }catch(Exception $e){

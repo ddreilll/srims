@@ -76,9 +76,7 @@
     <div class="modal fade" id="kt_modal_add_room" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
-                {{-- Form --}}
                 <form class="form" action="#" id="kt_modal_add_room_form">
-
                     <div class="modal-header" id="kt_modal_add_room_header">
                         <h2 class="fw-bolder">Add Room</h2>
                         <div id="kt_modal_add_room_close" class="btn btn-icon btn-sm btn-active-icon-primary">
