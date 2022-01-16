@@ -156,15 +156,11 @@
 </div>
 
 <div class="modal fade" id="kt_modal_edit_requirement" tabindex="-1">
-    <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
         <div class="modal-content">
-            <!--begin::Form-->
             <form class="form" action="#" id="kt_modal_edit_requirement_form">
                 <input type="text" name="id" hidden />
 
-                <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_edit_requirement_header">
                     <!--begin::Modal title-->
                     <h2 class="fw-bolder">Edit Requirement</h2>
@@ -182,44 +178,25 @@
                     </div>
                     <!--end::Close-->
                 </div>
-                <!--end::Modal header-->
-                <!--begin::Modal body-->
                 <div class="modal-body py-10 px-lg-17">
-                    <!--begin::Scroll-->
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_requirement_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_requirement_header" data-kt-scroll-wrappers="#kt_modal_edit_requirement_scroll" data-kt-scroll-offset="300px">
-                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
-                            <!--end::Input-->
                         </div>
 
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
-                            <!--end::Input-->
                         </div>
 
                         <div class="fv-row mb-15">
-                            <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">Description</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="description" />
-                            <!--end::Input-->
                         </div>
 
                     </div>
-                    <!--end::Scroll-->
                 </div>
-                <!--end::Modal body-->
-                <!--begin::Modal footer-->
                 <div class="modal-footer flex-center">
                     <!--begin::Button-->
                     <button type="reset" id="kt_modal_edit_requirement_cancel" class="btn btn-light me-3">Discard</button>
@@ -232,9 +209,7 @@
                     </button>
                     <!--end::Button-->
                 </div>
-                <!--end::Modal footer-->
             </form>
-            <!--end::Form-->
         </div>
     </div>
 </div>

@@ -28,7 +28,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-schedule-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-15" placeholder="Search schedule" />
+                                class="form-control form-control-solid w-250px ps-15" placeholder="Search Schedule" />
                         </div>
                     </div>
                     <div class="card-toolbar">
@@ -52,7 +52,7 @@
                                 Export
                             </button>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#kt_modal_add_schedule">Add schedule</button>
+                                data-bs-target="#kt_modal_add_schedule">Add Schedule</button>
                         </div>
                         <div class="d-flex justify-content-end align-items-center d-none"
                             data-kt-customer-table-toolbar="selected">
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="card-body py-3">
-                    <table id="kt_curriculum_table" class="table table-row-bordered gy-5 gs-7 ">
+                    <table id="kt_schedule_table" class="table table-row-bordered gy-5 gs-7 ">
                         <thead>
                             <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                 <th>Subject</th>
@@ -134,9 +134,9 @@
                                     data-placeholder="Select a semester" data-dropdown-parent="#kt_modal_add_schedule_form"
                                     name="semester">
                                     <option></option>
-                                    <option value="1">1st Semester</option>
-                                    <option value="2">2nd Semester</option>
-                                    <option value="3">Summer Semester</option>
+                                    @foreach ($formData_terms as $term)
+                                        <option value="{{ $term->term_id }}">{{ $term->term_name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-7 fv-row">
@@ -154,18 +154,6 @@
                         </div>
 
                         <div class="fv-row mb-7">
-                            <label class=" form-label fs-5 fw-bold mb-3">Room</label>
-                            <select class="form-select form-select-solid" data-control="select2"
-                                data-placeholder="Select a room" data-dropdown-parent="#kt_modal_add_schedule_form"
-                                name="room" data-allow-clear="true">
-                                <option></option>
-                                @foreach ($formData_rooms as $room)
-                                    <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="fv-row mb-15">
                             <label class="required form-label fs-5 fw-bold mb-3">Instructor</label>
                             <select class="form-select form-select-solid" data-control="select2"
                                 data-placeholder="Select an instructor" data-dropdown-parent="#kt_modal_add_schedule_form"
@@ -173,6 +161,18 @@
                                 <option></option>
                                 @foreach ($formData_instructors as $instructor)
                                     <option value="{{ $instructor->inst_id }}">{{ $instructor->inst_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="fv-row mb-15">
+                            <label class=" form-label fs-5 fw-bold mb-3">Room</label>
+                            <select class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select a room" data-dropdown-parent="#kt_modal_add_schedule_form"
+                                name="room" data-allow-clear="true">
+                                <option></option>
+                                @foreach ($formData_rooms as $room)
+                                    <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -213,20 +213,13 @@
     </div>
 
     <div class="modal fade" id="kt_modal_edit_schedule" tabindex="-1">
-        <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
-            <!--begin::Modal content-->
             <div class="modal-content">
-                <!--begin::Form-->
                 <form class="form" action="#" id="kt_modal_edit_schedule_form">
                     <input type="text" name="id" hidden />
 
-                    <!--begin::Modal header-->
                     <div class="modal-header" id="kt_modal_edit_schedule_header">
-                        <!--begin::Modal title-->
-                        <h2 class="fw-bolder">Edit schedule</h2>
-                        <!--end::Modal title-->
-                        <!--begin::Close-->
+                        <h2 class="fw-bolder">Edit Schedule</h2>
                         <div id="kt_modal_edit_schedule_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                             <span class="svg-icon svg-icon-1">
@@ -240,50 +233,99 @@
                             </span>
                             <!--end::Svg Icon-->
                         </div>
-                        <!--end::Close-->
                     </div>
-                    <!--end::Modal header-->
-                    <!--begin::Modal body-->
+
                     <div class="modal-body py-10 px-lg-17">
-                        <!--begin::Scroll-->
-                        <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_schedule_scroll" data-kt-scroll="true"
-                            data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
-                            data-kt-scroll-dependencies="#kt_modal_edit_schedule_header"
-                            data-kt-scroll-wrappers="#kt_modal_edit_schedule_scroll" data-kt-scroll-offset="300px">
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-7">
-                                <!--begin::Label-->
-                                <label class="required fs-6 fw-bold mb-2">Code</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
-                                <!--end::Input-->
-                            </div>
-
-                            <div class="fv-row mb-7">
-                                <!--begin::Label-->
-                                <label class="required fs-6 fw-bold mb-2">Name</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
-                                <!--end::Input-->
-                            </div>
-
-                            <div class="fv-row mb-15">
-                                <!--begin::Label-->
-                                <label class="fs-6 fw-bold mb-2">Description</label>
-                                <!--end::Label-->
-                                <!--begin::Input-->
-                                <input type="text" class="form-control form-control-solid" placeholder=""
-                                    name="description" />
-                                <!--end::Input-->
-                            </div>
-
+                        <div class="fv-row mb-7">
+                            <label class="required form-label fs-5 fw-bold mb-3">Subject</label>
+                            <select class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select a subject" data-dropdown-parent="#kt_modal_edit_schedule_form"
+                                name="subject">
+                                <option></option>
+                                @foreach ($formData_subjects as $subject)
+                                    <option value="{{ $subject->subj_id }}">
+                                        {{ $subject->subj_code . ' ― ' . $subject->subj_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <!--end::Scroll-->
+
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-bold mb-2">Section</label>
+                            <input type="text" class="form-control form-control-solid" name="section" />
+                        </div>
+
+                        <div class="row mb-10">
+                            <div class="col-md-5 fv-row">
+                                <label class="required form-label fs-5 fw-bold mb-3">Semester</label>
+                                <select class="form-select form-select-solid" data-control="select2"
+                                    data-placeholder="Select a semester" data-dropdown-parent="#kt_modal_edit_schedule_form"
+                                    name="semester">
+                                    <option></option>
+                                    @foreach ($formData_terms as $term)
+                                        <option value="{{ $term->term_id }}">{{ $term->term_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-7 fv-row">
+                                <label class="required form-label fs-5 fw-bold mb-3">Academic Year</label>
+                                <select class="form-select form-select-solid" data-control="select2"
+                                    data-placeholder="Select an academic year"
+                                    data-dropdown-parent="#kt_modal_edit_schedule_form" name="year">
+                                    <option></option>
+                                    @for ($i = 0; $i < sizeOf($formData_acadYears); $i++)
+                                        <option value="{{ $formData_acadYears[$i]['year'] }}">
+                                            {{ $formData_acadYears[$i]['year_acad'] }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="fv-row mb-7">
+                            <label class="required form-label fs-5 fw-bold mb-3">Instructor</label>
+                            <select class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select an instructor" data-dropdown-parent="#kt_modal_edit_schedule_form"
+                                name="instructor">
+                                <option></option>
+                                @foreach ($formData_instructors as $instructor)
+                                    <option value="{{ $instructor->inst_id }}">{{ $instructor->inst_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="fv-row mb-15">
+                            <label class=" form-label fs-5 fw-bold mb-3">Room</label>
+                            <select class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Select a room" data-dropdown-parent="#kt_modal_edit_schedule_form"
+                                name="room" data-allow-clear="true">
+                                <option></option>
+                                @foreach ($formData_rooms as $room)
+                                    <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="d-flex align-items-center fs-5 fw-bold">
+                                <span>Day and Time Slots</span>
+                            </label>
+                            <div class="fs-7 fw-bold text-muted">Day and Time slots should be on weekly basis</div>
+                        </div>
+
+                        <div class="card-body p-2" id="kt_modal_edit_schedule_dayTimeSlots">
+                            <a href="#" id="kt_modal_edit_schedule_dayTimeSlots_addBtn"
+                                class="mt-3 btn d-block btn-icon-primary p-3 btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary"><span
+                                    class="svg-icon svg-icon-1"><span class="svg-icon svg-icon-muted svg-icon-2"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                            fill="none">
+                                            <path opacity="0.3"
+                                                d="M21 13H3C2.4 13 2 12.6 2 12C2 11.4 2.4 11 3 11H21C21.6 11 22 11.4 22 12C22 12.6 21.6 13 21 13Z"
+                                                fill="black"></path>
+                                            <path
+                                                d="M12 22C11.4 22 11 21.6 11 21V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V21C13 21.6 12.6 22 12 22Z"
+                                                fill="black"></path>
+                                        </svg></span></span>Add Day and Time Slot</a>
+                        </div>
                     </div>
-                    <!--end::Modal body-->
-                    <!--begin::Modal footer-->
                     <div class="modal-footer flex-center">
                         <!--begin::Button-->
                         <button type="reset" id="kt_modal_edit_schedule_cancel" class="btn btn-light me-3">Discard</button>
@@ -296,9 +338,7 @@
                         </button>
                         <!--end::Button-->
                     </div>
-                    <!--end::Modal footer-->
                 </form>
-                <!--end::Form-->
             </div>
         </div>
     </div>
@@ -308,7 +348,12 @@
     <script type="text/javascript">
         KTUtil.onDOMContentLoaded((function() {
 
-            function add_timeSlot(type) {
+            function add_timeSlot(type, value = []) {
+
+                if (!value) {
+                    value['day'] = "";
+                    value['time'] = "";
+                }
 
                 append_element = $(`<div class="d-flex align-items-sm-center mb-7 time-slot">
                 <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
@@ -329,7 +374,7 @@
                     </div>
 
                     <div class="d-flex align-items-center">
-                        <a href="#" class="btn btn-icon btn-danger btn-sm btn-sm border-0 btn-circle" kt_modal_add_schedule_dayTimeSlots_delete>
+                        <a href="#" class="btn btn-icon btn-danger btn-sm btn-sm border-0 btn-circle" kt_modal_${type}_schedule_dayTimeSlots_delete>
                             <span class="svg-icon svg-icon-2 svg-icon-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path opacity="0.3" d="M6 19.7C5.7 19.7 5.5 19.6 5.3 19.4C4.9 19 4.9 18.4 5.3 18L18 5.3C18.4 4.9 19 4.9 19.4 5.3C19.8 5.7 19.8 6.29999 19.4 6.69999L6.7 19.4C6.5 19.6 6.3 19.7 6 19.7Z" fill="black" />
@@ -359,35 +404,47 @@
                         picker.container.find(".calendar-table").hide();
                     });
 
-                $('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot [name="time"]').last().val("");
-                $('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot [name="day"]').last().val("");
+                $('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot [name="time"]').last().val(
+                    value['time']);
+                $('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot [name="day"]').last().val(value[
+                    'day']);
             };
 
             function delete_timeSlot(e, type) {
                 $(e).closest(".time-slot").remove();
             };
 
-            function retrieve_schedule_data(type) {
+            function retrieve_form_data(type) {
 
                 return_data = {
                     subject: $("#kt_modal_" + type + "_schedule_form [name='subject']").val(),
-                    section: $("#kt_modal_" + type + "_schedule_form [name='section']").val(),
+                    section: ($("#kt_modal_" + type + "_schedule_form [name='section']").val() == '') ?
+                        null : $("#kt_modal_" + type + "_schedule_form [name='section']").val(),
                     semester: $("#kt_modal_" + type + "_schedule_form [name='semester']").val(),
                     year: $("#kt_modal_" + type + "_schedule_form [name='year']").val(),
-                    room: $("#kt_modal_" + type + "_schedule_form [name='room']").val(),
+                    room: ($("#kt_modal_" + type + "_schedule_form [name='room']").val() == '') ? null : $(
+                        "#kt_modal_" + type + "_schedule_form [name='room']").val(),
                     instructor: $("#kt_modal_" + type + "_schedule_form [name='instructor']").val(),
                     time_slots: []
                 };
+
+                if (type == "edit") {
+                    return_data['id'] = $("#kt_modal_" + type + "_schedule_form [name='id']").val();
+                }
 
                 time_slots = $('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot');
 
                 if (time_slots.length >= 1) {
                     for (let i = 0; i < time_slots.length; i++) {
+
+                        day = $($('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot')[i]).find(
+                            "[name='day']").val();
+                        time = $($('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot')[i]).find(
+                            "[name='time']").val();
+
                         return_data['time_slots'].push({
-                            day: $($('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot')[i])
-                                .find("[name='day']").val(),
-                            time: $($('#kt_modal_' + type + '_schedule_dayTimeSlots > div.time-slot')[
-                                i]).find("[name='time']").val()
+                            day: (day = '') ? null : day,
+                            time: (time == '') ? null : time
                         });
                     }
                 }
@@ -395,13 +452,19 @@
                 return return_data;
             }
 
-            var table = $("#kt_curriculum_table").DataTable({
+            function reset_form(type) {
+                $('#kt_modal_' + type + '_schedule_form .form-select-solid').val('').trigger('change');
+                $('#kt_modal_' + type + '_schedule_form .form-control-solid').val('');
+                $('#kt_modal_' + type + '_schedule_dayTimeSlots > .time-slot').remove();
+            }
+
+
+            var table = $("#kt_schedule_table").DataTable({
                 processing: true,
                 ajax: {
                     url: "{{ url('/schedules/retrieveAll') }}",
                     dataSrc: function(data) {
                         var return_data = new Array();
-                        console.log(data);
                         if (data.status == 200) {
 
                             d = data['data'];
@@ -419,10 +482,8 @@
                                 } else if (sched_timeSlots.length > 1) {
 
                                     for (let a = 0; a < sched_timeSlots.length; a++) {
-                                        console.log("loop - " + a);
 
                                         if (a == 0) { // start
-                                            console.log("first");
                                             sched_timeSlot_day += sched_timeSlots[a]['time_day'] +
                                                 "/";
                                             sched_timeSlot_time += sched_timeSlots[a][
@@ -430,14 +491,12 @@
                                             ].replace(/\s+/g, '') + "/";
                                         } else if ((a != sched_timeSlots.length - 1) && (a > 0 &&
                                                 a < sched_timeSlots.length - 1)) { // mid
-                                            console.log("mid");
                                             sched_timeSlot_day += sched_timeSlots[a]['time_day'] +
                                                 "/";
                                             sched_timeSlot_time += sched_timeSlots[a][
                                                 'time_duration'
                                             ].replace(/\s+/g, '') + "/";
                                         } else if (a == sched_timeSlots.length - 1) { // last
-                                            console.log("last");
                                             sched_timeSlot_day += sched_timeSlots[a]['time_day'];
                                             sched_timeSlot_time += sched_timeSlots[a][
                                                 'time_duration'
@@ -461,7 +520,7 @@
                                     AcadYear: d[i]["sche_acadYear"],
                                     Instructor: d[i]["sche_inst_name"],
                                     Action: `<div class="d-flex justify-content-start flex-shrink-0">
-                                            <a href="javascript:void(0)" kt_curriculum_table_edit class="btn btn-icon btn-light-success btn-active-success btn-sm me-1">
+                                            <a href="javascript:void(0)" kt_schedule_table_edit class="btn btn-icon btn-light-success btn-active-success btn-sm me-1">
                                                 <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -471,7 +530,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                             </a>
-                                            <a href="javascript:void(0)" kt_curriculum_table_delete class="btn btn-icon btn-light-danger btn-active-danger btn-sm">
+                                            <a href="javascript:void(0)" kt_schedule_table_delete class="btn btn-icon btn-light-danger btn-active-danger btn-sm">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -517,75 +576,63 @@
                 table.search(e.target.value).draw();
             });
 
+            var form_fields = {
+                'subject': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Subject is required'
+                        },
+                    },
+                },
+                'semester': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Semester is required'
+                        },
+                    },
+                },
+                'year': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Academic Year is required'
+                        },
+                    },
+                },
+                'instructor': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Instructor is required'
+                        },
+                    },
+                },
+            };
+
             //--begin::Add Modal--//
 
-            var add_modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_schedule'));
-            var add_submitBtn = document.getElementById('kt_modal_add_schedule_submit');
+            var add_modal = init_modal("kt_modal_add_schedule");
+            var add_submitBtnId = "kt_modal_add_schedule_submit";
+            var add_formValidation = init_formValidation("kt_modal_add_schedule_form", form_fields);
 
-            var add_form = document.getElementById('kt_modal_add_schedule_form');
-            var add_formValidation = FormValidation.formValidation(document.getElementById(
-                'kt_modal_add_schedule_form'), {
-                fields: {
-                    'subject': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Subject is required'
-                            },
-                        },
-                    },
-                    'semester': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Semester is required'
-                            },
-                        },
-                    },
-                    'year': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Academic Year is required'
-                            },
-                        },
-                    },
-                    'instructor': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Instructor is required'
-                            },
-                        },
-                    },
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: '',
-                    }),
-                },
-            });
+            $('#kt_modal_add_schedule_cancel, #kt_modal_add_schedule_close').on("click", function(t) {
+                t.preventDefault();
 
-            $("#kt_modal_add_schedule_form select").on('change', function() {
-                add_formValidation.revalidateField($(this).attr("name"));
-            });
-
-            $('#kt_modal_add_schedule_cancel, #kt_modal_add_schedule_close').on("click", function(
-                t) { // "X" and Discard button
-                t.preventDefault(),
-                    Swal.fire({
-                        text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
-                        icon: 'warning',
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
-                        confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
-                        cancelButtonText: "{{ __('modal.cancel_btn') }}",
-                        customClass: {
-                            confirmButton: 'btn btn-primary',
-                            cancelButton: 'btn btn-active-light',
-                        },
-                    }).then(function(t) {
-                        t.value ? (add_form.reset(), add_modal.hide()) : ''
-                    });
+                Swal.fire({
+                    text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
+                    icon: 'warning',
+                    showCancelButton: !0,
+                    buttonsStyling: !1,
+                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
+                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                    customClass: {
+                        confirmButton: 'btn btn-primary',
+                        cancelButton: 'btn btn-active-light',
+                    },
+                }).then(function(t) {
+                    if (t.value) {
+                        reset_form("add");
+                        add_modal.hide();
+                    }
+                });
             });
 
             $("#kt_modal_add_schedule_dayTimeSlots_addBtn").on("click", function() {
@@ -601,34 +648,56 @@
                 e.preventDefault();
 
                 add_formValidation.validate().then(function(e) {
+                    trigger_submitBtn(add_submitBtnId, "disable");
+                    form_data = retrieve_form_data("add");
 
                     if ('Valid' == e) {
-                        add_submitBtn.setAttribute('data-kt-indicator', 'on');
-                        add_submitBtn.disabled = !0;
-
                         axios({
                             method: "POST",
-                            url: "{{ url('/schedules/add') }}",
-                            data: retrieve_schedule_data("add"),
+                            url: "{{ url('/schedules/validate') }}",
+                            data: form_data,
                             timeout: "{{ $axios_timeout }}"
                         }).then(function(respond) {
                             if (respond.status == 200) {
-                                add_submitBtn.removeAttribute('data-kt-indicator');
-                                add_submitBtn.disabled = !1;
-                                add_modal.hide();
+                                if (respond.data.isValid) {
+                                    axios({
+                                        method: "POST",
+                                        url: "{{ url('/schedules/add') }}",
+                                        data: form_data,
+                                        timeout: "{{ $axios_timeout }}"
+                                    }).then(function(respond) {
 
-                                display_axios_success(respond.data.message);
+                                        trigger_submitBtn(add_submitBtnId,
+                                            "enable");
+                                        if (respond.status == 200) {
+                                            display_axios_success(respond.data
+                                                .message);
+                                            add_modal.hide();
+                                        } else {
+                                            display_modal_error(
+                                                "{{ __('modal.error') }}"
+                                                );
+                                        }
+
+                                        reset_form("add");
+                                        table.ajax.reload();
+                                    }).catch(function(error) {
+                                        display_axios_error(error);
+                                    });
+                                } else {
+                                    trigger_submitBtn(add_submitBtnId, "enable");
+                                    display_modal_error(
+                                        "{{ __('modal.error_duplicate') }}");
+                                }
+                            } else {
+                                display_modal_error("{{ __('modal.error') }}");
                             }
-
-                            table.ajax.reload();
                         }).catch(function(error) {
                             display_axios_error(error);
                         });
                     } else {
                         display_modal_error("{{ __('modal.error') }}");
                     }
-
-
                 });
             });
 
@@ -637,224 +706,197 @@
 
 
             //--begin::Edit Modal--//
-            var edit_modal = new bootstrap.Modal(document.querySelector('#kt_modal_edit_schedule'));
-            var edit_submitBtn = document.getElementById('kt_modal_edit_schedule_submit');
+            var edit_modal = init_modal("kt_modal_edit_schedule");
+            var edit_submitBtn = "kt_modal_edit_schedule_submit";
+            var edit_formValidation = init_formValidation("kt_modal_edit_schedule_form", form_fields);
 
-            var edit_form = document.getElementById('kt_modal_edit_schedule_form');
-            var edit_formValidation = FormValidation.formValidation(edit_form, {
-                fields: {
-                    'code': {
-                        validators: {
-                            notEmpty: {
-                                message: 'schedule Code is required'
-                            },
-                        },
+            $("#kt_schedule_table").on("click", "[kt_schedule_table_edit]", function() {
+
+                const id = $(this).closest("tr").attr("id");
+
+                axios({
+                    method: "POST",
+                    url: "{{ url('/schedules/retrieve') }}",
+                    data: {
+                        id: id
                     },
-                    name: {
-                        validators: {
-                            notEmpty: {
-                                message: 'schedule Name is required'
-                            },
-                        },
-                    },
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: '',
-                    }),
-                },
-            })
+                    timeout: "{{ $axios_timeout }}"
+                }).then(function(respond) {
 
-            $("#kt_curriculum_table").on("click", "[kt_curriculum_table_edit]",
-                function() { // Once the Edit button on the DataTable is clicked
+                    if (respond.status == 200) {
 
-                    const id = $(this).closest("tr").attr("id");
+                        if (respond.data.length == 1) {
+                            d = respond.data[0];
 
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        type: "POST",
-                        url: "{{ url('/schedule/retrieve') }}",
-                        data: {
-                            id: id
-                        }
-                    }).done(function(response) {
-                        response = JSON.parse(response);
+                            $('#kt_modal_edit_schedule_form [name="id"]').val(d['sche_id_md5']);
+                            $('#kt_modal_edit_schedule_form [name="subject"]').val(d[
+                                'sche_subj_id']).trigger('change');
+                            $('#kt_modal_edit_schedule_form [name="section"]').val(d[
+                                'sche_section']);
+                            $('#kt_modal_edit_schedule_form [name="semester"]').val(d[
+                                'sche_term_id']).trigger('change');
+                            $('#kt_modal_edit_schedule_form [name="year"]').val(d['sche_year'])
+                                .trigger('change');
+                            $('#kt_modal_edit_schedule_form [name="room"]').val(d[
+                                'sche_room_id']).trigger('change');
+                            $('#kt_modal_edit_schedule_form [name="instructor"]').val(d[
+                                'sche_inst_id']).trigger('change');
 
-                        if (response['data'].length == 1) {
-
-                            data = response['data'][0];
-
-                            $("#kt_modal_edit_schedule_form [name='id']").val(data['cour_id_md5']);
-                            $("#kt_modal_edit_schedule_form [name='code']").val(data['cour_code']);
-                            $("#kt_modal_edit_schedule_form [name='name']").val(data['cour_name']);
-                            $("#kt_modal_edit_schedule_form [name='description']").val(data[
-                                'cour_description']);
+                            timeSlots = d['sche_timeSlots'];
+                            for (let i = 0; i < timeSlots.length; i++) {
+                                add_timeSlot("edit", {
+                                    "day": timeSlots[i]['time_day'],
+                                    "time": timeSlots[i]['time_duration']
+                                });
+                            }
 
                             edit_modal.show();
-                        } else {
-                            Swal.fire({
-                                text: "{{ __('modal.error') }}",
-                                icon: 'error',
-                                buttonsStyling: !1,
-                                confirmButtonText: 'Ok, got it!',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                            });
                         }
 
-                    });
-                })
+                    } else {
+                        display_modal_error("{{ __('modal.error') }}");
+                    }
+                }).catch(function(error) {
+                    display_axios_error(error);
+                });
+            })
 
-            $('#kt_modal_edit_schedule_cancel, #kt_modal_edit_schedule_close').on("click",
-                function( // X and Discard Button
-                    t) { // "X" and Discard button
-                    t.preventDefault(),
-                        Swal.fire({
-                            text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
-                            icon: 'warning',
-                            showCancelButton: !0,
-                            buttonsStyling: !1,
-                            confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
-                            cancelButtonText: "{{ __('modal.cancel_btn') }}",
-                            customClass: {
-                                confirmButton: 'btn btn-primary',
-                                cancelButton: 'btn btn-active-light',
-                            },
-                        }).then(function(t) {
-                            t.value ? (edit_form.reset(), edit_modal.hide()) : ''
-                        });
+            $('#kt_modal_edit_schedule_cancel, #kt_modal_edit_schedule_close').on("click", function(t) {
+                t.preventDefault();
+
+                Swal.fire({
+                    text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
+                    icon: 'warning',
+                    showCancelButton: !0,
+                    buttonsStyling: !1,
+                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
+                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                    customClass: {
+                        confirmButton: 'btn btn-primary',
+                        cancelButton: 'btn btn-active-light',
+                    },
+                }).then(function(t) {
+                    if (t.value) {
+                        reset_form("edit");
+                        edit_modal.hide();
+                    }
+                });
+            });
+
+            $("#kt_modal_edit_schedule_dayTimeSlots_addBtn").on("click", function() {
+                add_timeSlot("edit");
+            });
+
+            $("#kt_modal_edit_schedule_dayTimeSlots").on("click",
+                "[kt_modal_edit_schedule_dayTimeSlots_delete]",
+                function() {
+                    delete_timeSlot(this, "edit");
                 });
 
-            $("#kt_modal_edit_schedule_form").on("submit", function(e) { // Edit Form Submission
-                e.preventDefault(),
-                    edit_formValidation &&
-                    edit_formValidation.validate().then(function(e) {
+            $("#kt_modal_edit_schedule_form").on("submit", function(e) {
+                e.preventDefault();
 
-                        if ('Valid' == e) {
-                            edit_submitBtn.setAttribute('data-kt-indicator', 'on');
-                            edit_submitBtn.disabled = !0;
+                edit_formValidation.validate().then(function(e) {
 
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content')
-                                },
-                                type: "POST",
-                                data: $("#kt_modal_edit_schedule_form").serialize(),
-                                url: "{{ url('/schedule/update') }}",
-                                datatype: "html",
-                            }).done(function(response) {
-                                response = JSON.parse(response);
-                                if (response['status'] == 200) {
+                    trigger_submitBtn(edit_submitBtn, "disable");
+                    edit_form_data = retrieve_form_data("edit");
 
-                                    edit_submitBtn.removeAttribute('data-kt-indicator'),
-                                        Swal.fire({
-                                            text: response['message'],
-                                            icon: 'success',
-                                            buttonsStyling: !1,
-                                            allowOutsideClick: false,
-                                            confirmButtonText: 'Ok, got it!',
-                                            customClass: {
-                                                confirmButton: 'btn btn-primary'
-                                            },
-                                        }).then(function(e) {
+                    if ('Valid' == e) {
+                        axios({
+                            method: "POST",
+                            url: "{{ url('/schedules/validate') }}",
+                            data: edit_form_data,
+                            timeout: "{{ $axios_timeout }}"
+                        }).then(function(respond) {
+                            if (respond.status == 200) {
+                                if (respond.data.isValid) {
+                                    axios({
+                                        method: "POST",
+                                        url: "{{ url('/schedules/update') }}",
+                                        data: edit_form_data,
+                                        timeout: "{{ $axios_timeout }}"
+                                    }).then(function(respond) {
 
-                                            if (e.isConfirmed) {
-                                                edit_modal.hide();
-                                                edit_submitBtn.disabled = !1;
-                                            }
-                                        });
+                                        trigger_submitBtn(edit_submitBtn,
+                                            "enable");
+                                        if (respond.status == 200) {
+                                            display_axios_success(respond.data
+                                                .message);
+                                            edit_modal.hide();
+                                        } else {
+                                            display_modal_error(
+                                                "{{ __('modal.error') }}"
+                                                );
+                                        }
+
+                                        reset_form("edit");
+                                        table.ajax.reload();
+                                    }).catch(function(error) {
+                                        display_axios_error(error);
+                                    });
                                 } else {
-                                    Swal.fire({
-                                        text: "{{ __('modal.error') }}",
-                                        icon: 'error',
-                                        buttonsStyling: !1,
-                                        allowOutsideClick: false,
-                                        confirmButtonText: 'Ok, got it!',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                    })
+                                    trigger_submitBtn(edit_submitBtn, "enable");
+                                    display_modal_error(
+                                        "{{ __('modal.error_duplicate') }}");
                                 }
-                                table.ajax.reload();
-                            });
-                        } else {
-                            Swal.fire({
-                                text: "{{ __('modal.error') }}",
-                                icon: 'error',
-                                buttonsStyling: !1,
-                                confirmButtonText: 'Ok, got it!',
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                            });
-                        }
-                    });
+                            } else {
+                                display_modal_error("{{ __('modal.error') }}");
+                            }
+                        }).catch(function(error) {
+                            display_axios_error(error);
+                        });
+                    } else {
+                        display_modal_error("{{ __('modal.error') }}");
+                    }
+                });
             });
 
             //--end::Edit Modal--//
 
             //--begin::Delete--//
 
-            $("#kt_curriculum_table").on("click", "[kt_curriculum_table_delete]",
-                function() { // Once the Delete Button on the DataTable is clicked
+            $("#kt_schedule_table").on("click", "[kt_schedule_table_delete]", function() {
 
-                    const id = $(this).closest("tr").attr("id");
+                const id = $(this).closest("tr").attr("id");
 
-                    Swal.fire({
-                        text: "{{ __('modal.confirmation', ['action' => 'delete']) }}",
-                        icon: 'warning',
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
-                        allowOutsideClick: false,
-                        confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'delete']) }}",
-                        cancelButtonText: "{{ __('modal.cancel_btn') }}",
-                        customClass: {
-                            confirmButton: 'btn btn-primary',
-                            cancelButton: 'btn btn-active-light',
-                        },
-                    }).then(function(t) {
-                        if (t.isConfirmed) {
+                Swal.fire({
+                    text: "{{ __('modal.confirmation', ['action' => 'delete']) }}",
+                    icon: 'warning',
+                    showCancelButton: !0,
+                    buttonsStyling: !1,
+                    allowOutsideClick: false,
+                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'delete']) }}",
+                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                    customClass: {
+                        confirmButton: 'btn btn-primary',
+                        cancelButton: 'btn btn-active-light',
+                    },
+                }).then(function(t) {
+                    if (t.isConfirmed) {
 
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content')
-                                },
-                                type: "POST",
-                                url: "{{ url('/schedule/delete') }}",
-                                data: {
-                                    id: id
-                                }
-                            }).done(function(response) {
-                                response = JSON.parse(response);
+                        axios({
+                            method: "POST",
+                            url: "{{ url('/schedules/delete') }}",
+                            data: {
+                                id: id
+                            },
+                            timeout: "{{ $axios_timeout }}"
+                        }).then(function(respond) {
+                            if (respond.status == 200) {
+                                display_toastr_info(respond.data.message);
+                            } else {
+                                display_modal_error("{{ __('modal.error') }}");
+                            }
 
-                                if (response['status'] == 401) {
-                                    toastr.info(response['message']);
-                                } else {
-                                    Swal.fire({
-                                        text: "{{ __('modal.error') }}",
-                                        icon: 'error',
-                                        buttonsStyling: !1,
-                                        confirmButtonText: 'Ok, got it!',
-                                        customClass: {
-                                            confirmButton: 'btn btn-primary'
-                                        },
-                                    });
-                                }
-                                table.ajax.reload();
+                            table.ajax.reload();
+                        }).catch(function(error) {
+                            display_axios_error(error);
+                        });
 
-                            });
-                        }
-                    });
-
+                    }
                 });
+
+            });
             //--end::Delete--//
 
         }));

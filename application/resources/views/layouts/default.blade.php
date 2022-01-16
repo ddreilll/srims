@@ -641,7 +641,45 @@
                 },
             });
         }
-        
+
+        function display_toastr_info(info_message){
+            toastr.info(info_message);
+        }
+
+
+
+
+        function trigger_submitBtn(elementId, trigger) {
+            var submitBtn = document.getElementById(elementId);
+
+            if (trigger == "enable") {
+                submitBtn.removeAttribute('data-kt-indicator');
+                submitBtn.disabled = !1;
+            } else if (trigger == "disable") {
+                submitBtn.setAttribute('data-kt-indicator', 'on');
+                submitBtn.disabled = !0;
+            }
+
+        }
+
+        function init_formValidation(formId, fields) {
+            return FormValidation.formValidation(document.getElementById(formId), {
+                fields: fields,
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: '.fv-row',
+                        eleInvalidClass: '',
+                        eleValidClass: '',
+                    }),
+                },
+            });
+        }
+
+        function init_modal(modalId) {
+            return new bootstrap.Modal(document.getElementById(modalId));
+        }
+
     </script>
 
     @yield('scripts')
