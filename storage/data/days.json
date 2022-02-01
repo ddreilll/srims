@@ -1,0 +1,30 @@
+[
+    {
+        "day": "Monday",
+        "day_initial" : "M"
+    },
+    {
+        "day": "Tuesday",
+        "day_initial" : "T"
+    },
+    {
+        "day": "Wednesday",
+        "day_initial" : "W"
+    },
+    {
+        "day": "Thursday",
+        "day_initial" : "TH"
+    },
+    {
+        "day": "Friday",
+        "day_initial" : "F"
+    },
+    {
+        "day": "Saturday",
+        "day_initial" : "SAT"
+    },
+    {
+        "day": "Sunday",
+        "day_initial" : "SUN"
+    }
+]
