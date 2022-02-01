@@ -21,8 +21,6 @@
 </IfModule>
 Options -MultiViews -Indexes
  
-
-
 RewriteEngine On
  
 # Handle Authorization Header
