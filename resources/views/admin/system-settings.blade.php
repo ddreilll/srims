@@ -252,15 +252,15 @@
             <div class="card-body">
                 <div class="fv-row mb-12">
                     <label class="required fs-6 fw-bold mb-2">Name</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="" name="name_main" />
+                    <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
                 </div>
 
-                <div class="mb-8">
+                {{-- <div class="mb-8">
                     <label class="form-label fs-5 fw-bold mb-3">Subsequent Terms</label>
                     <div class="fs-7 fw-bold text-muted">Add subsequent terms</div>
-                </div>
+                </div> --}}
 
-                <div id="kt_drawer_term_add_subsequents">
+                {{-- <div id="kt_drawer_term_add_subsequents">
 
                     <a href="javascript:void(0)" id="kt_drawer_term_add_subsequents_addBtn" class="mt-10 btn d-block btn-icon-primary btn-lg p-5 btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
                         <span class="indicator-label">
@@ -278,7 +278,7 @@
                             Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </a>
-                </div>
+                </div> --}}
 
             </div>
             <div class="card-footer flex-center text-center">
@@ -353,7 +353,7 @@
         /*
         |--------------------------------------------------------------------------
         |    Begin::Year Level
-        |-------------------------------------------------------------------------- 
+        |--------------------------------------------------------------------------
         |
         */
 
@@ -806,7 +806,7 @@
         /*
         |--------------------------------------------------------------------------
         |    End::Year Level
-        |-------------------------------------------------------------------------- 
+        |--------------------------------------------------------------------------
         |
         */
 
@@ -815,76 +815,76 @@
         /*
         |--------------------------------------------------------------------------
         |    Begin::Term
-        |-------------------------------------------------------------------------- 
+        |--------------------------------------------------------------------------
         |
         */
 
-        function add_subsequent(type, value = []) {
+        // function add_subsequent(type, value = []) {
 
-            if (!value) {
-                value['name'] = "";
-            }
+        //     if (!value) {
+        //         value['name'] = "";
+        //     }
 
-            append_element = $(` <div class="d-flex align-items-sm-center mb-7 subsequent">
-                <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
-                    <div class="flex-grow-1 my-lg-0 my-2 me-10">
-                        <div class="fv-row">
-                            <input type="text" class="form-control form-control-solid" placeholder="Name" name="name_subsequent" />
-                        </div>
-                    </div>
+        //     append_element = $(` <div class="d-flex align-items-sm-center mb-7 subsequent">
+        //         <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
+        //             <div class="flex-grow-1 my-lg-0 my-2 me-10">
+        //                 <div class="fv-row">
+        //                     <input type="text" class="form-control form-control-solid" placeholder="Name" name="name_subsequent" />
+        //                 </div>
+        //             </div>
 
-                    <div class="d-flex align-items-center">
-                        <a href="#" class="btn btn-icon btn-danger btn-sm btn-sm border-0 btn-circle" kt_drawer_term_${type}_subsequents_delete>
-                            <span class="svg-icon svg-icon-2 svg-icon-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path opacity="0.3" d="M6 19.7C5.7 19.7 5.5 19.6 5.3 19.4C4.9 19 4.9 18.4 5.3 18L18 5.3C18.4 4.9 19 4.9 19.4 5.3C19.8 5.7 19.8 6.29999 19.4 6.69999L6.7 19.4C6.5 19.6 6.3 19.7 6 19.7Z" fill="black" />
-                                    <path d="M18.8 19.7C18.5 19.7 18.3 19.6 18.1 19.4L5.40001 6.69999C5.00001 6.29999 5.00001 5.7 5.40001 5.3C5.80001 4.9 6.40001 4.9 6.80001 5.3L19.5 18C19.9 18.4 19.9 19 19.5 19.4C19.3 19.6 19 19.7 18.8 19.7Z" fill="black" />
-                                </svg>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>`);
+        //             <div class="d-flex align-items-center">
+        //                 <a href="#" class="btn btn-icon btn-danger btn-sm btn-sm border-0 btn-circle" kt_drawer_term_${type}_subsequents_delete>
+        //                     <span class="svg-icon svg-icon-2 svg-icon-primary">
+        //                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        //                             <path opacity="0.3" d="M6 19.7C5.7 19.7 5.5 19.6 5.3 19.4C4.9 19 4.9 18.4 5.3 18L18 5.3C18.4 4.9 19 4.9 19.4 5.3C19.8 5.7 19.8 6.29999 19.4 6.69999L6.7 19.4C6.5 19.6 6.3 19.7 6 19.7Z" fill="black" />
+        //                             <path d="M18.8 19.7C18.5 19.7 18.3 19.6 18.1 19.4L5.40001 6.69999C5.00001 6.29999 5.00001 5.7 5.40001 5.3C5.80001 4.9 6.40001 4.9 6.80001 5.3L19.5 18C19.9 18.4 19.9 19 19.5 19.4C19.3 19.6 19 19.7 18.8 19.7Z" fill="black" />
+        //                         </svg>
+        //                     </span>
+        //                 </a>
+        //             </div>
+        //         </div>
+        //     </div>`);
 
-            if ($("#kt_drawer_term_" + type + "_subsequents > div.subsequent").last().length >= 1) {
-                append_element.insertAfter($("#kt_drawer_term_" + type + "_subsequents > div.subsequent").last());
-            } else {
-                append_element.prependTo("#kt_drawer_term_" + type + "_subsequents");
-            }
+        //     if ($("#kt_drawer_term_" + type + "_subsequents > div.subsequent").last().length >= 1) {
+        //         append_element.insertAfter($("#kt_drawer_term_" + type + "_subsequents > div.subsequent").last());
+        //     } else {
+        //         append_element.prependTo("#kt_drawer_term_" + type + "_subsequents");
+        //     }
 
-            $('#kt_drawer_term_' + type + '_subsequents > div.subsequent [name="name_subsequent"]').last().val(value['name']);
-        };
+        //     $('#kt_drawer_term_' + type + '_subsequents > div.subsequent [name="name_subsequent"]').last().val(value['name']);
+        // };
 
-        function delete_subsequentt(e, type) {
-            $(e).closest(".subsequent").remove();
-        };
+        // function delete_subsequentt(e, type) {
+        //     $(e).closest(".subsequent").remove();
+        // };
 
-        function retrieve_form_data(type) {
+        // function retrieve_form_data(type) {
 
-            return_data = {
-                name: $("#kt_drawer_term_" + type + "_form [name='name_main']").val(),
-                subsequents: []
-            };
+        //     return_data = {
+        //         name: $("#kt_drawer_term_" + type + "_form [name='name_main']").val(),
+        //         subsequents: []
+        //     };
 
-            if (type == "edit") {
-                return_data['id'] = $("#kt_drawer_term_" + type + "_form [name='id']").val();
-            }
+        //     if (type == "edit") {
+        //         return_data['id'] = $("#kt_drawer_term_" + type + "_form [name='id']").val();
+        //     }
 
-            subsequents = $('#kt_drawer_term_' + type + '_subsequents > div.subsequent');
+        //     subsequents = $('#kt_drawer_term_' + type + '_subsequents > div.subsequent');
 
-            if (subsequents.length >= 1) {
-                for (let i = 0; i < subsequents.length; i++) {
+        //     if (subsequents.length >= 1) {
+        //         for (let i = 0; i < subsequents.length; i++) {
 
-                    subsequent_name = $($('#kt_drawer_term_' + type + '_subsequents > div.subsequent')[i]).find("[name='name_subsequent']").val();
+        //             subsequent_name = $($('#kt_drawer_term_' + type + '_subsequents > div.subsequent')[i]).find("[name='name_subsequent']").val();
 
-                    return_data['subsequents'].push({
-                        name: (subsequent_name == '') ? null : subsequent_name
-                    });
-                }
-            }
+        //             return_data['subsequents'].push({
+        //                 name: (subsequent_name == '') ? null : subsequent_name
+        //             });
+        //         }
+        //     }
 
-            return return_data;
-        }
+        //     return return_data;
+        // }
 
         function refresh_list_term() {
             $.ajax({
@@ -1054,56 +1054,55 @@
             add_term_formValidation.validate().then(function(e) {
 
                 if ('Valid' == e) {
-                    console.log(retrieve_form_data("add"));
-                    // add_term_submitBtn.setAttribute('data-kt-indicator', 'on');
-                    // add_term_submitBtn.disabled = !0;
+                    add_term_submitBtn.setAttribute('data-kt-indicator', 'on');
+                    add_term_submitBtn.disabled = !0;
 
-                    // $.ajax({
-                    //     headers: {
-                    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                    //             'content')
-                    //     },
-                    //     type: "POST",
-                    //     data: $("#kt_drawer_term_add_form").serialize(),
-                    //     url: "{{ url('/settings/term/add') }}",
-                    //     datatype: "html",
-                    // }).done(function(response) {
-                    //     response = JSON.parse(response);
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content')
+                        },
+                        type: "POST",
+                        data: $("#kt_drawer_term_add_form").serialize(),
+                        url: "{{ url('/settings/term/add') }}",
+                        datatype: "html",
+                    }).done(function(response) {
+                        response = JSON.parse(response);
 
-                    //     if (response['status'] == 200) {
+                        if (response['status'] == 200) {
 
-                    //         add_term_submitBtn.removeAttribute('data-kt-indicator'),
-                    //             Swal.fire({
-                    //                 text: response['message'],
-                    //                 icon: 'success',
-                    //                 buttonsStyling: !1,
-                    //                 allowOutsideClick: false,
-                    //                 confirmButtonText: 'Ok, got it!',
-                    //                 customClass: {
-                    //                     confirmButton: 'btn btn-primary'
-                    //                 },
-                    //             }).then(function(e) {
-                    //                 if (e.isConfirmed) {
-                    //                     add_term_drawer.hide();
-                    //                     add_term_submitBtn.disabled = !1;
-                    //                 }
-                    //             });
-                    //     } else {
-                    //         Swal.fire({
-                    //             text: "{{ __('modal.error') }}",
-                    //             icon: 'error',
-                    //             buttonsStyling: !1,
-                    //             allowOutsideClick: false,
-                    //             confirmButtonText: 'Ok, got it!',
-                    //             customClass: {
-                    //                 confirmButton: 'btn btn-primary'
-                    //             },
-                    //         });
-                    //     }
+                            add_term_submitBtn.removeAttribute('data-kt-indicator'),
+                                Swal.fire({
+                                    text: response['message'],
+                                    icon: 'success',
+                                    buttonsStyling: !1,
+                                    allowOutsideClick: false,
+                                    confirmButtonText: 'Ok, got it!',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                }).then(function(e) {
+                                    if (e.isConfirmed) {
+                                        add_term_drawer.hide();
+                                        add_term_submitBtn.disabled = !1;
+                                    }
+                                });
+                        } else {
+                            Swal.fire({
+                                text: "{{ __('modal.error') }}",
+                                icon: 'error',
+                                buttonsStyling: !1,
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Ok, got it!',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                            });
+                        }
 
-                    //     refresh_list_term();
-                    //     add_term_form.reset();
-                    // });
+                        refresh_list_term();
+                        add_term_form.reset();
+                    });
                 } else {
                     Swal.fire({
                         text: "{{ __('modal.error') }}",

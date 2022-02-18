@@ -33,7 +33,7 @@ $error = 0;
 		<meta name="author" content="Antonov_WEB">
         <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 		<meta name="theme-color" content="#000000">
-        <title>Project SECURITY &rsaquo; Admin Panel</title>
+        <title>PUPQC Project SECURITY &rsaquo; Admin Panel</title>
 
         <!-- CSS -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
@@ -65,26 +65,26 @@ if (isset($_POST['signin'])) {
 	}
 	@$date = @date("d F Y");
     @$time = @date("H:i");
-    
+
     $username = mysqli_real_escape_string($mysqli, $_POST['username']);
     $password = hash('sha256', $_POST['password']);
 
     if ($username == $settings['username'] && $password == $settings['password']) {
-        
+
         $checklh = $mysqli->query("SELECT id FROM `psec_logins` WHERE `username`='$username' AND ip='$ip' AND date='$date' AND time='$time' AND successful='1'");
         if (mysqli_num_rows($checklh) == 0) {
             $log = $mysqli->query("INSERT INTO `psec_logins` (username, ip, date, time, successful) VALUES ('$username', '$ip', '$date', '$time', '1')");
         }
-        
+
         $_SESSION['sec-username'] = $username;
-        
+
         echo '<meta http-equiv="refresh" content="0;url=dashboard.php">';
     } else {
         $checklh = $mysqli->query("SELECT id FROM `psec_logins` WHERE `username`='$username' AND ip='$ip' AND date='$date' AND time='$time' AND successful='0'");
         if (mysqli_num_rows($checklh) == 0) {
             $log = $mysqli->query("INSERT INTO `psec_logins` (username, ip, date, time, successful) VALUES ('$username', '$ip', '$date', '$time', '0')");
         }
-        
+
         echo '
 		<div class="alert alert-danger">
               <i class="fas fa-exclamation-circle"></i> The entered <strong>Username</strong> or <strong>Password</strong> is incorrect.
@@ -92,7 +92,7 @@ if (isset($_POST['signin'])) {
         $error = 1;
     }
 }
-?> 
+?>
 			<div class="form-group has-feedback <?php
 if ($error == 1) {
     echo 'has-danger';
@@ -128,14 +128,14 @@ if ($error == 1) {
                     <button type="submit" name="signin" class="btn btn-md btn-primary btn-block btn-flat"><i class="fas fa-sign-in-alt"></i>
 &nbsp;Sign In</button>
                     <p class="mb-1">
-                        <a href="https://codecanyon.net/item/project-security-website-security-antivirus-firewall/15487703/faqs/44196" target="_blank">Forgotten password</a>
+                        <a href="#" target="_blank">Forgotten password</a>
                     </p>
                 </div>
             </div>
 			</div>
 			</div>
-        </form> 
-		
+        </form>
+
 		</div>
     </body>
 </html>

@@ -24,7 +24,7 @@ if (!function_exists('format_name')) {
      * @param string $suffix NAME SUFFIX ― ex. ["Jr.", "Sr.", "III"]
      */
 
-    function format_name($type = 1, $prefix = null, $first, $middle = null, $last, $suffix = null)
+    function format_name($type = 1, $prefix = null, $first = null, $middle = null, $last = null, $suffix = null)
     {
         $formatted_name = "";
         switch ($type) {
