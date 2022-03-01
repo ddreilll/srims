@@ -3,7 +3,7 @@
         <div class="mt-auto d-flex justify-content-center">
           <div class="col-lg-8">
             <br />
-            <p>Protected by <strong><a href="" target="_blank">Project SECURITY</a></strong></p>
+            <p>Protected by <strong>PUPQC - Project SECURITY</strong></p>
           </div>
         </div>
       </footer>

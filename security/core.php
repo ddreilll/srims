@@ -73,37 +73,41 @@ function head()
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 	<meta name="theme-color" content="#000000">
     <link rel="shortcut icon" href="assets/img/favicon.png">
+<<<<<<< HEAD
     <title>PUPQC Web SECURITY &rsaquo; Admin Panel</title>
+=======
+    <title>PUPQC - Project SECURITY &rsaquo; Admin Panel</title>
+>>>>>>> 9e240043f03c6949c42a21f5811079c902c03835
 
     <!--STYLESHEET-->
     <!--=================================================-->
-	
+
     <!--Bootstrap 4-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-	
+
     <!--Font Awesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
-	
+
 	<!--Stylesheet-->
     <link href="assets/css/admin.min.css" rel="stylesheet">
 	<link href="assets/css/psec.css" rel="stylesheet">
-    
+
     <!--OverlayScrollbars-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/css/OverlayScrollbars.min.css" rel="stylesheet">
-	
+
     <!--Switchery-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.js"></script>
-    
+
     <!--Select2-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet">
 
     <!--DataTables-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.3/b-2.1.0/b-html5-2.1.0/r-2.2.9/datatables.min.css"/>
- 
+
 	<!--Flags-->
     <link href="assets/plugins/flags/flags.css" rel="stylesheet">
-	
+
     <!--SCRIPT-->
     <!--=================================================-->
 
@@ -112,7 +116,7 @@ function head()
 	src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
-	
+
 <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'dashboard.php' || basename($_SERVER['SCRIPT_NAME']) == 'visit-analytics.php') {
         echo '
@@ -124,7 +128,7 @@ function head()
 <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'log-details.php' || basename($_SERVER['SCRIPT_NAME']) == 'search.php') {
         echo '
-	
+
     <!--Map-->
     <script src="https://openlayers.org/api/OpenLayers.js"></script>';
     }
@@ -145,7 +149,7 @@ if ($settings['dark_mode'] == 1) {
              <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
           </li>
 		</ul>
-		  
+
 		  <form class="form-inline ml-3" action="search.php" method="get">
       		  <div class="input-group input-group-sm">
       		    <input type="text" name="ip" class="form-control form-control-navbar" placeholder="IP Lookup" required>
@@ -155,7 +159,7 @@ if ($settings['dark_mode'] == 1) {
      		    </div>
      		  </div>
    		  </form>
-		  
+
 		<ul class="nav navbar-nav ml-auto">
           <li class="nav-item d-none d-md-block">
              <a href="<?php
@@ -173,11 +177,10 @@ if ($settings['dark_mode'] == 1) {
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
 	<center><a href="dashboard.php" class="brand-link">
-      <span class="brand-text font-weight-light"><i class="fab fa-get-pocket"></i> PUPQC <br>Web SECURITY</span>
+      <span class="brand-text font-weight-light"><i class="fab fa-get-pocket"></i> PUPQC <br> Project SECURITY</span>
     </a></center>
-	
+
 	<div class="sidebar">
-	
       <div class="user-panel mt-5 d-flex align-content-center justify-content-center flex-wrap">
           <p class="margin_auto"><a href="account.php" class="btn btn-sm btn-secondary btn-flat"><i class="fas fa-user fa-fw"></i> Account</a>
 		  &nbsp;&nbsp;<a href="logout.php" class="btn btn-sm btn-danger btn-flat"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></p>
@@ -186,7 +189,7 @@ if ($settings['dark_mode'] == 1) {
 	  <nav class="mt-2">
 	  <ul class="nav nav-pills nav-sidebar nav-legacy flex-column" data-widget="treeview" role="menu">
 		<li class="nav-header">NAVIGATION</li>
-        
+
         <li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'dashboard.php') {
         echo 'active';
@@ -200,7 +203,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-home"></i>&nbsp; <p>Dashboard</p>
            </a>
         </li>
-          
+
         <li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'site-info.php') {
         echo 'active';
@@ -214,7 +217,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-info-circle"></i>&nbsp; <p>Site Information</p>
            </a>
         </li>
-          
+
         <li class="nav-item has-treeview <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'ip-whitelist.php' OR basename($_SERVER['SCRIPT_NAME']) == 'file-whitelist.php') {
         echo 'menu-open';
@@ -248,7 +251,7 @@ if ($settings['dark_mode'] == 1) {
 ?>"><i class="far fa-file-alt"></i>&nbsp; <p>File Whitelist</p></a></li>
            </ul>
         </li>
-          
+
         <li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'warning-pages.php') {
         echo 'active';
@@ -262,7 +265,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-file-alt"></i>&nbsp; <p>Warning Pages</p>
            </a>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'users.php') {
         echo 'active';
@@ -278,7 +281,7 @@ if ($settings['dark_mode'] == 1) {
         </li>
 
         <li class="nav-header">SECURITY</li>
-          
+
         <li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'sql-injection.php') {
         echo 'active';
@@ -296,10 +299,10 @@ if ($settings['dark_mode'] == 1) {
     } else {
         echo '<span class="right badge badge-danger">OFF</span>';
     }
-?>     
+?>
            </p></a>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'badbots.php') {
         echo 'active';
@@ -317,10 +320,10 @@ if ($settings['dark_mode'] == 1) {
     } else {
         echo '<span class="right badge badge-danger">OFF</span>';
     }
-?>     
+?>
            </p></a>
         </li>
-          
+
         <li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'proxy.php') {
         echo 'active';
@@ -338,10 +341,10 @@ if ($settings['dark_mode'] == 1) {
     } else {
         echo '<span class="right badge badge-danger">OFF</span>';
     }
-?>     
+?>
            </p></a>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'spam.php') {
         echo 'active';
@@ -360,10 +363,10 @@ if ($settings['dark_mode'] == 1) {
     } else {
         echo '<span class="right badge badge-danger">OFF</span>';
     }
-?>     
+?>
            </p></a>
         </li>
-        
+
 <?php
     $lquery1 = $mysqli->query("SELECT * FROM `psec_logs`");
     $lcount1 = mysqli_num_rows($lquery1);
@@ -446,7 +449,7 @@ if ($settings['dark_mode'] == 1) {
 ?></span></p></a></li>
            </ul>
         </li>
-        
+
 <?php
     $bquery1 = $mysqli->query("SELECT * FROM `psec_bans`");
     $bcount1 = mysqli_num_rows($bquery1);
@@ -519,7 +522,7 @@ if ($settings['dark_mode'] == 1) {
 ?></span></p></a></li>
            </ul>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'bad-words.php') {
         echo 'active';
@@ -542,9 +545,9 @@ if ($settings['dark_mode'] == 1) {
 ?>
            </p></a>
         </li>
-		
+
 		<li class="nav-header">SECURITY CHECK</li>
-          
+
         <li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'phpfunctions-check.php') {
         echo 'active';
@@ -558,7 +561,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-check"></i>&nbsp; <p>PHP Functions</p>
            </a>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'phpconfig-check.php') {
         echo 'active';
@@ -572,7 +575,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fab fa-php"></i>&nbsp; <p>PHP Configuration</p>
            </a>
         </li>
-		
+
 		<li class="nav-header">ANALYTICS &nbsp;
 <?php
     if ($settings['live_traffic'] == 1) {
@@ -581,7 +584,7 @@ if ($settings['dark_mode'] == 1) {
         echo '<span class="right badge badge-primary">OFF</span>';
     }
 ?></li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'live-traffic.php') {
         echo 'active';
@@ -595,7 +598,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-globe"></i>&nbsp; <p>Live Traffic</p>
            </a>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'visit-analytics.php') {
         echo 'active';
@@ -609,7 +612,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-chart-line"></i>&nbsp; <p>Visit Analytics</p>
            </a>
         </li>
-          
+
         <li class="nav-header">TOOLS</li>
 
 		<li class="nav-item <?php
@@ -625,7 +628,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-exclamation-circle"></i>&nbsp; <p>Error Monitoring</p>
            </a>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'htaccess-editor.php') {
         echo 'active';
@@ -639,7 +642,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-columns"></i>&nbsp; <p>.htacces Editor</p>
            </a>
         </li>
-		
+
 		<li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'port-scanner.php') {
         echo 'active';
@@ -667,7 +670,7 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-list"></i>&nbsp; <p>IP Blacklist Checker</p>
            </a>
         </li>
-          
+
         <li class="nav-item <?php
     if (basename($_SERVER['SCRIPT_NAME']) == 'hashing.php') {
         echo 'active';
@@ -681,9 +684,9 @@ if ($settings['dark_mode'] == 1) {
               <i class="fas fa-lock"></i>&nbsp; <p>Hashing</p>
            </a>
         </li>
-		
+
 		</ul>
-          
+
       </nav>
     </div>
 
@@ -694,35 +697,35 @@ if ($settings['dark_mode'] == 1) {
 function footer()
 {
     include 'config.php';
-	
+
 	global $psec_version;
 ?>
 <footer class="main-footer">
     <div class="scroll-btn"><div class="scroll-btn-arrow"></div></div>
     <strong>&copy; <?php
     echo date("Y");
-?> <a href="" target="_blank">PUPQC Web SECURITY</a> v<?php echo $psec_version; ?></strong>
-	
+?> <a href="#" target="_blank">PUPQC - Project SECURITY</a> v<?php echo $psec_version; ?></strong>
+
 </footer>
 
 </div>
 
     <!--JAVASCRIPT-->
     <!--=================================================-->
-	
+
     <!--Bootstrap 4-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-    
+
 	<!--AdminLTE-->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 	<script src="assets/js/psec.js"></script>
-    
+
     <!--OverlayScrollbars-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/js/jquery.overlayScrollbars.min.js"></script>
 
     <!--Select2-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-    
+
     <!--DataTables-->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.4/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.4/vfs_fonts.min.js"></script>

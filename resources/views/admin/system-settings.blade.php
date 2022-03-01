@@ -304,9 +304,9 @@
                 <!-- <div class="mb-8">
                     <label class="form-label fs-5 fw-bold mb-3">Subsequent Terms</label>
                     <div class="fs-7 fw-bold text-muted">Add subsequent terms</div>
-                </div>
+                </div> --}}
 
-                <div id="kt_drawer_term_add_subsequents">
+                {{-- <div id="kt_drawer_term_add_subsequents">
 
                     <a href="javascript:void(0)" id="kt_drawer_term_add_subsequents_addBtn"
                         class="mt-10 btn d-block btn-icon-primary btn-lg p-5 btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
