@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 //Controllers
-use App\Http\Controllers\BusinessRules\AcadYearController as AcadYear;
+use App\Http\Controllers\Admin\AcadYearController as AcadYear;
 use App\Http\Controllers\Admin\AdmissionRequirementsController as AdReq;
 
 
@@ -34,7 +34,7 @@ class AdmissionCriteriaController extends Controller
         $acadYears = (new AcadYear)->getAllYears();
 
 
-        return view('admin.admission-criteria', ['menu_header'=> 'System Setup', 'menu' => 'admission-requirements', 'sub_menu' => 'requirements-criteria', 'title' => "Admission Criteria", "formData_acadYears" => $acadYears, "formData_admissionRed" => $admissionReq]);
+        return view('admin.admission-criteria', ['menu_header' => 'System Setup', 'menu' => 'admission-requirements', 'sub_menu' => 'requirements-criteria', 'title' => "Admission Criteria", "formData_acadYears" => $acadYears, "formData_admissionRed" => $admissionReq]);
     }
 
     /*

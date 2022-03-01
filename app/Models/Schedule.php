@@ -20,8 +20,8 @@ class Schedule extends Model
 
         $this->subj_sche_id = $data['subject'];
         $this->sche_section = $data['section'];
-        $this->term_sche_id = $data['semester'];
         $this->sche_acadYear = $data['year'];
+        $this->term_sche_id = $data['semester'];
         $this->room_sche_id = $data['room'];
         $this->inst_sche_id = $data['instructor'];
         $this->save();
@@ -46,9 +46,10 @@ class Schedule extends Model
             , term_sche_id as sche_term_id
             , term_name as sche_term_name
             , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as sche_acadYear
+            , CONCAT("SY " , sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as sche_acadYear_short
             , inst_id as sche_inst_id
             , inst_prefix as sche_inst_name_prefix
-            , inst_firstName as sche_inst_name_first
+            , inst_firstName as sche_inst_name_first 
             , inst_middleName as sche_inst_name_middle
             , inst_lastName as sche_inst_name_last
             , inst_suffix as sche_inst_name_suffix')
@@ -67,6 +68,7 @@ class Schedule extends Model
             ->selectRaw('md5(sche_id) as sche_id_md5
             , sche_id 
             , sche_section
+            , sche_acadYear as sche_year
             , room_id as sche_room_id
             , room_name as sche_room_code
             , subj_id as sche_subj_id
@@ -74,8 +76,6 @@ class Schedule extends Model
             , subj_name as sche_subj_name
             , term_sche_id as sche_term_id
             , term_name as sche_term_name
-            , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as sche_acadYear
-            , sche_acadYear as sche_year
             , inst_id as sche_inst_id
             , inst_prefix as sche_inst_name_prefix
             , inst_firstName as sche_inst_name_first

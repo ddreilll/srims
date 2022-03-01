@@ -10,7 +10,6 @@ if (!function_exists('axios_timeout')) {
 }
 
 
-
 if (!function_exists('format_name')) {
 
     /**
@@ -24,7 +23,7 @@ if (!function_exists('format_name')) {
      * @param string $suffix NAME SUFFIX ― ex. ["Jr.", "Sr.", "III"]
      */
 
-    function format_name($type = 1, $prefix = null, $first, $middle = null, $last, $suffix = null)
+    function format_name($type = 1, $prefix = null, $first = null, $middle = null, $last = null, $suffix = null)
     {
         $formatted_name = "";
         switch ($type) {
@@ -38,5 +37,86 @@ if (!function_exists('format_name')) {
         }
 
         return $formatted_name;
+    }
+}
+
+if (!function_exists('get_record_status')) {
+
+    function get_record_status_list()
+    {
+
+        return [
+            [
+                'value' => 'DRAFT',
+                'display' => 'Draft'
+
+            ],
+            [
+                'value' => 'SUBMITTED',
+                'display' => 'Submitted'
+            ],
+            [
+                'value' => 'FOR_VALIDATION',
+                'display' => 'For Validation'
+            ],
+            [
+                'value' => 'PARTIALLY_VALIDATED',
+                'display' => 'Partially Validated'
+            ],
+            [
+                'value' => 'VALIDATED',
+                'display' => 'Validated'
+            ]
+        ];
+    }
+}
+
+if (!function_exists('get_grading_list')) {
+
+    function get_grading_list()
+    {
+
+        return [
+            [
+                'value' => 1.00,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 1.25,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 1.50,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 1.75,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 2.00,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 2.25,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 2.50,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 2.75,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 3.00,
+                'remarks' => "PASSED"
+            ],
+            [
+                'value' => 5.00,
+                'remarks' => "FAILED"
+            ]
+        ];
     }
 }

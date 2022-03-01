@@ -19,7 +19,11 @@ class AdmissionRequirementsCriteria extends Model
 
     public function insertOne($criteriaId, $requirementId)
     {
-        $this->insert(["adcr_arcr_id" => $criteriaId, "adre_arcr_id" => $requirementId]);
+        $this->adcr_arcr_id = $criteriaId;
+        $this->adre_arcr_id = $requirementId;
+        $this->save();
+
+        return $this->id;
     }
 
     public function fetchAll($filter = null)

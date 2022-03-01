@@ -15,7 +15,8 @@ class CreateStudentTable extends Migration
     {
         Schema::create('r_student', function (Blueprint $table) {
             $table->id('stud_id');
-            $table->string('stud_studentNo')->nullable();
+            $table->string('stud_uuid', 200)->unique();
+            $table->string('stud_studentNo')->unique();
             $table->string('stud_firstName', 50);
             $table->string('stud_middleName', 50)->nullable();
             $table->string('stud_lastName', 50);
@@ -23,17 +24,19 @@ class CreateStudentTable extends Migration
             $table->string('stud_addressLine', 250);
             $table->string('stud_addressCity', 50);
             $table->string('stud_addressProvince', 50);
-            $table->year('stud_yearAdmitted');
-            $table->year('stud_yearGraduated')->nullable();
-            $table->string('stud_latinHonor')->nullable();
-            $table->enum('stud_recordStatus', ['DRAFT', 'SUBMITTED', 'UNVALIDATED', 'PARTIALLY_VALIDATED', 'VALIDATED'])->default('DRAFT');
-            $table->enum('stud_validationLevel', ['0', '1', '2', '3'])->default('0')->comment('0 = "No Validation performed", 1 = "Validated Admission Credentials", 2 = "Validated Academic records", 3 = "Validated both 1&2"');
+            $table->year('stud_yearOfAdmission');
+            $table->enum('stud_admissionType', ['FRESHMEN', 'TRANSFEREE']);
+            $table->enum('stud_isGraduated', ['YES', 'NO']);
+            $table->dateTime('stud_dateGraduated')->nullable();
+            $table->string('stud_honor')->nullable();
+            $table->enum('stud_recordStatus', ['DRAFT', 'UNVALIDATED', 'PARTIALLY_VALIDATED', 'VALIDATED', 'FOR_CORRECTION'])->default('DRAFT');
+            $table->enum('stud_validationStatus', ['NO_VALIDATION', 'PROFILE', 'ENTRANCE_CREDENTIALS', 'ACADEMIC'])->default('NO_VALIDATION');
             $table->mediumText('stud_remarks')->nullable();
-            $table->timestamp('stud_createdAy');
+            $table->timestamp('stud_createdAt');
             $table->timestamp('stud_updatedAt')->nullable();
             $table->softDeletes('stud_deletedAt');
-            $table->foreignId('cour_stud_id');
-            $table->foreignId('curr_stud_id');
+            $table->foreignId('cour_stud_id')->nullable();
+            $table->foreignId('curr_stud_id')->nullable();
 
             $table->foreign('cour_stud_id')->references('cour_id')->on('s_course');
             $table->foreign('curr_stud_id')->references('curr_id')->on('s_curriculum');

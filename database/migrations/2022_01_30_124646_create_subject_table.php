@@ -17,7 +17,7 @@ class CreateSubjectTable extends Migration
             $table->id('subj_id');
             $table->string('subj_code', 50);
             $table->string('subj_name', 200);
-            $table->decimal('subj_units', 11, 2, true);
+            $table->decimal('subj_units', 11, 1, true);
             $table->timestamp('subj_createdAt');
             $table->timestamp('subj_updatedAt')->nullable();
             $table->softDeletes('subj_deletedAt');

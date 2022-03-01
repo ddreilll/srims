@@ -78,6 +78,21 @@
                     </div>
                 </div>
                 <div class="modal-body py-10 px-lg-17">
+
+                <div id="notice" class="alert alert-danger d-flex align-items-center p-5 mb-10">
+                        <span class="svg-icon svg-icon-2hx svg-icon-danger me-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black"/>
+                                <rect x="11" y="17" width="7" height="2" rx="1" transform="rotate(-90 11 17)" fill="black"/>
+                                <rect x="11" y="9" width="2" height="2" rx="1" transform="rotate(-90 11 9)" fill="black"/>
+                            </svg>
+                        </span>
+                        <div class="d-flex flex-column">
+                            <h4 class="mb-1 text-danger">Important, please read!</h4>
+                            <span>Duplicate data validation is not enabled, so please double-check any duplicate data manually.</span>
+                        </div>
+                    </div>
+                    
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_add_inst_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_inst_header" data-kt-scroll-wrappers="#kt_modal_add_inst_scroll" data-kt-scroll-offset="300px" style="max-height: 314px;">
 
                         <div class="fv-row mb-15 fv-plugins-icon-container">

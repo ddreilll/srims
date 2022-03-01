@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 //Controller 
 use App\Http\Controllers\BusinessRules\DaysController as Days;
-use App\Http\Controllers\BusinessRules\AcadYearController as AcadYears;
+use App\Http\Controllers\Admin\AcadYearController as AcadYears;
 use App\Http\Controllers\Admin\SubjectController as Subjects;
 use App\Http\Controllers\Admin\RoomController as Rooms;
 use App\Http\Controllers\Admin\InstructorController as Instructors;

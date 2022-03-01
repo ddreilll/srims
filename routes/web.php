@@ -2,6 +2,41 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+
+/*
+|--------------------------------------------------------------------------
+|                      Student Grades
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('student/grades', 'Admin\StudentGradesController@index')->name('student-grades');
+Route::post('student/grades/add', 'Admin\StudentGradesController@ajax_insert');
+Route::get('student/grades/retrieveAll', 'Admin\StudentGradesController@ajax_retrieveAll');
+Route::post('student/grades/retrieve', 'Admin\StudentGradesController@ajax_retrieve');
+Route::post('student/grades/update', 'Admin\StudentGradesController@ajax_update');
+Route::post('student/grades/delete', 'Admin\StudentGradesController@ajax_delete');
+
+/*
+|--------------------------------------------------------------------------
+|                      Student Records
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('student/profile', 'Admin\StudentProfileController@index')->name('student-profile');
+Route::post('student/profile/add', 'Admin\StudentProfileController@ajax_insert');
+Route::get('student/profile/retrieveAll', 'Admin\StudentProfileController@ajax_retrieveAll');
+Route::post('student/profile/retrieve', 'Admin\StudentProfileController@ajax_retrieve');
+Route::post('student/profile/update', 'Admin\StudentProfileController@ajax_update');
+Route::post('student/profile/delete', 'Admin\StudentProfileController@ajax_delete');
+
+Route::get('student/profile/{profile_uuid}', 'Admin\StudentProfileController@view_profile');
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 |                       Admission Requirements
@@ -125,7 +160,7 @@ Route::post('instructor/delete', 'Admin\InstructorController@ajax_delete');
 |
 */
 
-Route::get('settings', 'Admin\SystemSettingsController@index')->name('system-settings');
+Route::get('settings/curriculum', 'Admin\SystemSettingsController@view_curriculum')->name('settings-student-profile');
 
 // Year Level
 Route::post('settings/year-level/add', 'Admin\YearLevelController@ajax_insert');
@@ -142,4 +177,13 @@ Route::post('settings/term/retrieve', 'Admin\TermController@ajax_retrieve');
 Route::post('settings/term/updateOrder', 'Admin\TermController@ajax_reorder');
 Route::post('settings/term/update', 'Admin\TermController@ajax_update');
 Route::post('settings/term/delete', 'Admin\TermController@ajax_delete');
+
+
+Route::get('settings/student-profile', 'Admin\SystemSettingsController@view_student_profile')->name('settings-student-profile');
+Route::post('settings/student-profile/add', 'Admin\HonorController@ajax_insert');
+Route::get('settings/student-profile/retrieveAll', 'Admin\HonorController@ajax_retrieveAll');
+Route::post('settings/student-profile/retrieve', 'Admin\HonorController@ajax_retrieve');
+Route::post('settings/student-profile/update', 'Admin\HonorController@ajax_update');
+Route::post('settings/student-profile/delete', 'Admin\HonorController@ajax_delete');
+
 

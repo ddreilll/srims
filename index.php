@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
@@ -17,5 +19,8 @@ $uri = urldecode(
 if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
     return false;
 }
+
+// include "security/config.php";
+// include "security/project-security.php"; 
 
 require_once __DIR__.'/public/index.php';

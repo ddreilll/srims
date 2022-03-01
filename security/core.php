@@ -1,6 +1,6 @@
 <?php
 // Project SECURITY version
-$psec_version = "4.6";
+$psec_version = "1.0";
 
 $configfile = 'config.php';
 if (!file_exists($configfile)) {
@@ -73,7 +73,7 @@ function head()
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 	<meta name="theme-color" content="#000000">
     <link rel="shortcut icon" href="assets/img/favicon.png">
-    <title>Project SECURITY &rsaquo; Admin Panel</title>
+    <title>PUPQC Web SECURITY &rsaquo; Admin Panel</title>
 
     <!--STYLESHEET-->
     <!--=================================================-->
@@ -173,12 +173,12 @@ if ($settings['dark_mode'] == 1) {
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
 	<center><a href="dashboard.php" class="brand-link">
-      <span class="brand-text font-weight-light"><i class="fab fa-get-pocket"></i> Project SECURITY</span>
+      <span class="brand-text font-weight-light"><i class="fab fa-get-pocket"></i> PUPQC <br>Web SECURITY</span>
     </a></center>
 	
 	<div class="sidebar">
 	
-      <div class="user-panel mt-3 d-flex align-content-center justify-content-center flex-wrap">
+      <div class="user-panel mt-5 d-flex align-content-center justify-content-center flex-wrap">
           <p class="margin_auto"><a href="account.php" class="btn btn-sm btn-secondary btn-flat"><i class="fas fa-user fa-fw"></i> Account</a>
 		  &nbsp;&nbsp;<a href="logout.php" class="btn btn-sm btn-danger btn-flat"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></p>
       </div>
@@ -701,7 +701,7 @@ function footer()
     <div class="scroll-btn"><div class="scroll-btn-arrow"></div></div>
     <strong>&copy; <?php
     echo date("Y");
-?> <a href="https://codecanyon.net/item/project-security-website-security-antivirus-firewall/15487703?ref=Antonov_WEB" target="_blank">Project SECURITY</a> v<?php echo $psec_version; ?></strong>
+?> <a href="" target="_blank">PUPQC Web SECURITY</a> v<?php echo $psec_version; ?></strong>
 	
 </footer>
 
