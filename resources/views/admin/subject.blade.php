@@ -223,7 +223,7 @@
         function reset_form(type) {
 
             $('#kt_modal_' + type + '_subject_form .form-control-solid').val('');
-            $('#kt_modal_' + type + '_subject_form .form-select-solid').val('').trigger('change');
+            $('#kt_modal_' + type + '_subject_form .form-select-solid[multiple=""]').val([]).trigger('change');
         }
 
         function init_inputmask(type) {

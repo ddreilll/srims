@@ -163,7 +163,7 @@ class SubjectController extends Controller
         $prerequisite = [];
         if ($request['prerequisite']) {
             for ($i = 0; $i < sizeOf($request['prerequisite']); $i++) {
-                array_push($prerequisite, ['id' => $request['prerequisite'][$i]]);
+                ($request['prerequisite'][$i] != null) ? array_push($prerequisite, ['id' => $request['prerequisite'][$i]]) : null;
             }
         }
 
