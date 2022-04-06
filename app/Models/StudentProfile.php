@@ -75,8 +75,8 @@ class StudentProfile extends Model
 
         if ($user_roleID == 2) {
             if ($filter) {
-                array_push($filter, ["user_stud_id" => $user->id]);
-            }else {
+                array_push($filter, array(["user_stud_id" => $user->id]));
+            } else {
                 $filter = ["user_stud_id" => $user->id];
             }
         }
