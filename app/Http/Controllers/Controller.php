@@ -17,6 +17,8 @@ class Controller extends BaseController
         View::share('menu', '');
         View::share('sub_menu', '');
         View::share('sub_sub_menu', '');
+        View::share('menu_header', '');
+        View::share('title', '');
 
         View::share('axios_timeout', axios_timeout());
     }

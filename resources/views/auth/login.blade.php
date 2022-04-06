@@ -6,12 +6,11 @@
                 style="background-color: #F2C98A">
                 <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
                     <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
-                        <a href="../../demo8/dist/index.html" class="py-9 mb-5">
-                            <img alt="Logo" src="assets/media/logos/logo-2.svg" class="h-60px" />
+                        <a href="#" class="py-9 mb-5">
+                            <img alt="Logo" src="{{ asset('/assets/media/logo/logo_main.png') }}" class="h-60px" />
                         </a>
-                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">Welcome to Metronic</h1>
-                        <p class="fw-bold fs-2" style="color: #986923;">Discover Amazing Metronic
-                            <br />with great build tools
+                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">PUP Quezon City Branch</h1>
+                        <p class="fw-bold fs-2" style="color: #986923;">Non-SIS Student <br> Record Management System
                         </p>
                     </div>
                     <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
@@ -26,11 +25,7 @@
                             {{ csrf_field() }}
 
                             <div class="text-center mb-10">
-                                <h1 class="text-dark mb-3">Sign In to Metronic</h1>
-                                <div class="text-gray-400 fw-bold fs-4">New Here?
-                                    <a href="../../demo8/dist/authentication/flows/aside/sign-up.html"
-                                        class="link-primary fw-bolder">Create an Account</a>
-                                </div>
+                                <h1 class="text-dark mb-3">Sign In</h1>
                             </div>
                             <div class="fv-row mb-10">
                                 <label class="form-label fs-6 fw-bolder text-dark">Email</label>
@@ -47,8 +42,6 @@
                             <div class="fv-row mb-10">
                                 <div class="d-flex flex-stack mb-2">
                                     <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
-                                    <a href="../../demo8/dist/authentication/flows/aside/password-reset.html"
-                                        class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
                                 </div>
                                 <input
                                     class="form-control form-control-lg form-control-solid {{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -67,16 +60,6 @@
                                 </button>
                             </div>
                         </form>
-                    </div>
-                </div>
-                <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
-                    <div class="d-flex flex-center fw-bold fs-6">
-                        <a href="https://keenthemes.com" class="text-muted text-hover-primary px-2"
-                            target="_blank">About</a>
-                        <a href="https://keenthemes.com/support" class="text-muted text-hover-primary px-2"
-                            target="_blank">Support</a>
-                        <a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2"
-                            target="_blank">Purchase</a>
                     </div>
                 </div>
             </div>
