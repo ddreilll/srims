@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.admin')
 
 
 @section('content')
@@ -288,7 +288,7 @@
                                                     role="tabpanel">
 
                                                     @foreach ($stud_grades[$b]->semesters as $semester)
-                                                        <div class="card border border-1">
+                                                        <div class="card border border-1 mb-5">
                                                             <div class="card-header">
                                                                 <h3 class="card-title">{{ $semester->term_name }}
                                                                 </h3>

@@ -53,7 +53,7 @@ class StudentProfile extends Model
         if ($data['isGraduated'] == "YES") {
             $this->stud_dateGraduated = date("Y-m-d", strtotime($data['dateGraduated']));
             $this->stud_honor = $data['honor'];
-        }else {
+        } else {
             $this->stud_dateGraduated = null;
             $this->stud_honor = null;
         }
@@ -69,6 +69,18 @@ class StudentProfile extends Model
 
     public function fetchAll($filter)
     {
+
+        $user = \Auth::user();
+        $user_roleID = $user->roles->pluck('id')->toArray()[0];
+
+        if ($user_roleID == 2) {
+            if ($filter) {
+                array_push($filter, ["user_stud_id" => $user->id]);
+            }else {
+                $filter = ["user_stud_id" => $user->id];
+            }
+        }
+
         $data = $this->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
             ->selectRaw('r_student.*
             , md5(stud_id) as stud_id_md5
@@ -89,6 +101,13 @@ class StudentProfile extends Model
 
     public function edit($md5Id, $data)
     {
+        $user = \Auth::user();
+        $user_roleID = $user->roles->pluck('id')->toArray()[0];
+
+        if ($user_roleID == 2) {
+            $data["stud_recordStatus"] = "UNVALIDATED";
+        }
+
         $this->whereRaw('md5(stud_id) = "' . $md5Id . '"')
             ->update($data);
     }

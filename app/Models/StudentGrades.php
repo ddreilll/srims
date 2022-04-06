@@ -67,7 +67,7 @@ class StudentGrades extends Model
         return $this->id;
     }
 
-    public function fetchAll($filter)
+    public function fetchAll($size, $filter)
     {
         $data = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
             ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
@@ -95,7 +95,7 @@ class StudentGrades extends Model
             , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as enrsub_sche_acadYear_short
             ')
             ->where($filter)
-            ->get();
+            ->paginate($size, ['*'], 'start');
 
         $i = 0;
         foreach ($data as $schedule) {
@@ -126,6 +126,13 @@ class StudentGrades extends Model
 
     public function edit($md5Id, $data)
     {
+        $user = \Auth::user();
+        $user_roleID = $user->roles->pluck('id')->toArray()[0];
+
+        if ($user_roleID == 2) {
+            $data["enrsub_status"] = "UNVALIDATED";
+        }
+
         $this->whereRaw('md5(enrsub_id) = "' . $md5Id . '"')
             ->update($data);
     }
@@ -178,7 +185,7 @@ class StudentGrades extends Model
                     , subj_units as enrsub_subj_units
                     , sche_section as enrsub_sche_section
                     ')
-                    ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '" and term_name = "' . $semester->term_name . '"')
+                    ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '" and term_name = "' . $semester->term_name . '"and sche_acadYear = "' . $year->acad_year . '"')
                     ->get();
 
                 $b = 0;
@@ -204,7 +211,6 @@ class StudentGrades extends Model
                 }
 
                 $semesters[$a]['subjects'] = $grades;
-
                 $a++;
             }
 

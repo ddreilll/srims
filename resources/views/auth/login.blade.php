@@ -1,80 +1,85 @@
-<!doctype html>
-<!--
-* Workday - A time clock application for employees
-* Email: official.codefactor@gmail.com
-* Version: 1.1
-* Author: Brian Luna
-* Copyright 2020 Codefactor
--->
-<html lang="en" class="fullscreen-bg">
+@extends('layouts.app')
+@section('content')
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative"
+                style="background-color: #F2C98A">
+                <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
+                    <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
+                        <a href="../../demo8/dist/index.html" class="py-9 mb-5">
+                            <img alt="Logo" src="assets/media/logos/logo-2.svg" class="h-60px" />
+                        </a>
+                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">Welcome to Metronic</h1>
+                        <p class="fw-bold fs-2" style="color: #986923;">Discover Amazing Metronic
+                            <br />with great build tools
+                        </p>
+                    </div>
+                    <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
+                        style="background-image: url(assets/media/illustrations/sketchy-1/13.png"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-lg-row-fluid py-10">
+                <div class="d-flex flex-center flex-column flex-column-fluid">
+                    <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
+                            action="{{ route('login') }}" method="POST">
+                            {{ csrf_field() }}
 
-<head>
-	<title>Sign in | Workday Time Clock</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/assets/images/img/favicon-16x16.png') }}">
-	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/img/favicon-32x32.png') }}">
-	<link rel="icon" type="image/x-icon" href="{{ asset('/assets/images/img/favicon.ico') }}">
-    <link href="{{ asset('/assets/vendor/semantic-ui/semantic.min.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('/assets/css/auth.css') }}" rel="stylesheet" type="text/css">
-</head>
-
-<body>
-	<div id="wrapper">
-		<div class="vertical-align-wrap">
-			<div class="vertical-align-middle">
-				<div class="auth-box">
-					<div class="content">
-						<div class="header">
-							<div class="logo align-center"><img style="max-width:350px" src="{{ asset('/assets/images/img/logo.png') }}" alt="Workday"></div>
-							<p class="lead">{{ __('Sign in to your account') }}</p>
-						</div>
-						<form class="form-auth-small ui form" action="{{ route('login') }}" method="POST">
-                       		@csrf
-							<div class="fields">
-								<div class="sixteen wide field {{ $errors->has('email') ? ' has-error' : '' }}">
-									<label for="email" class="color-white">{{ __('Email') }}</label>
-									<input id="email" type="email" class="" name="email" value="{{ old('email') }}" placeholder="{{ __('Enter your e-mail address') }}" required autofocus>
-									@if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                	@endif	
-								</div>
-							</div>
-							<div class="fields">
-								<div class="sixteen wide field {{ $errors->has('password') ? ' has-error' : '' }}">
-									<label for="password" class="color-white">{{ __('Password') }}</label>
-                                	<input id="password" type="password" class="" name="password" placeholder="{{ __('Enter your password') }}" required>
-                                	@if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                	@endif
-								</div>
-							</div>
-							<div class="fields">
-								<div class="sixteen wide field">
-									<div class="ui checkbox">
-										<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-										<label class="color-white">{{ __('Remember me') }}</label>
-									</div>
-								</div>
-							</div>
-							<button type="submit" class="ui green button large fluid">{{ __('SIGN IN') }}</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-    <script src="{{ asset('/assets/vendor/jquery/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('/assets/vendor/semantic-ui/semantic.min.js') }}"></script>
-	<script>
-		$('.ui.checkbox').checkbox('uncheck', 'toggle');
-	</script>
-</body>
-
-</html>
+                            <div class="text-center mb-10">
+                                <h1 class="text-dark mb-3">Sign In to Metronic</h1>
+                                <div class="text-gray-400 fw-bold fs-4">New Here?
+                                    <a href="../../demo8/dist/authentication/flows/aside/sign-up.html"
+                                        class="link-primary fw-bolder">Create an Account</a>
+                                </div>
+                            </div>
+                            <div class="fv-row mb-10">
+                                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                                <input
+                                    class="form-control form-control-lg form-control-solid {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                    required autofocus type="text" name="email" autocomplete="off"
+                                    value="{{ old('email', null) }}" />
+                                    @if($errors->has('email'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('email') }}
+                                        </div>
+                                    @endif
+                            </div>
+                            <div class="fv-row mb-10">
+                                <div class="d-flex flex-stack mb-2">
+                                    <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+                                    <a href="../../demo8/dist/authentication/flows/aside/password-reset.html"
+                                        class="link-primary fs-6 fw-bolder">Forgot Password ?</a>
+                                </div>
+                                <input
+                                    class="form-control form-control-lg form-control-solid {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                    type="password" name="password" required autocomplete="off" />
+                                @if ($errors->has('password'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('password') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
+                                    <span class="indicator-label">Continue</span>
+                                    <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
+                    <div class="d-flex flex-center fw-bold fs-6">
+                        <a href="https://keenthemes.com" class="text-muted text-hover-primary px-2"
+                            target="_blank">About</a>
+                        <a href="https://keenthemes.com/support" class="text-muted text-hover-primary px-2"
+                            target="_blank">Support</a>
+                        <a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2"
+                            target="_blank">Purchase</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

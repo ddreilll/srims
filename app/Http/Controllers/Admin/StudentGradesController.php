@@ -55,9 +55,9 @@ class StudentGradesController extends Controller
         (new StudentGrades)->insertOne($student_details);
     }
 
-    public function getAllStudentGrades($filter = null)
+    public function getAllStudentGrades($size = 10, $filter = null)
     {
-        return (new StudentGrades)->fetchAll($filter);
+        return (new StudentGrades)->fetchAll($size, $filter);
     }
 
     public function getStudentGrade($md5Id)
@@ -108,10 +108,18 @@ class StudentGradesController extends Controller
         ]);
     }
 
-    public function ajax_retrieveAll()
+    public function ajax_retrieveAll(Request $request)
     {
+        $size = $request->length;
+
+        if ($request->search['value']) {
+            $filter = [["enrsub_remarks", 'like', '%' . $request->search['value'] . '%']];
+        }else {
+            $filter = null;
+        }
+
         header('Content-Type: application/json');
-        echo json_encode($this->getAllStudentGrades());
+        echo json_encode($this->getAllStudentGrades($size, $filter));
     }
 
     public function ajax_retrieve(Request $request)

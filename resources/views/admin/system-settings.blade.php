@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.admin')
 
 
 @section('content')
@@ -301,36 +301,7 @@
                     <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
                 </div>
 
-                <!-- <div class="mb-8">
-                    <label class="form-label fs-5 fw-bold mb-3">Subsequent Terms</label>
-                    <div class="fs-7 fw-bold text-muted">Add subsequent terms</div>
-                </div> --}}
-
-                {{-- <div id="kt_drawer_term_add_subsequents">
-
-                    <a href="javascript:void(0)" id="kt_drawer_term_add_subsequents_addBtn"
-                        class="mt-10 btn d-block btn-icon-primary btn-lg p-5 btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
-                        <span class="indicator-label">
-                            <span class="svg-icon svg-icon-1">
-                                <span class="svg-icon svg-icon-muted svg-icon-1hx">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none">
-                                        <path opacity="0.3"
-                                            d="M21 13H3C2.4 13 2 12.6 2 12C2 11.4 2.4 11 3 11H21C21.6 11 22 11.4 22 12C22 12.6 21.6 13 21 13Z"
-                                            fill="black"></path>
-                                        <path
-                                            d="M12 22C11.4 22 11 21.6 11 21V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V21C13 21.6 12.6 22 12 22Z"
-                                            fill="black"></path>
-                                    </svg>
-                                </span>
-                            </span>
-                            Add Subsequent term
-                        </span>
-                        <span class="indicator-progress">
-                            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                    </a>
-                </div> -->
+               
 
             </div>
             <div class="card-footer flex-center text-center">

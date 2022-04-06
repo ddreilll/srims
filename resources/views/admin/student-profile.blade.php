@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.admin')
 
 @section('styles')
     <style>
@@ -33,8 +33,10 @@
                     <div class="card-toolbar">
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
 
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#kt_modal_add_student_profile">Add Student Profile</button>
+                            @can('add_student_profile')
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_add_student_profile">Add Student Profile</button>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -62,206 +64,321 @@
     <div class="modal fade" id="kt_modal_add_student_profile" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered mw-700px">
             <div class="modal-content">
-                <form class="form" action="#" id="kt_modal_add_student_profile_form">
 
-                    <div class="modal-header" id="kt_modal_add_student_profile_header">
-                        <h2 class="fw-bolder">Add Student Profile</h2>
-                        <div id="kt_modal_add_student_profile_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-                            <span class="svg-icon svg-icon-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                        transform="rotate(-45 6 17.3137)" fill="black" />
-                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
-                                        fill="black" />
-                                </svg>
-                            </span>
+
+                <div class="stepper stepper-pills" id="kt_modal_add_student_profile_stepper">
+                    <div class="stepper-nav flex-center flex-wrap mb-10" hidden>
+                        <div class="stepper-item mx-2 my-4 current" data-kt-stepper-element="nav">
+                            <div class="stepper-line w-40px"></div>
+
+                            <div class="stepper-icon w-40px h-40px">
+                                <i class="stepper-check fas fa-check"></i>
+                                <span class="stepper-number">1</span>
+                            </div>
+
+                            <div class="stepper-label">
+                                <h3 class="stepper-title">
+                                    Step 1
+                                </h3>
+
+                                <div class="stepper-desc">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stepper-item mx-2 my-4" data-kt-stepper-element="nav">
+                            <div class="stepper-line w-40px"></div>
+
+                            <div class="stepper-icon w-40px h-40px">
+                                <i class="stepper-check fas fa-check"></i>
+                                <span class="stepper-number">2</span>
+                            </div>
+
+                            <div class="stepper-label">
+                                <h3 class="stepper-title">
+                                    Step 2
+                                </h3>
+
+                                <div class="stepper-desc">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stepper-item mx-2 my-4" data-kt-stepper-element="nav">
+                            <div class="stepper-line w-40px"></div>
+
+                            <div class="stepper-icon w-40px h-40px">
+                                <i class="stepper-check fas fa-check"></i>
+                                <span class="stepper-number">3</span>
+                            </div>
+
+                            <div class="stepper-label">
+                                <h3 class="stepper-title">
+                                    Step 3
+                                </h3>
+
+                                <div class="stepper-desc">
+                                    Description
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stepper-item mx-2 my-4" data-kt-stepper-element="nav">
+                            <div class="stepper-line w-40px"></div>
+
+                            <div class="stepper-icon w-40px h-40px">
+                                <i class="stepper-check fas fa-check"></i>
+                                <span class="stepper-number">4</span>
+                            </div>
+
+                            <div class="stepper-label">
+                                <h3 class="stepper-title">
+                                    Step 4
+                                </h3>
+
+                                <div class="stepper-desc">
+                                    Description
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="modal-body py-10 px-lg-17">
-                        <div class="scroll-y me-n7 pe-7" id="kt_modal_add_student_profile_scroll" data-kt-scroll="true"
-                            data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
-                            data-kt-scroll-dependencies="#kt_modal_add_student_profile_header"
-                            data-kt-scroll-wrappers="#kt_modal_add_student_profile_scroll" data-kt-scroll-offset="280px">
+                    <form class="form" action="#" id="kt_modal_add_student_profile_form">
 
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-bold mb-2">Student No.</label>
-                                <input type="text" class="form-control form-control-solid" name="studentNo" />
+                        <div class="modal-header" id="kt_modal_add_student_profile_header">
+                            <h2 class="fw-bolder">Add Student Profile</h2>
+                            <div id="kt_modal_add_student_profile_close"
+                                class="btn btn-icon btn-sm btn-active-icon-primary">
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                            transform="rotate(-45 6 17.3137)" fill="black" />
+                                        <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                            transform="rotate(45 7.41422 6)" fill="black" />
+                                    </svg>
+                                </span>
                             </div>
+                        </div>
 
-                            <div class="row g-9 mb-7">
+                        <div class="modal-body py-10 px-lg-17">
+                            <div class="scroll-y me-n7 pe-7" id="kt_modal_add_student_profile_scroll" data-kt-scroll="true"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_modal_add_student_profile_header"
+                                data-kt-scroll-wrappers="#kt_modal_add_student_profile_scroll"
+                                data-kt-scroll-offset="280px">
 
-                                <div class="col-md-7 fv-row">
-                                    <label class="required fs-6 fw-bold mb-2">First name</label>
-                                    <input class="form-control form-control-solid" placeholder="" name="firstName">
+                                <div class="fv-row mb-7">
+                                    <label class="required fs-6 fw-bold mb-2">Student No.</label>
+                                    <input type="text" class="form-control form-control-solid" name="studentNo" />
                                 </div>
 
-                                <div class="col-md-5 fv-row">
-                                    <label class="fs-6 fw-bold mb-2">Middle name</label>
-                                    <input class="form-control form-control-solid" placeholder="" name="middleName">
+                                <div class="row g-9 mb-7">
+
+                                    <div class="col-md-7 fv-row">
+                                        <label class="required fs-6 fw-bold mb-2">First name</label>
+                                        <input class="form-control form-control-solid" placeholder="" name="firstName">
+                                    </div>
+
+                                    <div class="col-md-5 fv-row">
+                                        <label class="fs-6 fw-bold mb-2">Middle name</label>
+                                        <input class="form-control form-control-solid" placeholder="" name="middleName">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row g-9 mb-7">
+                                <div class="row g-9 mb-7">
 
-                                <div class="col-md-7 fv-row">
-                                    <label class="required fs-6 fw-bold mb-2">Last name</label>
-                                    <input class="form-control form-control-solid" placeholder="" name="lastName">
+                                    <div class="col-md-7 fv-row">
+                                        <label class="required fs-6 fw-bold mb-2">Last name</label>
+                                        <input class="form-control form-control-solid" placeholder="" name="lastName">
+                                    </div>
+
+                                    <div class="col-md-3 fv-row">
+                                        <label class="fs-6 fw-bold mb-2">Suffix</label>
+                                        <input class="form-control form-control-solid" placeholder="" name="suffix">
+                                    </div>
                                 </div>
 
-                                <div class="col-md-3 fv-row">
-                                    <label class="fs-6 fw-bold mb-2">Suffix</label>
-                                    <input class="form-control form-control-solid" placeholder="" name="suffix">
-                                </div>
-                            </div>
-
-                            <div class="fv-row mb-7">
-                                <label class="required form-label fs-5 fw-bold mb-3">Course</label>
-                                <select class="form-select form-select-solid" data-control="select2"
-                                    data-placeholder="Select a course"
-                                    data-dropdown-parent="#kt_modal_add_student_profile_form" name="course">
-                                    <option></option>
-                                    @foreach ($formData_course as $course)
-                                        <option value="{{ $course->cour_id }}">
-                                            {{ $course->cour_code . ' ― ' . $course->cour_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="row mb-10">
-                                <div class="col-md-6 fv-row">
-                                    <label class="required form-label fs-5 fw-bold mb-3">Year of Admission</label>
+                                <div class="fv-row mb-7">
+                                    <label class="required form-label fs-5 fw-bold mb-3">Course</label>
                                     <select class="form-select form-select-solid" data-control="select2"
-                                        data-placeholder="Select a year"
-                                        data-dropdown-parent="#kt_modal_add_student_profile_form" name="yearOfAdmission">
+                                        data-placeholder="Select a course"
+                                        data-dropdown-parent="#kt_modal_add_student_profile_form" name="course">
                                         <option></option>
-                                        @foreach ($formData_year as $year)
-                                            <option value="{{ $year->syear_year }}">{{ $year->syear_year }}</option>
+                                        @foreach ($formData_course as $course)
+                                            <option value="{{ $course->cour_id }}">
+                                                {{ $course->cour_code . ' ― ' . $course->cour_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-md-6 fv-row">
-                                    <label class="required form-label fs-5 fw-bold mb-3">Admission type</label>
-
-                                    <div class="d-flex mt-3">
-                                        <label class="form-check form-check-custom form-check-solid me-5">
-                                            <input class="form-check-input" type="radio" value="FRESHMEN"
-                                                name="admissionType">
-                                            <span class="form-check-label">Freshmen</span>
-                                        </label>
-                                        <label class="form-check form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="radio" value="TRANSFEREE"
-                                                name="admissionType">
-                                            <span class="form-check-label">Transferee</span>
-                                        </label>
+                                <div class="row mb-10">
+                                    <div class="col-md-6 fv-row">
+                                        <label class="required form-label fs-5 fw-bold mb-3">Year of Admission</label>
+                                        <select class="form-select form-select-solid" data-control="select2"
+                                            data-placeholder="Select a year"
+                                            data-dropdown-parent="#kt_modal_add_student_profile_form"
+                                            name="yearOfAdmission">
+                                            <option></option>
+                                            @foreach ($formData_year as $year)
+                                                <option value="{{ $year->syear_year }}">{{ $year->syear_year }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                </div>
-                            </div>
-
-                            <div class="border border-1 rounded p-5">
-
-                                <div class="d-flex flex-stack">
-                                    <div class="me-5">
-                                        <label class="fs-6 fw-bold">Has been graduated?</label>
-                                        <div class="fs-7 fw-bold text-muted">If yes, toggle the button</div>
-                                    </div>
-                                    <label class="form-check form-switch form-check-custom form-check-solid me-5">
-                                        <input class="form-check-input" type="checkbox"
-                                            id="kt_modal_add_student_profile_if_graduated" />
-                                        <span class="form-check-label fw-bold text-muted"
-                                            for="kt_modal_add_student_profile_if_graduated">Yes</span>
-                                    </label>
                                 </div>
 
-                                <input type="text" name="isGraduated" value="NO" hidden>
+                                <div class="border border-1 rounded p-5 mb-5 fv-row">
 
-                                <div id="kt_modal_add_student_profile_has_graduated" class="collapse mt-7">
-
-                                    <div class="row">
-                                        <div class="col-md-6 fv-row">
-                                            <label class="form-label fs-5 fw-bold mb-3"><span class="required">Date
-                                                    Graduated</span>
-                                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                                    title="Date must between {{ $formData_year[0]->syear_year }} and {{ $formData_year[sizeof($formData_year) - 1]->syear_year }}"></i>
-                                            </label>
-                                            <input class="form-control form-control-solid" name="dateGraduated"
-                                                placeholder="MM/DD/YYYY" />
+                                    <div class="d-flex flex-stack ">
+                                        <div class="me-5">
+                                            <label class="fs-6 fw-bold required">Admission Type</label>
                                         </div>
 
+                                        <div class="d-flex">
+                                            <label class="form-check form-check-custom form-check-solid me-5">
+                                                <input class="form-check-input" type="radio" value="FRESHMEN"
+                                                    name="admissionType">
+                                                <span class="form-check-label">Freshmen</span>
+                                            </label>
+                                            <label class="form-check form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="radio" value="TRANSFEREE"
+                                                    name="admissionType">
+                                                <span class="form-check-label">Transferee</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border border-1 rounded p-5">
+
+                                    <div class="d-flex flex-stack">
+                                        <div class="me-5">
+                                            <label class="fs-6 fw-bold">Has been graduated?</label>
+                                            <div class="fs-7 fw-bold text-muted">If yes, toggle the button</div>
+                                        </div>
+                                        <label class="form-check form-switch form-check-custom form-check-solid me-5">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="kt_modal_add_student_profile_if_graduated" />
+                                            <span class="form-check-label fw-bold text-muted"
+                                                for="kt_modal_add_student_profile_if_graduated">Yes</span>
+                                        </label>
+                                    </div>
+
+                                    <input type="text" name="isGraduated" value="NO" hidden>
+
+                                    <div id="kt_modal_add_student_profile_has_graduated" class="collapse mt-7">
+
+                                        <div class="row">
+                                            <div class="col-md-6 fv-row">
+                                                <label class="form-label fs-5 fw-bold mb-3"><span
+                                                        class="required">Date
+                                                        Graduated</span>
+                                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                                        title="Date must between {{ $formData_year[0]->syear_year }} and {{ $formData_year[sizeof($formData_year) - 1]->syear_year }}"></i>
+                                                </label>
+                                                <input class="form-control form-control-solid" name="dateGraduated"
+                                                    placeholder="MM/DD/YYYY" />
+                                            </div>
+
+                                            <div class="col-md-6 fv-row">
+                                                <label class="form-label fs-5 fw-bold mb-3">Honor</label>
+                                                <select class="form-select form-select-solid" data-control="select2"
+                                                    data-placeholder="Select a honor"
+                                                    data-dropdown-parent="#kt_modal_add_student_profile_form" name="honor"
+                                                    data-allow-clear="true">
+                                                    <option></option>
+                                                    @foreach ($formData_honors as $honor)
+                                                        <option value="{{ $honor->honor_name }}">
+                                                            {{ $honor->honor_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="fw-bolder fs-3 rotate collapsible mb-10 mt-10" data-bs-toggle="collapse"
+                                    href="#kt_modal_add_student_profile_permanent_address" role="button"
+                                    aria-expanded="false" aria-controls="kt_customer_view_details">Permanent Address
+                                    <span class="ms-2 rotate-180">
+                                        <span class="svg-icon svg-icon-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none">
+                                                <path
+                                                    d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                                    fill="black" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <div id="kt_modal_add_student_profile_permanent_address" class="collapse show">
+
+                                    <div class="fv-row mb-7">
+                                        <label class="required fs-6 fw-bold mb-2">Address line</label>
+                                        <input class="form-control form-control-solid" placeholder="" name="addressLine">
+                                    </div>
+
+                                    <div class="row mb-7">
                                         <div class="col-md-6 fv-row">
-                                            <label class="form-label fs-5 fw-bold mb-3">Honor</label>
+                                            <label class="required form-label fs-5 fw-bold mb-3">Province</label>
                                             <select class="form-select form-select-solid" data-control="select2"
-                                                data-placeholder="Select a honor"
-                                                data-dropdown-parent="#kt_modal_add_student_profile_form" name="honor" data-allow-clear="true">
+                                                data-placeholder="Select a province"
+                                                data-dropdown-parent="#kt_modal_add_student_profile_form"
+                                                name="addressProvince">
                                                 <option></option>
-                                                @foreach ($formData_honors as $honor)
-                                                    <option value="{{ $honor->honor_name }}">{{ $honor->honor_name }}
-                                                    </option>
-                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 fv-row">
+                                            <label class="required form-label fs-5 fw-bold mb-3">City</label>
+                                            <select class="form-select form-select-solid" data-control="select2"
+                                                data-placeholder="Select a city"
+                                                data-dropdown-parent="#kt_modal_add_student_profile_form"
+                                                name="addressCity">
+                                                <option></option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="fw-bolder fs-3 rotate collapsible mb-10 mt-10" data-bs-toggle="collapse"
-                                href="#kt_modal_add_student_profile_permanent_address" role="button" aria-expanded="false"
-                                aria-controls="kt_customer_view_details">Permanent Address
-                                <span class="ms-2 rotate-180">
-                                    <span class="svg-icon svg-icon-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
-                                            <path
-                                                d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                                fill="black" />
-                                        </svg>
+                        <div class="modal-footer flex-center">
+                            <button type="button" class="btn btn-light btn-active-light-primary"
+                                data-kt-stepper-action="previous">
+                                Back
+                            </button>
+                            <div>
+                                <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit"
+                                    id="kt_stepper_login_submit">
+                                    <span class="indicator-label">
+                                        Submit
                                     </span>
-                                </span>
-                            </div>
+                                    <span class="indicator-progress">
+                                        Please wait... <span
+                                            class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
 
-                            <div id="kt_modal_add_student_profile_permanent_address" class="collapse show">
-
-                                <div class="fv-row mb-7">
-                                    <label class="required fs-6 fw-bold mb-2">Address line</label>
-                                    <input class="form-control form-control-solid" placeholder="" name="addressLine">
-                                </div>
-
-                                <div class="row mb-7">
-                                    <div class="col-md-6 fv-row">
-                                        <label class="required form-label fs-5 fw-bold mb-3">Province</label>
-                                        <select class="form-select form-select-solid" data-control="select2"
-                                            data-placeholder="Select a province"
-                                            data-dropdown-parent="#kt_modal_add_student_profile_form"
-                                            name="addressProvince">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 fv-row">
-                                        <label class="required form-label fs-5 fw-bold mb-3">City</label>
-                                        <select class="form-select form-select-solid" data-control="select2"
-                                            data-placeholder="Select a city"
-                                            data-dropdown-parent="#kt_modal_add_student_profile_form" name="addressCity">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <button type="button" class="btn btn-primary" data-kt-stepper-action="next">
+                                    <span>Continue</span> <span class="svg-icon svg-icon-1 me-0 ms-1"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none">
+                                            <path d="M14.4 11H3C2.4 11 2 11.4 2 12C2 12.6 2.4 13 3 13H14.4V11Z"
+                                                fill="black" />
+                                            <path opacity="0.3"
+                                                d="M14.4 20V4L21.7 11.3C22.1 11.7 22.1 12.3 21.7 12.7L14.4 20Z"
+                                                fill="black" />
+                                        </svg></span>
+                                </button>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="modal-footer flex-center">
-                        <button type="reset" id="kt_modal_add_student_profile_cancel"
-                            class="btn btn-light me-3">Discard</button>
-                        <button type="submit" id="kt_modal_add_student_profile_submit" class="btn btn-primary">
-                            <span class="indicator-label">Submit</span>
-                            <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -286,6 +403,7 @@
                             </span>
                         </div>
                     </div>
+
 
                     <div class="modal-body py-10 px-lg-17">
                         <div class="scroll-y me-n7 pe-7" id="kt_modal_edit_student_profile_scroll" data-kt-scroll="true"
@@ -403,7 +521,8 @@
                                             <label class="form-label fs-5 fw-bold mb-3">Honor</label>
                                             <select class="form-select form-select-solid" data-control="select2"
                                                 data-placeholder="Select a honor"
-                                                data-dropdown-parent="#kt_modal_edit_student_profile_form" name="honor" data-allow-clear="true">
+                                                data-dropdown-parent="#kt_modal_edit_student_profile_form" name="honor"
+                                                data-allow-clear="true">
                                                 <option></option>
                                                 @foreach ($formData_honors as $honor)
                                                     <option value="{{ $honor->honor_name }}">{{ $honor->honor_name }}
@@ -644,120 +763,122 @@
             });
 
 
-
-            var add_modal = init_bs_modal("kt_modal_add_student_profile");
-            var add_submitBtnId = "kt_modal_add_student_profile_submit";
-            var add_formValidation = init_formValidation("kt_modal_add_student_profile_form", form_fields);
-
-            $('#kt_modal_add_student_profile_cancel, #kt_modal_add_student_profile_close').on("click", function(
+            @can('add_student_profile')
+                var add_modal = init_bs_modal("kt_modal_add_student_profile");
+                var add_submitBtnId = "kt_modal_add_student_profile_submit";
+                var add_formValidation = init_formValidation("kt_modal_add_student_profile_form", form_fields);
+            
+                var add_modal_stepper = init_stepper("kt_modal_add_student_profile_stepper");
+            
+                $('#kt_modal_add_student_profile_cancel, #kt_modal_add_student_profile_close').on("click", function(
                 t) {
-
+            
                 t.preventDefault();
-
+            
                 Swal.fire({
-                    text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
-                    icon: 'warning',
-                    showCancelButton: !0,
-                    buttonsStyling: !1,
-                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
-                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
-                    customClass: {
-                        confirmButton: 'btn btn-primary',
-                        cancelButton: 'btn btn-active-light',
-                    },
+                text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
+                icon: 'warning',
+                showCancelButton: !0,
+                buttonsStyling: !1,
+                confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
+                cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-active-light',
+                },
                 }).then(function(t) {
-                    if (t.value) {
-                        reset_form("add");
-
-                        add_formValidation.disableValidator('dateGraduated');
-                        add_modal.modal("hide");
-                    }
-                });
-            });
-
-            $("#kt_modal_add_student_profile_form").on("submit", function(e) {
-                e.preventDefault();
-
-                add_formValidation.validate().then(function(e) {
-
-                    if ('Valid' == e) {
-
-                        trigger_btnIndicator(add_submitBtnId, "loading");
-
-                        axios({
-                            method: "POST",
-                            url: "{{ url('/student/profile/add') }}",
-                            data: retrieve_form_data("add"),
-                            timeout: "{{ $axios_timeout }}"
-                        }).then(function(respond) {
-                            trigger_btnIndicator(add_submitBtnId, "default");
-
-                            if (respond.status == 200) {
-
-                                display_axios_success(respond.data.message);
-                                add_modal.modal('hide');
-                            } else {
-
-                                display_modal_error("{{ __('modal.error') }}");
-                            }
-
-                            reset_form("add");
-                            table.ajax.reload();
-                        }).catch(function(error) {
-
-                            display_axios_error(error);
-                        });
-                    } else {
-                        display_modal_error("{{ __('modal.error') }}");
-                    }
-                });
-            });
-
-            var add_city = new City();
-
-            add_city.getProvinces().forEach((e) => {
-                $(`<option value="${e}">${e}</option>`).appendTo(
-                    "#kt_modal_add_student_profile_form [name='addressProvince']");
-            });
-
-            $("#kt_modal_add_student_profile_form [name='addressProvince']").on("change", function() {
-
-                if ($(this).val()) {
-                    var c = new City();
-
-                    $("#kt_modal_add_student_profile_form [name='addressCity']").empty();
-
-                    c.getCities($("#kt_modal_add_student_profile_form [name='addressProvince']").val())
-                        .forEach((e) => {
-                            $(`<option value="${e}">${e}</option>`).appendTo(
-                                "#kt_modal_add_student_profile_form [name='addressCity']");
-                        });
+                if (t.value) {
+                reset_form("add");
+            
+                add_formValidation.disableValidator('dateGraduated');
+                add_modal.modal("hide");
                 }
-            });
-
-            $("#kt_modal_add_student_profile_form #kt_modal_add_student_profile_if_graduated").on("click",
-                function() {
-
-                    $("#kt_modal_add_student_profile_form [name='dateGraduated']").val(null);
-                    $("#kt_modal_add_student_profile_form [name='honor']").val(null).trigger("change");
-
-                    if ($(this).is(':checked')) {
-
-                        $("#kt_modal_add_student_profile_form [name='isGraduated']").val('YES');
-                        $("#kt_modal_add_student_profile_has_graduated").addClass("show");
-                        add_formValidation.enableValidator('dateGraduated');
-                    } else {
-
-                        $("#kt_modal_add_student_profile_form [name='isGraduated']").val('NO');
-                        $("#kt_modal_add_student_profile_has_graduated").removeClass("show");
-                        add_formValidation.disableValidator('dateGraduated');
-                    };
                 });
-
-            Inputmask({
+                });
+            
+                $("#kt_modal_add_student_profile_form").on("submit", function(e) {
+                e.preventDefault();
+            
+                add_formValidation.validate().then(function(e) {
+            
+                if ('Valid' == e) {
+            
+                trigger_btnIndicator(add_submitBtnId, "loading");
+            
+                axios({
+                method: "POST",
+                url: "{{ url('/student/profile/add') }}",
+                data: retrieve_form_data("add"),
+                timeout: "{{ $axios_timeout }}"
+                }).then(function(respond) {
+                trigger_btnIndicator(add_submitBtnId, "default");
+            
+                if (respond.status == 200) {
+            
+                display_axios_success(respond.data.message);
+                add_modal.modal('hide');
+                } else {
+            
+                display_modal_error("{{ __('modal.error') }}");
+                }
+            
+                reset_form("add");
+                table.ajax.reload();
+                }).catch(function(error) {
+            
+                display_axios_error(error);
+                });
+                } else {
+                display_modal_error("{{ __('modal.error') }}");
+                }
+                });
+                });
+            
+                var add_city = new City();
+            
+                add_city.getProvinces().forEach((e) => {
+                $(`<option value="${e}">${e}</option>`).appendTo(
+                "#kt_modal_add_student_profile_form [name='addressProvince']");
+                });
+            
+                $("#kt_modal_add_student_profile_form [name='addressProvince']").on("change", function() {
+            
+                if ($(this).val()) {
+                var c = new City();
+            
+                $("#kt_modal_add_student_profile_form [name='addressCity']").empty();
+            
+                c.getCities($("#kt_modal_add_student_profile_form [name='addressProvince']").val())
+                .forEach((e) => {
+                $(`<option value="${e}">${e}</option>`).appendTo(
+                "#kt_modal_add_student_profile_form [name='addressCity']");
+                });
+                }
+                });
+            
+                $("#kt_modal_add_student_profile_form #kt_modal_add_student_profile_if_graduated").on("click",
+                function() {
+            
+                $("#kt_modal_add_student_profile_form [name='dateGraduated']").val(null);
+                $("#kt_modal_add_student_profile_form [name='honor']").val(null).trigger("change");
+            
+                if ($(this).is(':checked')) {
+            
+                $("#kt_modal_add_student_profile_form [name='isGraduated']").val('YES');
+                $("#kt_modal_add_student_profile_has_graduated").addClass("show");
+                add_formValidation.enableValidator('dateGraduated');
+                } else {
+            
+                $("#kt_modal_add_student_profile_form [name='isGraduated']").val('NO');
+                $("#kt_modal_add_student_profile_has_graduated").removeClass("show");
+                add_formValidation.disableValidator('dateGraduated');
+                };
+                });
+            
+                Inputmask({
                 "mask": "99/99/9999"
-            }).mask("#kt_modal_add_student_profile_form [name='dateGraduated']");
-
+                }).mask("#kt_modal_add_student_profile_form [name='dateGraduated']");
+            @endcan
 
             var edit_modal = init_bs_modal("kt_modal_edit_student_profile");
             var edit_submitBtnId = "kt_modal_edit_student_profile_submit";
@@ -822,8 +943,9 @@
                                 'cour_stud_id']).trigger('change');
                             $('#kt_modal_edit_student_profile_form [name="yearOfAdmission"]')
                                 .val(d['stud_yearOfAdmission']).trigger('change');
-                            $('#kt_modal_edit_student_profile_form [name="admissionType"][value="'+d[
-                                'stud_admissionType']+'"]')
+                            $('#kt_modal_edit_student_profile_form [name="admissionType"][value="' +
+                                    d[
+                                        'stud_admissionType'] + '"]')
                                 .prop("checked", true);
                             $('#kt_modal_edit_student_profile_form [name="dateGraduated"]')
                                 .val(d['stud_dateGraduated']).trigger('change');

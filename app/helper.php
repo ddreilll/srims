@@ -9,7 +9,6 @@ if (!function_exists('axios_timeout')) {
     }
 }
 
-
 if (!function_exists('format_name')) {
 
     /**

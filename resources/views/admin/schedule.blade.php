@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.admin')
 
 @section('styles')
     <style>
@@ -511,10 +511,10 @@
                             sched_timeSlots = d[i]['sche_timeSlots'];
                             if (sched_timeSlots.length == 1) {
 
-                                sched_timeSlot_day += (sched_timeSlots[a]['time_day']) ?
-                                    sched_timeSlots[a]['time_day'] : "";
-                                sched_timeSlot_time += (sched_timeSlots[a]['time_duration']) ?
-                                    sched_timeSlots[a]['time_duration'].replace(/\s+/g, '') : "";
+                                sched_timeSlot_day += (sched_timeSlots[0]['time_day']) ?
+                                    sched_timeSlots[0]['time_day'] : "";
+                                sched_timeSlot_time += (sched_timeSlots[0]['time_duration']) ?
+                                    sched_timeSlots[0]['time_duration'].replace(/\s+/g, '') : "";
                             } else if (sched_timeSlots.length > 1) {
 
                                 for (let a = 0; a < sched_timeSlots.length; a++) {

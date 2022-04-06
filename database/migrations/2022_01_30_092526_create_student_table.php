@@ -37,9 +37,11 @@ class CreateStudentTable extends Migration
             $table->softDeletes('stud_deletedAt');
             $table->foreignId('cour_stud_id')->nullable();
             $table->foreignId('curr_stud_id')->nullable();
+            $table->foreignId('user_stud_id')->nullable();
 
             $table->foreign('cour_stud_id')->references('cour_id')->on('s_course');
             $table->foreign('curr_stud_id')->references('curr_id')->on('s_curriculum');
+            $table->foreign('user_stud_id')->references('id')->on('users');
         });
     }
 

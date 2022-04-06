@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.admin')
 
 @section('styles')
     <style>
@@ -89,8 +89,8 @@
                         <div class="fv-row mb-7">
                             <label class="required form-label fs-5 fw-bold mb-3">Student</label>
                             <select class="form-select form-select-solid" data-control="select2"
-                                data-placeholder="Select a student"
-                                data-dropdown-parent="#kt_modal_add_student_grades_form" name="student">
+                                data-placeholder="Select a student" data-dropdown-parent="#kt_modal_add_student_grades_form"
+                                name="student">
                                 <option></option>
                                 @foreach ($formData_students as $student)
                                     <option value="{{ $student->stud_id }}">
@@ -108,7 +108,7 @@
                                 <option></option>
                                 @foreach ($formData_schedule as $schedule)
                                     <option value="{{ $schedule->sche_id }}">
-                                        {{ $schedule->sche_section .' ― ' .$schedule->sche_subj_code .' │ ' .$schedule->sche_term_name .' │ ' .$schedule->sche_acadYear_short .' │ ' .$schedule->sche_inst_fullName }}
+                                        {{ $schedule->sche_section .' ― ' .$schedule->sche_subj_code .' │ ' .$schedule->sche_subj_name .' │ ' .$schedule->sche_term_name .' │ ' .$schedule->sche_acadYear_short .' │ ' .$schedule->sche_inst_fullName }}
                                     </option>
                                 @endforeach
                             </select>
@@ -221,7 +221,7 @@
                                 <option></option>
                                 @foreach ($formData_schedule as $schedule)
                                     <option value="{{ $schedule->sche_id }}">
-                                        {{ $schedule->sche_section .' ― ' .$schedule->sche_subj_code .' │ ' .$schedule->sche_term_name .' │ ' .$schedule->sche_acadYear_short .' │ ' .$schedule->sche_inst_fullName }}
+                                        {{ $schedule->sche_section .' ― ' .$schedule->sche_subj_code .' │ ' .$schedule->sche_subj_name .' │ ' .$schedule->sche_term_name .' │ ' .$schedule->sche_acadYear_short .' │ ' .$schedule->sche_inst_fullName }}
                                     </option>
                                 @endforeach
                             </select>
@@ -324,25 +324,33 @@
 
             var table = $("#kt_student_grades_table").DataTable({
                 processing: true,
+                serverSide: true,
                 ajax: {
                     url: "{{ url('/student/grades/retrieveAll') }}",
-                    dataSrc: function(d) {
-                        var return_data = new Array();
+                    dataFilter: function(d) {
+                        var d = jQuery.parseJSON(d);
 
-                        for (let i = 0; i < d.length; i++) {
+                        d.raw_data = d.data;
+                        d.data = [];
 
-                            return_data.push({
-                                DT_RowId: d[i]["enrsub_id_md5"],
-                                StudentNo: `<a href="{{ url('student/profile') }}/${d[i]["enrsub_stud_uuid"]}" target="_blank"> ${d[i]["enrsub_stud_no"]}</a>`,
-                                Student: d[i]["enrsub_stud_fullName"],
-                                Subject: d[i]["enrsub_subj_code"],
-                                Description: d[i]["enrsub_subj_name"],
-                                Semester: d[i]["enrsub_term_name"],
-                                SchoolYear: d[i]["enrsub_sche_acadYear_short"],
-                                Instructor: d[i]["enrsub_inst_fullName"],
-                                FinalGrade: d[i]["enrsub_grade_display"],
-                                Remarks: d[i]["enrsub_remarks"],
-                                Status: d[i]["enrsub_status"],
+                        for (let i = 0; i < d.raw_data.length; i++) {
+
+                            href = (d.raw_data[i]["enrsub_stud_no"]) ?
+                                `<a href="{{ url('student/profile') }}/${d.raw_data[i]["enrsub_stud_uuid"]}" target="_blank"> ${d.raw_data[i]["enrsub_stud_no"]}</a>` :
+                                "";
+
+                            d.data.push({
+                                DT_RowId: d.raw_data[i]["enrsub_id_md5"],
+                                StudentNo: href,
+                                Student: d.raw_data[i]["enrsub_stud_fullName"],
+                                Subject: d.raw_data[i]["enrsub_subj_code"],
+                                Description: d.raw_data[i]["enrsub_subj_name"],
+                                Semester: d.raw_data[i]["enrsub_term_name"],
+                                SchoolYear: d.raw_data[i]["enrsub_sche_acadYear_short"],
+                                Instructor: d.raw_data[i]["enrsub_inst_fullName"],
+                                FinalGrade: d.raw_data[i]["enrsub_grade_display"],
+                                Remarks: d.raw_data[i]["enrsub_remarks"],
+                                Status: d.raw_data[i]["enrsub_status"],
                                 Action: `<div class="d-flex justify-content-start flex-shrink-0">
                                     <a href="javascript:void(0)" kt_student_grades_table_edit class="btn btn-icon btn-light-success btn-active-success btn-sm me-1">
                                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
@@ -368,9 +376,17 @@
                                 </div>`,
                             });
                         };
-                        return return_data;
+
+                        d.recordsTotal = d.total;
+                        d.recordsFiltered = d.total;
+
+                        console.log(JSON.stringify(d))
+                        return JSON.stringify(d);
+
                     },
                     error: function(xhr, error, code) {
+
+                        console.log(error);
 
                         display_modal_error_reload("{{ __('modal.error_datatable') }}");
                     }
@@ -502,27 +518,27 @@
             var edit_formValidation = init_formValidation("kt_modal_edit_student_grades_form", form_fields);
 
             $('#kt_modal_edit_student_grades_cancel, #kt_modal_edit_student_grades_close').on("click",
-            function(t) {
-                t.preventDefault();
+                function(t) {
+                    t.preventDefault();
 
-                Swal.fire({
-                    text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
-                    icon: 'warning',
-                    showCancelButton: !0,
-                    buttonsStyling: !1,
-                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
-                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
-                    customClass: {
-                        confirmButton: 'btn btn-primary',
-                        cancelButton: 'btn btn-active-light',
-                    },
-                }).then(function(t) {
-                    if (t.value) {
-                        reset_form("edit");
-                        edit_modal.hide();
-                    }
+                    Swal.fire({
+                        text: "{{ __('modal.confirmation', ['action' => 'cancel']) }}",
+                        icon: 'warning',
+                        showCancelButton: !0,
+                        buttonsStyling: !1,
+                        confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'cancel']) }}",
+                        cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                        customClass: {
+                            confirmButton: 'btn btn-primary',
+                            cancelButton: 'btn btn-active-light',
+                        },
+                    }).then(function(t) {
+                        if (t.value) {
+                            reset_form("edit");
+                            edit_modal.hide();
+                        }
+                    });
                 });
-            });
 
             $("#kt_student_grades_table").on("click", "[kt_student_grades_table_edit]", function() {
 
@@ -542,7 +558,8 @@
                         if (respond.data.length == 1) {
                             d = respond.data[0];
 
-                            $('#kt_modal_edit_student_grades_form [name="id"]').val(d['enrsub_id_md5']);
+                            $('#kt_modal_edit_student_grades_form [name="id"]').val(d[
+                                'enrsub_id_md5']);
                             $('#kt_modal_edit_student_grades_form [name="student"]').val(d[
                                 'stud_enrsub_id']).trigger('change');
                             $('#kt_modal_edit_student_grades_form [name="schedule"]').val(
@@ -560,10 +577,11 @@
                                 .closest("label")).addClass(
                                 "active");
 
-                            if (d['enrsub_otherGrade'] == 'D' || d['enrsub_otherGrade'] == 'W') {
+                            if (d['enrsub_otherGrade'] == 'D' || d['enrsub_otherGrade'] ==
+                                'W') {
                                 $($(
                                         "#kt_modal_edit_student_grades_form [name='grade']"
-                                        ).closest(".fv-row"))
+                                    ).closest(".fv-row"))
                                     .prop(
                                         'hidden', true);
                                 $('#kt_modal_edit_student_grades_form [name="grade"]').val('')
@@ -628,7 +646,7 @@
 
                 if ($(this).val() == 'D' || $(this).val() == 'W') {
                     $($(
-                                "#kt_modal_edit_student_grades_form [name='grade']").closest(
+                            "#kt_modal_edit_student_grades_form [name='grade']").closest(
                             ".fv-row"))
                         .prop(
                             'hidden', true);

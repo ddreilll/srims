@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\HonorController as Honors;
 
 //Model
 use App\Models\StudentProfile;
+use App\Role;
 
 class StudentProfileController extends Controller
 {
@@ -27,7 +28,6 @@ class StudentProfileController extends Controller
 
     public function index()
     {
-
         $acadYears = (new AcadYears)->getAllYears();
         $course = (new Course)->getAllCourses();
         $honors = (new Honors)->getAllHonors();
@@ -39,12 +39,11 @@ class StudentProfileController extends Controller
     {
         $fetched_profile = (new StudentProfile)->fetchAll(['stud_uuid' => $profile_uuid]);
 
-
         if (sizeof($fetched_profile) == 1) {
             $profile = $fetched_profile[0];
             $studentGrades = (new StudentGrades)->getGradesPerStudent($profile['stud_id_md5']);
 
-            return view('admin.student-profile-details', ['menu_header' => 'Student Profile' , 'title' => 'Student Details', "menu" => "student-records", "sub_menu" => "student-profile", "stud_profile" => $profile, "stud_grades" => $studentGrades]);
+            return view('admin.student-profile-details', ['menu_header' => 'Student Profile', 'title' => 'Student Details', "menu" => "student-records", "sub_menu" => "student-profile", "stud_profile" => $profile, "stud_grades" => $studentGrades]);
         } else {
 
             return view('errors.not-found', ['menu_header' => 'Menu', 'title' => "Profile not found", "menu" => "student-records", "sub_menu" => "student-profile"]);
