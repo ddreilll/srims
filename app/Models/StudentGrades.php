@@ -146,6 +146,10 @@ class StudentGrades extends Model
     public function fetchAllPerStudent($md5Id)
     {
 
+        $return_data = [];
+        $return_data['total_semester'] = 0;
+        $return_data['total_summer_semester'] = 0;
+
         $school_year = $this->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
             ->selectRaw('DISTINCT sche_acadYear as acad_year
             , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as acad_year_long
@@ -167,6 +171,11 @@ class StudentGrades extends Model
 
             $a = 0;
             foreach ($semesters as $semester) {
+                $return_data['total_semester'] += 1;
+
+                if ($semester['term_name'] == "Summer Semester") {
+                    $return_data['total_summer_semester'] += 1;
+                }
 
                 $grades = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
                     ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
@@ -218,6 +227,8 @@ class StudentGrades extends Model
             $i++;
         }
 
-        return $school_year;
+        $return_data["grades"] = $school_year;
+
+        return $return_data;
     }
 }

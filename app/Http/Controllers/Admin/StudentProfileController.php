@@ -39,11 +39,12 @@ class StudentProfileController extends Controller
     {
         $fetched_profile = (new StudentProfile)->fetchAll(['stud_uuid' => $profile_uuid]);
 
+
         if (sizeof($fetched_profile) == 1) {
             $profile = $fetched_profile[0];
             $studentGrades = (new StudentGrades)->getGradesPerStudent($profile['stud_id_md5']);
 
-            return view('admin.student-profile-details', ['menu_header' => 'Student Profile', 'title' => 'Student Details', "menu" => "student-records", "sub_menu" => "student-profile", "stud_profile" => $profile, "stud_grades" => $studentGrades]);
+            return view('admin.student-profile-details', ['menu_header' => 'Student Profile', 'title' => 'Student Details', "menu" => "student-records", "sub_menu" => "student-profile", "stud_profile" => $profile, "stud_grades" => $studentGrades['grades'], "stud_total_semester" => $studentGrades['total_semester'], "stud_total_summer_semester" => $studentGrades['total_summer_semester']]);
         } else {
 
             return view('errors.not-found', ['menu_header' => 'Menu', 'title' => "Profile not found", "menu" => "student-records", "sub_menu" => "student-profile"]);

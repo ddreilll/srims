@@ -25,7 +25,7 @@
                         <div class="card-body pt-15">
                             <div class="d-flex flex-center flex-column mb-5">
                                 <div class="symbol symbol-100px symbol-circle mb-7">
-                                    <img src="{{ asset('/new_assets/media/avatar/avatar_main.png') }}" alt="image" />
+                                    <img src="{{ asset('/assets/media/avatar/avatar_main.png') }}" alt="image" />
                                 </div>
                                 <a href="#"
                                     class="fs-3 text-gray-800 text-hover-primary fw-bolder mb-1">{{ $stud_profile->stud_fullName }}</a>
@@ -37,7 +37,7 @@
 
                                     <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                         <div class="fs-4 fw-bolder text-gray-700 text-center">
-                                            <span data-kt-countup="true" data-kt-countup-value="10">0</span>
+                                            <span data-kt-countup="true" data-kt-countup-value="{{ $stud_total_semester }}">0</span>
                                         </div>
                                         <div class="fw-bold text-muted">Total Semester</div>
                                     </div>
@@ -45,7 +45,7 @@
                                     <div class="border border-gray-300 border-dashed rounded py-3 px-3 ms-4 mb-3">
                                         <div class="fs-4 fw-bolder text-gray-700 text-center">
                                            
-                                            <span data-kt-countup="true" data-kt-countup-value="8">0</span>
+                                            <span data-kt-countup="true" data-kt-countup-value="{{ $stud_total_summer_semester }}">0</span>
                                         </div>
                                         <div class="fw-bold text-muted">Summer</div>
                                     </div>
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
 
-                            <div class="card my-10 mb-xl-9">
+                            {{-- <div class="card my-10 mb-xl-9">
                                 <div class="card-header ps-0 border-dashed border-bottom-1 border-0 border-gray-300" style="min-height:45px">
                                     <div class="card-title">
                                         <h5 class="fs-3 text-gray-800">SCHOOLS ATTENDED</h5>
@@ -129,7 +129,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -143,14 +143,14 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                                href="#kt_customer_view_overview_statements">Entrance Credentials</a>
+                                href="#kt_customer_view_overview_statements">Entrance Credentials </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                href="#kt_customer_view_overview_events_and_logs_tab">Change Logs</a>
+                                href="#kt_customer_view_overview_events_and_logs_tab">Change Logs </a>
                         </li>
                         <li class="nav-item ms-auto">
-                            <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
+                            {{-- <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Actions
                                 <span class="svg-icon svg-icon-2 me-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -163,51 +163,34 @@
                             </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold py-4 w-250px fs-6"
                                 data-kt-menu="true">
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5">
                                     <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Payments</div>
                                 </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5">
                                     <a href="#" class="menu-link px-5">Create invoice</a>
                                 </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5">
                                     <a href="#" class="menu-link flex-stack px-5">Create payments
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                             title="Specify a target name for future usage and reference"></i></a>
                                 </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5" data-kt-menu-trigger="hover"
                                     data-kt-menu-placement="left-start">
                                     <a href="#" class="menu-link px-5">
                                         <span class="menu-title">Subscription</span>
                                         <span class="menu-arrow"></span>
                                     </a>
-                                    <!--begin::Menu sub-->
                                     <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-5">Apps</a>
                                         </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-5">Billing</a>
                                         </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-5">Statements</a>
                                         </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu separator-->
                                         <div class="separator my-2"></div>
-                                        <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <div class="menu-content px-3">
                                                 <label class="form-check form-switch form-check-custom form-check-solid">
@@ -219,37 +202,22 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <!--end::Menu item-->
                                     </div>
-                                    <!--end::Menu sub-->
                                 </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu separator-->
                                 <div class="separator my-3"></div>
-                                <!--end::Menu separator-->
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5">
                                     <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Account</div>
                                 </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5">
                                     <a href="#" class="menu-link px-5">Reports</a>
                                 </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5 my-1">
                                     <a href="#" class="menu-link px-5">Account Settings</a>
                                 </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5">
                                     <a href="#" class="menu-link text-danger px-5">Delete customer</a>
                                 </div>
-                                <!--end::Menu item-->
-                            </div>
-                            <!--end::Menu-->
-                            <!--end::Menu-->
+                            </div> --}}
                         </li>
                     </ul>
 
@@ -351,11 +319,15 @@
                         </div>
 
                         <div class="tab-pane fade" id="kt_customer_view_overview_events_and_logs_tab" role="tabpanel">
-
+                            <div class="card mb-6 mb-xl-9">
+                                <div class="card-body">Hold on, we're launching this very soon <br>We are working very hard to give you the best experience possible!</div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="kt_customer_view_overview_statements" role="tabpanel">
-
+                            <div class="card mb-6 mb-xl-9">
+                                <div class="card-body">Hold on, we're launching this very soon <br>We are working very hard to give you the best experience possible!</div>
+                            </div>
                         </div>
                     </div>
                 </div>
