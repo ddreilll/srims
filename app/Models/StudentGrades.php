@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Faker\Generator;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+
 
 
 class StudentGrades extends Model
@@ -67,7 +69,7 @@ class StudentGrades extends Model
         return $this->id;
     }
 
-    public function fetchAll($size, $filter)
+    public function fetchAll()
     {
         $data = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
             ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
@@ -93,9 +95,7 @@ class StudentGrades extends Model
             , term_name as enrsub_term_name
             , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as enrsub_sche_acadYear
             , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as enrsub_sche_acadYear_short
-            ')
-            ->where($filter)
-            ->paginate($size, ['*'], 'start');
+            ')->get();
 
         $i = 0;
         foreach ($data as $schedule) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 //Controller 
 use App\Http\Controllers\Admin\ScheduleController as Schedule;
@@ -23,12 +24,13 @@ class StudentGradesController extends Controller
 |
 */
 
-    public function index()
+    public function index(Request $request)
     {
 
         $schedules = (new Schedule)->getAllSchedules();
         $students = (new StudentProfile)->getAllStudentProfile();
         $grades = get_grading_list();
+
 
         return view('admin.student-grades', ['menu_header' => 'Menu', 'title' => "Student Grades", "menu" => "student-records", "sub_menu" => "student-grades", "formData_schedule" => $schedules, "formData_students" => $students, "formData_grades" => $grades]);
     }
@@ -110,16 +112,22 @@ class StudentGradesController extends Controller
 
     public function ajax_retrieveAll(Request $request)
     {
-        $size = $request->length;
+        // $size = $request->length;
 
-        if ($request->search['value']) {
-            $filter = [["enrsub_remarks", 'like', '%' . $request->search['value'] . '%']];
-        }else {
-            $filter = null;
-        }
+        // if ($request->search['value']) {
+        //     $filter = [["enrsub_remarks", 'like', '%' . $request->search['value'] . '%']];
+        // } else {
+        //     $filter = null;
+        // }
+        
+        $query = (new StudentGrades)->query();
 
-        header('Content-Type: application/json');
-        echo json_encode($this->getAllStudentGrades($size, $filter));
+        return (new DataTables)->eloquent($query)->setTotalRecords(10)->toJson();
+
+
+
+        // header('Content-Type: application/json');
+        // echo json_encode($this->getAllStudentGrades($size, $filter));
     }
 
     public function ajax_retrieve(Request $request)
