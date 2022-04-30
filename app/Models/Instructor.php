@@ -22,7 +22,6 @@ class Instructor extends Model
     public function insertOne($data)
     {
         $this->inst_empNo = $data['emp_no'];
-        $this->inst_prefix = $data['prefix_name'];
         $this->inst_firstName = $data['first_name'];
         $this->inst_middleName = $data['middle_name'];
         $this->inst_lastName = $data['last_name'];
@@ -43,7 +42,7 @@ class Instructor extends Model
         foreach ($data as $instructor) {
             $data[$i]['inst_fullName'] = format_name(
                 1,
-                $instructor['inst_prefix'],
+                "",
                 $instructor['inst_firstName'],
                 $instructor['inst_middleName'],
                 $instructor['inst_lastName'],
@@ -64,7 +63,7 @@ class Instructor extends Model
 
         $data[0]['inst_fullName'] = format_name(
             1,
-            $data[0]['inst_prefix'],
+            "",
             $data[0]['inst_firstName'],
             $data[0]['inst_middleName'],
             $data[0]['inst_lastName'],
@@ -79,7 +78,6 @@ class Instructor extends Model
         $this->whereRaw('md5(inst_id) = "' . $md5Id . '"')
             ->update([
                 'inst_empNo' => $data['emp_no'],
-                'inst_prefix' => $data['prefix_name'],
                 'inst_firstName' => $data['first_name'],
                 'inst_middleName' => $data['middle_name'],
                 'inst_lastName' => $data['last_name'],

@@ -35,7 +35,6 @@ class StudentGrades extends Model
         , stud_middleName as enrsub_stud_middleName
         , stud_lastName as enrsub_stud_lastName
         , stud_suffix as enrsub_stud_suffixName
-        , inst_prefix as enrsub_inst_prefix
         , inst_firstName as enrsub_inst_firstName
         , inst_middleName as enrsub_inst_middleName
         , inst_lastName as enrsub_inst_lastName
@@ -51,7 +50,7 @@ class StudentGrades extends Model
             ->get();
 
         $data[0]['enrsub_stud_fullName'] = format_name(1, null,  $data[0]['enrsub_stud_firstName'], $data[0]['enrsub_stud_middleName'], $data[0]['enrsub_stud_lastName'], $data[0]['enrsub_stud_suffixName']);
-        $data[0]['enrsub_inst_fullName'] = format_name(1, $data[0]['enrsub_inst_prefix'],  $data[0]['enrsub_inst_firstName'], $data[0]['enrsub_inst_middleName'], $data[0]['enrsub_inst_lastName'], $data[0]['enrsub_inst_suffixName']);
+        $data[0]['enrsub_inst_fullName'] = format_name(1, "",  $data[0]['enrsub_inst_firstName'], $data[0]['enrsub_inst_middleName'], $data[0]['enrsub_inst_lastName'], $data[0]['enrsub_inst_suffixName']);
         return $data;
     }
 
@@ -69,7 +68,7 @@ class StudentGrades extends Model
         return $this->id;
     }
 
-    public function fetchAll()
+    public function fetchAll($size, $filter)
     {
         $data = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
             ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
@@ -84,7 +83,6 @@ class StudentGrades extends Model
             , stud_middleName as enrsub_stud_middleName
             , stud_lastName as enrsub_stud_lastName
             , stud_suffix as enrsub_stud_suffixName
-            , inst_prefix as enrsub_inst_prefix
             , inst_firstName as enrsub_inst_firstName
             , inst_middleName as enrsub_inst_middleName
             , inst_lastName as enrsub_inst_lastName
@@ -95,13 +93,15 @@ class StudentGrades extends Model
             , term_name as enrsub_term_name
             , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as enrsub_sche_acadYear
             , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as enrsub_sche_acadYear_short
-            ')->get();
+            ')
+            ->where($filter)
+            ->paginate($size, ['*'], 'start');
 
         $i = 0;
         foreach ($data as $schedule) {
 
             $data[$i]['enrsub_stud_fullName'] = format_name(1, null,  $schedule['enrsub_stud_firstName'], $schedule['enrsub_stud_middleName'], $schedule['enrsub_stud_lastName'], $schedule['enrsub_stud_suffix']);
-            $data[$i]['enrsub_inst_fullName'] = format_name(1, $schedule['enrsub_inst_prefix'],  $schedule['enrsub_inst_firstName'], $schedule['enrsub_inst_middleName'], $schedule['enrsub_inst_lastName'], $schedule['enrsub_inst_suffix']);
+            $data[$i]['enrsub_inst_fullName'] = format_name(1, null,  $schedule['enrsub_inst_firstName'], $schedule['enrsub_inst_middleName'], $schedule['enrsub_inst_lastName'], $schedule['enrsub_inst_suffix']);
 
 
             if ($data[$i]['enrsub_otherGrade'] == "INC" && $schedule['enrsub_grade']) {
@@ -184,7 +184,6 @@ class StudentGrades extends Model
                     ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
                     ->selectRaw('t_student_enrolled_subjects.*
                     , md5(enrsub_id) as enrsub_id_md5
-                    , inst_prefix as enrsub_inst_prefix
                     , inst_firstName as enrsub_inst_firstName
                     , inst_middleName as enrsub_inst_middleName
                     , inst_lastName as enrsub_inst_lastName
@@ -214,7 +213,7 @@ class StudentGrades extends Model
                         $grades[$b]['enrsub_grade_display'] = $grade['enrsub_grade'];
                     }
 
-                    $grades[$b]['enrsub_inst_fullName'] = format_name(1, $grades[$b]['enrsub_inst_prefix'],  $grades[$b]['enrsub_inst_firstName'], $grades[$b]['enrsub_inst_middleName'], $grades[$b]['enrsub_inst_lastName'], $grades[$b]['enrsub_inst_suffixName']);
+                    $grades[$b]['enrsub_inst_fullName'] = format_name(1, "",  $grades[$b]['enrsub_inst_firstName'], $grades[$b]['enrsub_inst_middleName'], $grades[$b]['enrsub_inst_lastName'], $grades[$b]['enrsub_inst_suffixName']);
 
                     $b++;
                 }

@@ -48,7 +48,6 @@ class Schedule extends Model
             , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as sche_acadYear
             , CONCAT("SY " , sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as sche_acadYear_short
             , inst_id as sche_inst_id
-            , inst_prefix as sche_inst_name_prefix
             , inst_firstName as sche_inst_name_first 
             , inst_middleName as sche_inst_name_middle
             , inst_lastName as sche_inst_name_last
@@ -77,7 +76,6 @@ class Schedule extends Model
             , term_sche_id as sche_term_id
             , term_name as sche_term_name
             , inst_id as sche_inst_id
-            , inst_prefix as sche_inst_name_prefix
             , inst_firstName as sche_inst_name_first
             , inst_middleName as sche_inst_name_middle
             , inst_lastName as sche_inst_name_last

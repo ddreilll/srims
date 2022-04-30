@@ -112,22 +112,16 @@ class StudentGradesController extends Controller
 
     public function ajax_retrieveAll(Request $request)
     {
-        // $size = $request->length;
+        $size = $request->length;
 
-        // if ($request->search['value']) {
-        //     $filter = [["enrsub_remarks", 'like', '%' . $request->search['value'] . '%']];
-        // } else {
-        //     $filter = null;
-        // }
-        
-        $query = (new StudentGrades)->query();
+        if ($request->search['value']) {
+            $filter = [["enrsub_remarks", 'like', '%' . $request->search['value'] . '%']];
+        }else {
+            $filter = null;
+        }
 
-        return (new DataTables)->eloquent($query)->setTotalRecords(10)->toJson();
-
-
-
-        // header('Content-Type: application/json');
-        // echo json_encode($this->getAllStudentGrades($size, $filter));
+        header('Content-Type: application/json');
+        echo json_encode($this->getAllStudentGrades($size, $filter));
     }
 
     public function ajax_retrieve(Request $request)

@@ -73,7 +73,6 @@ class InstructorController extends Controller
 
         $request->validate([
             'emp_no' => 'string|max:20|required',
-            'prefix_name' => 'string|max:10|nullable',
             'first_name' => 'string|max:50|required',
             'middle_name' => 'string|max:50|nullable',
             'last_name' => 'string|max:50|required',
@@ -109,7 +108,6 @@ class InstructorController extends Controller
         $request->validate([
             'id' => 'required',
             'emp_no' => 'string|max:20|required',
-            'prefix_name' => 'string|max:10|nullable',
             'first_name' => 'string|max:50|required',
             'middle_name' => 'string|max:50|nullable',
             'last_name' => 'string|max:50|required',
@@ -118,7 +116,6 @@ class InstructorController extends Controller
 
         $details = [
             'emp_no' => $request['emp_no'],
-            'prefix_name' => $request['prefix_name'],
             'first_name' => $request['first_name'],
             'middle_name' => $request['middle_name'],
             'last_name' => $request['last_name'],
