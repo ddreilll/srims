@@ -22,10 +22,10 @@ class Instructor extends Model
     public function insertOne($data)
     {
         $this->inst_empNo = $data['emp_no'];
-        $this->inst_firstName = $data['first_name'];
-        $this->inst_middleName = $data['middle_name'];
-        $this->inst_lastName = $data['last_name'];
-        $this->inst_suffix = $data['suffix_name'];
+        $this->inst_firstName = strtoupper($data['first_name']);
+        $this->inst_middleName = strtoupper($data['middle_name']);
+        $this->inst_lastName = strtoupper($data['last_name']);
+        $this->inst_suffix = strtoupper($data['suffix_name']);
         $this->save();
 
         return $this->id;
@@ -78,10 +78,10 @@ class Instructor extends Model
         $this->whereRaw('md5(inst_id) = "' . $md5Id . '"')
             ->update([
                 'inst_empNo' => $data['emp_no'],
-                'inst_firstName' => $data['first_name'],
-                'inst_middleName' => $data['middle_name'],
-                'inst_lastName' => $data['last_name'],
-                'inst_suffix' => $data['suffix_name']
+                'inst_firstName' => strtoupper($data['first_name']),
+                'inst_middleName' => strtoupper($data['middle_name']),
+                'inst_lastName' => strtoupper($data['last_name']),
+                'inst_suffix' => strtoupper($data['suffix_name'])
             ]);
     }
 
