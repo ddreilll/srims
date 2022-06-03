@@ -40,7 +40,7 @@ class StudentProfile extends Model
         $faker->addProvider(new \Faker\Provider\Base($faker));
 
         $this->stud_studentNo = $data['studentNo'];
-        $this->stud_uuid = $faker->uuid3();
+        $this->stud_uuid = $faker->uuid();
         $this->stud_firstName = $data['firstName'];
         $this->stud_middleName = $data['middleName'];
         $this->stud_lastName = $data['lastName'];

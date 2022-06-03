@@ -53,26 +53,35 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('student/profile/retrieveAll', 'StudentProfileController@ajax_retrieveAll');
     Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve');
     Route::post('student/profile/update', 'StudentProfileController@ajax_update');
+    Route::post('student/profile/update-remarks', 'StudentProfileController@ajax_update_remarks');
     Route::post('student/profile/delete', 'StudentProfileController@ajax_delete');
 
+    Route::get('student/profile/add', 'StudentProfileController@view_add_profile');
     Route::get('student/profile/{profile_uuid}', 'StudentProfileController@view_profile');
+    Route::get('student/profile/{profile_uuid}/edit', 'StudentProfileController@edit_profile');
 
+    Route::post('student/profile/retrieve-documents', 'StudentProfileController@ajax_retrieve_documents');
 
 
 
     /*
 |--------------------------------------------------------------------------
-|                       Admission Requirements
+|                       Documents
 |--------------------------------------------------------------------------
 |
 */
 
-    Route::get('admission-requirements/list', 'AdmissionRequirementsController@index')->name('admission-requirements');
-    Route::get('admission-requirements/retrieveAll', 'AdmissionRequirementsController@ajax_retrieveAll');
-    Route::post('admission-requirements/retrieve', 'AdmissionRequirementsController@ajax_retrieve');
-    Route::post('admission-requirements/add', 'AdmissionRequirementsController@ajax_insert');
-    Route::post('admission-requirements/update', 'AdmissionRequirementsController@ajax_update');
-    Route::post('admission-requirements/delete', 'AdmissionRequirementsController@ajax_delete');
+    Route::get('documents/list', 'DocumentsController@index')->name('documents');
+    Route::get('documents/retrieveAll', 'DocumentsController@ajax_retrieveAll');
+    Route::post('documents/retrieve', 'DocumentsController@ajax_retrieve');
+    Route::post('documents/add', 'DocumentsController@ajax_insert');
+    Route::post('documents/update', 'DocumentsController@ajax_update');
+    Route::post('documents/delete', 'DocumentsController@ajax_delete');
+
+    // Documents Type
+    Route::get('documents/category/{category}', 'DocumentsController@ajax_retrieve_by_category');
+    Route::post('documents/document-types', 'DocumentsController@ajax_retrieveTypes');
+
 
 
     /*

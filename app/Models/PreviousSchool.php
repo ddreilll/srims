@@ -2,10 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PreviousSchool extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
+
+    protected $table = 't_external_school';
+    protected $primaryKey = 'extsch_id';
+
+    const CREATED_AT = 'extsch_createdAt';
+    const UPDATED_AT = 'extsch_updatedAt';
+    const DELETED_AT = 'extsch_deletedAt';
 }
+
+ 
