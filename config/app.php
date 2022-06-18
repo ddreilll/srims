@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost/pupqc-erna'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -228,7 +230,7 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Bugsnag'      => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

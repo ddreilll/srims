@@ -24,6 +24,7 @@ class Schedule extends Model
         $this->term_sche_id = $data['semester'];
         $this->room_sche_id = $data['room'];
         $this->inst_sche_id = $data['instructor'];
+        $this->sche_filelink = $data['file_link'];
         $this->save();
 
         return $this->id;
@@ -67,6 +68,7 @@ class Schedule extends Model
             ->selectRaw('md5(sche_id) as sche_id_md5
             , sche_id 
             , sche_section
+            , sche_filelink
             , sche_acadYear as sche_year
             , room_id as sche_room_id
             , room_name as sche_room_code
@@ -90,7 +92,7 @@ class Schedule extends Model
     {
         $this->whereRaw('md5(sche_id) = "' . $md5Id . '"')
             ->update([
-                'sche_section' => $data['section'], 'sche_acadYear' => $data['year'], 'term_sche_id' => $data['semester'], 'room_sche_id' => $data['room'], 'subj_sche_id' => $data['subject'], 'inst_sche_id' => $data['instructor']
+                'sche_section' => $data['section'], 'sche_acadYear' => $data['year'], 'term_sche_id' => $data['semester'], 'room_sche_id' => $data['room'], 'subj_sche_id' => $data['subject'], 'inst_sche_id' => $data['instructor'],'sche_filelink' => $data['file_link']
             ]);
     }
 

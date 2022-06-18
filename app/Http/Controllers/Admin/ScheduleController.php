@@ -95,6 +95,8 @@ class ScheduleController extends Controller
         for ($i = 0; $i < sizeof($time_slots); $i++) {
             (new TimeSlot)->insertOne($sched_id, $time_slots[$i]);
         }
+
+        return md5($sched_id);
     }
 
     public function getAllSchedules($filter = null)
@@ -155,16 +157,18 @@ class ScheduleController extends Controller
             'semester' => 'required',
             'year' => 'required',
             'instructor' => 'required',
+            'file_link' => 'required',
         ]);
 
-        $this->createSchedule(
-            ["subject" => $request->subject, "section" => $request->section, "semester" => $request->semester, "year" => $request->year, "room" => $request->room, "instructor" => $request->instructor],
+        $md5_sched_id = $this->createSchedule(
+            ["subject" => $request->subject, "section" => $request->section, "semester" => $request->semester, "year" => $request->year, "room" => $request->room, "instructor" => $request->instructor, "file_link" => $request->file_link,],
             $request->time_slots
         );
 
         header('Content-Type: application/json');
         echo json_encode([
-            'message' => __('modal.added_success', ['attribute' => 'Schedule'])
+            'message' => __('modal.added_success', ['attribute' => 'Schedule']),
+            'id' => $md5_sched_id
         ]);
     }
 
@@ -212,7 +216,7 @@ class ScheduleController extends Controller
 
         $this->updateSchedule(
             $request->id,
-            ["subject" => $request->subject, "section" => $request->section, "semester" => $request->semester, "year" => $request->year, "room" => $request->room, "instructor" => $request->instructor],
+            ["subject" => $request->subject, "section" => $request->section, "semester" => $request->semester, "year" => $request->year, "room" => $request->room, "instructor" => $request->instructor, "file_link" => $request->file_link,],
             $request->time_slots
         );
 

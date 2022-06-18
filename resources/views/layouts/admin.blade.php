@@ -18,7 +18,6 @@
     <link rel="manifest" href="{{ asset('/assets/media/logo/favicon/site.webmanifest') }}">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 
     <link href="{{ asset('/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
         type="text/css" />
@@ -26,6 +25,76 @@
     <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
     <style>
+        /* poppins-200 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 200;
+            src: local(''),
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-200.woff2') }}') format('woff2'),
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-200.woff') }}') format('woff');
+        }
+
+        /* poppins-300 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 300;
+            src: local(''),
+
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-300.woff2') }}') format('woff2'),
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-300.woff') }}') format('woff');
+
+        }
+
+        /* poppins-regular - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            src: local(''),
+
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-regular.woff2') }}') format('woff2'),
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-regular.woff') }}') format('woff');
+
+        }
+
+        /* poppins-500 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            src: local(''),
+
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-500.woff2') }}') format('woff2'),
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-500.woff') }}') format('woff');
+
+        }
+
+        /* poppins-600 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 600;
+            src: local(''),
+
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-600.woff2') }}') format('woff2'),
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-600.woff') }}') format('woff');
+
+        }
+
+        /* poppins-700 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            src: local(''),
+
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-700.woff2') }}') format('woff2'),
+                url('{{ asset('/assets/font/poppins/poppins-v19-latin-700.woff') }}') format('woff');
+
+        }
+
         .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) .select2-search.select2-search--inline .select2-search__field {
             font-family: Poppins, Helvetica, sans-serif;
         }

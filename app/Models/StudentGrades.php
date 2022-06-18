@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
-
 
 
 class StudentGrades extends Model
@@ -18,6 +15,24 @@ class StudentGrades extends Model
     const CREATED_AT = 'enrsub_createdAt';
     const UPDATED_AT = 'enrsub_updatedAt';
     const DELETED_AT = 'enrsub_deletedAt';
+
+
+    /**
+     * Get enrolled subject grades from it's schedule
+     */
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class, 'sche_enrsub_id', 'sche_id');
+    }
+
+    /**
+     * Get enrolled subject grades from it's student
+     */
+    public function student()
+    {
+        return $this->hasOne(StudentProfile::class, 'stud_enrsub_id', 'stud_id');
+    }
+
 
     // Subject details
     public function fetchOne($md5Id)
@@ -82,7 +97,6 @@ class StudentGrades extends Model
             , stud_firstName as enrsub_stud_firstName
             , stud_middleName as enrsub_stud_middleName
             , stud_lastName as enrsub_stud_lastName
-            , stud_suffix as enrsub_stud_suffixName
             , inst_firstName as enrsub_inst_firstName
             , inst_middleName as enrsub_inst_middleName
             , inst_lastName as enrsub_inst_lastName
@@ -103,11 +117,12 @@ class StudentGrades extends Model
             $data[$i]['enrsub_stud_fullName'] = format_name(1, null,  $schedule['enrsub_stud_firstName'], $schedule['enrsub_stud_middleName'], $schedule['enrsub_stud_lastName'], $schedule['enrsub_stud_suffix']);
             $data[$i]['enrsub_inst_fullName'] = format_name(1, null,  $schedule['enrsub_inst_firstName'], $schedule['enrsub_inst_middleName'], $schedule['enrsub_inst_lastName'], $schedule['enrsub_inst_suffix']);
 
+            $finalGrade = (($schedule['enrsub_prelimGrade'] ? $schedule['enrsub_prelimGrade'] : 0.00) + ($schedule['enrsub_finalGrade'] ? $schedule['enrsub_finalGrade'] : $schedule['enrsub_prelimGrade'])) / 2;
 
-            if ($data[$i]['enrsub_otherGrade'] == "INC" && $schedule['enrsub_grade']) {
+            if ($data[$i]['enrsub_otherGrade'] == "INC" && $finalGrade >= 0.00) {
 
-                $data[$i]['enrsub_grade_display'] = $schedule['enrsub_grade'] . "/INC";
-            } else if ($data[$i]['enrsub_otherGrade'] == "INC" && !$schedule['enrsub_grade']) {
+                $data[$i]['enrsub_grade_display'] = $finalGrade . "/INC";
+            } else if ($data[$i]['enrsub_otherGrade'] == "INC" && $finalGrade == 0.00) {
 
                 $data[$i]['enrsub_grade_display'] = "INC";
             } else if ($schedule['enrsub_otherGrade'] == "W" || $schedule['enrsub_otherGrade'] == "D") {
@@ -115,7 +130,7 @@ class StudentGrades extends Model
                 $data[$i]['enrsub_grade_display'] = $schedule['enrsub_otherGrade'];
             } else {
 
-                $data[$i]['enrsub_grade_display'] = $schedule['enrsub_grade'];
+                $data[$i]['enrsub_grade_display'] = $finalGrade;
             }
 
             $i++;

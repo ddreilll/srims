@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.fluid')
 
 @section('styles')
     <style>
@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
             <div class="card mb-5 mb-xl-8">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
@@ -161,6 +161,11 @@
                             </select>
                         </div>
 
+                        <div class="fv-row mb-15">
+                            <label class="fs-6 fw-bold mb-2 required">Google Drive file link</label>
+                            <input type="text" class="form-control form-control-solid" name="file_link" />
+                        </div>
+
                         <div class="mb-8">
                             <label class="d-flex align-items-center fs-5 fw-bold">
                                 <span>Day and Time Slots</span>
@@ -185,8 +190,13 @@
                     </div>
                     <div class="modal-footer flex-center">
                         <button type="reset" id="kt_modal_add_schedule_cancel" class="btn btn-light me-3">Discard</button>
-                        <button type="submit" id="kt_modal_add_schedule_submit" class="btn btn-primary">
-                            <span class="indicator-label">Submit</span>
+                        <button type="button" id="kt_modal_add_schedule_save_add_student" class="btn btn-success">
+                            <span class="indicator-label">Save & Add Students</span>
+                            <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                        <button type="button" id="kt_modal_add_schedule_save" class="btn btn-primary">
+                            <span class="indicator-label">Save</span>
                             <span class="indicator-progress">Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -289,6 +299,11 @@
                                     <option value="{{ $room->room_id }}">{{ $room->room_name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <div class="fv-row mb-15">
+                            <label class="fs-6 fw-bold mb-2 required">Google Drive file link</label>
+                            <input type="text" class="form-control form-control-solid" name="file_link" />
                         </div>
 
                         <div class="mb-8">
@@ -413,6 +428,7 @@
                     room: ($("#kt_modal_" + type + "_schedule_form [name='room']").val() == '') ? null : $(
                         "#kt_modal_" + type + "_schedule_form [name='room']").val(),
                     instructor: $("#kt_modal_" + type + "_schedule_form [name='instructor']").val(),
+                    file_link: $("#kt_modal_" + type + "_schedule_form [name='file_link']").val(),
                     time_slots: []
                 };
 
@@ -475,8 +491,14 @@
                         },
                     },
                 },
+                'file_link': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Google Drive file link is required'
+                        },
+                    },
+                },
             };
-
 
 
             var table = $("#kt_schedule_table").DataTable({
@@ -611,7 +633,6 @@
 
 
             var add_modal = init_modal("kt_modal_add_schedule");
-            var add_submitBtnId = "kt_modal_add_schedule_submit";
             var add_formValidation = init_formValidation("kt_modal_add_schedule_form", form_fields);
 
             $('#kt_modal_add_schedule_cancel, #kt_modal_add_schedule_close').on("click", function(t) {
@@ -645,14 +666,17 @@
                     delete_timeSlot(this, "add");
                 });
 
-            $("#kt_modal_add_schedule_form").on("submit", function(e) {
+            
+            $("#kt_modal_add_schedule_save").on("click", function(e) {
                 e.preventDefault();
+
+                var add_saveBtnId = "kt_modal_add_schedule_save";
 
                 add_formValidation.validate().then(function(e) {
 
                     if ('Valid' == e) {
 
-                        trigger_btnIndicator(add_submitBtnId, "loading");
+                        trigger_btnIndicator(add_saveBtnId, "loading");
 
                         axios({
                             method: "POST",
@@ -672,7 +696,7 @@
                                         timeout: "{{ $axios_timeout }}"
                                     }).then(function(respond) {
 
-                                        trigger_btnIndicator(add_submitBtnId,
+                                        trigger_btnIndicator(add_saveBtnId,
                                             "default");
                                         if (respond.status == 200) {
 
@@ -693,7 +717,7 @@
                                     });
                                 } else if (!respond.data.isValid) {
 
-                                    trigger_btnIndicator(add_submitBtnId, "default");
+                                    trigger_btnIndicator(add_saveBtnId, "default");
                                     display_modal_error(
                                         "{{ __('modal.error_duplicate') }}");
                                 }
@@ -711,6 +735,77 @@
                 });
             });
 
+            $("#kt_modal_add_schedule_save_add_student").on("click", function(e) {
+                e.preventDefault();
+
+                var add_saveAddBtnId = "kt_modal_add_schedule_save_add_student";
+
+                add_formValidation.validate().then(function(e) {
+
+                    if ('Valid' == e) {
+
+                        trigger_btnIndicator(add_saveAddBtnId, "loading");
+
+                        axios({
+                            method: "POST",
+                            url: "{{ url('/schedules/validate') }}",
+                            data: retrieve_form_data("add"),
+                            timeout: "{{ $axios_timeout }}"
+                        }).then(function(respond) {
+
+                            if (respond.status == 200) {
+
+                                if (respond.data.isValid) {
+
+                                    axios({
+                                        method: "POST",
+                                        url: "{{ url('/schedules/add') }}",
+                                        data: retrieve_form_data("add"),
+                                        timeout: "{{ $axios_timeout }}"
+                                    }).then(function(respond) {
+
+                                        trigger_btnIndicator(add_saveAddBtnId,
+                                            "default");
+                                        if (respond.status == 200) {
+
+                                            display_axios_success(respond.data
+                                                .message);
+                                            add_modal.hide();
+
+                                            setInterval(() => {
+                                                    window.location = "{{ url('/class') }}" + "/" + respond.data.id;
+                                            }, 1500);
+                                        } else {
+
+                                            display_modal_error(
+                                                "{{ __('modal.error') }}"
+                                                );
+                                        }
+
+                                        reset_form("add");
+                                        table.ajax.reload();
+                                    }).catch(function(error) {
+                                        display_axios_error(error);
+                                    });
+                                } else if (!respond.data.isValid) {
+
+                                    trigger_btnIndicator(add_saveAddBtnId, "default");
+                                    display_modal_error(
+                                        "{{ __('modal.error_duplicate') }}");
+                                }
+                            } else {
+
+                                display_modal_error("{{ __('modal.error') }}");
+                            }
+                        }).catch(function(error) {
+
+                            display_axios_error(error);
+                        });
+                    } else {
+                        display_modal_error("{{ __('modal.error') }}");
+                    }
+                });
+            });
 
             var edit_modal = init_modal("kt_modal_edit_schedule");
             var edit_submitBtnId = "kt_modal_edit_schedule_submit";
@@ -770,7 +865,8 @@
                                 .trigger('change');
                             $('#kt_modal_edit_schedule_form [name="instructor"]').val(d[
                                 'sche_inst_id']).trigger('change');
-
+                            $('#kt_modal_edit_schedule_form [name="file_link"]').val(d[
+                                'sche_filelink']);
                             timeSlots = d['sche_timeSlots'];
                             for (let i = 0; i < timeSlots.length; i++) {
                                 add_timeSlot("edit", {

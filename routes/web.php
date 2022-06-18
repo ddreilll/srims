@@ -26,41 +26,68 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
+    /*
+    |--------------------------------------------------------------------------
+    |                      File Manager
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::get('file-manager', 'FileManagerController@index')->name('file-manager');
 
     /*
-|--------------------------------------------------------------------------
-|                      Student Grades
-|--------------------------------------------------------------------------
-|
-*/
+    |--------------------------------------------------------------------------
+    |                      Classes
+    |--------------------------------------------------------------------------
+    |
+    */
 
-    Route::get('student/grades', 'StudentGradesController@index')->name('student-grades');
-    Route::post('student/grades/add', 'StudentGradesController@ajax_insert');
-    Route::get('student/grades/retrieveAll', 'StudentGradesController@ajax_retrieveAll');
-    Route::post('student/grades/retrieve', 'StudentGradesController@ajax_retrieve');
-    Route::post('student/grades/update', 'StudentGradesController@ajax_update');
-    Route::post('student/grades/delete', 'StudentGradesController@ajax_delete');
+    Route::get('class', 'ClassController@index')->name('student-class');
+    Route::post('class/add', 'ClassController@ajax_insert');
+    Route::get('class/retrieveAll', 'ClassController@ajax_retrieveAll');
+    Route::post('class/retrieve', 'ClassController@ajax_retrieve');
+    Route::post('class/update', 'ClassController@ajax_update');
+    Route::post('class/delete', 'ClassController@ajax_delete');
+
+    Route::get('class/{class_md5_id}', 'ClassController@show_class');
+
+    /*               Student Grads         */
+
+    Route::get('class/{class_id}/students', 'ClassController@ajax_retrieve_all_student_grades');
+    Route::post('class/update-grade', 'ClassController@ajax_edit_student_grade');
+    Route::post('class/delete-grade', 'ClassController@ajax_delete_student_grade');
+
+    Route::get('class/{class_id}/search/student-profile', 'ClassController@ajax_search_student_profile');
+    Route::post('class/add-grade', 'ClassController@ajax_add_student_grade');
+
+
+
+
+
 
     /*
-|--------------------------------------------------------------------------
-|                      Student Records
-|--------------------------------------------------------------------------
-|
-*/
+        |--------------------------------------------------------------------------
+        |                      Student Records
+        |--------------------------------------------------------------------------
+        |
+        */
 
     Route::get('student/profile', 'StudentProfileController@index')->name('student-profile');
     Route::post('student/profile/add', 'StudentProfileController@ajax_insert');
     Route::get('student/profile/retrieveAll', 'StudentProfileController@ajax_retrieveAll');
     Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve');
-    Route::post('student/profile/update', 'StudentProfileController@ajax_update');
+    Route::post('student/profile/edit', 'StudentProfileController@ajax_edit');
     Route::post('student/profile/update-remarks', 'StudentProfileController@ajax_update_remarks');
     Route::post('student/profile/delete', 'StudentProfileController@ajax_delete');
 
-    Route::get('student/profile/add', 'StudentProfileController@view_add_profile');
-    Route::get('student/profile/{profile_uuid}', 'StudentProfileController@view_profile');
+    Route::get('student/profile/add', 'StudentProfileController@create_profile');
+    Route::get('student/profile/{profile_uuid}', 'StudentProfileController@show_profile');
     Route::get('student/profile/{profile_uuid}/edit', 'StudentProfileController@edit_profile');
 
     Route::post('student/profile/retrieve-documents', 'StudentProfileController@ajax_retrieve_documents');
+    Route::post('student/profile/retrieve-prev-college', 'StudentProfileController@ajax_retrieve_prevCollege');
+
+    Route::get('generate-pdf', 'StudentProfileController@generateTag');
 
 
 

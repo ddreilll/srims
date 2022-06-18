@@ -10,8 +10,10 @@
             <div class="aside-user-info flex-row-fluid flex-wrap ms-5">
                 <div class="d-flex">
                     <div class="flex-grow-1 me-2">
-                        <a href="#" class="text-white text-hover-primary fs-6 fw-bold">{{ auth()->user()->name }}</a>
-                        <span class="text-gray-600 fw-bold d-block fs-8 mb-1">{{ \Auth::user()->roles->pluck('title')->toArray()[0] }}</span>
+                        <a href="#"
+                            class="text-white text-hover-primary fs-6 fw-bold">{{ auth()->user()->name }}</a>
+                        <span
+                            class="text-gray-600 fw-bold d-block fs-8 mb-1">{{ \Auth::user()->roles->pluck('title')->toArray()[0] }}</span>
                         <div class="d-flex align-items-center text-success fs-9">
                             <span class="bullet bullet-dot bg-success me-1"></span>online
                         </div>
@@ -21,8 +23,8 @@
                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                             data-kt-menu-overflow="true">
                             <span class="svg-icon svg-icon-muted svg-icon-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
                                     <path opacity="0.3"
                                         d="M22.1 11.5V12.6C22.1 13.2 21.7 13.6 21.2 13.7L19.9 13.9C19.7 14.7 19.4 15.5 18.9 16.2L19.7 17.2999C20 17.6999 20 18.3999 19.6 18.7999L18.8 19.6C18.4 20 17.8 20 17.3 19.7L16.2 18.9C15.5 19.3 14.7 19.7 13.9 19.9L13.7 21.2C13.6 21.7 13.1 22.1 12.6 22.1H11.5C10.9 22.1 10.5 21.7 10.4 21.2L10.2 19.9C9.4 19.7 8.6 19.4 7.9 18.9L6.8 19.7C6.4 20 5.7 20 5.3 19.6L4.5 18.7999C4.1 18.3999 4.1 17.7999 4.4 17.2999L5.2 16.2C4.8 15.5 4.4 14.7 4.2 13.9L2.9 13.7C2.4 13.6 2 13.1 2 12.6V11.5C2 10.9 2.4 10.5 2.9 10.4L4.2 10.2C4.4 9.39995 4.7 8.60002 5.2 7.90002L4.4 6.79993C4.1 6.39993 4.1 5.69993 4.5 5.29993L5.3 4.5C5.7 4.1 6.3 4.10002 6.8 4.40002L7.9 5.19995C8.6 4.79995 9.4 4.39995 10.2 4.19995L10.4 2.90002C10.5 2.40002 11 2 11.5 2H12.6C13.2 2 13.6 2.40002 13.7 2.90002L13.9 4.19995C14.7 4.39995 15.5 4.69995 16.2 5.19995L17.3 4.40002C17.7 4.10002 18.4 4.1 18.8 4.5L19.6 5.29993C20 5.69993 20 6.29993 19.7 6.79993L18.9 7.90002C19.3 8.60002 19.7 9.39995 19.9 10.2L21.2 10.4C21.7 10.5 22.1 11 22.1 11.5ZM12.1 8.59998C10.2 8.59998 8.6 10.2 8.6 12.1C8.6 14 10.2 15.6 12.1 15.6C14 15.6 15.6 14 15.6 12.1C15.6 10.2 14 8.59998 12.1 8.59998Z"
                                         fill="black" />
@@ -40,16 +42,18 @@
                                         <img alt="Logo" src="{{ asset('/assets/media/logo/logo_main.png') }}" />
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name }}
+                                        <div class="fw-bolder d-flex align-items-center fs-5">
+                                            {{ auth()->user()->name }}
                                         </div>
-                                        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
+                                        <a href="#"
+                                            class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="separator my-2"></div>
                             <div class="menu-item px-5">
                                 <a href="#" class="menu-link px-5 disabled">My
-                                    Profile 
+                                    Profile
                                     <span class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
                             </div>
 
@@ -57,7 +61,8 @@
 
                             <div class="menu-item px-5 my-1">
                                 <a href="#" class="menu-link px-5 disabled">Account
-                                    Settings <span class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
+                                    Settings <span
+                                        class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
                             </div>
 
                             <div class="menu-item px-5">
@@ -86,14 +91,54 @@
                         </div>
                     </div>
 
-                    @can('menu_student_records')
-                        <div data-kt-menu-trigger="click"
-                            class="menu-item {{ $menu === 'student-records' ? 'here show' : '' }} menu-accordion">
-                            <span class="menu-link">
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ $menu === 'student-profile' ? 'active' : '' }}"
+                            href="{{ url('/student/profile') }}">
+                            <span class="menu-icon">
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 13H3C2.4 13 2 12.6 2 12C2 11.4 2.4 11 3 11H21C21.6 11 22 11.4 22 12C22 12.6 21.6 13 21 13Z" fill="black"/>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="menu-title">Student Profile</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ $menu === 'class' ? 'active' : '' }}" href="{{ url('/class') }}">
+                            <span class="menu-icon">
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 13H3C2.4 13 2 12.6 2 12C2 11.4 2.4 11 3 11H21C21.6 11 22 11.4 22 12C22 12.6 21.6 13 21 13Z" fill="black"/>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="menu-title">Class List</span>
+                        </a>
+                    </div>
+                @endcan
+
+
+
+                @can('category_tools')
+                    <div class="menu-item">
+                        <div class="menu-content pt-8 pb-2">
+                            <span class="menu-section text-muted text-uppercase fs-8 ls-1">Tools</span>
+                        </div>
+                    </div>
+
+                    @can('access_file_directory')
+                        <div class="menu-item">
+                            <a class="menu-link {{ $menu === 'file-manager' ? 'active' : '' }}"
+                                href="{{ url('/file-manager') }}">
                                 <span class="menu-icon">
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
                                             <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="black" />
                                             <path
                                                 d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z"
@@ -101,36 +146,8 @@
                                         </svg>
                                     </span>
                                 </span>
-                                <span class="menu-title">Student Records</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-
-                                @can('access_student_profile')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'student-profile' ? 'active' : '' }}"
-                                            href="{{ url('/student/profile') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Profile</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('access_student_grades')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'student-grades' ? 'active' : '' }}"
-                                            href="{{ url('/student/grades') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Grades</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                            </div>
+                                <span class="menu-title">File Manager</span>
+                            </a>
                         </div>
                     @endcan
                 @endcan
@@ -150,8 +167,8 @@
                                 <span class="menu-icon">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
                                             <path opacity="0.3"
                                                 d="M17 10H11C10.4 10 10 9.6 10 9V8C10 7.4 10.4 7 11 7H17C17.6 7 18 7.4 18 8V9C18 9.6 17.6 10 17 10ZM22 4V3C22 2.4 21.6 2 21 2H11C10.4 2 10 2.4 10 3V4C10 4.6 10.4 5 11 5H21C21.6 5 22 4.6 22 4ZM22 15V14C22 13.4 21.6 13 21 13H11C10.4 13 10 13.4 10 14V15C10 15.6 10.4 16 11 16H21C21.6 16 22 15.6 22 15ZM18 20V19C18 18.4 17.6 18 17 18H11C10.4 18 10 18.4 10 19V20C10 20.6 10.4 21 11 21H17C17.6 21 18 20.6 18 20Z"
                                                 fill="black" />
@@ -200,8 +217,8 @@
                                 <span class="menu-icon">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
                                             <path opacity="0.3"
                                                 d="M18 21.6C16.3 21.6 15 20.3 15 18.6V2.50001C15 2.20001 14.6 1.99996 14.3 2.19996L13 3.59999L11.7 2.3C11.3 1.9 10.7 1.9 10.3 2.3L9 3.59999L7.70001 2.3C7.30001 1.9 6.69999 1.9 6.29999 2.3L5 3.59999L3.70001 2.3C3.50001 2.1 3 2.20001 3 3.50001V18.6C3 20.3 4.3 21.6 6 21.6H18Z"
                                                 fill="black" />
@@ -264,8 +281,8 @@
                             <span class="menu-link">
                                 <span class="menu-icon">
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
                                             <path opacity="0.3"
                                                 d="M18 21.6C16.3 21.6 15 20.3 15 18.6V2.50001C15 2.20001 14.6 1.99996 14.3 2.19996L13 3.59999L11.7 2.3C11.3 1.9 10.7 1.9 10.3 2.3L9 3.59999L7.70001 2.3C7.30001 1.9 6.69999 1.9 6.29999 2.3L5 3.59999L3.70001 2.3C3.50001 2.1 3 2.20001 3 3.50001V18.6C3 20.3 4.3 21.6 6 21.6H18Z"
                                                 fill="black" />
@@ -339,16 +356,18 @@
                                 <span class="menu-icon">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
                                             <path
                                                 d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z"
                                                 fill="black" />
-                                            <rect opacity="0.3" x="14" y="4" width="4" height="4" rx="2" fill="black" />
+                                            <rect opacity="0.3" x="14" y="4" width="4"
+                                                height="4" rx="2" fill="black" />
                                             <path
                                                 d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z"
                                                 fill="black" />
-                                            <rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="black" />
+                                            <rect opacity="0.3" x="6" y="5" width="6"
+                                                height="6" rx="3" fill="black" />
                                         </svg>
                                     </span>
                                     <!--end::Svg Icon-->
@@ -390,8 +409,8 @@
                             <span class="menu-link">
                                 <span class="menu-icon">
                                     <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
                                             <path
                                                 d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z"
                                                 fill="black" />
@@ -434,18 +453,5 @@
 
             </div>
         </div>
-    </div>
-    <div class="aside-footer flex-column-auto py-5" id="kt_aside_footer">
-        <a href="#" class="btn btn-custom btn-primary w-100">
-            <span class="btn-label">Encode Student</span>
-            <span class="svg-icon btn-icon svg-icon-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path opacity="0.3"
-                        d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM15 17C15 16.4 14.6 16 14 16H8C7.4 16 7 16.4 7 17C7 17.6 7.4 18 8 18H14C14.6 18 15 17.6 15 17ZM17 12C17 11.4 16.6 11 16 11H8C7.4 11 7 11.4 7 12C7 12.6 7.4 13 8 13H16C16.6 13 17 12.6 17 12ZM17 7C17 6.4 16.6 6 16 6H8C7.4 6 7 6.4 7 7C7 7.6 7.4 8 8 8H16C16.6 8 17 7.6 17 7Z"
-                        fill="black" />
-                    <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="black" />
-                </svg>
-            </span>
-        </a>
     </div>
 </div>

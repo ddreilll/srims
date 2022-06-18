@@ -77,44 +77,147 @@ if (!function_exists('get_grading_list')) {
 
         return [
             [
-                'value' => 1.00,
-                'remarks' => "PASSED"
+                'value' => '1.00',
             ],
             [
-                'value' => 1.25,
-                'remarks' => "PASSED"
+                'value' => '1.25',
             ],
             [
-                'value' => 1.50,
-                'remarks' => "PASSED"
+                'value' => '1.50',
             ],
             [
-                'value' => 1.75,
-                'remarks' => "PASSED"
+                'value' => '1.75',
             ],
             [
-                'value' => 2.00,
-                'remarks' => "PASSED"
+                'value' => '2.00',
             ],
             [
-                'value' => 2.25,
-                'remarks' => "PASSED"
+                'value' => '2.25',
             ],
             [
-                'value' => 2.50,
-                'remarks' => "PASSED"
+                'value' => '2.50',
             ],
             [
-                'value' => 2.75,
-                'remarks' => "PASSED"
+                'value' => '2.75',
             ],
             [
-                'value' => 3.00,
-                'remarks' => "PASSED"
+                'value' => '3.00',
             ],
             [
-                'value' => 5.00,
-                'remarks' => "FAILED"
+                'value' => '4.00',
+            ],
+            [
+                'value' => '5.00',
+            ],
+            [
+                'value' => "W",
+            ],
+            [
+                'value' => "D",
+            ],
+            [
+                'value' => "INC",
+            ],
+        ];
+    }
+}
+
+if (!function_exists('get_final_rating_list')) {
+
+    function get_final_rating_list()
+    {
+
+        return [
+            [
+                'value' => '1.00',
+            ],
+            [
+                'value' => '1.25',
+            ],
+            [
+                'value' => '1.50',
+            ],
+            [
+                'value' => '1.75',
+            ],
+            [
+                'value' => '2.00',
+            ],
+            [
+                'value' => '2.25',
+            ],
+            [
+                'value' => '2.50',
+            ],
+            [
+                'value' => '2.75',
+            ],
+            [
+                'value' => '3.00',
+            ],
+            [
+                'value' => '4.00',
+            ],
+            [
+                'value' => '5.00',
+            ],
+            [
+                'value' => "W",
+            ],
+            [
+                'value' => "D",
+            ],
+            [
+                'value' => "INC",
+            ],
+            [
+                'value' => "1.0/INC",
+            ],
+            [
+                'value' => "1.25/INC",
+            ],
+            [
+                'value' => "1.50/INC",
+            ],
+            [
+                'value' => "1.75/INC",
+            ],
+            [
+                'value' => "2.00/INC",
+            ],
+            [
+                'value' => "2.25/INC",
+            ],
+            [
+                'value' => "2.50/INC",
+            ],
+            [
+                'value' => "2.75/INC",
+            ],
+            [
+                'value' => "3.00/INC",
+            ],
+            [
+                'value' => "5.00/INC",
+            ]
+        ];
+    }
+}
+
+if (!function_exists('get_grading_status_list')) {
+
+    function get_grading_status_list()
+    {
+
+        return [
+            [
+                'value' => "P",
+            ],
+            [
+                'value' => "W",
+            ],
+            [
+                'value' => "D",
             ]
         ];
     }

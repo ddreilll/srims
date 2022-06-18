@@ -1,17 +1,16 @@
-@extends('layouts.admin')
+@extends('layouts.fluid')
 
 @section('styles')
     <style>
         .daterangepicker.show-calendar .ranges {
             height: 0px;
         }
-
     </style>
 @endsection
 
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
             <div class="card mb-5 mb-xl-8">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
@@ -50,7 +49,6 @@
                                 <th>Status</th>
                                 <th>Created at</th>
                                 <th>Last update</th>
-                                <th>Remarks</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -124,6 +122,12 @@
 
                         for (let i = 0; i < d.length; i++) {
 
+                            let remarks_count = '';
+                            if(d[i]['stud_remarks'] && d[i]['stud_remarks'] != "CC"){
+
+                                remarks_count = `<span class="position-absolute top-0 start-100 translate-middle  badge badge-circle badge-dark">1</span>`;
+                            }
+
                             return_data.push({
                                 DT_RowId: d[i]["stud_id_md5"],
                                 StudNo: `<a href="{{ url('student/profile') }}/${d[i]["stud_uuid"]}" target="_blank"> ${d[i]["stud_studentNo"]}</a>`,
@@ -136,14 +140,13 @@
                                 UpdatedAt: d[i]["stud_updatedAt_m_f"] + "<br>" + d[i][
                                     "stud_updatedAt_t_f"
                                 ],
-                                Remarks: d[i]["stud_remarks"],
                                 Action: `<div class="d-flex justify-content-start flex-shrink-0">
-                                    <a href="javascript:void(0)" kt_student_profile_table_edit class="btn btn-icon btn-light-success btn-sm me-1">
+                                    <a href="{{ url('student/profile') }}/${d[i]["stud_uuid"]}/edit" class="btn btn-icon btn-light-success btn-sm me-1">
                                         <i class="fas fa-pen"></i>
                                     </a>
 
-                                    <button type="button" kt_student_profile_table_remarks class="btn btn-icon btn-light-dark btn-sm me-1">
-                                        <i class="fas fa-sticky-note"></i>
+                                    <button type="button" kt_student_profile_table_remarks class="btn btn-icon btn-light-dark btn-sm me-1 position-relative">
+                                        <i class="fas fa-sticky-note"></i> ${remarks_count}
                                     </button>
 
                                     <button type="button" kt_student_profile_table_delete class="btn btn-icon btn-light-danger btn-sm">
@@ -177,9 +180,6 @@
                     },
                     {
                         data: 'UpdatedAt'
-                    },
-                    {
-                        data: 'Remarks'
                     },
                     {
                         data: 'Action'

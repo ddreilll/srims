@@ -1,7 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.fluid')
 @section('content')
 <div class="post d-flex flex-column-fluid" id="kt_post">
-    <div id="kt_content_container" class="container-xxl">
+    <div id="kt_content_container" class="container-fluid">
 
         <div class="d-flex flex-column flex-column-fluid text-center p-10 py-lg-15">
             <div class="pt-lg-10 mb-10">
