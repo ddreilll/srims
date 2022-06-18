@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -28,6 +30,20 @@ class LoginController extends Controller
     protected $redirectTo = '/home';
 
     /**
+     * Get the maximum number of attempts to allow.
+     *
+     * @return int
+     */
+    protected $maxAttempts = 3;
+
+    /**
+     * Get the maximum number of attempts to allow.
+     *
+     * @return int
+     */
+    protected $decayMinutes = 30;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -35,5 +51,17 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        Auth::logoutOtherDevices($request->password);
     }
 }

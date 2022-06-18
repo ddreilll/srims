@@ -10,7 +10,7 @@
                             <img alt="Logo" src="{{ asset('/assets/media/logo/logo_main.png') }}" class="h-60px" />
                         </a>
                         <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">PUP Quezon City Branch</h1>
-                        <p class="fw-bold fs-2" style="color: #986923;">Non-SIS Student <br> Record Management System
+                        <p class="fw-bold fs-2" style="color: #986923;">Student Records <br>Information Management System
                         </p>
                     </div>
                     <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
