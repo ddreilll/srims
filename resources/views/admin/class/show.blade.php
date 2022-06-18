@@ -505,7 +505,7 @@
                     </button>
                 </div>`;
                 table.row($(this).closest("tr")).data(d);
-                $(row_dom).find(".form-select").select2();
+                $(row_dom).find(".form-select").select2({tags: true});
                 $("[name='grade_id']").val(d['id']);
 
                 $(row_dom).on("click", "[kt_student_grades_table_cancel]", function() {
@@ -734,16 +734,16 @@
 
                         $(clone).find('[data-name="student.midterm_grade"]').attr("name", "student[" +
                             rowIndex +
-                            "][midterm_grade]").select2();
+                            "][midterm_grade]").select2({tags: true});
                         $(clone).find('[data-name="student.final_grade"]').attr("name", "student[" +
                             rowIndex +
-                            "][final_grade]").select2();
+                            "][final_grade]").select2({tags: true});
                         $(clone).find('[data-name="student.final_rating"]').attr("name", "student[" +
                             rowIndex +
-                            "][final_rating]").select2();
+                            "][final_rating]").select2({tags: true});
                         $(clone).find('[data-name="student.grade_status"]').attr("name", "student[" +
                             rowIndex +
-                            "][grade_status]").select2();
+                            "][grade_status]").select2({tags: true});
 
                         const removeBtn = clone.find(
                             'button[kt_modal_add_student_grade_imported_remove]');
