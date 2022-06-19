@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Response;
+
 Route::redirect('/', url('/login'));
 Route::redirect('/home', url('/admin'));
 
@@ -25,6 +27,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
+
+    Route::get('session/keep-alive', function () {
+        return  response(null, Response::HTTP_OK);
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -59,9 +65,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     Route::get('class/{class_id}/search/student-profile', 'ClassController@ajax_search_student_profile');
     Route::post('class/add-grade', 'ClassController@ajax_add_student_grade');
-
-
-
 
 
 
