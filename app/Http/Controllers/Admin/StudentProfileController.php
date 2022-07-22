@@ -41,7 +41,7 @@ class StudentProfileController extends Controller
         $course = (new Course)->getAllCourses();
         $honors = (new Honors)->getAllHonors();
 
-        return view('admin.student_profile.index', ['menu_header' => 'Menu', 'title' => "List of Student Profile", "menu" => "student-records", "sub_menu" => "student-profile", "formData_year" => $acadYears, "formData_course" => $course, "formData_honors" => $honors, "breadcrumb" => [["name" => "List of Student Profile"]]]);
+        return view('admin.student_profile.index', ['menu_header' => 'Menu', 'title' => "List of Student Profile", "menu" => "student-profile", "sub_menu" => "student-profile", "formData_year" => $acadYears, "formData_course" => $course, "formData_honors" => $honors, "breadcrumb" => [["name" => "List of Student Profile"]]]);
     }
 
     public function show_profile($profile_uuid)
@@ -81,7 +81,7 @@ class StudentProfileController extends Controller
             $fp['stud_sSecondary'] = (sizeOf($fp['stud_sSecondary']) == 1) ? $fp['stud_sSecondary'][0] : [];
 
 
-            if ($fp['stud_admissionType'] == "TRANSFEREE") {
+            if ($fp['stud_admissionType'] == "TRANSFEREE" || $fp['stud_admissionType'] == "LADDERIZED") {
 
                 $fp['stud_sTertiary'] = $ps->where(["extsch_stud_id" => $sId, "extsch_educType" => "TRANSFER"])
                     ->get();
@@ -146,16 +146,16 @@ class StudentProfileController extends Controller
                             $finalGrade = (($grade['enrsub_prelimGrade'] ? $grade['enrsub_prelimGrade'] : 0.00) + ($grade['enrsub_finalGrade'] ? $grade['enrsub_finalGrade'] : $grade['enrsub_prelimGrade'])) / 2;
 
                             if ($grade['enrsub_otherGrade'] == "INC" && $finalGrade >= 0.00) {
-                
+
                                 $grades[$b]['enrsub_grade_display'] = $finalGrade . "/INC";
                             } else if ($grade['enrsub_otherGrade'] == "INC" && $finalGrade == 0.00) {
-                
+
                                 $grades[$b]['enrsub_grade_display'] = "INC";
                             } else if ($grade['enrsub_otherGrade'] == "W" || $grade['enrsub_otherGrade'] == "D") {
-                
+
                                 $grades[$b]['enrsub_grade_display'] = $grade['enrsub_otherGrade'];
                             } else {
-                
+
                                 $grades[$b]['enrsub_grade_display'] = $finalGrade;
                             }
 
@@ -199,7 +199,7 @@ class StudentProfileController extends Controller
                 ->orderBy('subm_documentType_1', 'desc')->get();
 
 
-            return view('admin.student_profile.show', array_merge($vd, ["stud_profile" => $fp, "stud_documents" => $ds, "stud_documents_fixed" => $dfs]));
+            return view('admin.student_profile.show', array_merge($vd, ["menu" => "student-profile", "stud_profile" => $fp, "stud_documents" => $ds, "stud_documents_fixed" => $dfs]));
         } else {
 
             return view('errors.not-found', ['menu_header' => 'Menu', 'title' => "Profile not found", "menu" => "student-records", "sub_menu" => "student-profile"]);
@@ -236,7 +236,7 @@ class StudentProfileController extends Controller
             $dt_ext[0]["types"] = $dtsi->where(["docuType_document" => $dt_ext[0]['docu_id']])->get();
         }
 
-        return view('admin.student_profile.create', ['title' => 'Add Student Profile', "formData_honors" => $honors, "formData_course" => $course, "formData_year" => $acadYears, "formData_terms" => $terms, "formData_yrLevel" => $yearLevel, "formData_docu_ent" => $dt_ent, "formData_docu_rec" => $dt_rec, "formData_docu_ext" => $dt_ext, "breadcrumb" => [["name" => "List of Student Profile", "url" => "/student/profile/"], ["name" => "Add Student Profile"]]]);
+        return view('admin.student_profile.create', ['title' => 'Add Student Profile', "menu" => "student-profile", "formData_honors" => $honors, "formData_course" => $course, "formData_year" => $acadYears, "formData_terms" => $terms, "formData_yrLevel" => $yearLevel, "formData_docu_ent" => $dt_ent, "formData_docu_rec" => $dt_rec, "formData_docu_ext" => $dt_ext, "breadcrumb" => [["name" => "List of Student Profile", "url" => "/student/profile/"], ["name" => "Add Student Profile"]]]);
     }
 
     public function edit_profile($profile_uuid)
@@ -305,7 +305,7 @@ class StudentProfileController extends Controller
             $fp['stud_sSecondary'] = (sizeOf($fp['stud_sSecondary']) == 1) ? $fp['stud_sSecondary'][0] : [];
 
 
-            if ($fp['stud_admissionType'] == "TRANSFEREE") {
+            if ($fp['stud_admissionType'] == "TRANSFEREE" || $fp['stud_admissionType'] == "LADDERIZED" ) {
 
                 $fp['stud_sTertiary'] = $ps->where(["extsch_stud_id" => $sId, "extsch_educType" => "TRANSFER"])
                     ->get();
@@ -401,7 +401,7 @@ class StudentProfileController extends Controller
             }
 
 
-            return view('admin.student_profile.edit', array_merge($vd, ["stud_profile" => $fp, "formData_honors" => $honors, "formData_course" => $course, "formData_year" => $acadYears, "formData_terms" => $terms, "formData_yrLevel" => $yearLevel, "formData_docu_ent" => $dt_ent, "formData_docu_rec" => $dt_rec, "formData_docu_ext" => $dt_ext, "breadcrumb" => [["name" => "List of Student Profile", "url" => "/student/profile/"], ["name" => "Edit Student Profile"]]]));
+            return view('admin.student_profile.edit', array_merge($vd, ["menu" => "student-profile", "stud_profile" => $fp, "formData_honors" => $honors, "formData_course" => $course, "formData_year" => $acadYears, "formData_terms" => $terms, "formData_yrLevel" => $yearLevel, "formData_docu_ent" => $dt_ent, "formData_docu_rec" => $dt_rec, "formData_docu_ext" => $dt_ext, "breadcrumb" => [["name" => "List of Student Profile", "url" => "/student/profile/"], ["name" => "Edit Student Profile"]]]));
         } else {
 
             return view('errors.not-found', ['menu_header' => 'Menu', 'title' => "Profile not found", "menu" => "student-records", "sub_menu" => "student-profile"]);
@@ -580,7 +580,7 @@ class StudentProfileController extends Controller
                 ]
             ]);
         }
-        if ($admissionType && $admissionType == "TRANSFEREE") {
+        if ($admissionType && ($admissionType == "TRANSFEREE" || $admissionType == "LADDERIZED")) {
             $psc = $request['college'];
 
             foreach ($psc as $c) {
@@ -762,7 +762,7 @@ class StudentProfileController extends Controller
 
         $spi = new StudentProfile();
         $fp = $spi->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
-            ->whereRaw('md5(stud_id) = "' . $request->id . '"AND stud_admissionType = "TRANSFEREE"')
+            ->whereRaw('md5(stud_id) = "' . $request->id . '"AND (stud_admissionType = "TRANSFEREE" OR stud_admissionType = "LADDERIZED")')
             ->selectRaw('r_student.*
             , md5(stud_id) as stud_id_md5
             , cour_name as stud_course_name
@@ -869,7 +869,7 @@ class StudentProfileController extends Controller
                 ]
             ]);
         }
-        if ($admissionType && $admissionType == "TRANSFEREE") {
+        if ($admissionType && ($admissionType == "TRANSFEREE" || $admissionType == "LADDERIZED")) {
             $psc = $request['college'];
 
             foreach ($psc as $c) {

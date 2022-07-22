@@ -35,8 +35,7 @@
 
                                 <div class="fv-row">
                                     <label class="form-label">Course</label>
-                                    <select class="form-select form-select-solid" data-control="select2"
-                                        data-placeholder="Select a course"
+                                    <select class="form-select form-select-solid" data-placeholder="Select a course" data-control="select2"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="course">
                                         <option></option>
                                         @foreach ($formData_course as $course)
@@ -62,6 +61,7 @@
                                         <option></option>
                                         <option value="FRESHMEN">Freshmen</option>
                                         <option value="TRANSFEREE">Transferee</option>
+                                        <option value="LADDERIZED">Ladderized</option>
                                     </select>
                                     <div class="text-muted fs-7 mb-5 mt-2">Set the Admission type</div>
                                 </div>
@@ -156,12 +156,14 @@
 
                                 <div class="fv-row mb-7" style="display:none !important">
                                     <label class="form-label ">Date Issued</label>
-                                    <input class="form-control form-control-solid" value="" name="honorableDismissedDate">
+                                    <input class="form-control form-control-solid" value=""
+                                        name="honorableDismissedDate">
                                 </div>
 
                                 <div class="fv-row" style="display:none !important">
                                     <label class="form-label ">School name and Address</label>
-                                    <input class="form-control form-control-solid" value="" name="honorableDismissedSchool">
+                                    <input class="form-control form-control-solid" value=""
+                                        name="honorableDismissedSchool">
                                     <div class=" fs-7 mb-5 mt-2">The school where the document will be transferred
                                     </div>
                                 </div>
@@ -194,7 +196,8 @@
                             </div>
                         </div>
 
-                        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-8 mt-10">
+                        <ul
+                            class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-8 mt-10">
                             <li class="nav-item">
                                 <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
                                     href="#kt_form_add_student_profile_general_tab">General Information</a>
@@ -334,7 +337,8 @@
 
                                             <div class="fv-row w-50">
                                                 <input placeholder="School name" class="form-control form-control-solid"
-                                                    oninput="this.value = this.value.toUpperCase()" name="college[0][name]">
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    name="college[0][name]">
                                             </div>
 
 
@@ -395,14 +399,16 @@
                                                         aria-selected="true"> Entrance </a>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link text-active-primary" data-bs-toggle="tab" role="tab"
-                                                        href="#kt_student_view_school_secondary" aria-selected="false">
+                                                    <a class="nav-link text-active-primary" data-bs-toggle="tab"
+                                                        role="tab" href="#kt_student_view_school_secondary"
+                                                        aria-selected="false">
                                                         Records </a>
                                                 </li>
 
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link text-active-primary" data-bs-toggle="tab" role="tab"
-                                                        href="#kt_student_view_school_tertiary" aria-selected="false"> Exit
+                                                    <a class="nav-link text-active-primary" data-bs-toggle="tab"
+                                                        role="tab" href="#kt_student_view_school_tertiary"
+                                                        aria-selected="false"> Exit
                                                     </a>
                                                 </li>
                                             </ul>
@@ -424,7 +430,8 @@
                                                             <select class="form-select form-select-solid"
                                                                 data-control="select2" data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
-                                                                data-allow-clear="true" name="documents[entrance][0][docu]">
+                                                                data-allow-clear="true"
+                                                                name="documents[entrance][0][docu]">
                                                                 <option></option>
                                                                 @foreach ($formData_docu_ent as $docu)
                                                                     <option value="{{ $docu->docu_id }}">
@@ -438,7 +445,8 @@
                                                             <select class="form-select form-select-solid"
                                                                 data-control="select2" data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
-                                                                data-allow-clear="true" name="documents[entrance][0][type]">
+                                                                data-allow-clear="true"
+                                                                name="documents[entrance][0][type]">
                                                                 <option></option>
 
                                                             </select>
@@ -492,7 +500,8 @@
 
                                                         <div>
                                                             <button kt_form_add_student_profile_document_entrance_removeBtn
-                                                                type="button" class="btn btn-icon btn-secondary btn-sm"><i
+                                                                type="button"
+                                                                class="btn btn-icon btn-secondary btn-sm"><i
                                                                     class="fas fa-minus"></i></button>
                                                         </div>
                                                     </div>
@@ -603,7 +612,8 @@
                                                                 <select class="form-select form-select-solid"
                                                                     data-placeholder="Year level"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
-                                                                    data-allow-clear="true" data-name="documents_fix.yrlvl">
+                                                                    data-allow-clear="true"
+                                                                    data-name="documents_fix.yrlvl">
                                                                     <option></option>
                                                                     @foreach ($formData_yrLevel as $year)
                                                                         <option value="{{ $year->year_name }}">
@@ -640,7 +650,8 @@
                                                             <select class="form-select form-select-solid"
                                                                 data-control="select2" data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
-                                                                data-allow-clear="true" name="documents[records][0][docu]">
+                                                                data-allow-clear="true"
+                                                                name="documents[records][0][docu]">
                                                                 <option></option>
                                                                 @foreach ($formData_docu_rec as $docu)
                                                                     <option value="{{ $docu->docu_id }}">
@@ -654,7 +665,8 @@
                                                             <select class="form-select form-select-solid"
                                                                 data-control="select2" data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
-                                                                data-allow-clear="true" name="documents[records][0][type]">
+                                                                data-allow-clear="true"
+                                                                name="documents[records][0][type]">
                                                                 <option></option>
 
                                                             </select>
@@ -708,7 +720,8 @@
 
                                                         <div>
                                                             <button kt_form_add_student_profile_document_records_removeBtn
-                                                                type="button" class="btn btn-icon btn-secondary btn-sm"><i
+                                                                type="button"
+                                                                class="btn btn-icon btn-secondary btn-sm"><i
                                                                     class="fas fa-minus"></i></button>
                                                         </div>
                                                     </div>
@@ -719,8 +732,8 @@
                                             <div class="tab-pane fade" id="kt_student_view_school_tertiary"
                                                 role="tabpanel">
 
-                                                <div id="kt_form_add_student_profile_document_exit_list"
-                                                    class="px-8" style="display:none !important">
+                                                <div id="kt_form_add_student_profile_document_exit_list" class="px-8"
+                                                    style="display:none !important">
 
                                                     <div class="d-flex justify-content-between">
 
@@ -796,7 +809,8 @@
 
                                                         <div>
                                                             <button kt_form_add_student_profile_document_exit_removeBtn
-                                                                type="button" class="btn btn-icon btn-secondary btn-sm"><i
+                                                                type="button"
+                                                                class="btn btn-icon btn-secondary btn-sm"><i
                                                                     class="fas fa-minus"></i></button>
                                                         </div>
                                                     </div>
@@ -818,7 +832,8 @@
 
                         <div class="d-flex justify-content-end">
                             <a href="{{ url('/student/profile') }}" class="btn btn-light me-5">Cancel</a>
-                            <button type="button" id="kt_form_add_student_profile_save_view" class="btn btn-primary me-2">
+                            <button type="button" id="kt_form_add_student_profile_save_view"
+                                class="btn btn-primary me-2">
                                 <span class="indicator-label">Save and View</span>
                                 <span class="indicator-progress">Please wait...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -1066,7 +1081,7 @@
                 $(honorableDissmisalForm).attr("style", "display: none !important");
                 $(honorableDissmisalForm).find(".fv-row").attr("style", "display: none !important");
                 $(honorableDissmisalForm).find(".form-select-solid").val("").trigger(
-                            "change");
+                    "change");
 
                 if (acadStatus == "GRD") {
 
@@ -1373,7 +1388,7 @@
 
                     $("#kt_form_add_student_profile_prev_college").attr("style",
                         "display: none !important");
-                } else if (admissionType == "TRANSFEREE") {
+                } else if (admissionType == "TRANSFEREE" || admissionType == "LADDERIZED" ) {
 
                     fv.enableValidator("college[0][name]")
                         .enableValidator("college[0][yearExited]");

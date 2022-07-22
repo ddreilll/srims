@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Term;
 use Illuminate\Http\Request;
 
 // Model
-use App\Models\Term;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class TermController extends Controller
 {
@@ -143,6 +144,36 @@ class TermController extends Controller
 
     // -- End::Ajax Requests -- //
 
+
+    public function ajax_select2_search(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $term = trim($request->term);
+            $terms = Term::select(
+                DB::raw('term_id as id'),
+                DB::raw('term_name as text'),
+            )->where('term_name', 'LIKE',  '%' . $term . '%')
+            ->orderBy('term_order', 'asc')
+            ->simplePaginate(10);
+
+            $morePages = true;
+
+            if (empty($terms->nextPageUrl())) {
+                $morePages = false;
+            }
+
+            $results = array(
+                "results" => $terms->items(),
+                "pagination" => array(
+                    "more" => $morePages
+                )
+            );
+
+            return response()->json($results);
+        }
+    }
 
     /*
 |--------------------------------------------------------------------------

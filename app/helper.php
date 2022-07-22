@@ -2,10 +2,64 @@
 
 use Illuminate\Support\Str;
 
+if (!function_exists('format_datetime')) {
+
+    /**
+     * Format datetime
+     *
+     * @param int $timestamp Time timestamp parameter is an integer Unix timerstamp
+     */
+
+    function format_datetime($timestamp)
+    {
+        // Get configuration from db
+
+        return date('m/d/Y h:i:s A', $timestamp);
+    }
+}
+
 if (!function_exists('axios_timeout')) {
     function axios_timeout()
     {
         return 15000;
+    }
+}
+
+if (!function_exists('get_day_list')) {
+
+    function get_day_list()
+    {
+
+        return [
+            [
+                'value' => "M",
+                'text' => "Monday",
+            ],
+            [
+                'value' => "T",
+                'text' => "Tuesday",
+            ],
+            [
+                'value' => "W",
+                'text' => "Wednesday",
+            ],
+            [
+                'value' => "TH",
+                'text' => "Thursday",
+            ],
+            [
+                'value' => "F",
+                'text' => "Friday",
+            ],
+            [
+                'value' => "SAT",
+                'text' => "Saturday",
+            ],
+            [
+                'value' => "SUN",
+                'text' => "Sunday",
+            ],
+        ];
     }
 }
 

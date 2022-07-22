@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 //Model
-use App\Models\Subject;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Models\SubjectPrerequisite as SubjPrereq;
 
 class SubjectController extends Controller
@@ -25,7 +26,7 @@ class SubjectController extends Controller
     {
         $subjects = (new Subject)->fetchAll([]);
 
-        return view('admin.subject', ['menu_header'=> 'System Setup', "title" => 'Subjects', "menu" => "course-curiculum", "sub_menu" => "subject", "formData_subjects" => $subjects]);
+        return view('admin.subject', ['menu_header' => 'System Setup', "title" => 'Subjects', "menu" => "course-curiculum", "sub_menu" => "subject", "formData_subjects" => $subjects]);
     }
 
     /*
@@ -237,14 +238,15 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function ajax_checkDelete(Request $request){
+    public function ajax_checkDelete(Request $request)
+    {
         $request->validate([
             'id' => 'required'
         ]);
 
-        if(!$this->checkAnyPrerequisite($request->id)){
+        if (!$this->checkAnyPrerequisite($request->id)) {
             $availability = true;
-        }else {
+        } else {
             $availability = false;
         }
 
@@ -256,6 +258,38 @@ class SubjectController extends Controller
 
     // -- End::Ajax Requests -- //
 
+    public function ajax_select2_search(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $term = trim($request->term);
+            $subjects = Subject::select(
+                DB::raw('subj_id as id'),
+                DB::raw('subj_name as text'),
+                'subj_code',
+                'subj_name',
+                'subj_units',
+            )->where('subj_name', 'LIKE',  '%' . $term . '%')
+                ->orWhere('subj_code', 'LIKE',  '%' . $term . '%')
+                ->simplePaginate(10);
+
+            $morePages = true;
+
+            if (empty($subjects->nextPageUrl())) {
+                $morePages = false;
+            }
+
+            $results = array(
+                "results" => $subjects->items(),
+                "pagination" => array(
+                    "more" => $morePages
+                )
+            );
+
+            return response()->json($results);
+        }
+    }
 
     /*
 |--------------------------------------------------------------------------

@@ -32,20 +32,22 @@
                 </div>
 
                 <div class="card-body py-3">
-                    <table id="kt_student_grades_table" class="table table-row-bordered gy-5 gs-7 ">
+                    <table id="kt_student_grades_table" class="align-middle table table-row-bordered gy-7 gs-10">
                         <thead>
-                            <tr class="fw-bolder fs-6 text-gray-800 px-7">
-                                <th>Subject Code</th>
-                                <th>Description</th>
-                                <th>Section</th>
-                                <th>Schedule (Day / Time / Room)</th>
-                                <th>Semester & Academic Year</th>
-                                <th>Instructor</th>
-                                <th>Total Enrolled Students</th>
-                                <th></th>
+                            <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                <th class="min-w-125px" data-priority="2">Subject Code</th>
+                                <th class="min-w-250px" data-priority="3">Description</th>
+                                <th class="min-w-75px" data-priority="5">Section</th>
+                                <th class="min-w-250px">Schedule (Day / Time / Room)</th>
+                                <th class="min-w-250px" data-priority="6">Semester & Academic Year</th>
+                                <th class="min-w-200px" data-priority="7">Instructor</th>
+                                <th data-priority="4">Total Enrolled Students</th>
+                                <th>Created at</th>
+                                <th class="min-w-150px">Last update</th>
+                                <th class="text-end" data-priority="1">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="fw-bold">
 
                         </tbody>
                     </table>
@@ -62,8 +64,9 @@
             var table = $("#kt_student_grades_table").DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 ajax: {
-                    url: "{{ url('/class/retrieveAll') }}",
+                    url: "{{ url('/ajax/class/retrieve-all') }}",
                     error: function(xhr, error, code) {
 
                         console.log(error);
@@ -86,7 +89,7 @@
                     {
                         data: 'schedule',
                         searchable: false,
-                        orderable: false
+                        orderable: false,
                     },
                     {
                         data: 'semester_sy',
@@ -99,14 +102,34 @@
                     {
                         data: 'enrolled_student_count',
                         searchable: false,
-                        width: "5%"
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'sche_createdAt',
+                        searchable: false,
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'sche_updatedAt',
+                        searchable: false,
+                        render: function(data, type) {
+                            if (type === 'display' && data) {
+
+                                return '<div class="badge badge-light fw-bolder">' + moment(
+                                    data).fromNow() + '</div>';
+                            }
+
+                            return data;
+                        },
                     },
                     {
                         data: 'action',
                         searchable: false,
-                        orderable: false
+                        orderable: false,
+                        className: "text-end",
                     },
                 ],
+                order: [[8, 'asc']],
             });
 
             $('[data-kt-student-grades-table-filter="search"]').on('keyup', function(e) { // Search bar 

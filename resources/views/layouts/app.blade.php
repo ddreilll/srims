@@ -21,9 +21,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 200;
-            src: local(''),
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-200.woff2') }}') format('woff2'),
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-200.woff') }}') format('woff');
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-200.ttf") }}') format('truetype');
         }
 
         /* poppins-300 - latin */
@@ -31,10 +29,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 300;
-            src: local(''),
-
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-300.woff2') }}') format('woff2'),
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-300.woff') }}') format('woff');
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-300.ttf") }}') format('truetype');
 
         }
 
@@ -43,10 +38,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 400;
-            src: local(''),
-
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-regular.woff2') }}') format('woff2'),
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-regular.woff') }}') format('woff');
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-regular.ttf") }}') format('truetype');
 
         }
 
@@ -55,10 +47,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 500;
-            src: local(''),
-
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-500.woff2') }}') format('woff2'),
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-500.woff') }}') format('woff');
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-500.ttf") }}') format('truetype');
 
         }
 
@@ -67,10 +56,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 600;
-            src: local(''),
-
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-600.woff2') }}') format('woff2'),
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-600.woff') }}') format('woff');
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-600.ttf") }}') format('truetype');
 
         }
 
@@ -79,13 +65,13 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 700;
-            src: local(''),
-
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-700.woff2') }}') format('woff2'),
-                url('{{ asset('/assets/font/poppins/poppins-v19-latin-700.woff') }}') format('woff');
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-700.ttf") }}') format('truetype');
 
         }
 
+        body {
+            font-family: "Poppins";
+        }
     </style>
     {{-- <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />

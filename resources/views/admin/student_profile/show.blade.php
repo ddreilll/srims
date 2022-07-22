@@ -198,7 +198,7 @@
                                                     href="#kt_student_view_school_secondary"> Secondary </a>
                                             </li>
 
-                                            @if ($stud_profile->stud_admissionType == 'TRANSFEREE')
+                                            @if ($stud_profile->stud_admissionType == 'TRANSFEREE' || $stud_profile->stud_admissionType == 'LADDERIZED')
                                                 <li class="nav-item" role="presentation">
                                                     <a class="nav-link text-active-primary" data-bs-toggle="tab" role="tab"
                                                         href="#kt_student_view_school_tertiary"> Tertiary </a>
@@ -253,7 +253,7 @@
                                             @endif
                                         </div>
 
-                                        @if ($stud_profile->stud_admissionType == 'TRANSFEREE')
+                                        @if ($stud_profile->stud_admissionType == 'TRANSFEREE' || $stud_profile->stud_admissionType == 'LADDERIZED')
 
                                             <div class="tab-pane fade" id="kt_student_view_school_tertiary"
                                                 role="tabpanel">

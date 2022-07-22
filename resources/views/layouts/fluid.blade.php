@@ -15,12 +15,72 @@
     <link rel="manifest" href="{{ asset('/assets/media/logo/favicon/site.webmanifest') }}">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <style>
+        /* poppins-200 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 200;
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-200.ttf") }}') format('truetype');
+        }
+
+        /* poppins-300 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 300;
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-300.ttf") }}') format('truetype');
+
+        }
+
+        /* poppins-regular - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-regular.ttf") }}') format('truetype');
+
+        }
+
+        /* poppins-500 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-500.ttf") }}') format('truetype');
+
+        }
+
+        /* poppins-600 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 600;
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-600.ttf") }}') format('truetype');
+
+        }
+
+        /* poppins-700 - latin */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-700.ttf") }}') format('truetype');
+
+        }
+
+        body {
+            font-family: "Poppins";
+        }
+    </style>
 
     <link href="{{ asset('/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
         type="text/css" />
     <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('/assets/plugins/custom/fontawesome-pro/css/all.min.css') }}" rel="stylesheet" type="text/css" />
+
 
     <style>
         .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) .select2-search.select2-search--inline .select2-search__field {
@@ -31,7 +91,7 @@
 
 </head>
 
-<body id="kt_body" data-kt-aside-minimize="on" class="header-tablet-and-mobile-fixed aside-enabled">
+<body id="kt_body" class="header-tablet-and-mobile-fixed aside-enabled">
     <div class="d-flex flex-column flex-root">
         <div class="page d-flex flex-row flex-column-fluid">
 
@@ -193,7 +253,7 @@
         {{ csrf_field() }}
     </form>
 
-    <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>    
     <script src="{{ asset('/assets/js/scripts.bundle.js') }}"></script>
 
     <script src="{{ asset('/assets/plugins/custom/axios/dist/axios.min.js') }}"></script>
@@ -201,8 +261,10 @@
     <script src="{{ asset('/assets/plugins/custom/draggable/draggable.bundle.js') }}"></script>
     <script src="{{ asset('/assets/plugins/custom/ph-cities/city.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/custom/session-timeout/dist/bootstrap-session-timeout.min.js') }}"></script>
+    <script src="{{ asset('/assets/plugins/custom/fontawesome-pro/js/all.min.js') }}"></script>
 
-    @if (!env('APP_DEBUG'))
+
+    {{-- @if (!env('APP_DEBUG'))
         <script type="text/javascript">
             $.sessionTimeout({
                 title: "Session timeout notification",
@@ -227,7 +289,7 @@
             $("#session-timeout-dialog-keepalive").removeAttr("data-dismiss").attr("data-bs-dismiss", "modal");
             $("#session-timeout-dialog").find(".modal-footer").addClass("d-flex justify-content-center");
         </script>
-    @endif
+    @endif --}}
 
     <script type="text/javascript">
         toastr.options = {

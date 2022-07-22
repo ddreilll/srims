@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 // Model
-use App\Models\Room;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class RoomController extends Controller
 {
@@ -131,6 +132,37 @@ class RoomController extends Controller
         echo json_encode([
             'message' => __('modal.deleted_success', ['attribute' => 'Room'])
         ]);
+    }
+
+
+    public function ajax_select2_search(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $term = trim($request->term);
+            $rooms = Room::select(
+                DB::raw('room_id as id'),
+                DB::raw('room_name as text'),
+            )->where('room_name', 'LIKE',  '%' . $term . '%')
+            ->orderBy('room_name', 'asc')
+                ->simplePaginate(10);
+
+            $morePages = true;
+
+            if (empty($rooms->nextPageUrl())) {
+                $morePages = false;
+            }
+
+            $results = array(
+                "results" => $rooms->items(),
+                "pagination" => array(
+                    "more" => $morePages
+                )
+            );
+
+            return response()->json($results);
+        }
     }
     /*
 |--------------------------------------------------------------------------

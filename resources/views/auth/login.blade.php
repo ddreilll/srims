@@ -2,8 +2,7 @@
 @section('content')
     <div class="d-flex flex-column flex-root">
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative"
-                style="background-color: #F2C98A">
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative" style="background-color: #F2C98A">
                 <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
                     <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
                         <a href="#" class="py-9 mb-5">
@@ -20,6 +19,11 @@
             <div class="d-flex flex-column flex-lg-row-fluid py-10">
                 <div class="d-flex flex-center flex-column flex-column-fluid">
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+                        @if (\Session::has('message'))
+                            <p class="alert alert-info">
+                                {{ \Session::get('message') }}
+                            </p>
+                        @endif
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
                             action="{{ route('login') }}" method="POST">
                             {{ csrf_field() }}
@@ -33,11 +37,11 @@
                                     class="form-control form-control-lg form-control-solid {{ $errors->has('email') ? ' is-invalid' : '' }}"
                                     required autofocus type="text" name="email" autocomplete="off"
                                     value="{{ old('email', null) }}" />
-                                    @if($errors->has('email'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('email') }}
-                                        </div>
-                                    @endif
+                                @if ($errors->has('email'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="fv-row mb-10">
                                 <div class="d-flex flex-stack mb-2">

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 // Models
-use App\Models\Instructor;
+use App\Http\Controllers\Controller;
 
 class InstructorController extends Controller
 {
@@ -143,6 +144,42 @@ class InstructorController extends Controller
         echo json_encode([
             'message' => __('modal.deleted_success', ['attribute' => 'Instructor'])
         ]);
+    }
+
+
+
+    public function ajax_select2_search(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $term = trim($request->term);
+            $instructor = Instructor::select(
+                DB::raw('inst_id as id'),
+                DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as full_name'),
+                DB::raw('inst_empNo as emp_no'),
+            )->where('inst_empNo', 'LIKE',  '%' . $term . '%')
+                ->orWhere('inst_firstName', 'LIKE',  '%' . $term . '%')
+                ->orWhere('inst_middleName', 'LIKE',  '%' . $term . '%')
+                ->orWhere('inst_lastName', 'LIKE',  '%' . $term . '%')
+                ->orderBy('inst_empNo', 'asc')
+                ->simplePaginate(10);
+
+            $morePages = true;
+
+            if (empty($instructor->nextPageUrl())) {
+                $morePages = false;
+            }
+
+            $results = array(
+                "results" => $instructor->items(),
+                "pagination" => array(
+                    "more" => $morePages
+                )
+            );
+
+            return response()->json($results);
+        }
     }
     /*
 |--------------------------------------------------------------------------

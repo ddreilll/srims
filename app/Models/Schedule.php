@@ -10,6 +10,7 @@ class Schedule extends Model
     use SoftDeletes;
 
     protected $table = 's_schedule';
+    protected $primaryKey = 'sche_id';
 
     const CREATED_AT = 'sche_createdAt';
     const UPDATED_AT = 'sche_updatedAt';

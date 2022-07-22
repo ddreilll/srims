@@ -34,7 +34,7 @@ class LoginController extends Controller
      *
      * @return int
      */
-    protected $maxAttempts = 3;
+    protected $maxAttempts = 2;
 
     /**
      * Get the maximum number of attempts to allow.

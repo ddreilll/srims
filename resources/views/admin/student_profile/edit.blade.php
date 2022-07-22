@@ -73,6 +73,7 @@
                                         <option></option>
                                         <option value="FRESHMEN">Freshmen</option>
                                         <option value="TRANSFEREE">Transferee</option>
+                                        <option value="LADDERIZED">Ladderized</option>
                                     </select>
                                     <div class="text-muted fs-7 mb-5 mt-2">Set the Admission type</div>
                                 </div>
@@ -1372,7 +1373,7 @@
 
 
 
-            @if ($stud_profile->stud_admissionType == 'TRANSFEREE')
+            @if ($stud_profile->stud_admissionType == 'TRANSFEREE' || $stud_profile->stud_admissionType == 'LADDERIZED')
 
                 axios({
                     method: "POST",
@@ -1414,10 +1415,6 @@
                 });
             @endif
 
-
-
-
-
             var city = new City();
 
             city.getProvinces().forEach((e) => {
@@ -1451,7 +1448,7 @@
 
                     $("#kt_form_add_student_profile_prev_college").attr("style",
                         "display: none !important");
-                } else if (admissionType == "TRANSFEREE") {
+                } else if (admissionType == "TRANSFEREE" || admissionType == "LADDERIZED") {
 
                     fv.enableValidator("college[0][name]")
                         .enableValidator("college[0][yearExited]");

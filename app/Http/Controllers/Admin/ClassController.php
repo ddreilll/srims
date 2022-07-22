@@ -8,15 +8,13 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-//Controller 
-use App\Http\Controllers\Admin\ScheduleController as ScheduleController;
-
 //Model
 use App\Models\StudentProfile;
 
 use App\Models\StudentGrades;
 use App\Models\Schedule;
 use App\Models\TimeSlot;
+use App\Models\Subject;
 
 class ClassController extends Controller
 {
@@ -31,11 +29,10 @@ class ClassController extends Controller
 
     public function index(Request $request)
     {
-
-        return view('admin.class.index', ['menu_header' => 'Menu', 'title' => "Class List", "menu" => "student-records", "sub_menu" => "student-grades", "breadcrumb" => [["name" => "Class List"]]]);
+        return view('admin.class.index', ['menu_header' => 'Menu', 'title' => "Class List", "menu" => "class", "sub_menu" => "student-grades", "breadcrumb" => [["name" => "Class List"]]]);
     }
 
-    public function show_class($class_md5_id)
+    public function show(Schedule $class)
     {
         $fs = Schedule::leftJoin('s_room', 'room_sche_id', '=', 'room_id')
             ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
@@ -51,12 +48,8 @@ class ClassController extends Controller
             , CONCAT(term_name, ", ", sche_acadYear, "-", sche_acadYear + 1) as class_sem_sy
             , room_name as class_room
             , CONCAT(inst_firstName, " ", inst_lastName) as class_instructor')
-            ->whereRaw("md5(sche_id) = '" . $class_md5_id . "'")
-            ->get();
-
-        if (sizeOf($fs) == 1) {
-
-            $fs = $fs[0];
+            ->where(["sche_id" => $class->sche_id])
+            ->get()[0];
 
             $sched_timeSlot_day = "";
             $sched_timeSlot_time = "";
@@ -90,9 +83,13 @@ class ClassController extends Controller
             }
 
             $fs['class_day_time'] = ($sched_timeSlot_day ? $sched_timeSlot_day : "") . ($sched_timeSlot_time ? " " . $sched_timeSlot_time : "");
-        }
 
-        return view('admin.class.show', ['menu_header' => 'Menu', 'title' => "Student Grades", "menu" => "student-records", "sub_menu" => "student-grades", "class" => $fs, "breadcrumb" => [["name" => "Class List", "url" => "/class"], ["name" => "Class details"]]]);
+        return view('admin.class.show', ['menu_header' => 'Menu', 'title' => "Student Grades", "menu" => "class", "sub_menu" => "student-grades", "class" => $fs, "breadcrumb" => [["name" => "Class List", "url" => "/class"], ["name" => "Class details"]]]);
+    }
+
+    public function create()
+    {
+        return view('admin.class.create', ['title' => 'Add Class', "menu" => "class", "breadcrumb" => [["name" => "Class list", "url" => "/class"], ["name" => "Add Class"]]]);
     }
 
 
@@ -112,99 +109,24 @@ class ClassController extends Controller
 */
 
 
-    public function createStudentGrade($student_details)
-    {
-        (new StudentGrades)->insertOne($student_details);
-    }
-
-    public function getAllStudentGrades($size = 10, $filter = null)
-    {
-        return (new StudentGrades)->fetchAll($size, $filter);
-    }
-
-    public function getStudentGrade($md5Id)
-    {
-        return (new StudentGrades)->fetchOne($md5Id);
-    }
-
-    public function updateStudentGrade($md5Id, $student_details)
-    {
-        $final_grade = ($student_details['other_grades'] == "W" || $student_details['other_grades'] == "D") ? null : $student_details['grade'];
-
-        (new StudentGrades)->edit($md5Id, [
-            'stud_enrsub_id' => $student_details['student'],
-            'sche_enrsub_id' => $student_details['schedule'],
-            'enrsub_grade' => $final_grade,
-            'enrsub_otherGrade' => $student_details['other_grades'],
-        ]);
-    }
-
-    public function removeStudentGrade($md5Id)
-    {
-        (new StudentGrades)->remove($md5Id);
-    }
-
-
-    public function getGradesPerStudent($md5Id)
-    {
-        return (new StudentGrades)->fetchAllPerStudent($md5Id);
-    }
-
-
     // -- Begin::Ajax Requests -- //
 
 
-    public function ajax_insert(Request $request)
-    {
-
-        $request->validate([
-            'student' => 'required',
-            'schedule' => 'required',
-        ]);
-
-        $this->createStudentGrade($request);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.added_success', ['attribute' => 'Student Grade'])
-        ]);
-    }
-
-    public function ajax_retrieveAll(Request $request)
+    public function ajax_retrieve_class_list(Request $request)
     {
         $query = Schedule::leftJoin('s_room', 'room_sche_id', '=', 'room_id')
             ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
             ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
             ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
-            ->selectRaw('s_instructor.*
-            , s_subject.*
-            , md5(sche_id) as sche_id_md5
-            , sche_id 
-            , sche_section
-            , room_id as sche_room_id
-            , room_name as sche_room_code
-            , subj_id as sche_subj_id
-            , subj_code as sche_subj_code
-            , subj_name as sche_subj_name
-            , term_sche_id as sche_term_id
-            , term_name as sche_term_name
-            , CONCAT(sche_acadYear, "-", sche_acadYear + 1) as sche_acadYear
-            , CONCAT("SY " , sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as sche_acadYear_short
-            , CONCAT(term_name, ", SY ", CONCAT(sche_acadYear, "-", sche_acadYear + 1)) as semester_sy
-            , CONCAT(inst_firstName, NULLIF(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as instructor
-            , (SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE sche_enrsub_id = sche_id) as enrolled_student_count');
+            ->select([
+                'sche_id', DB::raw('md5(sche_id) as sche_id_md5'),  'subj_code',  DB::raw('subj_name as subject_name'),  DB::raw('sche_section as section'), DB::raw('CONCAT(term_name, ", SY ", CONCAT(sche_acadYear, "-", sche_acadYear + 1)) as semester_sy'), DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as instructor'), DB::raw('(SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE sche_enrsub_id = sche_id) as enrolled_student_count'), 'sche_createdAt', 'sche_updatedAt'
+            ]);
 
         return Datatables::of($query)
-            ->setRowId('sche_id_md5')
+            ->setRowId('sche_id')
             ->addColumn('subject_code', function ($row) {
 
-                return '<a href="' . url('/class') . "/" . $row->sche_id_md5 . '">' . $row->sche_subj_code . '</a>';
-            })
-            ->addColumn('subject_name', function ($row) {
-                return $row->sche_subj_name;
-            })
-            ->editColumn('section', function ($row) {
-                return $row->sche_section;
+                return '<a href="' . url('/class') . "/" . $row->sche_id . '">' . $row->subj_code . '</a>';
             })
             ->addColumn('schedule', function ($row) {
                 $sched_timeSlot_day = "";
@@ -240,19 +162,27 @@ class ClassController extends Controller
 
                 return ($sched_timeSlot_day ? $sched_timeSlot_day : "") . ($sched_timeSlot_time ? " " . $sched_timeSlot_time : "") . ($row->sche_room_code ? " " . $row->sche_room_code : "");
             })
+            ->addColumn('created_at', function ($row) {
+
+                return format_datetime(strtotime($row->sche_createdAt));
+            })
+            ->addColumn('updated_at', function ($row) {
+
+                return ($row->sche_updatedAt) ? format_datetime(strtotime($row->sche_updatedAt)) : NULL;
+            })
             ->addColumn('action', function ($row) {
 
                 return '<div class="d-flex justify-content-start flex-shrink-0">
-                <a href="' . url('/class') . "/" . $row->sche_id_md5 . '" class="btn btn-icon btn-secondary btn-sm me-1">
-                <i class="fas fa-clipboard-list"></i>
+                <a href="' . url('/class') . "/" . $row->sche_id . '" class=" btn btn-icon btn-light-dark btn-sm me-1">
+                    <i class="fa-duotone fa-bars-sort fs-6"></i>
                  </a>
 
                 <button type="button" kt_student_grades_table_edit class="btn btn-icon btn-light-warning btn-sm me-1">
-                     <i class="fas fa-pen"></i>
+                    <i class="fa-duotone fa-pen-to-square fs-6"></i>
                  </button>
 
                  <button type="button" kt_student_grades_table_delete class="btn btn-icon btn-light-danger btn-sm">
-                 <i class="fas fa-trash"></i>
+                 <i class="fa-duotone fa-trash"></i>
                 </button>
             </div>';
             })
@@ -260,17 +190,29 @@ class ClassController extends Controller
             ->make(true);
     }
 
-    public function ajax_retrieve(Request $request)
+    public function ajax_search_subject(Request $request)
     {
-        $request->validate([
-            'id' => 'required'
+        $query = Subject::select([
+            DB::raw("subj_id as id"),
+            DB::raw("subj_code as code"),
+            DB::raw('subj_name as name'),
+            DB::raw('subj_units as units'),
         ]);
 
-        header('Content-Type: application/json');
-        echo json_encode($this->getStudentGrade($request->id));
+        return Datatables::of($query)
+            ->setRowId('id')
+            ->addColumn('action', function ($row) {
+                return '<div class="d-flex justify-content-center flex-shrink-0">
+                 <button type="button" kt_modal_add_student_grade_table_import class="btn btn-success btn-sm">
+                 <i class="fas fa-check-circle me-1"></i> Select
+                </button>
+            </div>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
-
+    // Student grades
     public function ajax_add_student_grade(Request $request)
     {
         $request->validate([
@@ -316,12 +258,12 @@ class ClassController extends Controller
             })
             ->addColumn('action', function ($row) {
                 return '<div class="d-flex justify-content-start flex-shrink-0">
-                <button type="button" kt_student_grades_table_edit class="btn btn-icon btn-light-warning btn-sm me-1">
-                     <i class="fas fa-pen"></i>
+                <button type="button" kt_student_grades_table_edit class="btn btn-warning btn-sm me-1">
+                     <i class="fa-duotone fa-pen-to-square me-2 fs-6"></i>Edit
                  </button>
 
                  <button type="button" kt_student_grades_table_delete class="btn btn-icon btn-light-danger btn-sm">
-                 <i class="fas fa-trash"></i>
+                 <i class="fa-duotone fa-trash"></i>
                 </button>
             </div>';
             })
@@ -398,9 +340,6 @@ class ClassController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-
-
-
 
     // -- End::Ajax Requests -- //
 

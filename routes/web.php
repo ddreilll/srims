@@ -1,6 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
+
+
+// Common Resource Routes:
+// index - Shows all listing
+// show - Show single listing
+// create - Show form to create new lising
+// store - Store new listing
+// edit - Show form to edit listing
+// update - Update listing
+// destroy - Delete listing
+
 
 Route::redirect('/', url('/login'));
 Route::redirect('/home', url('/admin'));
@@ -48,16 +61,15 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     |
     */
 
-    Route::get('class', 'ClassController@index')->name('student-class');
-    Route::post('class/add', 'ClassController@ajax_insert');
-    Route::get('class/retrieveAll', 'ClassController@ajax_retrieveAll');
-    Route::post('class/retrieve', 'ClassController@ajax_retrieve');
-    Route::post('class/update', 'ClassController@ajax_update');
-    Route::post('class/delete', 'ClassController@ajax_delete');
+    Route::get('class', 'ClassController@index')->name('class');
+    Route::get('class/create', 'ClassController@create');
+    Route::get('class/{class}', 'ClassController@show');
 
-    Route::get('class/{class_md5_id}', 'ClassController@show_class');
+    Route::get('ajax/class/retrieve-all', 'ClassController@ajax_retrieve_class_list');
+    Route::get('ajax/class/add/search/subject', 'ClassController@ajax_search_subject');
 
-    /*               Student Grads         */
+
+    // Student Grades
 
     Route::get('class/{class_id}/students', 'ClassController@ajax_retrieve_all_student_grades');
     Route::post('class/update-grade', 'ClassController@ajax_edit_student_grade');
@@ -167,6 +179,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('subject/delete', 'SubjectController@ajax_delete');
     Route::post('subject/checkDelete', 'SubjectController@ajax_checkDelete');
 
+    Route::post('subject/select2', 'SubjectController@ajax_select2_search');
+
 
     /*
 |--------------------------------------------------------------------------
@@ -198,7 +212,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('room/update', 'RoomController@ajax_update');
     Route::post('room/delete', 'RoomController@ajax_delete');
 
-
+    Route::post('room/select2', 'RoomController@ajax_select2_search');
     /*
 |--------------------------------------------------------------------------
 |                       Instructor Setup
@@ -213,6 +227,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('instructor/update', 'InstructorController@ajax_update');
     Route::post('instructor/delete', 'InstructorController@ajax_delete');
 
+    Route::post('instructor/select2', 'InstructorController@ajax_select2_search');
 
 
 
@@ -240,6 +255,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('settings/term/updateOrder', 'TermController@ajax_reorder');
     Route::post('settings/term/update', 'TermController@ajax_update');
     Route::post('settings/term/delete', 'TermController@ajax_delete');
+
+    Route::post('settings/semester/select2', 'TermController@ajax_select2_search');
+
+    // School year
+    Route::post('settings/school-year/select2', 'AcadYearController@ajax_select2_search');
 
 
     Route::get('settings/student-profile', 'SystemSettingsController@view_student_profile')->name('settings-student-profile');

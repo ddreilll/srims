@@ -40,9 +40,9 @@
                 </div>
 
                 <div class="card-body py-3">
-                    <table id="kt_student_profile_table" class="table table-row-bordered gy-5 gs-7 ">
+                    <table id="kt_student_profile_table" class="align-middle table table-row-bordered gy-7 gs-10">
                         <thead>
-                            <tr class="fw-bolder fs-6 text-gray-800 px-7">
+                            <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                                 <th>Student no.</th>
                                 <th>Name</th>
                                 <th>Course</th>
@@ -52,7 +52,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="fw-bold">
 
                         </tbody>
                     </table>
