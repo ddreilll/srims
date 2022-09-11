@@ -93,10 +93,10 @@ class StudentProfileController extends Controller
                 $g['total_summer_semester'] = 0;
 
                 $sg = new StudentGrades();
-                $school_year = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                    ->selectRaw('DISTINCT sche_acadYear as acad_year
-                        , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as acad_year_long
-                        , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as acad_year_short
+                $school_year = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'class_id')
+                    ->selectRaw('DISTINCT class_acadYear as acad_year
+                        , CONCAT(class_acadYear, " - ", class_acadYear + 1) as acad_year_long
+                        , CONCAT(class_acadYear, "-\'" ,SUBSTRING(class_acadYear + 1, 3, 2)) as acad_year_short
                         ')
                     ->whereRaw('stud_enrsub_id = "' . $sId . '"')
                     ->orderBy('acad_year', 'desc')
@@ -105,10 +105,10 @@ class StudentProfileController extends Controller
                 $i = 0;
                 foreach ($school_year as $year) {
 
-                    $semesters = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                        ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
+                    $semesters = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'class_id')
+                        ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
                         ->selectRaw('DISTINCT term_name, term_order')
-                        ->whereRaw('stud_enrsub_id = "' . $sId . '" and sche_acadYear = "' . $year->acad_year . '"')
+                        ->whereRaw('stud_enrsub_id = "' . $sId . '" and class_acadYear = "' . $year->acad_year . '"')
                         ->orderBy('term_order', 'desc')
                         ->get();
 
@@ -121,10 +121,10 @@ class StudentProfileController extends Controller
                         }
 
                         $grades = $sg->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
-                            ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                            ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
-                            ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
-                            ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
+                            ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'class_id')
+                            ->leftJoin('s_instructor', 'class_inst_id', '=', 'inst_id')
+                            ->leftJoin('s_subject', 'class_subj_id', '=', 'subj_id')
+                            ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
                             ->selectRaw('t_student_enrolled_subjects.*
                     , md5(enrsub_id) as enrsub_id_md5
                     , inst_firstName as enrsub_inst_firstName
@@ -134,30 +134,17 @@ class StudentProfileController extends Controller
                     , subj_code as enrsub_subj_code
                     , subj_name as enrsub_subj_name
                     , subj_units as enrsub_subj_units
-                    , sche_section as enrsub_sche_section
+                    , class_section as enrsub_sche_section
                     ')
-                            ->whereRaw('stud_enrsub_id = "' . $sId . '" and term_name = "' . $semester->term_name . '"and sche_acadYear = "' . $year->acad_year . '"')
+                            ->whereRaw('stud_enrsub_id = "' . $sId . '" and term_name = "' . $semester->term_name . '"and class_acadYear = "' . $year->acad_year . '"')
                             ->get();
 
                         $b = 0;
                         foreach ($grades as $grade) {
 
 
-                            $finalGrade = (($grade['enrsub_prelimGrade'] ? $grade['enrsub_prelimGrade'] : 0.00) + ($grade['enrsub_finalGrade'] ? $grade['enrsub_finalGrade'] : $grade['enrsub_prelimGrade'])) / 2;
-
-                            if ($grade['enrsub_otherGrade'] == "INC" && $finalGrade >= 0.00) {
-
-                                $grades[$b]['enrsub_grade_display'] = $finalGrade . "/INC";
-                            } else if ($grade['enrsub_otherGrade'] == "INC" && $finalGrade == 0.00) {
-
-                                $grades[$b]['enrsub_grade_display'] = "INC";
-                            } else if ($grade['enrsub_otherGrade'] == "W" || $grade['enrsub_otherGrade'] == "D") {
-
-                                $grades[$b]['enrsub_grade_display'] = $grade['enrsub_otherGrade'];
-                            } else {
-
-                                $grades[$b]['enrsub_grade_display'] = $finalGrade;
-                            }
+                            $grades[$b]['enrsub_grade_display'] = $grade['enrsub_finalRating'];
+                            $grades[$b]['enrsub_grade_display_status'] = $grade['enrsub_grade_status'];
 
                             $grades[$b]['enrsub_inst_fullName'] = format_name(1, "",  $grades[$b]['enrsub_inst_firstName'], $grades[$b]['enrsub_inst_middleName'], $grades[$b]['enrsub_inst_lastName'], $grades[$b]['enrsub_inst_suffixName']);
 
@@ -311,94 +298,7 @@ class StudentProfileController extends Controller
                     ->get();
             }
 
-            if ($fp['stud_recordType'] == "NONSIS") {
-                $g = [];
-                $g['total_semester'] = 0;
-                $g['total_summer_semester'] = 0;
-
-                $sg = new StudentGrades();
-                $school_year = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                    ->selectRaw('DISTINCT sche_acadYear as acad_year
-                        , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as acad_year_long
-                        , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as acad_year_short
-                        ')
-                    ->whereRaw('stud_enrsub_id = "' . $sId . '"')
-                    ->orderBy('acad_year', 'desc')
-                    ->get();
-
-                $i = 0;
-                foreach ($school_year as $year) {
-
-                    $semesters = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                        ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
-                        ->selectRaw('DISTINCT term_name, term_order')
-                        ->whereRaw('stud_enrsub_id = "' . $sId . '" and sche_acadYear = "' . $year->acad_year . '"')
-                        ->orderBy('term_order', 'desc')
-                        ->get();
-
-                    $a = 0;
-                    foreach ($semesters as $semester) {
-                        $g['total_semester'] += 1;
-
-                        if ($semester['term_name'] == "Summer Semester") {
-                            $g['total_summer_semester'] += 1;
-                        }
-
-                        $grades = $sg->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
-                            ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                            ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
-                            ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
-                            ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
-                            ->selectRaw('t_student_enrolled_subjects.*
-                    , md5(enrsub_id) as enrsub_id_md5
-                    , inst_firstName as enrsub_inst_firstName
-                    , inst_middleName as enrsub_inst_middleName
-                    , inst_lastName as enrsub_inst_lastName
-                    , inst_suffix as enrsub_inst_suffixName
-                    , subj_code as enrsub_subj_code
-                    , subj_name as enrsub_subj_name
-                    , subj_units as enrsub_subj_units
-                    , sche_section as enrsub_sche_section
-                    ')
-                            ->whereRaw('stud_enrsub_id = "' . $sId . '" and term_name = "' . $semester->term_name . '"and sche_acadYear = "' . $year->acad_year . '"')
-                            ->get();
-
-                        $b = 0;
-                        foreach ($grades as $grade) {
-
-                            if ($grade['enrsub_otherGrade'] == "INC" && $grade['enrsub_grade']) {
-
-                                $grades[$b]['enrsub_grade_display'] = $grade['enrsub_grade'] . "/INC";
-                            } else if ($grade['enrsub_otherGrade'] == "INC" && !$grade['enrsub_grade']) {
-
-                                $grades[$b]['enrsub_grade_display'] = "INC";
-                            } else if ($grade['enrsub_otherGrade'] == "W" || $grade['enrsub_otherGrade'] == "D") {
-
-                                $grades[$b]['enrsub_grade_display'] = $grade['enrsub_otherGrade'];
-                            } else {
-
-                                $grades[$b]['enrsub_grade_display'] = $grade['enrsub_grade'];
-                            }
-
-                            $grades[$b]['enrsub_inst_fullName'] = format_name(1, "",  $grades[$b]['enrsub_inst_firstName'], $grades[$b]['enrsub_inst_middleName'], $grades[$b]['enrsub_inst_lastName'], $grades[$b]['enrsub_inst_suffixName']);
-
-                            $b++;
-                        }
-
-                        $semesters[$a]['subjects'] = $grades;
-                        $a++;
-                    }
-
-                    $school_year[$i]['semesters'] = $semesters;
-                    $i++;
-                }
-
-                $g["grades"] = $school_year;
-
-                $vd = array_merge($vd, [
-                    "stud_grades" => $g['grades'], "stud_total_semester" => $g['total_semester'], "stud_total_summer_semester" => $g['total_summer_semester']
-                ]);
-            }
+           
 
 
             return view('admin.student_profile.edit', array_merge($vd, ["menu" => "student-profile", "stud_profile" => $fp, "formData_honors" => $honors, "formData_course" => $course, "formData_year" => $acadYears, "formData_terms" => $terms, "formData_yrLevel" => $yearLevel, "formData_docu_ent" => $dt_ent, "formData_docu_rec" => $dt_rec, "formData_docu_ext" => $dt_ext, "breadcrumb" => [["name" => "List of Student Profile", "url" => "/student/profile/"], ["name" => "Edit Student Profile"]]]));

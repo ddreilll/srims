@@ -76,15 +76,15 @@
                 },
                 columns: [{
                         data: 'subject_code',
-                        name: 's_subject.subj_code'
+                        name: 'subj_code'
                     },
                     {
                         data: 'subject_name',
-                        name: 's_subject.subj_name'
+                        name: 'subject_name'
                     },
                     {
                         data: 'section',
-                        name: 'sche_section'
+                        name: 'section'
                     },
                     {
                         data: 'schedule',
@@ -97,7 +97,7 @@
                     },
                     {
                         data: 'instructor',
-                        name: 's_instructor.inst_firstName'
+                        name: 'instructor'
                     },
                     {
                         data: 'enrolled_student_count',
@@ -105,12 +105,12 @@
                     },
                     {
                         data: 'created_at',
-                        name: 'sche_createdAt',
+                        name: 'created_at',
                         searchable: false,
                     },
                     {
                         data: 'updated_at',
-                        name: 'sche_updatedAt',
+                        name: 'updated_at',
                         searchable: false,
                         render: function(data, type) {
                             if (type === 'display' && data) {

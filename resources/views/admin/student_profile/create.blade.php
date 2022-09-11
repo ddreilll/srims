@@ -1039,7 +1039,7 @@
                 fv.disableValidator("dateExited");
 
 
-                if (acadStatus == "HD") {
+                if (acadStatus == "DIS") {
 
                     fv.enableValidator("dateExited");
 

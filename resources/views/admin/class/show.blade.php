@@ -207,7 +207,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <form class="form" action="#" id="kt_modal_add_student_grade_form">
-                    <input type="text" name="class_id" value="{{ $class->sche_id }}" hidden>
+                    <input type="text" name="class_id" value="{{ $class->class_id }}" hidden>
 
                     <div class="modal-header" id="kt_modal_add_student_grade_header">
                         <h2 class="fw-bolder">Add Student</h2>
@@ -370,7 +370,7 @@
                     'csv', 'excel', 'pdf', 'print'
                 ],
                 ajax: {
-                    url: "{{ url('/class') }}/{{ $class->sche_id }}/students",
+                    url: "{{ url('/class') }}/{{ $class->class_id }}/students",
                     error: function(xhr, error, code) {
 
                         console.log(error);
@@ -601,7 +601,7 @@
                 dom: 'rt',
                 pageLength: 5,
                 ajax: {
-                    url: "{{ url('class/') }}/{{ $class->sche_id }}/search/student-profile",
+                    url: "{{ url('class/') }}/{{ $class->class_id }}/search/student-profile",
                     error: function(xhr, error, code) {
 
                         console.log(error);

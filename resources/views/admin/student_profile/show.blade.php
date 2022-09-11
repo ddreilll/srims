@@ -68,7 +68,7 @@
                         <div class="card-body pt-15">
                             <div class="d-flex flex-center flex-column mb-5">
                                 <div class="symbol symbol-100px symbol-circle mb-7">
-                                    <img src="{{ asset('/assets/media/avatar/avatar_main.png') }}" alt="image" />
+                                    <img src="{{ asset('/assets/media/avatar/avatar_main.jpg') }}" alt="image" />
                                 </div>
                                 <p class="mb-1 text-gray-800 fw-boldest fs-5">{{ $stud_profile->stud_studentNo }}</p>
                                 <p class="fs-3 fw-bolder mb-1">
@@ -402,6 +402,8 @@
                                                                                     <td> {{ $semester->subjects[$i]['enrsub_sche_section'] }}
                                                                                     </td>
                                                                                     <td> {{ $semester->subjects[$i]['enrsub_grade_display'] }}
+                                                                                    </td>
+                                                                                    <td> {{ $semester->subjects[$i]['enrsub_grade_display_status'] }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endfor

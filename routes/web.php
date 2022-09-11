@@ -66,7 +66,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('class/{class}', 'ClassController@show');
 
     Route::get('ajax/class/retrieve-all', 'ClassController@ajax_retrieve_class_list');
-    Route::get('ajax/class/add/search/subject', 'ClassController@ajax_search_subject');
 
 
     // Student Grades
