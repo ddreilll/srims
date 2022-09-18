@@ -1,10 +1,10 @@
 {
-    "name": "laravel/laravel",
+    "name": "pupqc/srims",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "PUP Quezon City Branch - Student Record Information Management System",
     "keywords": [
-        "framework",
-        "laravel"
+        "pupqc",
+        "records"
     ],
     "license": "MIT",
     "require": {
