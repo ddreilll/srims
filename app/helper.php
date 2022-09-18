@@ -87,6 +87,11 @@ if (!function_exists('format_name')) {
             case '2':
                 $formatted_name = $last . " " . (($suffix) ? $suffix . " " : "") . ", " . $first . " " . $middle;
                 break;
+
+            case '3':
+
+                $formatted_name = $first . " " . (($middle) ? Str::of($middle)->substr(0, 1) . ". " : "") . $last;
+                break;
         }
 
         return $formatted_name;

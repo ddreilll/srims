@@ -145,7 +145,7 @@ class ClassController extends Controller
                 , DB::raw('class_section as section')
                 , DB::raw('CONCAT(term_name, ", SY ", CONCAT(class_acadYear, "-", class_acadYear + 1)) as semester_sy')
                 , DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as instructor')
-                , DB::raw('(SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE sche_enrsub_id = class_id) as enrolled_student_count')
+                , DB::raw('(SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE class_enrsub_id = class_id) as enrolled_student_count')
                 , 'class_createdAt'
                 , 'class_updatedAt'
             ]);
@@ -229,16 +229,11 @@ class ClassController extends Controller
     {
         $request->validate([ 
             'subject' => 'required',
-            'section' => 'required',
             'semester' => 'required',
             'school_year' => 'required',
             'instructor' => 'required',
-            'room' => 'required',
             'gradesheet_file[storage_type]' => 'required',
-            'gradesheet_file[file_path]' => 'required',
-            'gradesheet_file[file_name]' => 'required',
         ]);
-
 
         
 
@@ -262,7 +257,7 @@ class ClassController extends Controller
                 , "enrsub_finalRating" => $s["final_rating"]
                 , "enrsub_grade_status" => $s["grade_status"]
                 , "stud_enrsub_id" => $s['id']
-                , "sche_enrsub_id" => $request->class_id
+                , "class_enrsub_id" => $request->class_id
                 , "enrsub_createdAt" => NOW()
             ]);
         }
@@ -279,12 +274,12 @@ class ClassController extends Controller
     {
         DB::statement(DB::raw('set @rownum=0'));
         $query = StudentGrades::leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
-            ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'class_id')
+            ->leftJoin('s_class', 'class_enrsub_id', '=', 'class_id')
             ->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
             ->select([
                 DB::raw('(@rownum  := @rownum  + 1) as `row_no`'), DB::raw('md5(stud_id) as stud_md5_id'), DB::raw('enrsub_id as id'), 'r_student.stud_uuid', 'r_student.stud_studentNo', 'r_student.stud_lastName', 'r_student.stud_firstName', 'r_student.stud_middleName', DB::raw('s_course.cour_code as course'), DB::raw('enrsub_midtermGrade as midterm_grade'), DB::raw('enrsub_finalGrade as final_grade'), DB::raw('enrsub_finalRating as final_rating'), DB::raw('enrsub_grade_status as grade_status')
             ])
-            ->where("sche_enrsub_id", $class_id);
+            ->where("class_enrsub_id", $class_id);
 
         return Datatables::of($query)
             ->setRowId('stud_md5_id')
@@ -365,7 +360,7 @@ class ClassController extends Controller
                 DB::raw('cour_code as course'),
             ])
             ->where(array_merge($w, ["stud_recordType" => "NONSIS"]))
-            ->whereNotIn('stud_id',  StudentGrades::where(["sche_enrsub_id" => $class_id])->pluck('stud_enrsub_id'));;
+            ->whereNotIn('stud_id',  StudentGrades::where(["class_enrsub_id" => $class_id])->pluck('stud_enrsub_id'));;
 
         return Datatables::of($query)
             ->setRowId('id')

@@ -11,6 +11,15 @@
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div id="kt_content_container" class="container-fluid">
+            <div class="alert alert-danger d-flex align-items-center p-5 mb-10">
+                <span class="svg-icon svg-icon-2hx svg-icon-danger me-4">
+                    <i class="fa-duotone fa-circle-info"></i>
+                </span>
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-danger">Take note</h4>
+                    <span>This only applies to <b>NON SIS Students</b> only</span>
+                </div>
+            </div>
             <div class="card mb-5 mb-xl-8">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
@@ -105,7 +114,7 @@
                     },
                     {
                         data: 'created_at',
-                        name: 'created_at',
+                        name: 'class_createdAt',
                         searchable: false,
                     },
                     {
@@ -129,7 +138,9 @@
                         className: "text-end",
                     },
                 ],
-                order: [[8, 'asc']],
+                order: [
+                    [7, 'desc']
+                ],
             });
 
             $('[data-kt-student-grades-table-filter="search"]').on('keyup', function(e) { // Search bar 

@@ -47,22 +47,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     /*
     |--------------------------------------------------------------------------
-    |                      File Manager
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    Route::get('file-manager', 'FileManagerController@index')->name('file-manager');
-
-    /*
-    |--------------------------------------------------------------------------
     |                      Classes
     |--------------------------------------------------------------------------
     |
     */
 
     Route::get('class', 'ClassController@index')->name('class');
-    Route::get('class/create', 'ClassController@create');
+    Route::get('gradesheet/create', 'ClassController@create');
     Route::get('class/{class}', 'ClassController@show');
 
     Route::get('ajax/class/retrieve-all', 'ClassController@ajax_retrieve_class_list');
@@ -88,11 +79,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     Route::get('student/profile', 'StudentProfileController@index')->name('student-profile');
     Route::post('student/profile/add', 'StudentProfileController@ajax_insert');
-    Route::get('student/profile/retrieveAll', 'StudentProfileController@ajax_retrieveAll');
     Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve');
     Route::post('student/profile/edit', 'StudentProfileController@ajax_edit');
     Route::post('student/profile/update-remarks', 'StudentProfileController@ajax_update_remarks');
     Route::post('student/profile/delete', 'StudentProfileController@ajax_delete');
+
+    Route::get('ajax/student/profile/retrieve-all', 'StudentProfileController@ajax_retrieve_student_list');
+
 
     Route::get('student/profile/add', 'StudentProfileController@create_profile');
     Route::get('student/profile/{profile_uuid}', 'StudentProfileController@show_profile');

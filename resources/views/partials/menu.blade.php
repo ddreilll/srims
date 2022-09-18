@@ -5,7 +5,7 @@
     <div class="aside-toolbar flex-column-auto" id="kt_aside_toolbar">
         <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
             <div class="symbol symbol-50px">
-                <img src="{{ asset('/assets/media/avatar/avatar_main.png') }}" alt="" />
+                <img src="{{ asset('/assets/media/avatar/avatar_main.jpg') }}" alt="" />
             </div>
             <div class="aside-user-info flex-row-fluid flex-wrap ms-5">
                 <div class="d-flex">
@@ -105,34 +105,13 @@
                     <div class="menu-item">
                         <a class="menu-link {{ $menu === 'class' ? 'active' : '' }}" href="{{ url('/class') }}">
                             <span class="menu-icon">
-                                <i class="fa-duotone fa-screen-users"></i>
+                                <i class="fa-duotone fa-file-lines"></i>
                             </span>
-                            <span class="menu-title">Class List</span>
+                            <span class="menu-title">Gradesheets</span>
                         </a>
                     </div>
                 @endcan
 
-
-
-                @can('category_tools')
-                    <div class="menu-item">
-                        <div class="menu-content pt-8 pb-2">
-                            <span class="menu-section text-muted text-uppercase fs-8 ls-1">Tools</span>
-                        </div>
-                    </div>
-
-                    @can('access_file_directory')
-                        <div class="menu-item">
-                            <a class="menu-link {{ $menu === 'file-manager' ? 'active' : '' }}"
-                                href="{{ url('/file-manager') }}">
-                                <span class="menu-icon">
-                                    <i class="fa-duotone fa-folder-open"></i>
-                                </span>
-                                <span class="menu-title">File Manager</span>
-                            </a>
-                        </div>
-                    @endcan
-                @endcan
 
                 @can('category_system_setup')
 

@@ -79,12 +79,12 @@ return array (
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'poppins' => array(
-    '200' => $fontDir . '/poppins_200_813877711a871b2db3bd8c634afef2f1',
-    '300' => $fontDir . '/poppins_300_f1a3e6449eb5fb3debdaca187562ef63',
-    'normal' => $fontDir . '/poppins_normal_f993f8e4b80385d29bcbe5481e3c214c',
-    '500' => $fontDir . '/poppins_500_e479b832422c04849ca521409478177c',
-    '600' => $fontDir . '/poppins_600_3f58cf66d33304c1d031f364fdca8861',
-    'bold' => $fontDir . '/poppins_bold_0752b5c22d7212fabae08b4f4be93db0',
+    '200' => $fontDir . '/poppins_200_868c5d0f54736504f9300a77b33ba84e',
+    '300' => $fontDir . '/poppins_300_8a58ef9f5d60f12fa28286a70e725558',
+    'normal' => $fontDir . '/poppins_normal_0ba611a73844dea0a037009a664fa44e',
+    '500' => $fontDir . '/poppins_500_fe516440f70735dec2883ad9e6ea0738',
+    '600' => $fontDir . '/poppins_600_1664062187aaebfa448f64258dd3143d',
+    'bold' => $fontDir . '/poppins_bold_0b22a433b5500b4302cf342c021d0eac',
   ),
 );
 }; ?>

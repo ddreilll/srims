@@ -5,7 +5,18 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
 
         <div id="kt_content_container" class="container-fluid">
+            <div class="alert alert-danger d-flex align-items-center p-5 mb-10">
+                <span class="svg-icon svg-icon-2hx svg-icon-danger me-4">
+                    <i class="fa-duotone fa-circle-info"></i>
+                </span>
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-danger">Take note</h4>
+                    <span>This only applies to <b>NON SIS Students</b> only</span>
+                </div>
+            </div>
+            
             <div class="d-flex flex-column flex-xl-row">
+                
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 
                     <div class="card mb-5 mb-xl-8">
@@ -16,7 +27,9 @@
                                 <p class="fs-3 fw-bolder mb-1 text-center">
                                     {{ $class->class_subj_name }}</p>
 
-                                {!! $class->class_section ? '<span class="badge badge-light-dark fs-6 my-5">' . $class->class_section . '<span>' : '' !!}
+                                {!! $class->class_section
+                                    ? '<span class="badge badge-light-dark fs-6 my-5">' . $class->class_section . '<span>'
+                                    : '' !!}
                             </div>
 
                             <div class="d-flex flex-stack fs-4 py-3">
@@ -70,7 +83,8 @@
                                             <div class="d-flex flex-stack flex-grow-1">
                                                 <div class="fw-bold">
                                                     <div class="fs-6 text-gray-700">Google Drive file found<br>
-                                                        <a href="{{ $class->class_file_link }}" class="me-1" target="_blank">Click here to view
+                                                        <a href="{{ $class->class_file_link }}" class="me-1"
+                                                            target="_blank">Click here to view
                                                             the file</a>
                                                     </div>
                                                 </div>
@@ -87,6 +101,7 @@
                 </div>
 
                 <div class="flex-lg-row-fluid ms-lg-15">
+
                     <div class="card mb-5 mb-xl-8">
                         <div class="card-header border-0 pt-6">
                             <div class="card-title">
@@ -505,7 +520,9 @@
                     </button>
                 </div>`;
                 table.row($(this).closest("tr")).data(d);
-                $(row_dom).find(".form-select").select2({tags: true});
+                $(row_dom).find(".form-select").select2({
+                    tags: true
+                });
                 $("[name='grade_id']").val(d['id']);
 
                 $(row_dom).on("click", "[kt_student_grades_table_cancel]", function() {
@@ -734,16 +751,24 @@
 
                         $(clone).find('[data-name="student.midterm_grade"]').attr("name", "student[" +
                             rowIndex +
-                            "][midterm_grade]").select2({tags: true});
+                            "][midterm_grade]").select2({
+                            tags: true
+                        });
                         $(clone).find('[data-name="student.final_grade"]').attr("name", "student[" +
                             rowIndex +
-                            "][final_grade]").select2({tags: true});
+                            "][final_grade]").select2({
+                            tags: true
+                        });
                         $(clone).find('[data-name="student.final_rating"]').attr("name", "student[" +
                             rowIndex +
-                            "][final_rating]").select2({tags: true});
+                            "][final_rating]").select2({
+                            tags: true
+                        });
                         $(clone).find('[data-name="student.grade_status"]').attr("name", "student[" +
                             rowIndex +
-                            "][grade_status]").select2({tags: true});
+                            "][grade_status]").select2({
+                            tags: true
+                        });
 
                         const removeBtn = clone.find(
                             'button[kt_modal_add_student_grade_imported_remove]');

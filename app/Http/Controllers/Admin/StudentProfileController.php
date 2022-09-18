@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Faker\Generator;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Yajra\DataTables\Facades\DataTables;
 
 //Controller 
 use App\Http\Controllers\Admin\AcadYearController as AcadYears;
@@ -93,7 +94,7 @@ class StudentProfileController extends Controller
                 $g['total_summer_semester'] = 0;
 
                 $sg = new StudentGrades();
-                $school_year = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'class_id')
+                $school_year = $sg->leftJoin('s_class', 'class_enrsub_id', '=', 'class_id')
                     ->selectRaw('DISTINCT class_acadYear as acad_year
                         , CONCAT(class_acadYear, " - ", class_acadYear + 1) as acad_year_long
                         , CONCAT(class_acadYear, "-\'" ,SUBSTRING(class_acadYear + 1, 3, 2)) as acad_year_short
@@ -105,7 +106,7 @@ class StudentProfileController extends Controller
                 $i = 0;
                 foreach ($school_year as $year) {
 
-                    $semesters = $sg->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'class_id')
+                    $semesters = $sg->leftJoin('s_class', 'class_enrsub_id', '=', 'class_id')
                         ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
                         ->selectRaw('DISTINCT term_name, term_order')
                         ->whereRaw('stud_enrsub_id = "' . $sId . '" and class_acadYear = "' . $year->acad_year . '"')
@@ -121,7 +122,7 @@ class StudentProfileController extends Controller
                         }
 
                         $grades = $sg->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
-                            ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'class_id')
+                            ->leftJoin('s_class', 'class_enrsub_id', '=', 'class_id')
                             ->leftJoin('s_instructor', 'class_inst_id', '=', 'inst_id')
                             ->leftJoin('s_subject', 'class_subj_id', '=', 'subj_id')
                             ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
@@ -292,13 +293,13 @@ class StudentProfileController extends Controller
             $fp['stud_sSecondary'] = (sizeOf($fp['stud_sSecondary']) == 1) ? $fp['stud_sSecondary'][0] : [];
 
 
-            if ($fp['stud_admissionType'] == "TRANSFEREE" || $fp['stud_admissionType'] == "LADDERIZED" ) {
+            if ($fp['stud_admissionType'] == "TRANSFEREE" || $fp['stud_admissionType'] == "LADDERIZED") {
 
                 $fp['stud_sTertiary'] = $ps->where(["extsch_stud_id" => $sId, "extsch_educType" => "TRANSFER"])
                     ->get();
             }
 
-           
+
 
 
             return view('admin.student_profile.edit', array_merge($vd, ["menu" => "student-profile", "stud_profile" => $fp, "formData_honors" => $honors, "formData_course" => $course, "formData_year" => $acadYears, "formData_terms" => $terms, "formData_yrLevel" => $yearLevel, "formData_docu_ent" => $dt_ent, "formData_docu_rec" => $dt_rec, "formData_docu_ext" => $dt_ext, "breadcrumb" => [["name" => "List of Student Profile", "url" => "/student/profile/"], ["name" => "Edit Student Profile"]]]));
@@ -560,41 +561,68 @@ class StudentProfileController extends Controller
         ]);
     }
 
-    public function ajax_retrieveAll()
+    /** 
+     *  Retrieves the listing of the resource via Datatable
+     * 
+     * @return \Yajra\DataTables\Facades\DataTables
+     */
+    public function ajax_retrieve_student_list()
     {
+        // Get currently loggedin user role 
+        // If ROLEID: 1 | ROLENAME: ADMIN - Show all user profiles
+        // If ROLEID: 2 | ROLENAME: ENCODER - Show only encoded profiles
 
         $user = Auth::user();
+
+        $queryFilter = [];
         $userRole = $user->roles->pluck('id')->toArray()[0];
-        $f = [];
 
         if ($userRole == 2) {
-            $f = ["user_stud_id" => $user->id];
+            $queryFilter = ["user_stud_id" => $user->id];
         }
 
-        $sp = new StudentProfile();
-        $d = $sp->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
+        $query = StudentProfile::leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
             ->selectRaw('r_student.*
-            , md5(stud_id) as stud_id_md5
-            , cour_name as stud_course_name
-            , cour_code as stud_course 
-            , DATE_FORMAT(stud_createdAt, "%Y-%m-%d") as `stud_createdAt_m_f`
-            , DATE_FORMAT(stud_createdAt, "%l:%i:%s %p") as `stud_createdAt_t_f`
-            , IFNULL(DATE_FORMAT(stud_updatedAt, "%Y-%m-%d"), "") as `stud_updatedAt_m_f`
-            , IFNULL(DATE_FORMAT(stud_updatedAt, "%l:%i:%s %p"), "") as `stud_updatedAt_t_f`
-            ')
-            ->where($f)
-            ->get();
-
-        $i = 0;
-        foreach ($d as $p) {
-
-            $d[$i]['stud_fullName'] = $p['stud_lastName'] . ', ' . $p['stud_firstName'] . ' ' . $p['stud_middleName'];
-            $i++;
-        }
+      , md5(stud_id) as stud_id_md5
+      , cour_code as stud_course 
+      ')->where($queryFilter)->get();
 
 
-        header('Content-Type: application/json');
-        echo json_encode($d);
+        return Datatables::of($query)
+            ->setRowId('stud_id_md5')
+            ->addColumn('stud_studNo', function ($row) {
+
+                return '<a href="' . url('/student/profile') . "/" . $row->stud_uuid . '" target="_blank">' . $row->stud_studentNo . '</a>';
+            })
+            ->addColumn('stud_name', function ($row) {
+                return format_name("2", null, $row->stud_firstName, $row->stud_middleName, $row->stud_lastName);
+            })
+            ->addColumn('stud_created_at', function ($row) {
+
+                return format_datetime(strtotime($row->stud_createdAt));
+            })
+            ->addColumn('stud_updated_at', function ($row) {
+
+                return ($row->stud_updatedAt) ? format_datetime(strtotime($row->stud_updatedAt)) : NULL;
+            })
+            ->addColumn('action', function ($row) {
+
+                return '<div class="d-flex justify-content-start flex-shrink-0">
+                    <a href="' . url('student/profile') . '/' . $row->stud_uuid . '/edit" class=" btn btn-icon btn-light-warning btn-sm me-1">
+                        <i class="fa-duotone fa-pen-to-square fs-6"></i>
+                        </a>
+
+                    <button type="button" kt_student_profile_table_remarks class="btn btn-icon btn-light-dark btn-sm me-1 position-relative">
+                        <i class="fa-duotone fa-sticky-note"></i>
+                    </button>
+
+                    <button type="button" kt_student_profile_table_delete class="btn btn-icon btn-light-danger btn-sm">
+                    <i class="fas fa-trash"></i>
+                        </button>
+                </div>';
+            })
+            ->rawColumns(['stud_studNo', 'action'])
+            ->make(true);
     }
 
     public function ajax_retrieve(Request $request)

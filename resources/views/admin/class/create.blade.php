@@ -7,7 +7,7 @@
 
             <div class="d-flex justify-content-between mt-10 mb-20">
                 <div class="d-flex flex-center">
-                    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Class</h1>
+                    <h1 class="d-flex flex-column text-dark fw-bolder my-0 fs-1">Add Gradesheet</h1>
                 </div>
                 <div class="d-flex flex-center">
                     <button id="kt_form_add_student_profile_clearAllFields" type="button" class="btn btn-danger"><i
