@@ -4,7 +4,8 @@
     "description": "PUP Quezon City Branch - Student Record Information Management System",
     "keywords": [
         "pupqc",
-        "records"
+        "records",
+        "students"
     ],
     "license": "MIT",
     "require": {
