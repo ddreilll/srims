@@ -21,7 +21,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 200;
-            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-200.ttf") }}') format('truetype');
+            src: url('{{ asset('assets/fonts/poppins/poppins-v19-latin-200.ttf') }}') format('truetype');
         }
 
         /* poppins-300 - latin */
@@ -29,7 +29,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 300;
-            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-300.ttf") }}') format('truetype');
+            src: url('{{ asset('assets/fonts/poppins/poppins-v19-latin-300.ttf') }}') format('truetype');
 
         }
 
@@ -38,7 +38,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 400;
-            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-regular.ttf") }}') format('truetype');
+            src: url('{{ asset('assets/fonts/poppins/poppins-v19-latin-regular.ttf') }}') format('truetype');
 
         }
 
@@ -47,7 +47,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 500;
-            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-500.ttf") }}') format('truetype');
+            src: url('{{ asset('assets/fonts/poppins/poppins-v19-latin-500.ttf') }}') format('truetype');
 
         }
 
@@ -56,7 +56,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 600;
-            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-600.ttf") }}') format('truetype');
+            src: url('{{ asset('assets/fonts/poppins/poppins-v19-latin-600.ttf') }}') format('truetype');
 
         }
 
@@ -65,7 +65,7 @@
             font-family: 'Poppins';
             font-style: normal;
             font-weight: 700;
-            src: url('{{ asset("assets/fonts/poppins/poppins-v19-latin-700.ttf") }}') format('truetype');
+            src: url('{{ asset('assets/fonts/poppins/poppins-v19-latin-700.ttf') }}') format('truetype');
 
         }
 
@@ -79,7 +79,8 @@
     <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('/assets/plugins/custom/fontawesome-pro/css/all.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/assets/plugins/custom/fontawesome-pro/css/all.min.css') }}" rel="stylesheet"
+        type="text/css" />
 
 
     <style>
@@ -167,26 +168,35 @@
 
                                     @if (sizeOf($breadcrumb) >= 1)
                                         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
-                                            <li class="breadcrumb-item text-muted">
-                                                <a href="{{ url('/') }}"
-                                                    class="text-muted text-hover-primary">Dashboard</a>
-                                            </li>
 
-                                            @for ($i = 0; $i < sizeOf($breadcrumb); $i++)
-                                                <li class="breadcrumb-item">
-                                                    <span class="bullet bg-gray-200 w-5px h-2px"></span>
+                                            @if (sizeOf($breadcrumb) == 1 && $breadcrumb[0]['name'] == 'Dashboard')
+                                                <li class="breadcrumb-item text-dark">Dashboard
+                                                </li>
+                                            @else
+                                                <li class="breadcrumb-item text-muted">
+                                                    <a href="{{ url('/dashboard') }}"
+                                                        class="text-muted text-hover-primary">Dashboard</a>
                                                 </li>
 
-                                                @if (sizeOf($breadcrumb) != $i + 1)
-                                                    <li class="breadcrumb-item text-muted"><a
-                                                            href="{{ url($breadcrumb[$i]['url']) }}"
-                                                            class="text-muted text-hover-primary">{{ $breadcrumb[$i]['name'] }}</a>
+                                                @for ($i = 0; $i < sizeOf($breadcrumb); $i++)
+                                                    <li class="breadcrumb-item">
+                                                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
                                                     </li>
-                                                @else
-                                                    <li class="breadcrumb-item text-dark">{{ $breadcrumb[$i]['name'] }}
-                                                    </li>
-                                                @endif
-                                            @endfor
+
+                                                    @if (sizeOf($breadcrumb) != $i + 1)
+                                                        <li class="breadcrumb-item text-muted"><a
+                                                                href="{{ url($breadcrumb[$i]['url']) }}"
+                                                                class="text-muted text-hover-primary">{{ $breadcrumb[$i]['name'] }}</a>
+                                                        </li>
+                                                    @else
+                                                        <li class="breadcrumb-item text-dark">
+                                                            {{ $breadcrumb[$i]['name'] }}
+                                                        </li>
+                                                    @endif
+                                                @endfor
+                                            @endif
+
+
                                         </ul>
                                     @else
                                         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
@@ -253,7 +263,7 @@
         {{ csrf_field() }}
     </form>
 
-    <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>    
+    <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('/assets/js/scripts.bundle.js') }}"></script>
 
     <script src="{{ asset('/assets/plugins/custom/axios/dist/axios.min.js') }}"></script>
@@ -262,34 +272,6 @@
     <script src="{{ asset('/assets/plugins/custom/ph-cities/city.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/custom/session-timeout/dist/bootstrap-session-timeout.min.js') }}"></script>
     <script src="{{ asset('/assets/plugins/custom/fontawesome-pro/js/all.min.js') }}"></script>
-
-
-    {{-- @if (!env('APP_DEBUG'))
-        <script type="text/javascript">
-            $.sessionTimeout({
-                title: "Session timeout notification",
-                message: 'Your session is about to expire',
-                warnAfter: 30000,
-                redirAfter: 60000,
-                keepAlive: true,
-                keepAliveUrl: '/session/keep-alive',
-                ajaxType: 'GET',
-                keepAliveInterval: 6000,
-                ignoreUserActivity: false,
-                countdownSmart: true,
-                countdownMessage: 'Redirecting in {timer}.',
-                countdownBar: true,
-                onRedir: function() {
-                    $('#logoutform').submit();
-                }
-            });
-
-            $("#session-timeout-dialog").find(".modal-header button[class='close']").remove();
-            $("#session-timeout-dialog-logout").remove();
-            $("#session-timeout-dialog-keepalive").removeAttr("data-dismiss").attr("data-bs-dismiss", "modal");
-            $("#session-timeout-dialog").find(".modal-footer").addClass("d-flex justify-content-center");
-        </script>
-    @endif --}}
 
     <script type="text/javascript">
         toastr.options = {

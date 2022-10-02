@@ -105,10 +105,8 @@
                                         data-placeholder="Academic Status"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="academicStatus">
                                         <option></option>
-                                        <option value="UNK">Unknown</option>
-                                        <option value="REG">Regular</option>
+                                        <option value="UNG">Undergraduate</option>
                                         <option value="RTN">Returnee</option>
-                                        <option value="INC">Inactive</option>
                                         <option value="DIS">Dismissed</option>
                                         <option value="GRD">Graduated</option>
                                     </select>

@@ -16,14 +16,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 Route::redirect('/', url('/login'));
-Route::redirect('/home', url('/admin'));
+Route::redirect('/home', url('/dashboard'));
 
 
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
-    Route::get('/', 'HomeController@index')->name('home');
 
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -41,9 +40,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
-    Route::get('session/keep-alive', function () {
-        return  response(null, Response::HTTP_OK);
-    });
+    Route::get('/dashboard', 'DashboardController@dashboard_1')->name('admin.dashboard.1');
+    Route::get('ajax/student-per-year', 'DashboardController@ajax_retrieve_total_student_per_year');
+
 
     /*
     |--------------------------------------------------------------------------

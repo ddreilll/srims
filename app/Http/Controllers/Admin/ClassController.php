@@ -138,16 +138,7 @@ class ClassController extends Controller
             ->leftJoin('s_instructor', 'class_inst_id', '=', 'inst_id')
             ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
             ->select([
-                'class_id'
-                , DB::raw('md5(class_id) as class_id_md5')
-                , 'subj_code'
-                , DB::raw('subj_name as subject_name')
-                , DB::raw('class_section as section')
-                , DB::raw('CONCAT(term_name, ", SY ", CONCAT(class_acadYear, "-", class_acadYear + 1)) as semester_sy')
-                , DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as instructor')
-                , DB::raw('(SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE class_enrsub_id = class_id) as enrolled_student_count')
-                , 'class_createdAt'
-                , 'class_updatedAt'
+                'class_id', DB::raw('md5(class_id) as class_id_md5'), 'subj_code', DB::raw('subj_name as subject_name'), DB::raw('class_section as section'), DB::raw('CONCAT(term_name, ", SY ", CONCAT(class_acadYear, "-", class_acadYear + 1)) as semester_sy'), DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as instructor'), DB::raw('(SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE class_enrsub_id = class_id) as enrolled_student_count'), 'class_createdAt', 'class_updatedAt'
             ]);
 
         return Datatables::of($query)
@@ -227,7 +218,7 @@ class ClassController extends Controller
      */
     public function ajax_store_class(Request $request)
     {
-        $request->validate([ 
+        $request->validate([
             'subject' => 'required',
             'semester' => 'required',
             'school_year' => 'required',
@@ -235,9 +226,18 @@ class ClassController extends Controller
             'gradesheet_file[storage_type]' => 'required',
         ]);
 
-        
 
-        
+        $classData = [
+            "class_section" => $request->section,
+            "class_acadYear" => $request->school_year,
+            "class_fsorage" => $request->gradesheet_file['storage_type'],
+            "class_flink" => $request->gradesheet_file['file_path'],
+            "class_fname" => $request->gradesheet_file['file_name'],
+            "class_term_id" => $request->semester,
+            "class_room_id" => $request->room,
+            "class_subj_id" => $request->subject,
+            "class_inst_id" => $request->instructor
+        ];
     }
 
     // Student grades via ajax request
@@ -252,13 +252,7 @@ class ClassController extends Controller
         foreach ($request->student as $s) {
 
             array_push($d, [
-                "enrsub_midtermGrade" => $s['midterm_grade']
-                , "enrsub_finalGrade" => $s["final_grade"]
-                , "enrsub_finalRating" => $s["final_rating"]
-                , "enrsub_grade_status" => $s["grade_status"]
-                , "stud_enrsub_id" => $s['id']
-                , "class_enrsub_id" => $request->class_id
-                , "enrsub_createdAt" => NOW()
+                "enrsub_midtermGrade" => $s['midterm_grade'], "enrsub_finalGrade" => $s["final_grade"], "enrsub_finalRating" => $s["final_rating"], "enrsub_grade_status" => $s["grade_status"], "stud_enrsub_id" => $s['id'], "class_enrsub_id" => $request->class_id, "enrsub_createdAt" => NOW()
             ]);
         }
 

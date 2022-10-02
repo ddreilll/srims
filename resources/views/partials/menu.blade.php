@@ -5,7 +5,7 @@
     <div class="aside-toolbar flex-column-auto" id="kt_aside_toolbar">
         <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
             <div class="symbol symbol-50px">
-                <img src="{{ asset('/assets/media/avatar/avatar_main.jpg') }}" alt="" />
+                <img src="{{ asset('/assets/media/avatar/avatar_main.png') }}" alt="" />
             </div>
             <div class="aside-user-info flex-row-fluid flex-wrap ms-5">
                 <div class="d-flex">
@@ -84,6 +84,15 @@
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                 id="#kt_aside_menu" data-kt-menu="true">
 
+                <div class="menu-item">
+                    <a class="menu-link {{ $menu === 'dashboard' ? 'active' : '' }}" href="{{ url('/dashboard') }}">
+                        <span class="menu-icon">
+                            <i class="fa-duotone fa-chart-network"></i>
+                        </span>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </div>
+                
                 @can('category_transaction')
                     <div class="menu-item">
                         <div class="menu-content pt-8 pb-2">
