@@ -389,6 +389,34 @@ class StudentProfileController extends Controller
 
     // -- Begin::Ajax Requests -- //
 
+    /** 
+     *  Validate Student No. if not duplicated via ajax call
+     * 
+     * @return \Illuminate\Http\Request;
+     */
+    public function ajax_validate_studentNo(Request $request)
+    {
+        $isValid = '';
+        $filter = [['stud_studentNo', '=', $request->studentNo]];
+
+        if ($request->studentId) {
+            array_push($filter, ["stud_id", '!=', $request->studentId]);
+        }
+
+        $query = StudentProfile::where($filter)->get();
+
+        if (sizeOf($query) >= 1) {
+            $isValid = false;
+        } else {
+            $isValid = true;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'valid' => $isValid,
+        ]);
+    }
+
 
     public function ajax_insert(Request $request)
     {

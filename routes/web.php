@@ -84,6 +84,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('student/profile/delete', 'StudentProfileController@ajax_delete');
 
     Route::get('ajax/student/profile/retrieve-all', 'StudentProfileController@ajax_retrieve_student_list');
+    Route::post('ajax/student/profile/validate-studentNo', 'StudentProfileController@ajax_validate_studentNo');
 
 
     Route::get('student/profile/add', 'StudentProfileController@create_profile');

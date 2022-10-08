@@ -35,8 +35,9 @@
 
                                 <div class="fv-row">
                                     <label class="form-label">Course</label>
-                                    <select class="form-select form-select-solid" data-placeholder="Select a course" data-control="select2"
-                                        data-dropdown-parent="#kt_form_add_student_profile" name="course">
+                                    <select class="form-select form-select-solid" data-placeholder="Select a course"
+                                        data-control="select2" data-dropdown-parent="#kt_form_add_student_profile"
+                                        name="course">
                                         <option></option>
                                         @foreach ($formData_course as $course)
                                             <option value="{{ $course->cour_id }}">
@@ -860,7 +861,6 @@
     <script type="text/javascript">
         KTUtil.onDOMContentLoaded((function() {
 
-
             // Form logics
             let fv = init_formValidation("kt_form_add_student_profile", {
                 'recordType': {
@@ -868,12 +868,21 @@
                         notEmpty: {
                             message: 'Record type is required'
                         },
+
                     },
                 },
                 'studentNo': {
                     validators: {
                         notEmpty: {
                             message: 'Student number is required'
+                        },
+                        remote: {
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            message: 'Student number is already in use',
+                            method: 'POST',
+                            url: '{{ url('/ajax/student/profile/validate-studentNo') }}',
                         },
                     },
                 },
@@ -923,7 +932,11 @@
                     validators: {
                         notEmpty: {
                             enabled: false,
-                            message: 'Date is required',
+                            message: 'Date graduated is required',
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'The value is not a valid date or doesn\'t have a valid format (MM/DD/YYYY)',
                         },
                     }
                 },
@@ -949,6 +962,10 @@
                             enabled: false,
                             message: 'Date issued is required',
                         },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'The value is not a valid date or doesn\'t have a valid format (MM/DD/YYYY)',
+                        },
                     },
                 },
                 "honorableDismissedSchool": {
@@ -964,6 +981,10 @@
                         notEmpty: {
                             enabled: false,
                             message: 'College name is required',
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'The value is not a valid date or doesn\'t have a valid format (MM/DD/YYYY)',
                         },
                     },
                 },
@@ -1343,6 +1364,7 @@
                         .addField("college[" + rowIndex + "][yearExited]",
                             collegeYearExitedValidators);
 
+
                     const removeBtn = clone.find(
                         'button[kt_form_add_student_profile_prev_college_removeBtn]');
                     removeBtn.attr('data-row-index', rowIndex);
@@ -1352,6 +1374,10 @@
                         const index = $(this).attr('data-row-index');
                         removeCollege(index);
                     })
+
+                    Inputmask({
+                        "mask": "9999"
+                    }).mask("#kt_form_add_student_profile [name='college[" + rowIndex + "][yearExited]']");
                 });
 
             var city = new City();
@@ -1386,7 +1412,7 @@
 
                     $("#kt_form_add_student_profile_prev_college").attr("style",
                         "display: none !important");
-                } else if (admissionType == "TRANSFEREE" || admissionType == "LADDERIZED" ) {
+                } else if (admissionType == "TRANSFEREE" || admissionType == "LADDERIZED") {
 
                     fv.enableValidator("college[0][name]")
                         .enableValidator("college[0][yearExited]");
@@ -1407,6 +1433,21 @@
                 "mask": "99/99/9999"
             }).mask("#kt_form_add_student_profile [name='dateExited']");
 
+            Inputmask({
+                "mask": "99/99/9999"
+            }).mask("#kt_form_add_student_profile [name='honorableDismissedDate']");
+
+            Inputmask({
+                "mask": "9999"
+            }).mask("#kt_form_add_student_profile [name='college[0][yearExited]']");
+
+            Inputmask({
+                "mask": "9999"
+            }).mask("#kt_form_add_student_profile [name='hs_yearGraduated']");
+
+            Inputmask({
+                "mask": "9999"
+            }).mask("#kt_form_add_student_profile [name='es_yearGraduated']");
 
 
             // Documents
