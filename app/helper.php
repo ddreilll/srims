@@ -85,7 +85,7 @@ if (!function_exists('format_name')) {
                 break;
 
             case '2':
-                $formatted_name = $last . " " . (($suffix) ? $suffix . " " : "") . ", " . $first . " " . $middle;
+                $formatted_name = $last . (($suffix) ?  " " . $suffix . " " : "") . ", " . $first . " " . $middle;
                 break;
 
             case '3':

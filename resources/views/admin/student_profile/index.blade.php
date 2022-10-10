@@ -5,6 +5,23 @@
         .daterangepicker.show-calendar .ranges {
             height: 0px;
         }
+
+        .menu-state-bg-light-primary .menu-item.hover:not(.here)>.menu-hover-warning:not(.disabled):not(.active):not(.here),
+        .menu-state-bg-light-primary .menu-item:not(.here) .menu-hover-warning:hover:not(.disabled):not(.active):not(.here) {
+            transition: color .2s ease, background-color .2s ease;
+            background-color: #fff5f8;
+            color: #f1416c;
+        }
+
+        .menu-state-bg-light-primary .menu-item.hover:not(.here)>.menu-hover-warning:not(.disabled):not(.active):not(.here) .menu-title,
+        .menu-state-bg-light-primary .menu-item:not(.here) .menu-hover-warning:hover:not(.disabled):not(.active):not(.here) .menu-title {
+            color: #f1416c;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #f1416c;
+            color: #f1416c;
+        }
     </style>
 @endsection
 
@@ -46,27 +63,28 @@
                                 </div>
                                 <div class="separator border-gray-200"></div>
                                 <div class="px-7 py-5" data-kt-student-profile="form">
-                                    <div class="mb-10">
+                                    <div class="mb-5">
                                         <label class="form-label fs-6 fw-semibold">Course</label>
-                                        <select class="form-select form-select-solid fw-bold"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-kt-student-profile-filter-field="course"
+                                        <select data-kt-student-profile-filter-type="select"
+                                            class="form-select form-select-solid fw-bold" data-placeholder="Select option"
+                                            data-allow-clear="true" data-kt-student-profile-filter-field="course"
                                             data-kt-student-profile-filter-column="2">
                                             <option></option>
                                         </select>
                                     </div>
-                                    <div class="mb-10">
+                                    <div class="mb-5">
                                         <label class="form-label fs-6 fw-semibold">Admission Year</label>
-                                        <select class="form-select form-select-solid fw-bold"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-kt-student-profile-filter-field="admissionYear"
+                                        <select data-kt-student-profile-filter-type="select"
+                                            class="form-select form-select-solid fw-bold" data-placeholder="Select option"
+                                            data-allow-clear="true" data-kt-student-profile-filter-field="admissionYear"
                                             data-kt-student-profile-filter-column="4">
                                             <option></option>
                                         </select>
                                     </div>
-                                    <div class="mb-10">
+                                    <div class="mb-5">
                                         <label class="form-label fs-6 fw-semibold">Academic Status</label>
-                                        <select class="form-select form-select-solid fw-bold" data-control="select2"
+                                        <select data-kt-student-profile-filter-type="select"
+                                            class="form-select form-select-solid fw-bold" data-control="select2"
                                             data-placeholder="Select option" data-allow-clear="true"
                                             data-kt-student-profile-filter-column="3">
                                             {{-- 'UNG - Undergraduate', 'RTN - Returnee', 'DIS - Honorable Dismissal', 'GRD - Graduated' --}}
@@ -78,15 +96,55 @@
                                             <option value="NA">------------ Undefined ------------</option>
                                         </select>
                                     </div>
+                                    <div class="mb-5">
+                                        <label class="form-label fw-semibold">Record type</label>
+                                        <div class="d-flex">
+                                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                                <input data-kt-student-profile-filter-column="5"
+                                                    name="student_profile_filter_recordType" class="form-check-input"
+                                                    data-kt-student-profile-filter-type="radioBtn" type="radio"
+                                                    value="SIS" id="student_profile_sis">
+                                                <span class="form-check-label" for="student_profile_sis">SIS</span>
+                                            </label>
+                                            <label class="form-check form-check-sm form-check-custom form-check-solid">
+                                                <input data-kt-student-profile-filter-column="5"
+                                                    name="student_profile_filter_recordType" class="form-check-input"
+                                                    data-kt-student-profile-filter-type="radioBtn" type="radio"
+                                                    value="NONSIS" id="student_profile_nonsis">
+                                                <span class="form-check-label" for="student_profile_nonsis">NON-SIS</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="separator my-10 opacity-75"></div>
+                                    <div class="mb-5">
+                                        <label class="form-label fw-semibold">Created at</label>
+                                        <div class="d-flex">
+                                            <div class="input-group">
+                                                <input class="form-control form-control-solid rounded rounded-end-0" 
+                                                    placeholder="Pick date range" data-kt-student-profile-filter-type="flatPickr" data-kt-student-profile-filter-field="createdAt" />
+                                                <button class="btn btn-icon btn-light"
+                                                    id="kt_ecommerce_sales_flatpickr_clear">
+                                                    <span class="svg-icon svg-icon-5">
+                                                        <i class="fa-light fa-xmark"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="mb-10">
-                                        <label class="form-label fs-6 fw-semibold">Record type</label>
-                                        <select class="form-select form-select-solid fw-bold" data-control="select2"
-                                            data-placeholder="Select option" data-allow-clear="true"
-                                            data-kt-student-profile-filter-column="5">
-                                            <option></option>
-                                            <option value="SIS">SIS</option>
-                                            <option value="NONSIS">NON-SIS</option>
-                                        </select>
+                                        <label class="form-label fw-semibold">Updated at</label>
+                                        <div class="d-flex">
+                                            <div class="input-group">
+                                                <input class="form-control form-control-solid rounded rounded-end-0" 
+                                                    placeholder="Pick date range" data-kt-student-profile-filter-type="flatPickr" data-kt-student-profile-filter-field="updateddAt" />
+                                                <button class="btn btn-icon btn-light"
+                                                    id="kt_ecommerce_sales_flatpickr_clear">
+                                                    <span class="svg-icon svg-icon-5">
+                                                        <i class="fa-light fa-xmark"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <button type="reset"
@@ -103,7 +161,7 @@
                             @can('add_student_profile')
                                 <a href="{{ url('student/profile/add') }}" class="btn btn-primary">Add Student Profile</a>
                             @endcan
-                            <a href="{{ url('student/profile/archived') }}" class="mx-2 btn btn-icon btn-warning"
+                            <a href="{{ url('student/profile/archived') }}" class="mx-2 btn btn-icon btn-danger"
                                 data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark"
                                 title="Archived Profile"><i class="fa-solid fa-box-archive"></i></a>
                         </div>
@@ -290,12 +348,23 @@
             }
 
             const resetFilter = function() {
-                $('[data-kt-student-profile-filter="form"] select').each((e, n) => {
+                $('[data-kt-student-profile-filter="form"] :radio:checked, [data-kt-student-profile-filter="form"] select ')
+                    .each((e, n) => {
 
-                    $(n).val('').trigger('change');
-                    table.column($(n).attr('data-kt-student-profile-filter-column')).search("")
-                        .draw();
-                })
+                        table.column($(n).attr('data-kt-student-profile-filter-column')).search("")
+                            .draw();
+
+                        switch ($(n).attr('data-kt-student-profile-filter-type')) {
+                            case 'radioBtn':
+                                $(n).prop('checked', false);
+                                break;
+
+                            case 'select':
+                                $(n).val('').trigger('change');
+                                break;
+                        }
+
+                    })
             }
 
             const showFilterCounter = function(show, count) {
@@ -386,13 +455,14 @@
             $('[data-kt-student-profile-filter-action="apply"]').on("click", function() {
                 filterCount = 0;
 
-                $('[data-kt-student-profile-filter="form"] select').each((e, n) => {
-                    filterCount += ($(n).val()) ? 1 : 0;
+                $('[data-kt-student-profile-filter="form"] :radio:checked, [data-kt-student-profile-filter="form"] select ')
+                    .each((e, n) => {
+                        filterCount += ($(n).val()) ? 1 : 0;
 
-                    table.column($(n).attr('data-kt-student-profile-filter-column')).search($(n)
-                            .val())
-                        .draw();
-                })
+                        table.column($(n).attr('data-kt-student-profile-filter-column')).search($(n)
+                                .val())
+                            .draw();
+                    })
 
                 if (filterCount >= 1) {
                     showFilterCounter(true, filterCount);
@@ -421,8 +491,8 @@
                     confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'archive']) }}",
                     cancelButtonText: "{{ __('modal.cancel_btn') }}",
                     customClass: {
-                        confirmButton: 'btn btn-primary',
-                        cancelButton: 'btn btn-active-light',
+                        confirmButton: 'btn btn-active-light',
+                        cancelButton: 'btn btn-danger',
                     },
                 }).then(function(t) {
                     if (t.isConfirmed) {

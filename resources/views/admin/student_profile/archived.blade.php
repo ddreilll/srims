@@ -142,6 +142,11 @@
 
             });
 
+            table.on('draw', function(e) {
+                $(this).find('[data-bs-toggle="tooltip"]').tooltip();
+            });
+
+
             $("#kt_student_profile_table").on("click", "[kt_student_profile_table_restore]", function() {
 
                 const id = $(this).closest("tr").attr("id");

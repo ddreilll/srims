@@ -661,8 +661,7 @@ class StudentProfileController extends Controller
                         <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
                     </svg>
                 </span>
-                <!--end::Svg Icon--></a>
-                <!--begin::Menu-->
+                </a>
                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                     <div class="menu-item px-3">
                         <a href="' . url('student/profile') . '/' . $row->stud_uuid . '" class="menu-link px-3">View</a>
@@ -672,7 +671,7 @@ class StudentProfileController extends Controller
                     </div>
                     <div class="separator my-3 opacity-75"></div>
                     <div class="menu-item px-3">
-                        <a href="#" class="menu-link px-3" kt_student_profile_table_archive>
+                        <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
                         <span class="menu-icon">
                             <i class="fa-duotone fa-inbox-in fs-5"></i>
                         </span>
@@ -680,8 +679,7 @@ class StudentProfileController extends Controller
                         </a>
                     </div>
                 </div>
-                <!--end::Menu-->
-            </td>';
+                 </td>';
             })
             ->filterColumn('stud_name', function ($query, $keyword) {
                 $query->whereRaw("CONCAT(stud_firstName, ' ', stud_middleName, ' ', stud_lastName) like ?", ["%{$keyword}%"]);
@@ -691,6 +689,9 @@ class StudentProfileController extends Controller
             })
             ->filterColumn('stud_yearOfAdmission', function ($query, $keyword) {
                 $query->where("stud_yearOfAdmission", $keyword);
+            })
+            ->filterColumn('stud_recordType', function ($query, $keyword) {
+                $query->where("stud_recordType", $keyword);
             })
             ->filterColumn('stud_academicStatus', function ($query, $keyword) {
 
@@ -716,13 +717,20 @@ class StudentProfileController extends Controller
         // This function is for Admin only
 
         $query = StudentProfile::leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
-            ->selectRaw('r_student.*
-      , md5(stud_id) as stud_id_md5
-      , cour_code as stud_course 
-      ')->onlyTrashed()->get();
+            ->select(
+                DB::raw('md5(stud_id) as stud_id_md5'),
+                'stud_uuid',
+                'stud_studentNo',
+                'stud_firstName',
+                'stud_middleName',
+                'stud_lastName',
+                DB::raw('cour_code as stud_course'),
+                'stud_createdAt',
+                'stud_deletedAt'
+            )->onlyTrashed();
 
 
-        return Datatables::of($query)
+        return Datatables::eloquent($query)
             ->setRowId('stud_id_md5')
             ->addColumn('stud_name', function ($row) {
                 return format_name("2", null, $row->stud_firstName, $row->stud_middleName, $row->stud_lastName);
@@ -739,17 +747,17 @@ class StudentProfileController extends Controller
 
                 return '<div class="d-flex justify-content-start flex-shrink-0">
 
-                    <button type="button" kt_student_profile_table_restore class="btn btn-icon btn-light-warning btn-sm mx-2">
+                    <button type="button" kt_student_profile_table_restore class="btn btn-icon btn-light-warning btn-sm mx-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="Restore">
                         <i class="fa-solid fa-rotate-left fs-6"></i>
                     </button>
 
-                    <button type="button" kt_student_profile_table_force_delete class="btn btn-icon btn-light-danger btn-sm">
+                    <button disabled type="button" kt_student_profile_table_force_delete class="btn btn-icon btn-sm btn btn-bg-light btn-color-muted" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="Permanently delete">
                         <i class="fa-solid fa-trash-xmark fs-6"></i>
                     </button>
                 </div>';
             })
             ->rawColumns(['stud_studNo', 'action'])
-            ->make(true);
+            ->toJson();
     }
 
     public function ajax_retrieve(Request $request)
