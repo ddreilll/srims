@@ -17,6 +17,15 @@ class StudentProfile extends Model
     const UPDATED_AT = 'stud_updatedAt';
     const DELETED_AT = 'stud_deletedAt';
 
+    /**
+     * Get the course that has a student
+     */
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'cour_stud_id', 'cour_id');
+    }
+
+
     // Subject details
     public function fetchOne($md5Id)
     {

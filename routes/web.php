@@ -77,15 +77,17 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         */
 
     Route::get('student/profile', 'StudentProfileController@index')->name('student-profile');
+    Route::get('student/profile/archived', 'StudentProfileController@archived');
     Route::post('student/profile/add', 'StudentProfileController@ajax_insert');
     Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve');
     Route::post('student/profile/edit', 'StudentProfileController@ajax_edit');
     Route::post('student/profile/update-remarks', 'StudentProfileController@ajax_update_remarks');
-    Route::post('student/profile/delete', 'StudentProfileController@ajax_delete');
+    Route::post('student/profile/archive', 'StudentProfileController@ajax_archive');
 
     Route::get('ajax/student/profile/retrieve-all', 'StudentProfileController@ajax_retrieve_student_list');
+    Route::get('ajax/student/profile/retrieve-archived', 'StudentProfileController@ajax_retrieve_archived_student_list');
     Route::post('ajax/student/profile/validate-studentNo', 'StudentProfileController@ajax_validate_studentNo');
-
+    Route::post('ajax/student/profile/restore', 'StudentProfileController@ajax_restore');
 
     Route::get('student/profile/add', 'StudentProfileController@create_profile');
     Route::get('student/profile/{profile_uuid}', 'StudentProfileController@show_profile');
@@ -155,6 +157,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('course/retrieve', 'CourseController@ajax_retrieve');
     Route::post('course/update', 'CourseController@ajax_update');
     Route::post('course/delete', 'CourseController@ajax_delete');
+
+    Route::post('select2/course', 'CourseController@select2');
 
     /*
 |--------------------------------------------------------------------------
@@ -251,7 +255,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('settings/semester/select2', 'TermController@ajax_select2_search');
 
     // School year
-    Route::post('settings/school-year/select2', 'AcadYearController@ajax_select2_search');
+    Route::post('settings/school-year/select2', 'AcadYearController@ajax_select2_plus_search');
+    Route::post('select2/settings/school-year/base', 'AcadYearController@ajax_select2_base_search');
 
 
     Route::get('settings/student-profile', 'SystemSettingsController@view_student_profile')->name('settings-student-profile');

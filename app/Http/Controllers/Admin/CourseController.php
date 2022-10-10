@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 // Models
 use App\Models\Course;
@@ -139,7 +140,34 @@ class CourseController extends Controller
     }
     // -- End::Ajax Requests -- //
 
+    // -- Begin:Select2 Ajax Request -- //
 
+    public function select2(Request $request)
+    {
+        $term = trim($request->term);
+        $course = Course::select(
+            DB::raw('cour_id as id'),
+            DB::raw('cour_code as text'),
+        )->where('cour_code', 'LIKE',  '%' . $term . '%')
+            ->simplePaginate(10);
+
+        $morePages = true;
+
+        if (empty($course->nextPageUrl())) {
+            $morePages = false;
+        }
+
+        $results = array(
+            "results" => $course->items(),
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+
+        return response()->json($results);
+    }
+
+    // -- End:Select2 Ajax Request -- //
 
     /*
 |--------------------------------------------------------------------------
