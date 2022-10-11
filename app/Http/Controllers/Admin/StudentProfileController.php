@@ -707,18 +707,18 @@ class StudentProfileController extends Controller
 
                 $dateRange = explode("to", $keyword);
                 if (sizeOf($dateRange) == 2) {
-                    $query->whereBetween("stud_createdAt", [$dateRange[0], $dateRange[1]]);
+                    $query->whereBetween("stud_createdAt", [$dateRange[0] . " 00:00:00", $dateRange[1] . " 23:59:00"]);
                 } else {
-                    $query->whereBetween("stud_createdAt", [$keyword, $keyword]);
+                    $query->whereBetween("stud_createdAt", [$keyword . " 00:00:00",  $keyword . " 23:59:00"]);
                 }
             })
             ->filterColumn('stud_updatedAt', function ($query, $keyword) {
 
                 $dateRange = explode("to", $keyword);
                 if (sizeOf($dateRange) == 2) {
-                    $query->whereBetween("stud_updatedAt", [$dateRange[0], $dateRange[1]]);
+                    $query->whereBetween("stud_updatedAt", [$dateRange[0] . " 00:00:00", $dateRange[1] . " 23:59:00"]);
                 } else {
-                    $query->whereBetween("stud_updatedAt", [$keyword, $keyword]);
+                    $query->whereBetween("stud_updatedAt", [$keyword . " 00:00:00",  $keyword . " 23:59:00"]);
                 }
             })
             ->rawColumns(['stud_studNo', 'action'])

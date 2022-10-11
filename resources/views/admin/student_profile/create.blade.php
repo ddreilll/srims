@@ -982,10 +982,6 @@
                             enabled: false,
                             message: 'College name is required',
                         },
-                        date: {
-                            format: 'MM/DD/YYYY',
-                            message: 'The value is not a valid date or doesn\'t have a valid format (MM/DD/YYYY)',
-                        },
                     },
                 },
                 "college[0][yearExited]": {
