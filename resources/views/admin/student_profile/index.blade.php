@@ -120,10 +120,13 @@
                                         <label class="form-label fw-semibold">Created at</label>
                                         <div class="d-flex">
                                             <div class="input-group">
-                                                <input class="form-control form-control-solid rounded rounded-end-0" 
-                                                    placeholder="Pick date range" data-kt-student-profile-filter-type="flatPickr" data-kt-student-profile-filter-field="createdAt" />
+                                                <input class="form-control form-control-solid rounded rounded-end-0"
+                                                    placeholder="Pick date range"
+                                                    data-kt-student-profile-filter-type="flatPickr"
+                                                    data-kt-student-profile-filter-field="createdAt"
+                                                    data-kt-student-profile-filter-column="6" />
                                                 <button class="btn btn-icon btn-light"
-                                                    id="kt_ecommerce_sales_flatpickr_clear">
+                                                    data-kt-student-profile-filter-clear="createdAt">
                                                     <span class="svg-icon svg-icon-5">
                                                         <i class="fa-light fa-xmark"></i>
                                                     </span>
@@ -135,10 +138,13 @@
                                         <label class="form-label fw-semibold">Updated at</label>
                                         <div class="d-flex">
                                             <div class="input-group">
-                                                <input class="form-control form-control-solid rounded rounded-end-0" 
-                                                    placeholder="Pick date range" data-kt-student-profile-filter-type="flatPickr" data-kt-student-profile-filter-field="updateddAt" />
+                                                <input class="form-control form-control-solid rounded rounded-end-0"
+                                                    placeholder="Pick date range"
+                                                    data-kt-student-profile-filter-type="flatPickr"
+                                                    data-kt-student-profile-filter-field="updatedAt"
+                                                    data-kt-student-profile-filter-column="7" />
                                                 <button class="btn btn-icon btn-light"
-                                                    id="kt_ecommerce_sales_flatpickr_clear">
+                                                    data-kt-student-profile-filter-clear="updatedAt">
                                                     <span class="svg-icon svg-icon-5">
                                                         <i class="fa-light fa-xmark"></i>
                                                     </span>
@@ -244,6 +250,8 @@
     <script type="text/javascript">
         KTUtil.onDOMContentLoaded((function() {
 
+            // ----- Begin:Table -----
+
             var table = $("#kt_student_profile_table").DataTable({
                 processing: true,
                 serverSide: true,
@@ -332,7 +340,7 @@
                     },
                 ],
                 order: [
-                    [4, 'desc']
+                    [6, 'desc']
                 ],
 
             });
@@ -347,10 +355,29 @@
                 })
             }
 
-            const resetFilter = function() {
-                $('[data-kt-student-profile-filter="form"] :radio:checked, [data-kt-student-profile-filter="form"] select ')
-                    .each((e, n) => {
+            let filter_createdAt = $('[data-kt-student-profile-filter-field="createdAt"]').flatpickr({
+                altInput: !0,
+                altFormat: 'm/d/Y',
+                dateFormat: 'Y-m-d',
+                mode: 'range',
+            });
 
+            let filter_updatedAt = $('[data-kt-student-profile-filter-field="updatedAt"]').flatpickr({
+                altInput: !0,
+                altFormat: 'm/d/Y',
+                dateFormat: 'Y-m-d',
+                mode: 'range',
+            });
+
+
+            const resetFilter = function() {
+                // Clear all flatpickr inputs
+                filter_createdAt.clear();
+                filter_updatedAt.clear();
+
+                // Dynamically clear all remaining inpute
+                $('[data-kt-student-profile-filter="form"] :radio:checked, [data-kt-student-profile-filter="form"] [data-kt-student-profile-filter-type="select"], [data-kt-student-profile-filter="form"] [data-kt-student-profile-filter-type="flatPickr"]')
+                    .each((e, n) => {
                         table.column($(n).attr('data-kt-student-profile-filter-column')).search("")
                             .draw();
 
@@ -452,10 +479,18 @@
                 },
             });
 
+            $('[data-kt-student-profile-filter-clear="createdAt"]').on("click", function() {
+                filter_createdAt.clear();
+            })
+
+            $('[data-kt-student-profile-filter-clear="updatedAt"]').on("click", function() {
+                filter_updatedAt.clear();
+            })
+
             $('[data-kt-student-profile-filter-action="apply"]').on("click", function() {
                 filterCount = 0;
 
-                $('[data-kt-student-profile-filter="form"] :radio:checked, [data-kt-student-profile-filter="form"] select ')
+                $('[data-kt-student-profile-filter="form"] :radio:checked, [data-kt-student-profile-filter="form"] [data-kt-student-profile-filter-type="select"], [data-kt-student-profile-filter="form"] [data-kt-student-profile-filter-type="flatPickr"]')
                     .each((e, n) => {
                         filterCount += ($(n).val()) ? 1 : 0;
 
@@ -520,6 +555,9 @@
                 });
 
             });
+
+            // ----- End:Table -----
+
 
             const resetRemarksFormData = function() {
 

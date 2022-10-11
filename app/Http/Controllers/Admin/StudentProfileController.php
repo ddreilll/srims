@@ -703,6 +703,24 @@ class StudentProfileController extends Controller
                     $query->where("stud_academicStatus", $keyword);
                 }
             })
+            ->filterColumn('stud_createdAt', function ($query, $keyword) {
+
+                $dateRange = explode("to", $keyword);
+                if (sizeOf($dateRange) == 2) {
+                    $query->whereBetween("stud_createdAt", [$dateRange[0], $dateRange[1]]);
+                } else {
+                    $query->whereBetween("stud_createdAt", [$keyword, $keyword]);
+                }
+            })
+            ->filterColumn('stud_updatedAt', function ($query, $keyword) {
+
+                $dateRange = explode("to", $keyword);
+                if (sizeOf($dateRange) == 2) {
+                    $query->whereBetween("stud_updatedAt", [$dateRange[0], $dateRange[1]]);
+                } else {
+                    $query->whereBetween("stud_updatedAt", [$keyword, $keyword]);
+                }
+            })
             ->rawColumns(['stud_studNo', 'action'])
             ->toJson();
     }
