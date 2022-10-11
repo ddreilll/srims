@@ -11,9 +11,9 @@
                     <div class="card mb-5 mb-xl-8">
 
                         @switch($stud_profile->stud_academicStatus)
-                            @case('REG')
+                            @case('UNG')
                                 <div class="card-header justify-content-end ribbon ribbon-start">
-                                    <div class="ribbon-label bg-success">Regular</div>
+                                    <div class="ribbon-label bg-gray-600">Undergraduate</div>
                                     <div class="card-title">
                                     </div>
                                 </div>
@@ -27,22 +27,6 @@
                                 </div>
                             @break
 
-                            @case('INC')
-                                <div class="card-header justify-content-end ribbon ribbon-start">
-                                    <div class="ribbon-label bg-secondary text-dark">Inactive</div>
-                                    <div class="card-title">
-                                    </div>
-                                </div>
-                            @break
-
-                            @case('UNK')
-                                <div class="card-header justify-content-end ribbon ribbon-start">
-                                    <div class="ribbon-label bg-dark">Unknown</div>
-                                    <div class="card-title">
-                                    </div>
-                                </div>
-                            @break
-
                             @case('DIS')
                                 <div class="card-header justify-content-end ribbon ribbon-start">
                                     <div class="ribbon-label bg-danger">Dismissed</div>
@@ -50,7 +34,6 @@
                                     </div>
                                 </div>
                             @break
-
 
                             @case('GRD')
                                 <div class="card-header justify-content-end ribbon ribbon-start">
@@ -75,7 +58,9 @@
                                     {{ $stud_profile->stud_lastName . ', ' . $stud_profile->stud_firstName . ($stud_profile->stud_middleName ? ' ' . substr($stud_profile->stud_middleName, 0, 1) . '.' : '') }}</a>
                                 <div class="fs-5 fw-bold text-muted mb-3">{{ $stud_profile->stud_course }}</div>
 
-                                {!! $stud_profile->stud_recordType == 'SIS' ? '<span class="badge badge-warning fs-6">SIS Record</span>' : '<span class="badge badge-light-dark fs-6">NON-SIS Record</span>' !!}
+                                {!! $stud_profile->stud_recordType == 'SIS'
+                                    ? '<span class="badge badge-warning fs-6">SIS Record</span>'
+                                    : '<span class="badge badge-light-dark fs-6">NON-SIS Record</span>' !!}
 
                                 @if ($stud_profile->stud_recordType == 'NONSIS')
                                     <div class="d-flex flex-wrap flex-center mt-10">
@@ -105,21 +90,22 @@
 
                     </div>
 
-                    @if ($stud_profile->stud_isHonorableDismissed == "YES")
-                    <div class="card bg-danger">
-                        <div class="card-body text-center text-light fw-bold fs-5">
+                    @if ($stud_profile->stud_isHonorableDismissed == 'YES')
+                        <div class="card bg-danger">
+                            <div class="card-body text-center text-light fw-bold fs-5">
 
-                            {!! $stud_profile->stud_honorableDismissedStatus == "ISSUED" ? 'Issued' : 'Granted' !!} Honorable Dismissed on {!! date('M d, Y', strtotime($stud_profile->stud_honorableDismissedDate)) !!} 
+                                {!! $stud_profile->stud_honorableDismissedStatus == 'ISSUED' ? 'Issued' : 'Granted' !!} Honorable Dismissed on {!! date('M d, Y', strtotime($stud_profile->stud_honorableDismissedDate)) !!}
 
-                            @if ($stud_profile->stud_honorableDismissedStatus == "GRANTED")
-                                <p class="mb-0 mt-2">COPY FOR: <span class="fw-boldest">{{ $stud_profile->stud_honorableDismissedSchool }}</span></p>
-                            @endif
+                                @if ($stud_profile->stud_honorableDismissedStatus == 'GRANTED')
+                                    <p class="mb-0 mt-2">COPY FOR: <span
+                                            class="fw-boldest">{{ $stud_profile->stud_honorableDismissedSchool }}</span></p>
+                                @endif
 
-                           
+
+                            </div>
                         </div>
-                    </div>
                     @endif
-                   
+
 
                     <div class="d-flex flex-center mt-5">
                         <a href="{{ url('/student/profile/') }}/{{ $stud_profile->stud_uuid }}/edit"
@@ -200,8 +186,9 @@
 
                                             @if ($stud_profile->stud_admissionType == 'TRANSFEREE' || $stud_profile->stud_admissionType == 'LADDERIZED')
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link text-active-primary" data-bs-toggle="tab" role="tab"
-                                                        href="#kt_student_view_school_tertiary"> Tertiary </a>
+                                                    <a class="nav-link text-active-primary" data-bs-toggle="tab"
+                                                        role="tab" href="#kt_student_view_school_tertiary"> Tertiary
+                                                    </a>
                                                 </li>
                                             @endif
                                         </ul>
@@ -435,7 +422,7 @@
                                 <div class="card-header py-3 border-dashed border-bottom-1 border-0 border-gray-300"
                                     style="min-height:45px">
                                     <div class="card-title">
-                                        <h2 class="fs-3 text-gray-800">DOCUMENTS CATEGORY</h2>
+                                        <h2 class="fs-3 text-gray-800">DOCUMENTS</h2>
                                     </div>
                                     <div class="card-toolbar">
                                         <ul class="nav nav-stretch fs-6 fw-bold nav-line-tabs nav-line-tabs-2x border-transparent text-uppercase"
@@ -443,18 +430,21 @@
 
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link text-active-primary active" data-bs-toggle="tab"
-                                                    role="tab" href="#kt_student_documents_entrance" aria-selected="true">
+                                                    role="tab" href="#kt_student_documents_entrance"
+                                                    aria-selected="true">
                                                     Entrance </a>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link text-active-primary" data-bs-toggle="tab" role="tab"
-                                                    href="#kt_student_documents_records" aria-selected="false">
+                                                <a class="nav-link text-active-primary" data-bs-toggle="tab"
+                                                    role="tab" href="#kt_student_documents_records"
+                                                    aria-selected="false">
                                                     Records </a>
                                             </li>
 
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link text-active-primary" data-bs-toggle="tab" role="tab"
-                                                    href="#kt_student_documents_exit" aria-selected="false"> Exit
+                                                <a class="nav-link text-active-primary" data-bs-toggle="tab"
+                                                    role="tab" href="#kt_student_documents_exit"
+                                                    aria-selected="false"> Exit
                                                 </a>
                                             </li>
                                         </ul>
@@ -465,20 +455,27 @@
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade active show" id="kt_student_documents_entrance"
                                             role="tabpanel">
-                                            <ul>
-                                                @foreach ($stud_documents['entrance'] as $docu)
-                                                    <li class="fw-bold fs-6 mb-2">
-                                                        <span class="fw-bolder">{{ $docu['docu_name'] }}</span>
-                                                        @if ($docu['subm_documentType'] != null)
-                                                            {{ ' · ' . $docu['subm_documentType'] }}
-                                                        @endif
-                                                        @if ($docu['subm_dateSubmitted'] != null)
-                                                            - <em
-                                                                class="fs-7 fw-normal">{{ 'Submitted on ' . date('M d, Y', strtotime($docu['subm_dateSubmitted'])) }}</em>
-                                                        @endif
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                            @if (sizeOf($stud_documents['entrance']) >= 1)
+                                                <ul>
+
+                                                    @foreach ($stud_documents['entrance'] as $docu)
+                                                        <li class="fw-bold fs-6 mb-2">
+                                                            <span class="fw-bolder">{{ $docu['docu_name'] }}</span>
+                                                            @if ($docu['subm_documentType'] != null)
+                                                                {{ ' · ' . $docu['subm_documentType'] }}
+                                                            @endif
+                                                            @if ($docu['subm_dateSubmitted'] != null)
+                                                                - <em
+                                                                    class="fs-7 fw-normal">{{ 'Submitted on ' . date('M d, Y', strtotime($docu['subm_dateSubmitted'])) }}</em>
+                                                            @endif
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <div class="d-flex flex-center">
+                                                    <p class="mb-0 mt-3">No available Entrance documents</p>
+                                                </div>
+                                            @endif
                                         </div>
 
                                         <div class="tab-pane fade" id="kt_student_documents_records" role="tabpanel">
@@ -509,13 +506,39 @@
                                                 </div>
                                             @endif
 
+                                            @if (sizeOf($stud_documents_fixed['records']['regcert']) >= 1 && sizeOf($stud_documents['records']) >= 1)
+                                                <div class="p-10 pb-0 mx-5">
+                                                    <h4 class="mb-5 text-gray-800 fw-bold" {!! sizeOf($stud_documents_fixed['records']['regcert']) >= 1 && sizeOf($stud_documents['records']) >= 1
+                                                        ? ''
+                                                        : 'hidden' !!}>Other
+                                                        Documents</h4>
 
-                                            <div class="{!! sizeOf($stud_documents_fixed['records']['regcert']) >= 1 && sizeOf($stud_documents['records']) >= 1 ? 'p-10 pb-0 mx-5 ' : '' !!}">
-                                                <h4 class="mb-5 text-gray-800 fw-bold" {!! sizeOf($stud_documents_fixed['records']['regcert']) >= 1 && sizeOf($stud_documents['records']) >= 1 ? '' : 'hidden' !!}>Other
-                                                    Documents</h4>
+                                                    <ul>
+                                                        @foreach ($stud_documents['records'] as $docu)
+                                                            <li class="fw-bold fs-6 mb-2">
+                                                                <span class="fw-bolder">{{ $docu['docu_name'] }}</span>
+                                                                @if ($docu['subm_documentType'] != null)
+                                                                    {{ ' · ' . $docu['subm_documentType'] }}
+                                                                @endif
+                                                                @if ($docu['subm_dateSubmitted'] != null)
+                                                                    - <em
+                                                                        class="fs-7 fw-normal">{{ 'Submitted on ' . date('M d, Y', strtotime($docu['subm_dateSubmitted'])) }}</em>
+                                                                @endif
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @else
+                                                <div class="d-flex flex-center">
+                                                    <p class="mb-0 mt-3">No available Records documents</p>
+                                                </div>
+                                            @endif
+                                        </div>
 
+                                        <div class="tab-pane fade" id="kt_student_documents_exit" role="tabpanel">
+                                            @if (sizeOf($stud_documents['entrance']) >= 1)
                                                 <ul>
-                                                    @foreach ($stud_documents['records'] as $docu)
+                                                    @foreach ($stud_documents['exit'] as $docu)
                                                         <li class="fw-bold fs-6 mb-2">
                                                             <span class="fw-bolder">{{ $docu['docu_name'] }}</span>
                                                             @if ($docu['subm_documentType'] != null)
@@ -528,26 +551,11 @@
                                                         </li>
                                                     @endforeach
                                                 </ul>
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="tab-pane fade" id="kt_student_documents_exit" role="tabpanel">
-                                            <ul>
-                                                @foreach ($stud_documents['exit'] as $docu)
-                                                    <li class="fw-bold fs-6 mb-2">
-                                                        <span class="fw-bolder">{{ $docu['docu_name'] }}</span>
-                                                        @if ($docu['subm_documentType'] != null)
-                                                            {{ ' · ' . $docu['subm_documentType'] }}
-                                                        @endif
-                                                        @if ($docu['subm_dateSubmitted'] != null)
-                                                            - <em
-                                                                class="fs-7 fw-normal">{{ 'Submitted on ' . date('M d, Y', strtotime($docu['subm_dateSubmitted'])) }}</em>
-                                                        @endif
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                            @else
+                                                <div class="d-flex flex-center">
+                                                    <p class="mb-0 mt-3">No available Exit documents</p>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
