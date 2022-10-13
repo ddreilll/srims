@@ -536,7 +536,7 @@
                                         </div>
 
                                         <div class="tab-pane fade" id="kt_student_documents_exit" role="tabpanel">
-                                            @if (sizeOf($stud_documents['entrance']) >= 1)
+                                            @if (sizeOf($stud_documents['exit']) >= 1)
                                                 <ul>
                                                     @foreach ($stud_documents['exit'] as $docu)
                                                         <li class="fw-bold fs-6 mb-2">

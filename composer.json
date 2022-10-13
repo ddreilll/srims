@@ -21,11 +21,13 @@
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "spatie/laravel-activitylog": "^4.6",
         "spatie/laravel-query-builder": "*",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
+        "kitloong/laravel-migrations-generator": "^6.4",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3"

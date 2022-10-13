@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Faker\Generator;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\Facades\DataTables;
-// use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 
 //Controller 
@@ -26,6 +24,7 @@ use App\Models\StudentGrades;
 use App\Models\Documents;
 use App\Models\DocumentsType;
 use App\Models\DocumentsSubmitted;
+
 
 class StudentProfileController extends Controller
 {
@@ -50,6 +49,8 @@ class StudentProfileController extends Controller
 
     public function show_profile($profile_uuid)
     {
+
+
         $sp = new StudentProfile();
         $tp = $sp->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
             ->selectRaw('r_student.*
@@ -64,6 +65,10 @@ class StudentProfileController extends Controller
             ->where(['stud_uuid' => $profile_uuid])
             ->get();
 
+        activity()
+            ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $tp[0]->stud_id])
+            ->event('viewed')
+            ->log(__('activity_logs.viewed', ["resource" => "Student profile " . "[" . $tp[0]->stud_studentNo . "]", "resource_id" =>  "id - " . $tp[0]->stud_id, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
 
         if (sizeof($tp) == 1) {
 
@@ -561,7 +566,7 @@ class StudentProfileController extends Controller
             }
         }
 
-        if ($request->academicStatus == "GRD" || $request->academicStatus == "HD") {
+        if ($request->academicStatus == "GRD" || $request->academicStatus == "DIS") {
 
             foreach ($dsext as $sd) {
 
@@ -591,6 +596,10 @@ class StudentProfileController extends Controller
             }
         }
 
+        activity()
+        ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $spId])
+        ->event('created')
+        ->log(__('activity_logs.created', ["resource" => "Student profile " . "[" . $request->studentNo . "]", "resource_id" =>  "id - " . $spId, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
 
         header('Content-Type: application/json');
         echo json_encode([
@@ -720,6 +729,9 @@ class StudentProfileController extends Controller
                 } else {
                     $query->whereBetween("stud_updatedAt", [$keyword . " 00:00:00",  $keyword . " 23:59:00"]);
                 }
+            })
+            ->orderColumn('stud_name', function ($query, $order) {
+                $query->orderBy('stud_lastName', $order);
             })
             ->rawColumns(['stud_studNo', 'action'])
             ->toJson();
@@ -994,7 +1006,7 @@ class StudentProfileController extends Controller
             }
         }
 
-        if ($request->academicStatus == "GRD" || $request->academicStatus == "HD") {
+        if ($request->academicStatus == "GRD" || $request->academicStatus == "DIS") {
 
             foreach ($dsext as $sd) {
 
