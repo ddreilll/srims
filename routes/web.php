@@ -50,12 +50,18 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     |--------------------------------------------------------------------------
     |
     */
+    Route::get('gradesheet', 'GradesheetController@index')->name('gradesheet');
+    Route::get('gradesheet/create', 'GradesheetController@create');
+    Route::get('gradesheet/{gradesheet}', 'GradesheetController@show')->whereNumber('gradesheet');
 
-    Route::get('class', 'ClassController@index')->name('class');
-    Route::get('gradesheet/create', 'ClassController@create');
-    Route::get('class/{class}', 'ClassController@show');
+    Route::post('gradesheet/store', 'GradesheetController@store');
+    Route::get('gradesheet/fetch-all', 'GradesheetController@fetch_all');
 
-    Route::get('ajax/class/retrieve-all', 'ClassController@ajax_retrieve_class_list');
+
+    // Route::get('class', 'ClassController@index')->name('class');
+    // Route::get('class/{class}', 'ClassController@show');
+
+    // Route::get('ajax/class/retrieve-all', 'ClassController@ajax_retrieve_class_list');
 
 
     // Student Grades

@@ -375,7 +375,7 @@
                 filter_createdAt.clear();
                 filter_updatedAt.clear();
 
-                // Dynamically clear all remaining inpute
+                // Dynamically clear all remaining inputs
                 $('[data-kt-student-profile-filter="form"] :radio:checked, [data-kt-student-profile-filter="form"] [data-kt-student-profile-filter-type="select"], [data-kt-student-profile-filter="form"] [data-kt-student-profile-filter-type="flatPickr"]')
                     .each((e, n) => {
                         table.column($(n).attr('data-kt-student-profile-filter-column')).search("")

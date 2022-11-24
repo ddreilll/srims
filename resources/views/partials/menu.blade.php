@@ -112,7 +112,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link {{ $menu === 'class' ? 'active' : '' }}" href="{{ url('/class') }}">
+                        <a class="menu-link {{ $menu === 'class' ? 'active' : '' }}" href="{{ url('/gradesheet') }}">
                             <span class="menu-icon">
                                 <i class="fa-duotone fa-file-lines"></i>
                             </span>
