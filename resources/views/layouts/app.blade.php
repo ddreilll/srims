@@ -73,15 +73,14 @@
             font-family: "Poppins";
         }
     </style>
-    {{-- <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" /> --}}
-    <link href="{{ asset('/assets/plugins/custom/bootstrap-4.6.2/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body id="kt_body" class="bg-body">
     @yield('content')
 
-    {{-- <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script> --}}
-    <script src="{{ asset('/assets/js/scripts.bundle.js') }}"></script>
+    <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
 </body>
 
 </html>
