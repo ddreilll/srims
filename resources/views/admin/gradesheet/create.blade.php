@@ -477,7 +477,6 @@
             });
             // End::Global Configuration
 
-
             // Begin::Input Fields
             $("[name='subject']").select2({
                 minimumInputLength: 2,
@@ -879,19 +878,25 @@
                                 let window_location = "";
 
                                 switch (add_submitBtnId) {
+
+
                                     case "kt_class_gradesheet_file_component_saveViewBtn":
-                                        window_location = "{{ url('/gradesheet') }}/" +
-                                            respond.data.id;
+                                        window_location = (
+                                            "{{ route('admin.gradesheet.show', ':gradesheet') }}"
+                                        ).replace(':gradesheet', respond.data
+                                            .id);
                                         break;
 
                                     case "kt_class_gradesheet_file_component_saveAddMoreBtn":
-                                        window_location =
-                                            "{{ url('/gradesheet') }}/create";
+                                        window_location = (
+                                            "{{ route('admin.gradesheet.create') }}"
+                                        );
                                         break;
 
                                     case "kt_class_gradesheet_file_component_saveBtn":
-                                        window_location =
-                                            "{{ url('/gradesheet') }}";
+                                        window_location = (
+                                            "{{ route('admin.gradesheet') }}"
+                                        );
                                         break;
                                 }
 

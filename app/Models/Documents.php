@@ -10,6 +10,7 @@ class Documents extends Model
     use SoftDeletes;
 
     protected $table = 's_documents';
+    protected $primaryKey = 'docu_id';
 
     const CREATED_AT = 'docu_createdAt';
     const UPDATED_AT = 'docu_updatedAt';

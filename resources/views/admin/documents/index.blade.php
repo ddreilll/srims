@@ -1,5 +1,4 @@
-@extends('layouts.admin')
-
+@extends('layouts.fluid')
 
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">

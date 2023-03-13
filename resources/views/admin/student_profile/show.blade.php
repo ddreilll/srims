@@ -1,6 +1,5 @@
 @extends('layouts.fluid')
 
-
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
 
@@ -107,9 +106,44 @@
                     @endif
 
 
-                    <div class="d-flex flex-center mt-5">
-                        <a href="{{ url('/student/profile/') }}/{{ $stud_profile->stud_uuid }}/edit"
-                            class="btn btn-secondary mt-3"><i class="fas fa-user-edit fs-4 me-2"></i>Edit Profile</a>
+                    <div class="d-flex justify-content-around mt-5">
+                        <div>
+                            <a href="{{ url('/student/profile/') }}/{{ $stud_profile->stud_uuid }}/edit"
+                                class="btn btn-secondary">Edit Profile</a>
+                        </div>
+
+                        <div>
+                            <a href="#" class="btn btn-success" data-kt-menu-trigger="click"
+                                data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true"><i
+                                    class="fa-solid fa-print me-2"></i>Generate
+                                <span class="svg-icon svg-icon-5 m-0">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                            fill="currentColor" />
+                                    </svg>
+                                </span>
+                            </a>
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
+                                data-kt-menu="true">
+                                <div class="menu-item px-3">
+                                    <a href="{{ route('admin.student.generate.envelope-document-evaluation', $stud_profile->stud_id) }}"
+                                        class="menu-link px-3" target="_blank">Envelope Document Evaluation</a>
+                                </div>
+                                <div class="menu-item px-3">
+                                    <a href="" class="menu-link px-3">Transcript of Records (TOR) <span
+                                            class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
+                                </div>
+                                <div class="separator my-2"></div>
+                                <div class="menu-item px-3">
+                                    <a href="" class="menu-link px-3"><i class="fa-solid fa-user-tag me-2"></i>
+                                        Envelope Tag <span
+                                            class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -180,8 +214,9 @@
                                                     role="tab" href="#kt_student_view_school_primary"> Primary </a>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link text-active-primary" data-bs-toggle="tab" role="tab"
-                                                    href="#kt_student_view_school_secondary"> Secondary </a>
+                                                <a class="nav-link text-active-primary" data-bs-toggle="tab"
+                                                    role="tab" href="#kt_student_view_school_secondary"> Secondary
+                                                </a>
                                             </li>
 
                                             @if ($stud_profile->stud_admissionType == 'TRANSFEREE' || $stud_profile->stud_admissionType == 'LADDERIZED')

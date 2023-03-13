@@ -274,6 +274,12 @@
     <script src="{{ asset('/assets/plugins/custom/fontawesome-pro/js/all.min.js') }}"></script>
 
     <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         toastr.options = {
             "closeButton": false,
             "debug": true,

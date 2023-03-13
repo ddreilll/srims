@@ -15,4 +15,5 @@ class GradesheetPages extends Model
     const CREATED_AT = 'grdsheetpg_createdAt';
     const UPDATED_AT = 'grdsheetpg_updatedAt';
     const DELETED_AT = 'grdsheetpg_deletedAt';
+
 }

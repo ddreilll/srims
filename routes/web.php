@@ -22,8 +22,6 @@ Route::redirect('/home', url('/dashboard'));
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
-
-
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
@@ -46,51 +44,46 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     /*
     |--------------------------------------------------------------------------
-    |                      Classes
+    |                      Gradesheet
     |--------------------------------------------------------------------------
     |
     */
-    Route::get('gradesheet', 'GradesheetController@index')->name('gradesheet');
-    Route::get('gradesheet/create', 'GradesheetController@create');
-    Route::get('gradesheet/{gradesheet}', 'GradesheetController@show')->whereNumber('gradesheet');
+    Route::get('gradesheet', 'GradesheetController@index')->name('admin.gradesheet');
+    Route::get('gradesheet/create', 'GradesheetController@create')->name('admin.gradesheet.create');;
+    Route::get('gradesheet/{gradesheet}', 'GradesheetController@show')->whereNumber('gradesheet')->name('admin.gradesheet.show');
+    Route::post('gradesheet/{gradesheet}/validate/student-enrollment', 'GradesheetController@validateStudentEnrollment')->name('admin.gradesheet.validate.student-enrollment');
+    Route::post('gradesheet/{gradesheet}/form-validate/student', 'GradesheetController@validateStudent')->name('admin.gradesheet.form-validate.student');
+    Route::get('gradesheet/{gradesheet}/pages', 'GradesheetController@getPages')->name('admin.gradesheet.pages');
+    Route::get('gradesheet/{gradesheet}/page-rows', 'GradesheetController@getPageRows')->name('admin.gradesheet.page.rows');
+    Route::post('gradesheet/{gradesheet}/page-details', 'GradesheetController@getPageDetails')->name('admin.gradesheet.pages-details');
 
     Route::post('gradesheet/store', 'GradesheetController@store');
-    Route::get('gradesheet/fetch-all', 'GradesheetController@fetch_all');
+    Route::get('gradesheet/{gradesheet}/edit', 'GradesheetController@edit')->name('admin.gradesheet.edit');
+    Route::post('gradesheet/{gradesheet}', 'GradesheetController@save')->name('admin.gradesheet.update');
 
-
-    // Route::get('class', 'ClassController@index')->name('class');
-    // Route::get('class/{class}', 'ClassController@show');
-
-    // Route::get('ajax/class/retrieve-all', 'ClassController@ajax_retrieve_class_list');
-
-
-    // Student Grades
-
-    Route::get('class/{class_id}/students', 'ClassController@ajax_retrieve_all_student_grades');
-    Route::post('class/update-grade', 'ClassController@ajax_edit_student_grade');
-    Route::post('class/delete-grade', 'ClassController@ajax_delete_student_grade');
-
-    Route::get('class/{class_id}/search/student-profile', 'ClassController@ajax_search_student_profile');
-    Route::post('class/add-grade', 'ClassController@ajax_add_student_grade');
-
+    Route::post('gradesheet/{gradesheet}/students', 'GradesheetController@storeStudents')->name('admin.gradesheet-students.store');
+    Route::get('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@showStudent')->name('admin.gradesheet-students.show');
+    Route::post('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@updateStudent')->name('admin.gradesheet-students.update');
+    Route::delete('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@destroyStudent')->name('admin.gradesheet-students.destroy');
 
 
     /*
-        |--------------------------------------------------------------------------
-        |                      Student Records
-        |--------------------------------------------------------------------------
-        |
-        */
+    |--------------------------------------------------------------------------
+    |                      Student Records
+    |--------------------------------------------------------------------------
+    |
+    */
+
 
     Route::get('student/profile', 'StudentProfileController@index')->name('student-profile');
     Route::get('student/profile/archived', 'StudentProfileController@archived');
     Route::post('student/profile/add', 'StudentProfileController@ajax_insert');
-    Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve');
+    Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve')->name('admin.student.ajaxRetrieve');
     Route::post('student/profile/edit', 'StudentProfileController@ajax_edit');
     Route::post('student/profile/update-remarks', 'StudentProfileController@ajax_update_remarks');
     Route::post('student/profile/archive', 'StudentProfileController@ajax_archive');
 
-    Route::get('ajax/student/profile/retrieve-all', 'StudentProfileController@ajax_retrieve_student_list');
+    Route::get('ajax/student/profile/retrieve-all', 'StudentProfileController@ajax_retrieve_student_list')->name('admin.student.fetch');
     Route::get('ajax/student/profile/retrieve-archived', 'StudentProfileController@ajax_retrieve_archived_student_list');
     Route::post('ajax/student/profile/validate-studentNo', 'StudentProfileController@ajax_validate_studentNo');
     Route::post('ajax/student/profile/restore', 'StudentProfileController@ajax_restore');
@@ -102,9 +95,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('student/profile/retrieve-documents', 'StudentProfileController@ajax_retrieve_documents');
     Route::post('student/profile/retrieve-prev-college', 'StudentProfileController@ajax_retrieve_prevCollege');
 
-    Route::get('generate-pdf', 'StudentProfileController@generateTag');
-
-
+    Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
 
     /*
 |--------------------------------------------------------------------------
@@ -112,7 +103,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 |--------------------------------------------------------------------------
 |
 */
-
     Route::get('documents/list', 'DocumentsController@index')->name('documents');
     Route::get('documents/retrieveAll', 'DocumentsController@ajax_retrieveAll');
     Route::post('documents/retrieve', 'DocumentsController@ajax_retrieve');
@@ -124,33 +114,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('documents/category/{category}', 'DocumentsController@ajax_retrieve_by_category');
     Route::post('documents/document-types', 'DocumentsController@ajax_retrieveTypes');
 
-
-
     /*
-|--------------------------------------------------------------------------
-|                       Admission Criteria
-|--------------------------------------------------------------------------
-|
-*/
 
-    Route::get('admission-criteria/list', 'AdmissionCriteriaController@index')->name('admission-criteria');
-    Route::get('admission-criteria/retrieveAll', 'AdmissionCriteriaController@ajax_retrieveAll');
-    Route::post('admission-criteria/add', 'AdmissionCriteriaController@ajax_insert');
-    Route::post('admission-criteria/retrieve', 'AdmissionCriteriaController@ajax_retrieve');
-    Route::post('admission-criteria/update', 'AdmissionCriteriaController@ajax_update');
-    Route::post('admission-criteria/delete', 'AdmissionCriteriaController@ajax_delete');
-
-    /*
-|--------------------------------------------------------------------------
-|                       Curriculum
-|--------------------------------------------------------------------------
-|
-*/
-    Route::get('curriculum', 'CurriculumController@index')->name('curriculum');
-
-
-
-    /*
 |--------------------------------------------------------------------------
 |                       Course
 |--------------------------------------------------------------------------
@@ -182,22 +147,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('subject/checkDelete', 'SubjectController@ajax_checkDelete');
 
     Route::post('subject/select2', 'SubjectController@ajax_select2_search');
-
-
-    /*
-|--------------------------------------------------------------------------
-|                       Schedule Setup
-|--------------------------------------------------------------------------
-|
-*/
-
-    Route::get('schedules', 'ScheduleController@index')->name('schedules');
-    Route::post('schedules/add', 'ScheduleController@ajax_insert');
-    Route::get('schedules/retrieveAll', 'ScheduleController@ajax_retrieveAll');
-    Route::post('schedules/validate', 'ScheduleController@ajax_validate');
-    Route::post('schedules/retrieve', 'ScheduleController@ajax_retrieve');
-    Route::post('schedules/update', 'ScheduleController@ajax_update');
-    Route::post('schedules/delete', 'ScheduleController@ajax_delete');
 
 
     /*
@@ -263,7 +212,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     // School year
     Route::post('settings/school-year/select2', 'AcadYearController@ajax_select2_plus_search');
     Route::post('select2/settings/school-year/base', 'AcadYearController@ajax_select2_base_search');
-
 
     Route::get('settings/student-profile', 'SystemSettingsController@view_student_profile')->name('settings-student-profile');
     Route::post('settings/student-profile/add', 'HonorController@ajax_insert');

@@ -79,12 +79,12 @@ return array (
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'poppins' => array(
-    '200' => $fontDir . '/poppins_200_868c5d0f54736504f9300a77b33ba84e',
-    '300' => $fontDir . '/poppins_300_8a58ef9f5d60f12fa28286a70e725558',
-    'normal' => $fontDir . '/poppins_normal_0ba611a73844dea0a037009a664fa44e',
-    '500' => $fontDir . '/poppins_500_fe516440f70735dec2883ad9e6ea0738',
-    '600' => $fontDir . '/poppins_600_1664062187aaebfa448f64258dd3143d',
-    'bold' => $fontDir . '/poppins_bold_0b22a433b5500b4302cf342c021d0eac',
+    '200' => $fontDir . '/poppins_200_80c4aef53c941f630f9a1f264c47aa5d',
+    '300' => $fontDir . '/poppins_300_c9995850f8f547fd9f7ed3c7a2f07a5a',
+    'normal' => $fontDir . '/poppins_normal_35bebdab2d360e6d44d2c81c806c49e6',
+    '500' => $fontDir . '/poppins_500_45ca0929f68239e2bdabc1425b3c2eae',
+    '600' => $fontDir . '/poppins_600_a543ba389c186fa0f777be48de1a21ca',
+    'bold' => $fontDir . '/poppins_bold_258601cfab080c1aacae396b7e402a3e',
   ),
 );
 }; ?>

@@ -74,7 +74,7 @@
         }
     </style>
     {{-- <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" /> --}}
-    <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/assets/plugins/custom/bootstrap-4.6.2/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body id="kt_body" class="bg-body">

@@ -8,6 +8,7 @@ use Faker\Generator;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 //Controller 
 use App\Http\Controllers\Admin\AcadYearController as AcadYears;
@@ -24,7 +25,6 @@ use App\Models\StudentGrades;
 use App\Models\Documents;
 use App\Models\DocumentsType;
 use App\Models\DocumentsSubmitted;
-
 
 class StudentProfileController extends Controller
 {
@@ -49,7 +49,6 @@ class StudentProfileController extends Controller
 
     public function show_profile($profile_uuid)
     {
-
 
         $sp = new StudentProfile();
         $tp = $sp->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
@@ -381,18 +380,9 @@ class StudentProfileController extends Controller
         (new StudentProfile)->remove($md5Id);
     }
 
-    public function generateTag()
+    public function generateEnvelopeDocumentEvaluation(StudentProfile $student)
     {
 
-        $data = [
-            'title' => 'Welcome to ItSolutionStuff.com',
-            'date' => date('m/d/Y')
-        ];
-
-
-        $pdf = \PDF::loadView('pdf.student_profile.envelope_label.index', $data)->setPaper('legal', 'landscape');
-
-        return $pdf->stream('itsolutionstuff.pdf');
     }
 
     // -- Begin::Ajax Requests -- //
@@ -410,7 +400,7 @@ class StudentProfileController extends Controller
         $filter = [['stud_studentNo', '=', $request->studentNo]];
 
         if ($request->studentId) {
-            array_push($filter, ["stud_id", '!=', $request->studentId]);
+            array_push($filter, ["stud_id", '=', $request->studentId]);
         }
 
         $query = StudentProfile::where($filter)->get();
@@ -597,9 +587,9 @@ class StudentProfileController extends Controller
         }
 
         activity()
-        ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $spId])
-        ->event('created')
-        ->log(__('activity_logs.created', ["resource" => "Student profile " . "[" . $request->studentNo . "]", "resource_id" =>  "id - " . $spId, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
+            ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $spId])
+            ->event('created')
+            ->log(__('activity_logs.created', ["resource" => "Student profile " . "[" . $request->studentNo . "]", "resource_id" =>  "id - " . $spId, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
 
         header('Content-Type: application/json');
         echo json_encode([
@@ -615,21 +605,9 @@ class StudentProfileController extends Controller
      */
     public function ajax_retrieve_student_list(Request $request)
     {
-        // Get currently loggedin user role 
-        // If ROLEID: 1 | ROLENAME: ADMIN - Show all user profiles
-        // If ROLEID: 2 | ROLENAME: ENCODER - Show only encoded profiles
-
-        $user = Auth::user();
-
-        $queryFilter = [];
-        $userRole = $user->roles->pluck('id')->toArray()[0];
-
-        if ($userRole == 2) {
-            $queryFilter = ["user_stud_id" => $user->id];
-        }
-
         $query = StudentProfile::leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')->select([
             DB::raw('md5(stud_id) as stud_id_md5'),
+            'stud_id',
             'stud_uuid',
             'stud_studentNo',
             'stud_firstName',
@@ -642,99 +620,116 @@ class StudentProfileController extends Controller
             'stud_academicStatus',
             'stud_createdAt',
             'stud_updatedAt',
-        ])->where($queryFilter);
+        ]);
 
-        return Datatables::eloquent($query)
-            ->setRowId('stud_id_md5')
-            ->addColumn('stud_studNo', function ($row) {
+        if ($request->has('draw')) {
+            return Datatables::eloquent($query)
+                ->setRowId('stud_id_md5')
+                ->addColumn('stud_studNo', function ($row) {
 
-                return '<a href="' . url('/student/profile') . "/" . $row->stud_uuid . '" target="_blank">' . $row->stud_studentNo . '</a>';
-            })
-            ->addColumn('stud_name', function ($row) {
-                return format_name("2", null, $row->stud_firstName, $row->stud_middleName, $row->stud_lastName);
-            })
-            ->addColumn('stud_created_at', function ($row) {
+                    return '<a href="' . url('/student/profile') . "/" . $row->stud_uuid . '" target="_blank">' . $row->stud_studentNo . '</a>';
+                })
+                ->addColumn('stud_name', function ($row) {
+                    return format_name("2", null, $row->stud_firstName, $row->stud_middleName, $row->stud_lastName);
+                })
+                ->addColumn('stud_created_at', function ($row) {
 
-                return format_datetime(strtotime($row->stud_createdAt));
-            })
-            ->addColumn('stud_updated_at', function ($row) {
+                    return format_datetime(strtotime($row->stud_createdAt));
+                })
+                ->addColumn('stud_updated_at', function ($row) {
 
-                return ($row->stud_updatedAt) ? format_datetime(strtotime($row->stud_updatedAt)) : NULL;
-            })
-            ->addColumn('action', function ($row) {
-                return '<td class="text-end">
-                <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                <span class="svg-icon svg-icon-5 m-0">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                    </svg>
-                </span>
-                </a>
-                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                    <div class="menu-item px-3">
-                        <a href="' . url('student/profile') . '/' . $row->stud_uuid . '" class="menu-link px-3">View</a>
-                    </div>
-                    <div class="menu-item px-3 ">
-                        <a href="' . url('student/profile') . '/' . $row->stud_uuid . '/edit" class="menu-link px-3">Edit</a>
-                    </div>
-                    <div class="separator my-3 opacity-75"></div>
-                    <div class="menu-item px-3">
-                        <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
-                        <span class="menu-icon">
-                            <i class="fa-duotone fa-inbox-in fs-5"></i>
+                    return ($row->stud_updatedAt) ? format_datetime(strtotime($row->stud_updatedAt)) : NULL;
+                })
+                ->addColumn('action', function ($row) {
+                    return '<td class="text-end">
+                        <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                        <span class="svg-icon svg-icon-5 m-0">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                            </svg>
                         </span>
-                        <span class="menu-title">Archive</span>
                         </a>
-                    </div>
-                </div>
-                 </td>';
-            })
-            ->filterColumn('stud_name', function ($query, $keyword) {
-                $query->whereRaw("CONCAT(stud_firstName, ' ', stud_middleName, ' ', stud_lastName) like ?", ["%{$keyword}%"]);
-            })
-            ->filterColumn('stud_course', function ($query, $keyword) {
-                $query->where("s_course.cour_id", $keyword);
-            })
-            ->filterColumn('stud_yearOfAdmission', function ($query, $keyword) {
-                $query->where("stud_yearOfAdmission", $keyword);
-            })
-            ->filterColumn('stud_recordType', function ($query, $keyword) {
-                $query->where("stud_recordType", $keyword);
-            })
-            ->filterColumn('stud_academicStatus', function ($query, $keyword) {
+                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                            <div class="menu-item px-3">
+                                <a href="' . url('student/profile') . '/' . $row->stud_uuid . '" class="menu-link px-3">View</a>
+                            </div>
+                            <div class="menu-item px-3 ">
+                                <a href="' . url('student/profile') . '/' . $row->stud_uuid . '/edit" class="menu-link px-3">Edit</a>
+                            </div>
+                            <div class="separator my-3 opacity-75"></div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
+                                <span class="menu-icon">
+                                    <i class="fa-duotone fa-inbox-in fs-5"></i>
+                                </span>
+                                <span class="menu-title">Archive</span>
+                                </a>
+                            </div>
+                        </div>
+                        </td>';
+                })
+                ->filterColumn('stud_name', function ($query, $keyword) {
+                    $query->whereRaw("CONCAT(stud_firstName, ' ', stud_middleName, ' ', stud_lastName) like ?", ["%{$keyword}%"]);
+                })
+                ->filterColumn('stud_course', function ($query, $keyword) {
+                    $query->where("s_course.cour_id", $keyword);
+                })
+                ->filterColumn('stud_yearOfAdmission', function ($query, $keyword) {
+                    $query->where("stud_yearOfAdmission", $keyword);
+                })
+                ->filterColumn('stud_recordType', function ($query, $keyword) {
+                    $query->where("stud_recordType", $keyword);
+                })
+                ->filterColumn('stud_academicStatus', function ($query, $keyword) {
 
-                // 'UNG - Undergraduate', 'RTN - Returnee', 'DIS - Honorable Dismissal', 'GRD - Graduated'
+                    // 'UNG - Undergraduate', 'RTN - Returnee', 'DIS - Honorable Dismissal', 'GRD - Graduated'
 
-                if ($keyword == "NA") {
-                    $query->whereRaw("stud_academicStatus NOT IN ('UNG', 'RTN', 'DIS', 'GRD')");
-                } else {
-                    $query->where("stud_academicStatus", $keyword);
-                }
-            })
-            ->filterColumn('stud_createdAt', function ($query, $keyword) {
+                    if ($keyword == "NA") {
+                        $query->whereRaw("stud_academicStatus NOT IN ('UNG', 'RTN', 'DIS', 'GRD')");
+                    } else {
+                        $query->where("stud_academicStatus", $keyword);
+                    }
+                })
+                ->filterColumn('stud_createdAt', function ($query, $keyword) {
 
-                $dateRange = explode("to", $keyword);
-                if (sizeOf($dateRange) == 2) {
-                    $query->whereBetween("stud_createdAt", [$dateRange[0] . " 00:00:00", $dateRange[1] . " 23:59:00"]);
-                } else {
-                    $query->whereBetween("stud_createdAt", [$keyword . " 00:00:00",  $keyword . " 23:59:00"]);
-                }
-            })
-            ->filterColumn('stud_updatedAt', function ($query, $keyword) {
+                    $dateRange = explode("to", $keyword);
+                    if (sizeOf($dateRange) == 2) {
+                        $query->whereBetween("stud_createdAt", [$dateRange[0] . " 00:00:00", $dateRange[1] . " 23:59:00"]);
+                    } else {
+                        $query->whereBetween("stud_createdAt", [$keyword . " 00:00:00",  $keyword . " 23:59:00"]);
+                    }
+                })
+                ->filterColumn('stud_updatedAt', function ($query, $keyword) {
 
-                $dateRange = explode("to", $keyword);
-                if (sizeOf($dateRange) == 2) {
-                    $query->whereBetween("stud_updatedAt", [$dateRange[0] . " 00:00:00", $dateRange[1] . " 23:59:00"]);
-                } else {
-                    $query->whereBetween("stud_updatedAt", [$keyword . " 00:00:00",  $keyword . " 23:59:00"]);
-                }
-            })
-            ->orderColumn('stud_name', function ($query, $order) {
-                $query->orderBy('stud_lastName', $order);
-            })
-            ->rawColumns(['stud_studNo', 'action'])
-            ->toJson();
+                    $dateRange = explode("to", $keyword);
+                    if (sizeOf($dateRange) == 2) {
+                        $query->whereBetween("stud_updatedAt", [$dateRange[0] . " 00:00:00", $dateRange[1] . " 23:59:00"]);
+                    } else {
+                        $query->whereBetween("stud_updatedAt", [$keyword . " 00:00:00",  $keyword . " 23:59:00"]);
+                    }
+                })
+                ->orderColumn('stud_name', function ($query, $order) {
+                    $query->orderBy('stud_lastName', $order);
+                })
+                ->rawColumns(['stud_studNo', 'action'])
+                ->toJson();
+        } else {
+            $results = $query->where('stud_studentNo', 'LIKE', '%' . $request->term . '%')->orWhereRaw("CONCAT(stud_firstName, ' ', stud_middleName, ' ', stud_lastName) like ?", ["%{$request->term}%"])->where('stud_recordType', '=', $request->recordType)->simplePaginate(10);
+
+            if (empty($results->nextPageUrl())) {
+                $morePages = false;
+            } else {
+                $morePages = true;
+            }
+
+            return response()->json([
+                "results" => $results->items(),
+                "pagination" => array(
+                    "more" => $morePages
+                )
+            ], Response::HTTP_OK);
+        }
     }
 
     /** 
@@ -798,15 +793,16 @@ class StudentProfileController extends Controller
 
         $sp = new StudentProfile();
         $fp = $sp->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
-            ->whereRaw('md5(stud_id) = "' . $request->id . '"')
+            ->where(function ($query) use ($request) {
+                $query->orWhere('stud_id', $request->id)->orWhere('stud_uuid', $request->id)->orWhereRaw(sprintf("md5(stud_id) = '%s'", $request->id));
+            })
             ->selectRaw('r_student.*
             , md5(stud_id) as stud_id_md5
             , cour_name as stud_course_name
             , cour_code as stud_course')
             ->get();
 
-        header('Content-Type: application/json');
-        echo json_encode($fp);
+        return response()->json($fp, Response::HTTP_OK);
     }
 
     public function ajax_retrieve_documents(Request $request)

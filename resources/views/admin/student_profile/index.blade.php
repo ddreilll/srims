@@ -190,7 +190,6 @@
                             </tr>
                         </thead>
                         <tbody class="fw-bold">
-
                         </tbody>
                     </table>
                 </div>

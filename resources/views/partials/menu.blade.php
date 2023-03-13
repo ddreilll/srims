@@ -92,14 +92,13 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </div>
-                
+
                 @can('category_transaction')
                     <div class="menu-item">
                         <div class="menu-content pt-8 pb-2">
                             <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
                         </div>
                     </div>
-
 
                     <div class="menu-item">
                         <a class="menu-link {{ $menu === 'student-profile' ? 'active' : '' }}"
@@ -152,70 +151,19 @@
                                         </a>
                                     </div>
                                 @endcan
-
-                                @can('access_requirements_criteria')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'requirements-criteria' ? 'active' : '' }}"
-                                            href="{{ url('/admission-criteria/list') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Documents Criteria</span>
-                                        </a>
-                                    </div>
-                                @endcan
                             </div>
                         </div>
                     @endcan
 
-                    @can('menu_course_curriculum')
-                        <div data-kt-menu-trigger="click"
-                            class="menu-item menu-accordion {{ $menu == 'course-curiculum' ? 'here show' : '' }}">
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <i class="fa-duotone fa-building-columns"></i>
-                                </span>
-                                <span class="menu-title">Course Curriculum</span>
-                                <span class="menu-arrow"></span>
+                    @can('access_course')
+                    <div class="menu-item">
+                        <a class="menu-link {{ $menu === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">
+                            <span class="menu-icon">
+                                <i class="fa-duotone fa-diploma"></i>
                             </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                @can('access_curriculum')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'curriculum' ? 'active' : '' }}"
-                                            href="{{ url('/curriculum') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">List of Curriculum</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('access_course')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'course' ? 'active' : '' }}"
-                                            href="{{ url('/course') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Course</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('access_subject')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'subject' ? 'active' : '' }}"
-                                            href="{{ url('/subject') }} ">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Subjects</span>
-                                        </a>
-                                    </div>
-                                @endcan
-                            </div>
-                        </div>
+                            <span class="menu-title">Course</span>
+                        </a>
+                    </div>
                     @endcan
 
                     @can('menu_schedules')
@@ -223,23 +171,12 @@
                             class="menu-item menu-accordion {{ $menu == 'schedules-menu' ? 'here show' : '' }}">
                             <span class="menu-link">
                                 <span class="menu-icon">
-                                    <i class="fa-duotone fa-calendar-days"></i>
+                                    <i class="fa-duotone fa-file-lines"></i>
                                 </span>
-                                <span class="menu-title">Schedules</span>
+                                <span class="menu-title">Gradesheet</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                @can('access_schedules')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'schedules' ? 'active' : '' }}"
-                                            href="{{ url('/schedules') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">List of Schedules</span>
-                                        </a>
-                                    </div>
-                                @endcan
 
                                 @can('access_rooms')
                                     <div class="menu-item">
@@ -261,6 +198,18 @@
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
                                             <span class="menu-title">Instructors</span>
+                                        </a>
+                                    </div>
+                                @endcan
+
+                                @can('access_subject')
+                                    <div class="menu-item">
+                                        <a class="menu-link {{ $sub_menu === 'subject' ? 'active' : '' }}"
+                                            href="{{ url('/subject') }} ">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Subjects</span>
                                         </a>
                                     </div>
                                 @endcan

@@ -12,17 +12,33 @@ class StudentProfile extends Model
     use SoftDeletes;
 
     protected $table = 'r_student';
+    protected $primaryKey = 'stud_id';
 
     const CREATED_AT = 'stud_createdAt';
     const UPDATED_AT = 'stud_updatedAt';
     const DELETED_AT = 'stud_deletedAt';
 
-    /**
-     * Get the course that has a student
-     */
     public function course()
     {
         return $this->belongsTo(Course::class, 'cour_stud_id', 'cour_id');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Documents::class, 't_submitted_documents', 'subm_student', 'subm_document')->withPivot([
+            'subm_documentType'
+            ,'subm_documentType_1'
+            ,'subm_documentType_2'
+            ,'subm_documentType_3'
+            ,'subm_documentCategory'
+            ,'subm_remarks'
+            ,'subm_dateSubmitted'
+        ]);
+    }
+
+    public function gradesheet()
+    {
+        return $this->belongsTo(Gradesheet::class, 'grdsheetpg_gradesheet_id');
     }
 
 

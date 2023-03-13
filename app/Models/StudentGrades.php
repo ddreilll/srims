@@ -3,246 +3,235 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 
 class StudentGrades extends Model
 {
-    use SoftDeletes;
+    public $table = 't_student_enrolled_subjects';
 
-    protected $table = 't_student_enrolled_subjects';
-
-    const CREATED_AT = 'enrsub_createdAt';
-    const UPDATED_AT = 'enrsub_updatedAt';
-    const DELETED_AT = 'enrsub_deletedAt';
-
-
-    /**
-     * Get enrolled subject grades from it's schedule
-     */
-    public function schedule()
-    {
-        return $this->belongsTo(Schedule::class, 'sche_enrsub_id', 'sche_id');
-    }
-
-    /**
-     * Get enrolled subject grades from it's student
-     */
     public function student()
     {
-        return $this->hasOne(StudentProfile::class, 'stud_enrsub_id', 'stud_id');
+        return $this->belongsTo(StudentProfile::class, 'stud_enrsub_id', 'stud_id');
     }
 
-
-    // Subject details
-    public function fetchOne($md5Id)
+    public function gradesheet()
     {
-
-        $data = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
-            ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-            ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
-            ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
-            ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
-            ->selectRaw('t_student_enrolled_subjects.*
-        , md5(enrsub_id) as enrsub_id_md5
-        , stud_studentNo as enrsub_stud_no
-        , stud_firstName as enrsub_stud_firstName
-        , stud_middleName as enrsub_stud_middleName
-        , stud_lastName as enrsub_stud_lastName
-        , stud_suffix as enrsub_stud_suffixName
-        , inst_firstName as enrsub_inst_firstName
-        , inst_middleName as enrsub_inst_middleName
-        , inst_lastName as enrsub_inst_lastName
-        , inst_suffix as enrsub_inst_suffixName
-        , subj_code as enrsub_subj_code
-        , subj_name as enrsub_subj_name
-        , subj_units as enrsub_subj_units
-        , term_name as enrsub_term_name
-        , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as enrsub_sche_acadYear
-        , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as enrsub_sche_acadYear_short
-        ')
-            ->whereRaw('md5(enrsub_id) = "' . $md5Id . '"')
-            ->get();
-
-        $data[0]['enrsub_stud_fullName'] = format_name(1, null,  $data[0]['enrsub_stud_firstName'], $data[0]['enrsub_stud_middleName'], $data[0]['enrsub_stud_lastName'], $data[0]['enrsub_stud_suffixName']);
-        $data[0]['enrsub_inst_fullName'] = format_name(1, "",  $data[0]['enrsub_inst_firstName'], $data[0]['enrsub_inst_middleName'], $data[0]['enrsub_inst_lastName'], $data[0]['enrsub_inst_suffixName']);
-        return $data;
+        return $this->belongsTo(Gradesheet::class, 'class_enrsub_id', 'class_id');
     }
 
-    public function insertOne($data)
+    public function page()
     {
-
-        $this->enrsub_grade = $data['grade'];
-        $this->enrsub_otherGrade = $data['other_grades'];
-        $this->enrsub_remarks = $data['remarks'];
-        $this->sche_enrsub_id = $data['schedule'];
-        $this->stud_enrsub_id = $data['student'];
-        $this->enrsub_status = 'UNVALIDATED';
-        $this->save();
-
-        return $this->id;
+        return $this->belongsTo(Page::class, 'grdsheetpg_enrsub_id', 'grdsheetpg_id');
     }
 
-    public function fetchAll($size, $filter)
-    {
-        $data = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
-            ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-            ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
-            ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
-            ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
-            ->selectRaw('t_student_enrolled_subjects.*
-            , md5(enrsub_id) as enrsub_id_md5
-            , stud_studentNo as enrsub_stud_no
-            , stud_uuid as enrsub_stud_uuid
-            , stud_firstName as enrsub_stud_firstName
-            , stud_middleName as enrsub_stud_middleName
-            , stud_lastName as enrsub_stud_lastName
-            , inst_firstName as enrsub_inst_firstName
-            , inst_middleName as enrsub_inst_middleName
-            , inst_lastName as enrsub_inst_lastName
-            , inst_suffix as enrsub_inst_suffixName
-            , subj_code as enrsub_subj_code
-            , subj_name as enrsub_subj_name
-            , subj_units as enrsub_subj_units
-            , term_name as enrsub_term_name
-            , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as enrsub_sche_acadYear
-            , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as enrsub_sche_acadYear_short
-            ')
-            ->where($filter)
-            ->paginate($size, ['*'], 'start');
+    // // Subject details
+    // public function fetchOne($md5Id)
+    // {
 
-        $i = 0;
-        foreach ($data as $schedule) {
+    //     $data = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
+    //         ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
+    //         ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
+    //         ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
+    //         ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
+    //         ->selectRaw('t_student_enrolled_subjects.*
+    //     , md5(enrsub_id) as enrsub_id_md5
+    //     , stud_studentNo as enrsub_stud_no
+    //     , stud_firstName as enrsub_stud_firstName
+    //     , stud_middleName as enrsub_stud_middleName
+    //     , stud_lastName as enrsub_stud_lastName
+    //     , stud_suffix as enrsub_stud_suffixName
+    //     , inst_firstName as enrsub_inst_firstName
+    //     , inst_middleName as enrsub_inst_middleName
+    //     , inst_lastName as enrsub_inst_lastName
+    //     , inst_suffix as enrsub_inst_suffixName
+    //     , subj_code as enrsub_subj_code
+    //     , subj_name as enrsub_subj_name
+    //     , subj_units as enrsub_subj_units
+    //     , term_name as enrsub_term_name
+    //     , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as enrsub_sche_acadYear
+    //     , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as enrsub_sche_acadYear_short
+    //     ')
+    //         ->whereRaw('md5(enrsub_id) = "' . $md5Id . '"')
+    //         ->get();
 
-            $data[$i]['enrsub_stud_fullName'] = format_name(1, null,  $schedule['enrsub_stud_firstName'], $schedule['enrsub_stud_middleName'], $schedule['enrsub_stud_lastName'], $schedule['enrsub_stud_suffix']);
-            $data[$i]['enrsub_inst_fullName'] = format_name(1, null,  $schedule['enrsub_inst_firstName'], $schedule['enrsub_inst_middleName'], $schedule['enrsub_inst_lastName'], $schedule['enrsub_inst_suffix']);
+    //     $data[0]['enrsub_stud_fullName'] = format_name(1, null,  $data[0]['enrsub_stud_firstName'], $data[0]['enrsub_stud_middleName'], $data[0]['enrsub_stud_lastName'], $data[0]['enrsub_stud_suffixName']);
+    //     $data[0]['enrsub_inst_fullName'] = format_name(1, "",  $data[0]['enrsub_inst_firstName'], $data[0]['enrsub_inst_middleName'], $data[0]['enrsub_inst_lastName'], $data[0]['enrsub_inst_suffixName']);
+    //     return $data;
+    // }
 
-            $finalGrade = (($schedule['enrsub_prelimGrade'] ? $schedule['enrsub_prelimGrade'] : 0.00) + ($schedule['enrsub_finalGrade'] ? $schedule['enrsub_finalGrade'] : $schedule['enrsub_prelimGrade'])) / 2;
+    // public function insertOne($data)
+    // {
 
-            if ($data[$i]['enrsub_otherGrade'] == "INC" && $finalGrade >= 0.00) {
+    //     $this->enrsub_grade = $data['grade'];
+    //     $this->enrsub_otherGrade = $data['other_grades'];
+    //     $this->enrsub_remarks = $data['remarks'];
+    //     $this->sche_enrsub_id = $data['schedule'];
+    //     $this->stud_enrsub_id = $data['student'];
+    //     $this->enrsub_status = 'UNVALIDATED';
+    //     $this->save();
 
-                $data[$i]['enrsub_grade_display'] = $finalGrade . "/INC";
-            } else if ($data[$i]['enrsub_otherGrade'] == "INC" && $finalGrade == 0.00) {
+    //     return $this->id;
+    // }
 
-                $data[$i]['enrsub_grade_display'] = "INC";
-            } else if ($schedule['enrsub_otherGrade'] == "W" || $schedule['enrsub_otherGrade'] == "D") {
+    // public function fetchAll($size, $filter)
+    // {
+    //     $data = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
+    //         ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
+    //         ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
+    //         ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
+    //         ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
+    //         ->selectRaw('t_student_enrolled_subjects.*
+    //         , md5(enrsub_id) as enrsub_id_md5
+    //         , stud_studentNo as enrsub_stud_no
+    //         , stud_uuid as enrsub_stud_uuid
+    //         , stud_firstName as enrsub_stud_firstName
+    //         , stud_middleName as enrsub_stud_middleName
+    //         , stud_lastName as enrsub_stud_lastName
+    //         , inst_firstName as enrsub_inst_firstName
+    //         , inst_middleName as enrsub_inst_middleName
+    //         , inst_lastName as enrsub_inst_lastName
+    //         , inst_suffix as enrsub_inst_suffixName
+    //         , subj_code as enrsub_subj_code
+    //         , subj_name as enrsub_subj_name
+    //         , subj_units as enrsub_subj_units
+    //         , term_name as enrsub_term_name
+    //         , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as enrsub_sche_acadYear
+    //         , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as enrsub_sche_acadYear_short
+    //         ')
+    //         ->where($filter)
+    //         ->paginate($size, ['*'], 'start');
 
-                $data[$i]['enrsub_grade_display'] = $schedule['enrsub_otherGrade'];
-            } else {
+    //     $i = 0;
+    //     foreach ($data as $schedule) {
 
-                $data[$i]['enrsub_grade_display'] = $finalGrade;
-            }
+    //         $data[$i]['enrsub_stud_fullName'] = format_name(1, null,  $schedule['enrsub_stud_firstName'], $schedule['enrsub_stud_middleName'], $schedule['enrsub_stud_lastName'], $schedule['enrsub_stud_suffix']);
+    //         $data[$i]['enrsub_inst_fullName'] = format_name(1, null,  $schedule['enrsub_inst_firstName'], $schedule['enrsub_inst_middleName'], $schedule['enrsub_inst_lastName'], $schedule['enrsub_inst_suffix']);
 
-            $i++;
-        }
+    //         $finalGrade = (($schedule['enrsub_prelimGrade'] ? $schedule['enrsub_prelimGrade'] : 0.00) + ($schedule['enrsub_finalGrade'] ? $schedule['enrsub_finalGrade'] : $schedule['enrsub_prelimGrade'])) / 2;
 
-        return $data;
-    }
+    //         if ($data[$i]['enrsub_otherGrade'] == "INC" && $finalGrade >= 0.00) {
 
-    public function edit($md5Id, $data)
-    {
-        $user = \Auth::user();
-        $user_roleID = $user->roles->pluck('id')->toArray()[0];
+    //             $data[$i]['enrsub_grade_display'] = $finalGrade . "/INC";
+    //         } else if ($data[$i]['enrsub_otherGrade'] == "INC" && $finalGrade == 0.00) {
 
-        if ($user_roleID == 2) {
-            $data["enrsub_status"] = "UNVALIDATED";
-        }
+    //             $data[$i]['enrsub_grade_display'] = "INC";
+    //         } else if ($schedule['enrsub_otherGrade'] == "W" || $schedule['enrsub_otherGrade'] == "D") {
 
-        $this->whereRaw('md5(enrsub_id) = "' . $md5Id . '"')
-            ->update($data);
-    }
+    //             $data[$i]['enrsub_grade_display'] = $schedule['enrsub_otherGrade'];
+    //         } else {
 
-    public function remove($md5Id)
-    {
-        $this->whereRaw('md5(enrsub_id) = "' . $md5Id . '"')
-            ->delete();
-    }
+    //             $data[$i]['enrsub_grade_display'] = $finalGrade;
+    //         }
 
-    public function fetchAllPerStudent($md5Id)
-    {
+    //         $i++;
+    //     }
 
-        $return_data = [];
-        $return_data['total_semester'] = 0;
-        $return_data['total_summer_semester'] = 0;
+    //     return $data;
+    // }
 
-        $school_year = $this->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-            ->selectRaw('DISTINCT sche_acadYear as acad_year
-            , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as acad_year_long
-            , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as acad_year_short
-            ')
-            ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '"')
-            ->orderBy('acad_year', 'desc')
-            ->get();
+    // public function edit($md5Id, $data)
+    // {
+    //     $user = \Auth::user();
+    //     $user_roleID = $user->roles->pluck('id')->toArray()[0];
 
-        $i = 0;
-        foreach ($school_year as $year) {
+    //     if ($user_roleID == 2) {
+    //         $data["enrsub_status"] = "UNVALIDATED";
+    //     }
 
-            $semesters = $this->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
-                ->selectRaw('DISTINCT term_name, term_order')
-                ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '" and sche_acadYear = "' . $year->acad_year . '"')
-                ->orderBy('term_order', 'desc')
-                ->get();
+    //     $this->whereRaw('md5(enrsub_id) = "' . $md5Id . '"')
+    //         ->update($data);
+    // }
 
-            $a = 0;
-            foreach ($semesters as $semester) {
-                $return_data['total_semester'] += 1;
+    // public function remove($md5Id)
+    // {
+    //     $this->whereRaw('md5(enrsub_id) = "' . $md5Id . '"')
+    //         ->delete();
+    // }
 
-                if ($semester['term_name'] == "Summer Semester") {
-                    $return_data['total_summer_semester'] += 1;
-                }
+    // public function fetchAllPerStudent($md5Id)
+    // {
 
-                $grades = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
-                    ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
-                    ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
-                    ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
-                    ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
-                    ->selectRaw('t_student_enrolled_subjects.*
-                    , md5(enrsub_id) as enrsub_id_md5
-                    , inst_firstName as enrsub_inst_firstName
-                    , inst_middleName as enrsub_inst_middleName
-                    , inst_lastName as enrsub_inst_lastName
-                    , inst_suffix as enrsub_inst_suffixName
-                    , subj_code as enrsub_subj_code
-                    , subj_name as enrsub_subj_name
-                    , subj_units as enrsub_subj_units
-                    , sche_section as enrsub_sche_section
-                    ')
-                    ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '" and term_name = "' . $semester->term_name . '"and sche_acadYear = "' . $year->acad_year . '"')
-                    ->get();
+    //     $return_data = [];
+    //     $return_data['total_semester'] = 0;
+    //     $return_data['total_summer_semester'] = 0;
 
-                $b = 0;
-                foreach ($grades as $grade) {
+    //     $school_year = $this->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
+    //         ->selectRaw('DISTINCT sche_acadYear as acad_year
+    //         , CONCAT(sche_acadYear, " - ", sche_acadYear + 1) as acad_year_long
+    //         , CONCAT(sche_acadYear, "-\'" ,SUBSTRING(sche_acadYear + 1, 3, 2)) as acad_year_short
+    //         ')
+    //         ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '"')
+    //         ->orderBy('acad_year', 'desc')
+    //         ->get();
 
-                    if ($grade['enrsub_otherGrade'] == "INC" && $grade['enrsub_grade']) {
+    //     $i = 0;
+    //     foreach ($school_year as $year) {
 
-                        $grades[$b]['enrsub_grade_display'] = $grade['enrsub_grade'] . "/INC";
-                    } else if ($grade['enrsub_otherGrade'] == "INC" && !$grade['enrsub_grade']) {
+    //         $semesters = $this->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
+    //             ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
+    //             ->selectRaw('DISTINCT term_name, term_order')
+    //             ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '" and sche_acadYear = "' . $year->acad_year . '"')
+    //             ->orderBy('term_order', 'desc')
+    //             ->get();
 
-                        $grades[$b]['enrsub_grade_display'] = "INC";
-                    } else if ($grade['enrsub_otherGrade'] == "W" || $grade['enrsub_otherGrade'] == "D") {
+    //         $a = 0;
+    //         foreach ($semesters as $semester) {
+    //             $return_data['total_semester'] += 1;
 
-                        $grades[$b]['enrsub_grade_display'] = $grade['enrsub_otherGrade'];
-                    } else {
+    //             if ($semester['term_name'] == "Summer Semester") {
+    //                 $return_data['total_summer_semester'] += 1;
+    //             }
 
-                        $grades[$b]['enrsub_grade_display'] = $grade['enrsub_grade'];
-                    }
+    //             $grades = $this->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
+    //                 ->leftJoin('s_schedule', 'sche_enrsub_id', '=', 'sche_id')
+    //                 ->leftJoin('s_instructor', 'inst_sche_id', '=', 'inst_id')
+    //                 ->leftJoin('s_subject', 'subj_sche_id', '=', 'subj_id')
+    //                 ->leftJoin('s_term', 'term_sche_id', '=', 'term_id')
+    //                 ->selectRaw('t_student_enrolled_subjects.*
+    //                 , md5(enrsub_id) as enrsub_id_md5
+    //                 , inst_firstName as enrsub_inst_firstName
+    //                 , inst_middleName as enrsub_inst_middleName
+    //                 , inst_lastName as enrsub_inst_lastName
+    //                 , inst_suffix as enrsub_inst_suffixName
+    //                 , subj_code as enrsub_subj_code
+    //                 , subj_name as enrsub_subj_name
+    //                 , subj_units as enrsub_subj_units
+    //                 , sche_section as enrsub_sche_section
+    //                 ')
+    //                 ->whereRaw('md5(stud_enrsub_id) = "' . $md5Id . '" and term_name = "' . $semester->term_name . '"and sche_acadYear = "' . $year->acad_year . '"')
+    //                 ->get();
 
-                    $grades[$b]['enrsub_inst_fullName'] = format_name(1, "",  $grades[$b]['enrsub_inst_firstName'], $grades[$b]['enrsub_inst_middleName'], $grades[$b]['enrsub_inst_lastName'], $grades[$b]['enrsub_inst_suffixName']);
+    //             $b = 0;
+    //             foreach ($grades as $grade) {
 
-                    $b++;
-                }
+    //                 if ($grade['enrsub_otherGrade'] == "INC" && $grade['enrsub_grade']) {
 
-                $semesters[$a]['subjects'] = $grades;
-                $a++;
-            }
+    //                     $grades[$b]['enrsub_grade_display'] = $grade['enrsub_grade'] . "/INC";
+    //                 } else if ($grade['enrsub_otherGrade'] == "INC" && !$grade['enrsub_grade']) {
 
-            $school_year[$i]['semesters'] = $semesters;
-            $i++;
-        }
+    //                     $grades[$b]['enrsub_grade_display'] = "INC";
+    //                 } else if ($grade['enrsub_otherGrade'] == "W" || $grade['enrsub_otherGrade'] == "D") {
 
-        $return_data["grades"] = $school_year;
+    //                     $grades[$b]['enrsub_grade_display'] = $grade['enrsub_otherGrade'];
+    //                 } else {
 
-        return $return_data;
-    }
+    //                     $grades[$b]['enrsub_grade_display'] = $grade['enrsub_grade'];
+    //                 }
+
+    //                 $grades[$b]['enrsub_inst_fullName'] = format_name(1, "",  $grades[$b]['enrsub_inst_firstName'], $grades[$b]['enrsub_inst_middleName'], $grades[$b]['enrsub_inst_lastName'], $grades[$b]['enrsub_inst_suffixName']);
+
+    //                 $b++;
+    //             }
+
+    //             $semesters[$a]['subjects'] = $grades;
+    //             $a++;
+    //         }
+
+    //         $school_year[$i]['semesters'] = $semesters;
+    //         $i++;
+    //     }
+
+    //     $return_data["grades"] = $school_year;
+
+    //     return $return_data;
+    // }
 }
