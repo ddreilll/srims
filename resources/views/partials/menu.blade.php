@@ -116,6 +116,7 @@
                                 <i class="fa-duotone fa-file-lines"></i>
                             </span>
                             <span class="menu-title">Gradesheets</span>
+                            <span class="menu-badge"><span class="badge badge-secondary">NON-SIS</span></span>
                         </a>
                     </div>
                 @endcan

@@ -95,6 +95,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('student/profile/retrieve-prev-college', 'StudentProfileController@ajax_retrieve_prevCollege');
 
     Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
+    Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
+    Route::get('students/{student}/generate/envelope-tag', 'StudentProfileController@generateEnvelopeTag')->name('admin.student.generate.envelope-tag');
 
     /*
 |--------------------------------------------------------------------------

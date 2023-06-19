@@ -2,29 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Faker\Generator;
-use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\DB;
+use App\Models\Documents;
+use Illuminate\Http\Request;
+use App\Models\DocumentsType;
+use App\Models\StudentGrades;
 use Illuminate\Http\Response;
+use App\Models\PreviousSchool;
 
 //Controller 
-use App\Http\Controllers\Admin\AcadYearController as AcadYears;
-use App\Http\Controllers\Admin\CourseController as Course;
-use App\Http\Controllers\Admin\HonorController as Honors;
-use App\Http\Controllers\Admin\TermController as Terms;
-use App\Http\Controllers\Admin\YearLevelController as YearLevel;
+use App\Models\StudentProfile;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\DocumentsSubmitted;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 //Model
-use App\Models\StudentProfile;
-use App\Models\PreviousSchool;
-use App\Models\StudentGrades;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Controllers\Admin\TermController as Terms;
 
-use App\Models\Documents;
-use App\Models\DocumentsType;
-use App\Models\DocumentsSubmitted;
+use App\Http\Controllers\Admin\HonorController as Honors;
+use App\Http\Controllers\Admin\CourseController as Course;
+use App\Http\Controllers\Admin\AcadYearController as AcadYears;
+use App\Http\Controllers\Admin\YearLevelController as YearLevel;
 
 class StudentProfileController extends Controller
 {
@@ -382,7 +383,56 @@ class StudentProfileController extends Controller
 
     public function generateEnvelopeDocumentEvaluation(StudentProfile $student)
     {
+        $dsi = new DocumentsSubmitted();
+        $documents['all']["entrance"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+            ->where(["subm_documentCategory" => "ENTRANCE", "subm_student" => $student->stud_id])->get();
+        $documents['all']["records"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+            ->where(["subm_documentCategory" => "RECORDS", "subm_student" => $student->stud_id, "docu_isPermanent" => "NO"])->get();
+        $documents['all']["exit"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+            ->where(["subm_documentCategory" => "EXIT", "subm_student" => $student->stud_id])->get();
 
+        $documents['default']["records"]['regcert'] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+            ->where(["subm_documentCategory" => "RECORDS", "subm_student" => $student->stud_id, "docu_id" => "1"])
+            ->orderBy('subm_documentType', 'desc')
+            ->orderBy('subm_documentType_1', 'desc')->get();
+
+        $pdf = Pdf::loadView('admin.student_profile.pdf.document-evaluation', compact('student', 'documents'));
+
+        $pdf->render();
+        $canvas = $pdf->getCanvas();
+
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->set_opacity(.5, "Multiply");
+        $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+
+        return $pdf->stream();
+    }
+
+    public function generateScholasticData(StudentProfile $student)
+    {
+        abort_if($student->stud_recordType != 'NONSIS', Response::HTTP_NOT_FOUND);
+
+        $pdf = Pdf::loadView('admin.student_profile.pdf.scholastic-data', compact('student'));
+
+        $pdf->render();
+        $canvas = $pdf->getCanvas();
+
+        $height = $canvas->get_height();
+
+        $canvas->set_opacity(.5, "Multiply");
+        $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+
+        return $pdf->stream();
+    }
+
+    public function generateEnvelopeTag(StudentProfile $student)
+    {
+        $pdf = Pdf::loadView('admin.student_profile.pdf.envelope-tag', compact('student'));
+
+        $pdf->render();
+        return $pdf->stream();
     }
 
     // -- Begin::Ajax Requests -- //
@@ -641,33 +691,7 @@ class StudentProfileController extends Controller
                     return ($row->stud_updatedAt) ? format_datetime(strtotime($row->stud_updatedAt)) : NULL;
                 })
                 ->addColumn('action', function ($row) {
-                    return '<td class="text-end">
-                        <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                        <span class="svg-icon svg-icon-5 m-0">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                            </svg>
-                        </span>
-                        </a>
-                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                            <div class="menu-item px-3">
-                                <a href="' . url('student/profile') . '/' . $row->stud_uuid . '" class="menu-link px-3">View</a>
-                            </div>
-                            <div class="menu-item px-3 ">
-                                <a href="' . url('student/profile') . '/' . $row->stud_uuid . '/edit" class="menu-link px-3">Edit</a>
-                            </div>
-                            <div class="separator my-3 opacity-75"></div>
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
-                                <span class="menu-icon">
-                                    <i class="fa-duotone fa-inbox-in fs-5"></i>
-                                </span>
-                                <span class="menu-title">Archive</span>
-                                </a>
-                            </div>
-                        </div>
-                        </td>';
+                    return view('admin.student_profile.partials.datatableActions', compact('row'));
                 })
                 ->filterColumn('stud_name', function ($query, $keyword) {
                     $query->whereRaw("CONCAT(stud_firstName, ' ', stud_middleName, ' ', stud_lastName) like ?", ["%{$keyword}%"]);

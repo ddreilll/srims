@@ -3,9 +3,7 @@
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
 
-        <div id="kt_content_container" class="container-fluid">
-
-            @include('admin.gradesheet.includes.alert')
+        <div id="kt_content_container" class="container-fluid">            
 
             <div class="d-flex flex-column flex-xl-row">
 

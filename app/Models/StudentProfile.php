@@ -20,7 +20,7 @@ class StudentProfile extends Model
 
     public function course()
     {
-        return $this->belongsTo(Course::class, 'cour_stud_id', 'cour_id');
+        return $this->hasOne(Course::class, 'cour_id', 'cour_stud_id' );
     }
 
     public function documents()

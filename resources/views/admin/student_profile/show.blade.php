@@ -129,17 +129,18 @@
                                 data-kt-menu="true">
                                 <div class="menu-item px-3">
                                     <a href="{{ route('admin.student.generate.envelope-document-evaluation', $stud_profile->stud_id) }}"
-                                        class="menu-link px-3" target="_blank">Envelope Document Evaluation</a>
+                                        class="menu-link px-3" target="_blank">Envelope Documents Evaluation</a>
                                 </div>
-                                <div class="menu-item px-3">
-                                    <a href="" class="menu-link px-3">Transcript of Records (TOR) <span
-                                            class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
-                                </div>
+                                @if ($stud_profile->stud_recordType == 'NONSIS')
+                                    <div class="menu-item px-3">
+                                        <a href="{{ route('admin.student.generate.scholastic-data', $stud_profile->stud_id) }}"
+                                            class="menu-link px-3" target="_blank">Scholastic Data </a>
+                                    </div>
+                                @endif
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-3">
-                                    <a href="" class="menu-link px-3"><i class="fa-solid fa-user-tag me-2"></i>
-                                        Envelope Tag <span
-                                            class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
+                                    <a href="{{ route('admin.student.generate.envelope-tag', $stud_profile->stud_id) }}" class="menu-link px-3" target="_blank"><i class="fa-solid fa-user-tag me-2"></i>
+                                        Envelope Tag</a>
                                 </div>
                             </div>
                         </div>
