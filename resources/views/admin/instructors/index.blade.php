@@ -18,7 +18,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-inst-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-15" placeholder="Search Instructor" />
+                                class="form-control  w-250px ps-15" placeholder="Search Instructor" />
                         </div>
                     </div>
                     <div class="card-toolbar">
@@ -105,7 +105,7 @@
 
                             <div class="fv-row mb-15 fv-plugins-icon-container">
                                 <label class="required fs-6 fw-bold mb-2">Employee No.</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="" name="emp_no">
+                                <input type="text" class="form-control " placeholder="" name="emp_no">
                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
 
@@ -113,12 +113,12 @@
 
                                 <div class="col-md-7 fv-row">
                                     <label class="required fs-6 fw-bold mb-2">First name</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="first_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="first_name">
                                 </div>
 
                                 <div class="col-md-5 fv-row">
                                     <label class="fs-6 fw-bold mb-2">Middle name</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="middle_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="middle_name">
                                 </div>
                             </div>
 
@@ -126,12 +126,12 @@
 
                                 <div class="col-md-7 fv-row">
                                     <label class="required fs-6 fw-bold mb-2">Last name</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="last_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="last_name">
                                 </div>
 
                                 <div class="col-md-5 fv-row">
                                     <label class="fs-6 fw-bold mb-2">Suffix</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="suffix_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="suffix_name">
                                 </div>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
 
                             <div class="fv-row mb-15 fv-plugins-icon-container">
                                 <label class="required fs-6 fw-bold mb-2">Employee No.</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="" name="emp_no">
+                                <input type="text" class="form-control " placeholder="" name="emp_no">
                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
 
@@ -193,12 +193,12 @@
 
                                 <div class="col-md-7 fv-row">
                                     <label class="required fs-6 fw-bold mb-2">First name</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="first_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="first_name">
                                 </div>
 
                                 <div class="col-md-5 fv-row">
                                     <label class="fs-6 fw-bold mb-2">Middle name</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="middle_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="middle_name">
                                 </div>
                             </div>
 
@@ -206,12 +206,12 @@
 
                                 <div class="col-md-7 fv-row">
                                     <label class="required fs-6 fw-bold mb-2">Last name</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="last_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="last_name">
                                 </div>
 
                                 <div class="col-md-5 fv-row">
                                     <label class="fs-6 fw-bold mb-2">Suffix</label>
-                                    <input class="form-control form-control-solid text-uppercase" placeholder="" name="suffix_name">
+                                    <input class="form-control  text-uppercase" placeholder="" name="suffix_name">
                                 </div>
                             </div>
 
@@ -245,7 +245,7 @@
             }
 
             function reset_form(type) {
-                $('#kt_modal_' + type + '_inst_form .form-control-solid').val('');
+                $('#kt_modal_' + type + '_inst_form .').val('');
             }
 
             var form_fields = {

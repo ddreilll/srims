@@ -107,7 +107,7 @@
                 <div class="card-body">
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-bold mb-2">Name</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                        <input type="text" class="form-control " placeholder="" name="name" />
                     </div>
                 </div>
                 <div class="card-footer flex-center text-center">
@@ -150,7 +150,7 @@
                 <div class="card-body">
                     <div class="fv-row mb-7">
                         <label class="required fs-6 fw-bold mb-2">Name</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                        <input type="text" class="form-control " placeholder="" name="name" />
                     </div>
                 </div>
                 <div class="card-footer flex-center text-center">
@@ -229,7 +229,7 @@
             }
 
             function reset_honor_form(type) {
-                $('#kt_drawer_honor_' + type + '_form .form-control-solid').val('');
+                $('#kt_drawer_honor_' + type + '_form .').val('');
             }
 
             var honor_form_fields = {

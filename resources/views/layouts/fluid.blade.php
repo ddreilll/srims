@@ -274,6 +274,36 @@
     <script src="{{ asset('/assets/plugins/custom/fontawesome-pro/js/all.min.js') }}"></script>
 
     <script type="text/javascript">
+        @if (session('message'))
+            Swal.fire({
+                html: '{!! session('message') !!}',
+                icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                },
+            });
+        @endif
+
+        @if (session('info'))
+            Swal.fire({
+                html: '{!! session('info') !!}',
+                icon: 'info',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                },
+            });
+        @endif
+
+        @if (session('warning'))
+            Swal.fire({
+                html: '{!! session('warning') !!}',
+                icon: 'warning',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                },
+            });
+        @endif
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

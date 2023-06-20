@@ -14,7 +14,7 @@
                                 <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
                             </svg>
                         </span>
-                        <input type="text" data-kt-course-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Course" />
+                        <input type="text" data-kt-course-table-filter="search" class="form-control  w-250px ps-15" placeholder="Search Course" />
                     </div>
                 </div>
                 <div class="card-toolbar">
@@ -71,12 +71,12 @@
 
                         <div class="fv-row mb-7">
                             <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
+                            <input type="text" class="form-control " placeholder="" name="code" />
                         </div>
 
                         <div class="fv-row mb-7">
                             <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                            <input type="text" class="form-control " placeholder="" name="name" />
                         </div>
 
                     </div>
@@ -124,7 +124,7 @@
                             <label class="required fs-6 fw-bold mb-2">Code</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
+                            <input type="text" class="form-control " placeholder="" name="code" />
                             <!--end::Input-->
                         </div>
 
@@ -133,7 +133,7 @@
                             <label class="required fs-6 fw-bold mb-2">Name</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                            <input type="text" class="form-control " placeholder="" name="name" />
                             <!--end::Input-->
                         </div>
 
@@ -167,7 +167,7 @@
         }
 
         function reset_form(type) {
-            $('#kt_modal_' + type + '_course_form .form-control-solid').val('');
+            $('#kt_modal_' + type + '_course_form .').val('');
         }
 
         var form_fields = {

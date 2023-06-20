@@ -118,7 +118,7 @@
                                         </svg>
                                     </span>
                                     <input type="text" data-kt-student-grades-table-filter="search"
-                                        class="form-control form-control-solid w-250px ps-15" placeholder="Search" />
+                                        class="form-control  w-250px ps-15" placeholder="Search" />
                                 </div>
                             </div>
                             <div class="card-toolbar">
@@ -139,7 +139,7 @@
                                 <div>
                                     <div class="fv-row mb-7" id="edit_template_midterm_grade"
                                         style="display:none !important">
-                                        <select class="form-select form-select-solid" data-placeholder="Grade"
+                                        <select class="form-select " data-placeholder="Grade"
                                             data-allow-clear="true" data-dropdown-parent="#kt_form_edit_student_grade"
                                             data-name="midterm_grade">
                                             <option></option>
@@ -152,7 +152,7 @@
 
                                     <div class="fv-row mb-7" id="edit_template_final_grade"
                                         style="display:none !important">
-                                        <select class="form-select form-select-solid" data-placeholder="Grade"
+                                        <select class="form-select " data-placeholder="Grade"
                                             data-allow-clear="true" data-dropdown-parent="#kt_form_edit_student_grade"
                                             data-name="final_grade">
                                             <option></option>
@@ -165,7 +165,7 @@
 
                                     <div class="fv-row mb-7" id="edit_template_final_rating"
                                         style="display:none !important">
-                                        <select class="form-select form-select-solid" data-placeholder="Rating"
+                                        <select class="form-select " data-placeholder="Rating"
                                             data-allow-clear="true" data-dropdown-parent="#kt_form_edit_student_grade"
                                             data-name="final_rating">
                                             <option></option>
@@ -178,7 +178,7 @@
 
                                     <div class="fv-row mb-7" id="edit_template_grade_status"
                                         style="display:none !important">
-                                        <select class="form-select form-select-solid" data-placeholder="Status"
+                                        <select class="form-select " data-placeholder="Status"
                                             data-allow-clear="true" data-dropdown-parent="#kt_form_edit_student_grade"
                                             data-name="grade_status">
                                             <option></option>
@@ -253,7 +253,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-student-profile-table-filter="search"
-                                class="form-control form-control-solid form-control-lg ps-15"
+                                class="form-control  form-control-lg ps-15"
                                 placeholder="Search by Student number or full name" />
                         </div>
 
@@ -291,7 +291,7 @@
 
                                 <div class="col-2">
                                     <div class="fv-row mb-7">
-                                        <select class="form-select form-select-solid" data-placeholder="Midterm"
+                                        <select class="form-select " data-placeholder="Midterm"
                                             data-allow-clear="true"
                                             data-dropdown-parent="#kt_modal_add_student_grade_form"
                                             data-name="student.midterm_grade">
@@ -306,7 +306,7 @@
 
                                 <div class="col-2">
                                     <div class="fv-row mb-7">
-                                        <select class="form-select form-select-solid" data-placeholder="Final"
+                                        <select class="form-select " data-placeholder="Final"
                                             data-allow-clear="true"
                                             data-dropdown-parent="#kt_modal_add_student_grade_form"
                                             data-name="student.final_grade">
@@ -321,7 +321,7 @@
 
                                 <div class="col-2">
                                     <div class="fv-row mb-7">
-                                        <select class="form-select form-select-solid" data-placeholder="Final Rating"
+                                        <select class="form-select " data-placeholder="Final Rating"
                                             data-allow-clear="true"
                                             data-dropdown-parent="#kt_modal_add_student_grade_form"
                                             data-name="student.final_rating">
@@ -336,7 +336,7 @@
 
                                 <div class="col-2">
                                     <div class="fv-row mb-7">
-                                        <select class="form-select form-select-solid" data-placeholder="Status"
+                                        <select class="form-select " data-placeholder="Status"
                                             data-allow-clear="true"
                                             data-dropdown-parent="#kt_modal_add_student_grade_form"
                                             data-name="student.grade_status">

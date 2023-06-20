@@ -66,7 +66,7 @@
                                     <div class="mb-5">
                                         <label class="form-label fs-6 fw-semibold">Course</label>
                                         <select data-kt-student-profile-filter-type="select"
-                                            class="form-select form-select-solid fw-bold" data-placeholder="Select option"
+                                            class="form-select  fw-bold" data-placeholder="Select option"
                                             data-allow-clear="true" data-kt-student-profile-filter-field="course"
                                             data-kt-student-profile-filter-column="2">
                                             <option></option>
@@ -75,7 +75,7 @@
                                     <div class="mb-5">
                                         <label class="form-label fs-6 fw-semibold">Admission Year</label>
                                         <select data-kt-student-profile-filter-type="select"
-                                            class="form-select form-select-solid fw-bold" data-placeholder="Select option"
+                                            class="form-select  fw-bold" data-placeholder="Select option"
                                             data-allow-clear="true" data-kt-student-profile-filter-field="admissionYear"
                                             data-kt-student-profile-filter-column="4">
                                             <option></option>
@@ -84,7 +84,7 @@
                                     <div class="mb-5">
                                         <label class="form-label fs-6 fw-semibold">Academic Status</label>
                                         <select data-kt-student-profile-filter-type="select"
-                                            class="form-select form-select-solid fw-bold" data-control="select2"
+                                            class="form-select  fw-bold" data-control="select2"
                                             data-placeholder="Select option" data-allow-clear="true"
                                             data-kt-student-profile-filter-column="3">
                                             {{-- 'UNG - Undergraduate', 'RTN - Returnee', 'DIS - Honorable Dismissal', 'GRD - Graduated' --}}
@@ -120,7 +120,7 @@
                                         <label class="form-label fw-semibold">Created at</label>
                                         <div class="d-flex">
                                             <div class="input-group">
-                                                <input class="form-control form-control-solid rounded rounded-end-0"
+                                                <input class="form-control  rounded rounded-end-0"
                                                     placeholder="Pick date range"
                                                     data-kt-student-profile-filter-type="flatPickr"
                                                     data-kt-student-profile-filter-field="createdAt"
@@ -138,7 +138,7 @@
                                         <label class="form-label fw-semibold">Updated at</label>
                                         <div class="d-flex">
                                             <div class="input-group">
-                                                <input class="form-control form-control-solid rounded rounded-end-0"
+                                                <input class="form-control  rounded rounded-end-0"
                                                     placeholder="Pick date range"
                                                     data-kt-student-profile-filter-type="flatPickr"
                                                     data-kt-student-profile-filter-field="updatedAt"
@@ -225,7 +225,7 @@
                             data-kt-scroll-wrappers="#kt_modal_remarks_scroll" data-kt-scroll-offset="300px">
 
                             <div class="fv-row mb-7">
-                                <textarea class="form-control form-control-solid" placeholder="Type your remarks here" style="height: 100px"
+                                <textarea class="form-control " placeholder="Type your remarks here" style="height: 100px"
                                     name="remarks"></textarea>
                             </div>
 
@@ -560,7 +560,7 @@
 
             const resetRemarksFormData = function() {
 
-                $("#kt_modal_remarks_form .form-control-solid").val('');
+                $("#kt_modal_remarks_form .").val('');
             }
 
             var remarks_modal = init_modal("kt_modal_remarks");

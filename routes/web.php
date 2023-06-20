@@ -4,16 +4,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-// Common Resource Routes:
-// index - Shows all listing
-// show - Show single listing
-// create - Show form to create new lising
-// store - Store new listing
-// edit - Show form to edit listing
-// update - Update listing
-// destroy - Delete listing
-
-
 Route::redirect('/', url('/login'));
 Route::redirect('/home', url('/dashboard'));
 
@@ -36,6 +26,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
+
+    // User Accounts
+    Route::resource('users', 'UsersController');
+
+
 
     Route::get('/dashboard', 'DashboardController@dashboard_1')->name('admin.dashboard.1');
     Route::get('ajax/student-per-year', 'DashboardController@ajax_retrieve_total_student_per_year');

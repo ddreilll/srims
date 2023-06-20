@@ -65,11 +65,6 @@ class StudentProfileController extends Controller
             ->where(['stud_uuid' => $profile_uuid])
             ->get();
 
-        activity()
-            ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $tp[0]->stud_id])
-            ->event('viewed')
-            ->log(__('activity_logs.viewed', ["resource" => "Student profile " . "[" . $tp[0]->stud_studentNo . "]", "resource_id" =>  "id - " . $tp[0]->stud_id, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
-
         if (sizeof($tp) == 1) {
 
             $vd = [
@@ -895,11 +890,6 @@ class StudentProfileController extends Controller
             }
         }
 
-        activity()
-            ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $spId])
-            ->event('created')
-            ->log(__('activity_logs.created', ["resource" => "Student profile " . "[" . $request->studentNo . "]", "resource_id" =>  "id - " . $spId, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
-
         header('Content-Type: application/json');
         echo json_encode([
             'message' => __('modal.added_success', ['attribute' => 'Student Profile']),
@@ -1057,10 +1047,6 @@ class StudentProfileController extends Controller
 
                     <button type="button" kt_student_profile_table_restore class="btn btn-icon btn-light-warning btn-sm mx-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="Restore">
                         <i class="fa-solid fa-rotate-left fs-6"></i>
-                    </button>
-
-                    <button disabled type="button" kt_student_profile_table_force_delete class="btn btn-icon btn-sm btn btn-bg-light btn-color-muted" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="Permanently delete">
-                        <i class="fa-solid fa-trash-xmark fs-6"></i>
                     </button>
                 </div>';
             })

@@ -207,7 +207,7 @@
             <div class="card-body">
                 <div class="fv-row mb-7">
                     <label class="required fs-6 fw-bold mb-2">Name</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                    <input type="text" class="form-control " placeholder="" name="name" />
                 </div>
             </div>
             <div class="card-footer flex-center text-center">
@@ -253,7 +253,7 @@
             <div class="card-body">
                 <div class="fv-row mb-7">
                     <label class="required fs-6 fw-bold mb-2">Name</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                    <input type="text" class="form-control " placeholder="" name="name" />
                 </div>
             </div>
             <div class="card-footer flex-center text-center">
@@ -298,7 +298,7 @@
             <div class="card-body">
                 <div class="fv-row mb-12">
                     <label class="required fs-6 fw-bold mb-2">Name</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                    <input type="text" class="form-control " placeholder="" name="name" />
                 </div>
 
                
@@ -347,7 +347,7 @@
             <div class="card-body">
                 <div class="fv-row mb-7">
                     <label class="required fs-6 fw-bold mb-2">Name</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                    <input type="text" class="form-control " placeholder="" name="name" />
                 </div>
             </div>
             <div class="card-footer flex-center text-center">
@@ -857,7 +857,7 @@ KTUtil.onDOMContentLoaded((function() {
     //             <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
     //                 <div class="flex-grow-1 my-lg-0 my-2 me-10">
     //                     <div class="fv-row">
-    //                         <input type="text" class="form-control form-control-solid" placeholder="Name" name="name_subsequent" />
+    //                         <input type="text" class="form-control " placeholder="Name" name="name_subsequent" />
     //                     </div>
     //                 </div>
 

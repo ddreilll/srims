@@ -53,7 +53,7 @@ return [
             'email_verified_at_helper' => '',
             'password'                 => 'Password',
             'password_helper'          => '',
-            'roles'                    => 'Roles',
+            'roles'                    => 'Role',
             'roles_helper'             => '',
             'remember_token'           => 'Remember Token',
             'remember_token_helper'    => '',

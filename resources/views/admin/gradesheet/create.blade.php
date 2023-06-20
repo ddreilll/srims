@@ -29,7 +29,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row">
-                                    <select class="form-select form-select-solid" data-placeholder="Select a subject"
+                                    <select class="form-select " data-placeholder="Select a subject"
                                         data-dropdown-parent="#kt_class_form_create" name="subject">
                                         <option></option>
                                     </select>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row">
-                                    <input type="text" class="form-control form-control-solid" name="section" />
+                                    <input type="text" class="form-control " name="section" />
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row mb-7">
-                                    <select class="form-select form-select-solid" data-placeholder="Select a semester"
+                                    <select class="form-select " data-placeholder="Select a semester"
                                         data-dropdown-parent="#kt_class_form_create" name="semester">
                                         <option></option>
                                     </select>
@@ -67,7 +67,7 @@
 
                                 <div class="fv-row">
                                     <label class="form-label">School year</label>
-                                    <select class="form-select form-select-solid" data-placeholder="Select a year"
+                                    <select class="form-select " data-placeholder="Select a year"
                                         data-dropdown-parent="#kt_class_form_create" name="school_year">
                                         <option></option>
                                     </select>
@@ -83,7 +83,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row">
-                                    <select class="form-select form-select-solid" data-placeholder="Select an instructor"
+                                    <select class="form-select " data-placeholder="Select an instructor"
                                         data-dropdown-parent="#kt_class_form_create" name="instructor">
                                         <option></option>
                                     </select>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row">
-                                    <select class="form-select form-select-solid" data-placeholder="Select a room"
+                                    <select class="form-select " data-placeholder="Select a room"
                                         data-dropdown-parent="#kt_class_form_create" name="room" data-allow-clear="true">
                                         <option></option>
                                     </select>
@@ -145,7 +145,7 @@
                                                     style="display:none !important">
                                                     <td>
                                                         <div class="fv-row">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-hide-search="true" data-placeholder="Select a day"
                                                                 data-dropdown-parent="#kt_class_form_create"
                                                                 data-name="timeslot.day">
@@ -163,14 +163,14 @@
                                                     </td>
                                                     <td>
                                                         <div class="fv-row">
-                                                            <input class="form-control form-control-solid"
+                                                            <input class="form-control "
                                                                 placeholder="Pick a time"
                                                                 data-name="timeslot.time_start" />
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="fv-row">
-                                                            <input class="form-control form-control-solid"
+                                                            <input class="form-control "
                                                                 placeholder="Pick a time" data-name="timeslot.time_end" />
                                                         </div>
                                                     </td>
@@ -228,7 +228,7 @@
                                             <span class="input-group-text"><i
                                                     class="fa-duotone fa-hard-drive fs-4"></i></span>
                                             <div class="overflow-hidden flex-grow-1">
-                                                <select class="form-select form-select-solid rounded-start-0"
+                                                <select class="form-select  rounded-start-0"
                                                     data-control="select2" data-placeholder="Select a storage drive"
                                                     data-hide-search="true" name="gradesheet_file[storage_type]">
                                                     <option></option>
@@ -247,7 +247,7 @@
                                             <div class="fv-row">
                                                 <label class="form-label"
                                                     kt-class-gradesheet-file-component="filePathName">File path</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     name="gradesheet_file[file_path]" />
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@
                                             <div class="fv-row">
                                                 <label class="form-label">File name</label>
                                                 <div class="input-group input-group-solid flex-nowrap">
-                                                    <input class="form-control form-control-solid"
+                                                    <input class="form-control "
                                                         name="gradesheet_file[file_name]" />
                                                     <span class="input-group-text">.pdf</span>
                                                 </div>
@@ -309,20 +309,20 @@
                                                         </td>
                                                         <td>
                                                             <div class="fv-row">
-                                                                <input class="form-control form-control-solid"
+                                                                <input class="form-control "
                                                                     name="gradesheet_file[pages][0][tot_rows]" />
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="fv-row">
-                                                                <input class="form-control form-control-solid"
+                                                                <input class="form-control "
                                                                     name="gradesheet_file[pages][0][file_path]" />
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="fv-row">
                                                                 <div class="input-group input-group-solid flex-nowrap">
-                                                                    <input class="form-control form-control-solid"
+                                                                    <input class="form-control "
                                                                         name="gradesheet_file[pages][0][file_name]" />
                                                                     <span class="input-group-text">.pdf</span>
                                                                 </div>
@@ -350,20 +350,20 @@
                                                         </td>
                                                         <td>
                                                             <div class="fv-row">
-                                                                <input class="form-control form-control-solid"
+                                                                <input class="form-control "
                                                                     data-name="gradesheet_file[pages].tot_rows" />
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="fv-row">
-                                                                <input class="form-control form-control-solid"
+                                                                <input class="form-control "
                                                                     data-name="gradesheet_file[pages].file_path" />
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="fv-row">
                                                                 <div class="input-group input-group-solid flex-nowrap">
-                                                                    <input class="form-control form-control-solid"
+                                                                    <input class="form-control "
                                                                         data-name="gradesheet_file[pages].file_name" />
                                                                     <span class="input-group-text">.pdf</span>
                                                                 </div>

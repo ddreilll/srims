@@ -84,7 +84,7 @@
                                         <div class="mb-10">
                                             <label class="form-label fw-bold">Status:</label>
                                             <div>
-                                                <select class="form-select form-select-solid" data-kt-select2="true"
+                                                <select class="form-select " data-kt-select2="true"
                                                     data-placeholder="Select option"
                                                     data-dropdown-parent="#kt_menu_61cf1e18251a3" data-allow-clear="true">
                                                     <option></option>

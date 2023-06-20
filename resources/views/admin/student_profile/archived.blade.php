@@ -12,16 +12,6 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div id="kt_content_container" class="container-fluid">
 
-            <div class="alert alert-danger d-flex align-items-center p-5 mb-10">
-                <span class="svg-icon svg-icon-2hx svg-icon-danger me-4">
-                    <i class="fa-duotone fa-circle-info"></i>
-                </span>
-                <div class="d-flex flex-column">
-                    <h4 class="mb-1 text-danger">Please take note</h4>
-                    <span>A student profile that will be deleted will removed immediately. It cannot be restored.</span>
-                </div>
-            </div>
-
             <div class="card mb-5 mb-xl-8">
                 <div class="card-body py-3">
                     <table id="kt_student_profile_table" class="align-middle table table-row-bordered gy-5 gs-10">
@@ -72,7 +62,7 @@
                             data-kt-scroll-wrappers="#kt_modal_remarks_scroll" data-kt-scroll-offset="300px">
 
                             <div class="fv-row mb-7">
-                                <textarea class="form-control form-control-solid" placeholder="Type your remarks here" style="height: 100px"
+                                <textarea class="form-control " placeholder="Type your remarks here" style="height: 100px"
                                     name="remarks"></textarea>
                             </div>
 
