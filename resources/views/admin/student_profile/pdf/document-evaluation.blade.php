@@ -196,7 +196,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($student->stud_academicStatus == 'GRD' && $student->stud_academicStatus == 'DIS')
+                @if ($student->stud_academicStatus == 'GRD' || $student->stud_academicStatus == 'DIS')
                     @forelse ($documents['all']["exit"] as $key => $document)
                         <tr>
                             <td class="text-center font-weight-bold">{{ $key + 1 }}.</td>
