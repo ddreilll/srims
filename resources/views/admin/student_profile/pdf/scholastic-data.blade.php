@@ -68,127 +68,60 @@
     <hr />
 
     <div>
-        <table class="table table-bordered table-sm">
-            <thead>
-                <tr class="table-active bg-secondary">
-                    <th scope="col" colspan="6" class="py-3"><span class="text-uppercase">SY 2000 - 2001</span>
-                    </th>
-                </tr>
-                <tr class="table-active">
-                    <th scope="col"
-                        width="5%"class="text-center font-weight-normal small align-middle font-weight-bold">NO.
-                    </th>
-                    <th scope="col" width="15%" class="font-weight-normal small align-middle font-weight-bold">
-                        SUBJECT CODE</th>
-                    <th scope="col" width="65%" class="font-weight-normal small align-middle font-weight-bold">
-                        DESCRIPTION</th>
-                    <th scope="col" width="5%" class="font-weight-normal small align-middle font-weight-bold">
-                        UNITS</th>
-                    <th scope="col" width="5%" class="font-weight-normal small align-middle font-weight-bold">
-                        FINAL GRADE</th>
-                    <th scope="col" width="5%" class="font-weight-normal small align-middle font-weight-bold">
-                        GRADE STATUS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="col" colspan="6"class="align-middle text-center"><span class="text-uppercase">2nd
-                            Semester</span>
-                    </th>
-                </tr>
-                <tr>
-                    <th class="text-center">1.</th>
-                    <td class="text-center">MT 123</td>
-                    <td>COLLEGE ALGEBRA</td>
-                    <td class="text-center">3.0</td>
-                    <td class="text-center">2.50</td>
-                    <td class="text-center">P</td>
-                </tr>
-                <tr>
-                    <th scope="col" colspan="6"class="align-middle text-center"><span class="text-uppercase">1st
-                            Semester</span>
-                    </th>
-                </tr>
-                <tr>
-                    <th class="text-center">1.</th>
-                    <td class="text-center">MT 143</td>
-                    <td>Plane & Spherical Trigonometry</td>
-                    <td class="text-center">3.0</td>
-                    <td class="text-center">1.00</td>
-                    <td class="text-center">P</td>
-                </tr>
-                <tr>
-                    <th class="text-center">2.</th>
-                    <td class="text-center">MT 123</td>
-                    <td>Calculus</td>
-                    <td class="text-center">3.0</td>
-                    <td class="text-center">1.75</td>
-                    <td class="text-center">P</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        @foreach ($vd['stud_grades'] as $gradeSheetPerYear)
+            {{-- <h1>{{ $gradeSheetPerYear['acad_year_long'] }}</h1> --}}
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr class="table-active bg-secondary">
+                        <th scope="col" colspan="6" class="py-3"><span
+                                class="text-uppercase">{{ $gradeSheetPerYear['acad_year_long'] }}</span>
+                        </th>
+                    </tr>
+                    <tr class="table-active">
+                        <th scope="col"
+                            width="5%"class="text-center font-weight-normal small align-middle font-weight-bold">NO.
+                        </th>
+                        <th scope="col" width="15%"
+                            class="font-weight-normal small align-middle font-weight-bold">
+                            SUBJECT CODE</th>
+                        <th scope="col" width="65%"
+                            class="font-weight-normal small align-middle font-weight-bold">
+                            DESCRIPTION</th>
+                        <th scope="col" width="5%"
+                            class="font-weight-normal small align-middle font-weight-bold">
+                            UNITS</th>
+                        <th scope="col" width="5%"
+                            class="font-weight-normal small align-middle font-weight-bold">
+                            FINAL GRADE</th>
+                        <th scope="col" width="5%"
+                            class="font-weight-normal small align-middle font-weight-bold">
+                            REMARKS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($gradeSheetPerYear['semesters'] as $semester)
+                        <tr>
+                            <th scope="col" colspan="6"class="align-middle text-center"><span
+                                    class="text-uppercase">{{ $semester['term_name'] }}</span>
+                            </th>
+                        </tr>
+                        @foreach ($semester['subjects'] as $key => $subject)
+                            <tr>
+                                <th class="text-center">{{ $key + 1 }}.</th>
+                                <td class="text-center">{{ $subject['enrsub_subj_code'] }}</td>
+                                <td>{{ $subject['enrsub_subj_name'] }}</td>
+                                <td class="text-center">{{ $subject['enrsub_subj_units'] }}</td>
+                                <td class="text-center">{{ $subject['enrsub_finalGrade'] }}</td>
+                                <td class="text-center">{{ $subject['enrsub_grade_status'] }}</td>
+                            </tr>
+                        @endforeach
+                    @endforeach
 
-    <div>
-        <table class="table table-bordered table-sm">
-            <thead>
-                <tr class="table-active bg-secondary">
-                    <th scope="col" colspan="6" class="py-3"><span class="text-uppercase">SY 1999 - 2000</span>
-                    </th>
-                </tr>
-                <tr class="table-active">
-                    <th scope="col"
-                        width="5%"class="text-center font-weight-normal small align-middle font-weight-bold">NO.
-                    </th>
-                    <th scope="col" width="15%" class="font-weight-normal small align-middle font-weight-bold">
-                        SUBJECT CODE</th>
-                    <th scope="col" width="65%" class="font-weight-normal small align-middle font-weight-bold">
-                        DESCRIPTION</th>
-                    <th scope="col" width="5%" class="font-weight-normal small align-middle font-weight-bold">
-                        UNITS</th>
-                    <th scope="col" width="5%" class="font-weight-normal small align-middle font-weight-bold">
-                        FINAL GRADE</th>
-                    <th scope="col" width="5%" class="font-weight-normal small align-middle font-weight-bold">
-                        GRADE STATUS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="col" colspan="6"class="align-middle text-center"><span class="text-uppercase">2nd
-                            Semester</span>
-                    </th>
-                </tr>
-                <tr>
-                    <th class="text-center">1.</th>
-                    <td class="text-center">MT 123</td>
-                    <td>COLLEGE ALGEBRA</td>
-                    <td class="text-center">3.0</td>
-                    <td class="text-center">2.50</td>
-                    <td class="text-center">P</td>
-                </tr>
-                <tr>
-                    <th scope="col" colspan="6"class="align-middle text-center"><span class="text-uppercase">1st
-                            Semester</span>
-                    </th>
-                </tr>
-                <tr>
-                    <th class="text-center">1.</th>
-                    <td class="text-center">MT 143</td>
-                    <td>Plane & Spherical Trigonometry</td>
-                    <td class="text-center">3.0</td>
-                    <td class="text-center">1.00</td>
-                    <td class="text-center">P</td>
-                </tr>
-                <tr>
-                    <th class="text-center">2.</th>
-                    <td class="text-center">MT 123</td>
-                    <td>Calculus</td>
-                    <td class="text-center">3.0</td>
-                    <td class="text-center">1.75</td>
-                    <td class="text-center">P</td>
-                </tr>
-            </tbody>
-        </table>
+
+
+                </tbody>
+            </table>
+        @endforeach
     </div>
 </body>
 
