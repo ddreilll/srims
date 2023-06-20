@@ -28,7 +28,7 @@ class DocumentsController extends Controller
     public function index()
     {
 
-        return view('admin.documents.index', ['menu_header' => 'System Setup', 'menu' => 'admission-requirements', 'sub_menu' => 'requirements', 'title' => "Documents"]);
+        return view('admin.documents.index', ['menu_header' => 'System Setup', 'menu' => 'admission-requirements', 'sub_menu' => 'requirements', 'title' => "Documents", "breadcrumb" => [["name" => "System Setup"]]]);
     }
 
     /*

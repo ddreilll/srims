@@ -47,21 +47,20 @@
     <div>
         <table class="table table-borderless table-xs">
             <tr>
-                <td>Student No.:</td>
-                <th>{{ $student->stud_studentNo }}</th>
-                <td class="text-right">Admission Status:</td>
-                <th>{{ $student->stud_admissionType }}</th>
-                <td class="text-right">Year:</td>
-                <th>{{ $student->stud_yearOfAdmission }}</th>
+                <td class="align-middle">Student No.:</td>
+                <th class="align-middle">{{ $student->stud_studentNo }}</th>
+                <th class="align-middle text-right"><span class="font-weight-normal ms-2">Admission Status:</span> {{ $student->stud_admissionType }}</th>
+                <th class="align-middle text-right"><span class="font-weight-normal ms-2">Year:</span> {{ $student->stud_yearOfAdmission }}</th>
             </tr>
             <tr>
-                <td>Name:</td>
-                <th>{{ sprintf('%s, %s %s', $student->stud_lastName, $student->stud_firstName, $student->stud_middleName) }}
+                <td class="align-middle">Name:</td>
+                <th class="align-middle" colspan="3">
+                    {{ sprintf('%s, %s %s', $student->stud_lastName, $student->stud_firstName, $student->stud_middleName) }}
                 </th>
             </tr>
             <tr>
-                <td>Course:</td>
-                <th>{{ $student->course->cour_name }}</th>
+                <td class="align-middle">Course:</td>
+                <th class="align-middle" colspan="3">{{ $student->course->cour_name }}</th>
             </tr>
         </table>
     </div>
@@ -92,7 +91,10 @@
                 @forelse ($documents['all']["entrance"] as $key => $document)
                     <tr>
                         <td class="text-center font-weight-bold">{{ $key + 1 }}.</td>
-                        <td>{!! sprintf('<span>%s</span> · <i class="small">%s</i>', $document->docu_name, $document->subm_documentType) !!}</td>
+                        <td>{!! sprintf('<span>%s</span>', $document->docu_name) !!} @if ($document->subm_documentType)
+                                · <i class="small">{{ $document->subm_documentType }}</i>
+                            @endif
+                        </td>
                         <td>{{ $document->subm_dateSubmitted ? date('m/d/Y', strtotime($document->subm_dateSubmitted)) : '' }}
                         </td>
                         <td></td>
@@ -128,7 +130,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if (sizeOf($documents['all']['records']) >= 1 && sizeOf($documents['default']['records']['regcert']) >= 1)
+                @if (sizeOf($documents['all']['records']) >= 1 || sizeOf($documents['default']['records']['regcert']) >= 1)
                     @foreach ($documents['all']['records'] as $key => $document)
                         <tr>
                             <td class="text-center font-weight-bold">{{ $key + 1 }}.</td>
@@ -147,13 +149,15 @@
                         @foreach ($documents['default']['records']['regcert'] as $key => $regcert)
                             <tr>
                                 <td class="text-center font-weight-bold">{{ $key + 1 }}.</td>
-                                <td>{!! sprintf(
-                                    'SY %s-%s · <span class="small">%s - %s</span>',
-                                    $regcert->subm_documentType,
-                                    $regcert->subm_documentType + 1,
-                                    $regcert->subm_documentType_1,
-                                    $regcert->subm_documentType_2,
-                                ) !!}</td>
+                                <td>{!! sprintf('SY %s-%s', $regcert->subm_documentType, $regcert->subm_documentType + 1) !!}
+                                    @if ($regcert->subm_documentType_1)
+                                        · <span class="small">{{ $regcert->subm_documentType_1 }}
+                                            @endif @if ($regcert->subm_documentType_2)
+                                                - {{ $regcert->subm_documentType_2 }}
+                                            @endif
+                                        </span>
+
+                                </td>
                                 <td>{{ $regcert->subm_dateSubmitted ? date('m/d/Y', strtotime($regcert->subm_dateSubmitted)) : '' }}
                                 </td>
                                 <td></td>

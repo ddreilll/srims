@@ -22,7 +22,7 @@ class InstructorController extends Controller
     public function index()
     {
 
-        return view('admin.instructor', ['menu_header' => 'System Setup', 'title' => "Instructor", "menu" => "schedules-menu", "sub_menu" => "instructor"]);
+        return view('admin.instructors.index', ['menu_header' => 'System Setup', 'title' => "Instructor", "menu" => "schedules-menu", "sub_menu" => "instructor", "breadcrumb" => [["name" => "System Setup"]]]);
     }
 
     /*

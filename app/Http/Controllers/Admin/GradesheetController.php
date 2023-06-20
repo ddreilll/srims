@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\TimeSlot;
+use App\Models\Gradesheet;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
+use App\Models\GradesheetPages;
 
 //Model
-use App\Models\Gradesheet;
-use App\Models\GradesheetPages;
-use App\Models\TimeSlot;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 
 class GradesheetController extends Controller
 {
@@ -96,33 +97,7 @@ class GradesheetController extends Controller
                     return ($row->class_updatedAt) ? format_datetime(strtotime($row->class_updatedAt)) : NULL;
                 })
                 ->addColumn('action', function ($row) {
-                    return '<td class="text-end">
-                <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                <span class="svg-icon svg-icon-5 m-0">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                    </svg>
-                </span>
-                </a>
-                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                    <div class="menu-item px-3">
-                        <a href="' . route('admin.gradesheet.show', $row->class_id) . '" class="menu-link px-3">View</a>
-                    </div>
-                    <div class="menu-item px-3 ">
-                        <a href="' . route('admin.gradesheet.edit', $row->class_id) . '" class="menu-link px-3">Edit</a>
-                    </div>
-                    <div class="separator my-3 opacity-75"></div>
-                    <div class="menu-item px-3">
-                        <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
-                        <span class="menu-icon">
-                             <i class="fa-duotone fa-trash fs-5"></i>
-                        </span>
-                        <span class="menu-title">Delete</span>
-                        </a>
-                    </div>
-                </div>
-                 </td>';
+                    return view('admin.gradesheet.partials.datatableActions', compact('row'));
                 })
                 ->filterColumn('subject_code', function ($query, $keyword) {
                     $query->whereRaw("subj_code like ?", ["%%{$keyword}%%"]);
@@ -591,6 +566,84 @@ class GradesheetController extends Controller
         $gradesheet->students()->detach($student);
 
         return response()->json(['message' => __('modal.deleted_success', ['attribute' => 'Student Grade'])], Response::HTTP_OK);
+    }
+
+
+    public function generatePdf(Gradesheet $gradesheet)
+    {
+
+        $fs = Gradesheet::leftJoin('s_room', 'class_room_id', '=', 'room_id')
+            ->leftJoin('s_subject', 'class_subj_id', '=', 'subj_id')
+            ->leftJoin('s_instructor', 'class_inst_id', '=', 'inst_id')
+            ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
+            ->selectRaw('
+         subj_code as class_subj_code
+        , subj_name as class_subj_name
+        , subj_units as class_subj_units
+        , class_section as class_section
+        , term_name as class_semester
+        , CONCAT(class_acadYear,"-", class_acadYear + 1) as class_sy
+        , room_name as class_room')
+            ->where(["class_id" => $gradesheet->class_id])
+            ->get()[0];
+
+        $sched_timeSlot_day = "";
+        $sched_timeSlot_time = "";
+
+        $ts = new TimeSlot();
+        $sched_timeSlots = $ts->select(['time_id', 'time_day', 'time_duration'])
+            ->where("time_class_id", $gradesheet->class_id)
+            ->get();
+
+        if (sizeOf($sched_timeSlots) == 1) {
+            $sched_timeSlot_day .= ($sched_timeSlots[0]['time_day']) ? $sched_timeSlots[0]['time_day'] : "";
+            $sched_timeSlot_time .= ($sched_timeSlots[0]['time_duration']) ? $sched_timeSlots[0]['time_duration'] : "";
+        } else if (sizeOf($sched_timeSlots) >= 1) {
+
+            for ($a = 0; $a < sizeOf($sched_timeSlots); $a++) {
+
+                if ($a == 0) { // start
+
+                    $sched_timeSlot_day .= ($sched_timeSlots[$a]['time_day']) ? $sched_timeSlots[$a]['time_day'] . "/" : "";
+                    $sched_timeSlot_time .= ($sched_timeSlots[$a]['time_duration']) ? $sched_timeSlots[$a]['time_duration'] . "/" : "";
+                } else if (($a != sizeOf($sched_timeSlots) - 1) && ($a > 0 && $a < sizeOf($sched_timeSlots) - 1)) { // mid
+
+                    $sched_timeSlot_day .= ($sched_timeSlots[$a]['time_day']) ? $sched_timeSlots[$a]['time_day'] . "/" : "";
+                    $sched_timeSlot_time .= ($sched_timeSlots[$a]['time_duration']) ? $sched_timeSlots[$a]['time_duration'] . "/" : "";
+                } else if ($a == sizeOf($sched_timeSlots) - 1) { // last
+
+                    $sched_timeSlot_day .= ($sched_timeSlots[$a]['time_day']) ? $sched_timeSlots[$a]['time_day'] : "";
+                    $sched_timeSlot_time .= ($sched_timeSlots[$a]['time_duration']) ? $sched_timeSlots[$a]['time_duration'] : "";
+                }
+            }
+        }
+
+        $fs['class_day_time'] = ($sched_timeSlot_day ? $sched_timeSlot_day : "") . ($sched_timeSlot_time ? " " . $sched_timeSlot_time : "");
+
+        $fs['students'] = Gradesheet::query()
+            ->leftJoin('t_student_enrolled_subjects', 't_student_enrolled_subjects.class_enrsub_id', '=', 's_class.class_id')
+            ->leftJoin('r_student', 'r_student.stud_id', '=', 't_student_enrolled_subjects.stud_enrsub_id')
+            ->leftJoin('s_course', 's_course.cour_id', '=', 'r_student.cour_stud_id')
+            ->leftJoin('s_gradesheet_page', 's_gradesheet_page.grdsheetpg_id', '=', 't_student_enrolled_subjects.grdsheetpg_enrsub_id')
+            ->where('t_student_enrolled_subjects.class_enrsub_id', $gradesheet->class_id)
+            ->select([
+                'r_student.stud_studentNo', 'r_student.stud_lastName', 'r_student.stud_firstName', 'r_student.stud_middleName', DB::raw('t_student_enrolled_subjects.enrsub_midtermGrade as midterm_grade'), DB::raw('t_student_enrolled_subjects.enrsub_finalGrade as final_grade'), DB::raw('t_student_enrolled_subjects.enrsub_finalRating as final_rating'), DB::raw('t_student_enrolled_subjects.enrsub_grade_status as grade_status')
+            ])->get();
+
+
+        $gradesheet = $fs;
+        $pdf = Pdf::loadView('admin.gradesheet.pdf.index', compact('gradesheet'));
+
+        $pdf->render();
+        $canvas = $pdf->getCanvas();
+
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->set_opacity(.5, "Multiply");
+        $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+
+        return $pdf->stream();
     }
     /*
 |--------------------------------------------------------------------------

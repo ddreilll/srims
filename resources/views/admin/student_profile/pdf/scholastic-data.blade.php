@@ -44,32 +44,30 @@
 <body>
     <p class="font-weight-bold pb-0" style="font-size: 1rem">SCHOLASTIC DATA REPORT</p>
     <hr />
-    <div>
-        <table class="table table-borderless table-xs">
-            <tr>
-                <td>Student No.:</td>
-                <th>{{ $student->stud_studentNo }}</th>
-                <td class="text-right">Admission Status:</td>
-                <th>{{ $student->stud_admissionType }}</th>
-                <td class="text-right">Year:</td>
-                <th>{{ $student->stud_yearOfAdmission }}</th>
-            </tr>
-            <tr>
-                <td>Name:</td>
-                <th>{{ sprintf('%s, %s %s', $student->stud_lastName, $student->stud_firstName, $student->stud_middleName) }}
-                </th>
-            </tr>
-            <tr>
-                <td>Course:</td>
-                <th>{{ $student->course->cour_name }}</th>
-            </tr>
-        </table>
-    </div>
+    <table class="table table-borderless table-xs">
+        <tr>
+            <td class="align-middl">Student No.:</td>
+            <th class="align-middle">{{ $student->stud_studentNo }}</th>
+            <th class="align-middle text-right"><span class="font-weight-normal ms-2">Admission Status:</span>
+                {{ $student->stud_admissionType }}</th>
+            <th class="align-middle text-right"><span class="font-weight-normal ms-2">Year:</span>
+                {{ $student->stud_yearOfAdmission }}</th>
+        </tr>
+        <tr>
+            <td class="align-middle">Name:</td>
+            <th class="align-middle" colspan="3">
+                {{ sprintf('%s, %s %s', $student->stud_lastName, $student->stud_firstName, $student->stud_middleName) }}
+            </th>
+        </tr>
+        <tr>
+            <td class="align-middle">Course:</td>
+            <th class="align-middle" colspan="3">{{ $student->course->cour_name }}</th>
+        </tr>
+    </table>
     <hr />
 
     <div>
         @foreach ($vd['stud_grades'] as $gradeSheetPerYear)
-            {{-- <h1>{{ $gradeSheetPerYear['acad_year_long'] }}</h1> --}}
             <table class="table table-bordered table-sm">
                 <thead>
                     <tr class="table-active bg-secondary">
