@@ -12,14 +12,13 @@ class SystemSettingsController extends Controller
 {
     public function view_curriculum()
     {
-
         $terms = (new Terms)->getAllTerm([]);
 
-        return view('admin.system-settings', ['menu_header' => 'Settings', 'title' => 'System Settings', 'menu' => '', 'sub_menu' => 'system-settings', 'formData_terms' => $terms]);
+        return view('admin.settings.show', ['menu_header' => 'Settings', 'title' => "System Settings", "menu" => "system-settings", "sub_menu" => "settings-curriculum", "breadcrumb" => [["name" => "System Settings"]], 'formData_terms' => $terms]);
     }
 
     public function view_student_profile()
     {
-        return view('admin.settings-student-profile', ['menu_header' => 'Settings', 'title' => 'System Settings ― Student Profile', 'menu' => 'system-settings', 'sub_menu' => 'settings-student-profile']);
+        return view('admin.settings.student-profile', ['menu_header' => 'Settings', 'title' => 'System Settings', 'menu' => 'system-settings', 'sub_menu' => 'settings-student-profile', "breadcrumb" => [["name" => "System Settings"]]]);
     }
 }

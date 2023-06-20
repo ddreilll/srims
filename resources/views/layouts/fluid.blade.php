@@ -211,28 +211,6 @@
                                 @endisset
 
                             </div>
-
-                            <div class="d-flex align-items-stretch overflow-auto pt-3 pt-lg-0">
-                                <div class="d-flex align-items-center">
-                                    <span class="fs-7 text-gray-700 fw-bolder pe-3">Quick Tools:</span>
-                                    <div class="d-flex">
-                                        <a href="{{ url('/student/profile/add') }}"
-                                            class="btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary pulse pulse-primary"
-                                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
-                                            title="Add Student Profile">
-                                            <i class="fas fa-user-plus fs-4"></i>
-                                            <span class="pulse-ring border-3"></span>
-                                        </a>
-
-                                        <a href="{{ url('/student/profile/') }}"
-                                            class="btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary"
-                                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
-                                            title="View List of Students">
-                                            <i class="fas fa-clipboard-list fs-3"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

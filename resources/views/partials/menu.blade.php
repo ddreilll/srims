@@ -131,28 +131,13 @@
                     </div>
 
                     @can('menu_admission_requirements')
-                        <div data-kt-menu-trigger="click"
-                            class="menu-item {{ $menu === 'admission-requirements' ? 'here show' : '' }} menu-accordion">
-                            <span class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link {{ $menu === 'admission-requirements' ? 'active' : '' }}" href="{{ url('/course') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-file-certificate"></i>
                                 </span>
                                 <span class="menu-title">Documents</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                @can('access_requirements')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'requirements' ? 'active' : '' }}"
-                                            href="{{ url('/documents/list') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Documents</span>
-                                        </a>
-                                    </div>
-                                @endcan
-                            </div>
+                            </a>
                         </div>
                     @endcan
 
@@ -248,18 +233,6 @@
                                         </a>
                                     </div>
                                 @endcan
-
-                                @can('access_user_roles')
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="#">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">User Roles</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
                             </div>
                         </div>
                     @endcan
