@@ -49,8 +49,10 @@
             <tr>
                 <td class="align-middle">Student No.:</td>
                 <th class="align-middle">{{ $student->stud_studentNo }}</th>
-                <th class="align-middle text-right"><span class="font-weight-normal ms-2">Admission Status:</span> {{ $student->stud_admissionType }}</th>
-                <th class="align-middle text-right"><span class="font-weight-normal ms-2">Year:</span> {{ $student->stud_yearOfAdmission }}</th>
+                <th class="align-middle text-right"><span class="font-weight-normal ms-2">Admission Status:</span>
+                    {{ $student->stud_admissionType }}</th>
+                <th class="align-middle text-right"><span class="font-weight-normal ms-2">Year:</span>
+                    {{ $student->stud_yearOfAdmission }}</th>
             </tr>
             <tr>
                 <td class="align-middle">Name:</td>
@@ -67,10 +69,11 @@
     <hr />
 
     <div>
-        <table class="table table-bordered table-sm">
+        <table class="table table-bordered table-xs">
             <thead>
                 <tr class="table-active bg-secondary">
-                    <th scope="col" colspan="4" class="py-3"><span class="text-uppercase">Entrance
+                    <th scope="col" colspan="4" style="padding-top: .3rem; padding-bottom: .3rem;"><span
+                            class="text-uppercase">Entrance
                             Documents</span>
                     </th>
                 </tr>
@@ -109,10 +112,11 @@
     </div>
 
     <div>
-        <table class="table table-bordered table-sm">
+        <table class="table table-bordered table-xs">
             <thead>
                 <tr class="table-active bg-secondary">
-                    <th scope="col" colspan="4" class="py-3"><span class="text-uppercase">RECORDS
+                    <th scope="col" colspan="4" style="padding-top: .3rem; padding-bottom: .3rem;"><span
+                            class="text-uppercase">RECORDS
                             Documents</span>
                     </th>
                 </tr>
@@ -175,11 +179,12 @@
     </div>
 
     <div>
-        <table class="table table-bordered table-sm">
+        <table class="table table-bordered table-xs">
 
             <thead>
                 <tr class="table-active bg-secondary">
-                    <th scope="col" colspan="4" class="py-3"><span class="text-uppercase">EXIT Documents</span>
+                    <th scope="col" colspan="4" style="padding-top: .3rem; padding-bottom: .3rem;"><span
+                            class="text-uppercase">EXIT Documents</span>
                     </th>
                 </tr>
                 <tr class="table-active">
@@ -212,14 +217,30 @@
                     @endforelse
                 @else
                     <tr>
-                        <td class="text-center py-3" colspan="4"> This is applicable for student with
-                            <b>Graduated</b> and <b>Honorable Dismissed</b> <br>academic status only.
+                        <td class="text-center py-3" colspan="4"> This is applicable for student
+                            <b>Graduated</b> or <b>Issued Honorable Dismissal Certificate</b> only.
                         </td>
                     </tr>
                 @endif
             </tbody>
         </table>
     </div>
+
+    <hr />
+    <table class="table table-borderless table-xs">
+        <tr>
+            <th style="font-size:2rem" class="align-middle">
+                {{ sprintf('%s, %s %s', $student->stud_lastName, $student->stud_firstName, $student->stud_middleName) }}
+            </th>
+        </tr>
+        <tr>
+            <th style="font-size:1.5rem" class="align-middle">{{ $student->stud_studentNo }}</th>
+        </tr>
+        <tr>
+            <th style="font-size:1.5rem" class="align-middle">{{ $student->course->cour_code }}</th>
+        </tr>
+    </table>
+    <hr />
 </body>
 
 </html>

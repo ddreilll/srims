@@ -47,9 +47,4 @@
             </a>
         </div>
     </div>
-
-    <a href="{{ route('admin.student.generate.envelope-tag', $row->stud_id) }}"
-        class="btn btn-icon btn-sm btn-light btn-active-light-dark" target="_blank">
-        <i class="fa-solid fa-tag"></i>
-    </a>
 </td>
