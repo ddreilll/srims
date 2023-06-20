@@ -11,9 +11,6 @@
 </a>
 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
     data-kt-menu="true">
-    <div class="menu-item px-3">
-        <a href="{{ route('users.show', $row->id) }}" class="menu-link px-3">View</a>
-    </div>
     <div class="menu-item px-3 ">
         <a href="{{ route('users.edit', $row->id) }}" class="menu-link px-3">Edit</a>
     </div>
