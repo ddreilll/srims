@@ -22,7 +22,7 @@ class RoomController extends Controller
 
     public function index()
     {
-        return view('admin.room', ['title' => "Room", "menu" => "schedules-menu", "sub_menu" => "room", "menu_header" => "System Setup"]);
+        return view('admin.rooms.index', ['title' => "Room", "menu" => "schedules-menu", "sub_menu" => "room", "menu_header" => "System Setup", "breadcrumb" => [["name" => "System Setup"]]]);
     }
 
     /*

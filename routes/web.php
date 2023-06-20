@@ -65,6 +65,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@updateStudent')->name('admin.gradesheet-students.update');
     Route::delete('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@destroyStudent')->name('admin.gradesheet-students.destroy');
 
+    Route::get('gradesheet/{gradesheet}/generate/pdf', 'GradesheetController@generatePdf')->name('admin.gradesheet.generate.pdf');
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +88,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('ajax/student/profile/validate-studentNo', 'StudentProfileController@ajax_validate_studentNo');
     Route::post('ajax/student/profile/restore', 'StudentProfileController@ajax_restore');
 
-    Route::get('student/profile/add', 'StudentProfileController@create_profile');
+    Route::get('student/profile/add', 'StudentProfileController@create_profile')->name('admin.student.create');
     Route::get('student/profile/{profile_uuid}', 'StudentProfileController@show_profile');
     Route::get('student/profile/{profile_uuid}/edit', 'StudentProfileController@edit_profile');
 
