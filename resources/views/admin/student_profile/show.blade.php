@@ -137,11 +137,6 @@
                                             class="menu-link px-3" target="_blank">Scholastic Data </a>
                                     </div>
                                 @endif
-                                <div class="separator my-2"></div>
-                                <div class="menu-item px-3">
-                                    <a href="{{ route('admin.student.generate.envelope-tag', $stud_profile->stud_id) }}" class="menu-link px-3" target="_blank"><i class="fa-solid fa-user-tag me-2"></i>
-                                        Envelope Tag</a>
-                                </div>
                             </div>
                         </div>
 
