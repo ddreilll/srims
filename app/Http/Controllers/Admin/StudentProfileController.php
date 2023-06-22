@@ -19,7 +19,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Admin\CourseController as Course;
-use App\Http\Controllers\Admin\AcadYearController as AcadYears;
+use App\Models\SchoolYear;
 use App\Models\YearLevel;
 
 class StudentProfileController extends Controller
@@ -194,7 +194,7 @@ class StudentProfileController extends Controller
 
     public function create_profile()
     {
-        $acadYears = (new AcadYears)->getAllYears();
+        $acadYears = SchoolYear::all();
         $course = (new Course)->getAllCourses();
         $honors = Honor::all();
         $terms = Term::all();
@@ -244,7 +244,7 @@ class StudentProfileController extends Controller
 
         if (sizeof($tp) == 1) {
 
-            $acadYears = (new AcadYears)->getAllYears();
+            $acadYears = SchoolYear::all();
             $course = (new Course)->getAllCourses();
             $honors = Honor::all();
             $terms = Term::all();
