@@ -101,13 +101,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     |
     */
 
-    Route::get('subject', 'SubjectController@index')->name('subject');
-    Route::post('subject/add', 'SubjectController@ajax_insert');
-    Route::get('subject/retrieveAll', 'SubjectController@ajax_retrieveAll');
-    Route::post('subject/retrieve', 'SubjectController@ajax_retrieve');
-    Route::post('subject/update', 'SubjectController@ajax_update');
-    Route::post('subject/delete', 'SubjectController@ajax_delete');
-    Route::post('subject/checkDelete', 'SubjectController@ajax_checkDelete');
+    // Route::get('subject', 'SubjectController@index')->name('subject');
+    // Route::post('subject/add', 'SubjectController@ajax_insert');
+    // Route::get('subject/retrieveAll', 'SubjectController@ajax_retrieveAll');
+    // Route::post('subject/retrieve', 'SubjectController@ajax_retrieve');
+    // Route::post('subject/update', 'SubjectController@ajax_update');
+    // Route::post('subject/delete', 'SubjectController@ajax_delete');
+    // Route::post('subject/checkDelete', 'SubjectController@ajax_checkDelete');
 
     Route::post('subject/select2', 'SubjectController@ajax_select2_search');
 
@@ -142,7 +142,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::resource('instructors', 'InstructorController');
 
         // Subjects
-        Route::resource('subjects', 'SubjectController', ['except' => 'show']);
+        Route::resource('subjects', 'SubjectController');
 
         // Year Level
         Route::resource('year-levels', 'YearLevelController');
