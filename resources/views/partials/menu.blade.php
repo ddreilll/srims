@@ -102,18 +102,6 @@
                         </div>
                     </div>
 
-                    @can('menu_admission_requirements')
-                        <div class="menu-item">
-                            <a class="menu-link {{ $menu === 'admission-requirements' ? 'active' : '' }}"
-                                href="{{ url('/documents/list') }}">
-                                <span class="menu-icon">
-                                    <i class="fa-duotone fa-file-certificate"></i>
-                                </span>
-                                <span class="menu-title">Documents</span>
-                            </a>
-                        </div>
-                    @endcan
-
                     @can('access_course')
                         <div class="menu-item">
                             <a class="menu-link {{ $menu === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">

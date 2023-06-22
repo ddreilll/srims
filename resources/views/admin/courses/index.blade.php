@@ -16,13 +16,13 @@
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div class="card-header border-0">
                                     <div class="card-title">
-                                        <h2>{{ __('cruds.document.title') }}</h2>
+                                        <h2>{{ __('cruds.course.title') }}</h2>
                                     </div>
                                     <div class="card-toolbar">
-                                        <a href="{{ route('settings.documents.create') }}"
+                                        <a href="{{ route('settings.courses.create') }}"
                                             class="btn btn-sm btn-light-primary">
                                             <i class="fa-solid fa-plus me-2"></i>
-                                            {{ __('global.add') }} {{ __('cruds.document.title') }}
+                                            {{ __('global.add') }} {{ __('cruds.course.title') }}
                                         </a>
                                     </div>
                                 </div>
@@ -31,37 +31,28 @@
                                         class="table border table-rounded table-row-bordered gy-5 gs-7">
                                         <thead>
                                             <tr class="fw-bolder fs-6 text-gray-800 px-7">
-                                                <th>{{ __('cruds.document.fields.docu_name') }}</th>
-                                                <th>{{ __('cruds.document.fields.docu_category') }}</th>
-                                                <th>{{ __('cruds.documentType.title') }}</th>
+                                                <th>{{ __('cruds.course.fields.cour_code') }}</th>
+                                                <th>{{ __('cruds.course.fields.cour_name') }}</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($documents as $document)
+                                            @forelse ($courses as $course)
                                                 <tr>
                                                     <td class="align-middle">
-                                                        <p class="font-weight-bold mb-0">{{ $document->docu_name }}</p>
-                                                        @if ($document->docu_description)
-                                                            <p class="mt-1 mb-0 text-muted">
-                                                                {{ $document->docu_description }}</p>
-                                                        @endif
+                                                        {{ $course->cour_code }}
                                                     </td>
                                                     <td class="align-middle">
-                                                        {{ (new App\Enums\DocumentCategoriesEnum())->getDisplayNames()[$document->docu_category] }}
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        {{ sizeOf($document->types) >= 1 ? sizeOf($document->types) : '' }}
+                                                        {{ $course->cour_name }}
                                                     </td>
                                                     <td class="align-middle">
                                                         @include('admin._partials.tableActions', [
-                                                            'viewGate' =>
-                                                                sizeOf($document->types) >= 1 ? true : false,
-                                                            'editGate' => !$document->isPermanent,
-                                                            'deleteGate' => !$document->isPermanent,
-                                                            'row' => $document,
-                                                            'crudRoutePart' => 'documents',
-                                                            'primaryKey' => 'docu_id',
+                                                            'viewGate' => false,
+                                                            'editGate' => true,
+                                                            'deleteGate' => true,
+                                                            'row' => $course,
+                                                            'crudRoutePart' => 'courses',
+                                                            'primaryKey' => 'cour_id',
                                                         ])
                                                     </td>
                                                 </tr>
@@ -75,7 +66,7 @@
                                         </tbody>
                                     </table>
 
-                                    {!! $documents->links() !!}
+                                    {!! $courses->links() !!}
 
                                 </div>
                             </div>

@@ -450,6 +450,33 @@
         }
     </script>
 
+    <script type="text/javascript">
+        KTUtil.onDOMContentLoaded((function() {
+            
+            $(`[destroy-resource="true"]`).on("click", function() {
+
+                var documentId = $(this).attr("data-id");
+
+                Swal.fire({
+                    text: "{{ __('modal.confirmation', ['action' => 'delete']) }}",
+                    icon: 'warning',
+                    showCancelButton: !0,
+                    buttonsStyling: !1,
+                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'delete']) }}",
+                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                    customClass: {
+                        confirmButton: 'btn btn-danger',
+                        cancelButton: 'btn btn-active-light',
+                    },
+                }).then(function(t) {
+                    if (t.value) {
+                        $(`form#${documentId}-destroy`).submit();
+                    }
+                });
+            });
+        }));
+    </script>
+
     @yield('scripts')
 
 </body>

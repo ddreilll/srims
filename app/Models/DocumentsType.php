@@ -16,4 +16,15 @@ class DocumentsType extends Model
     const UPDATED_AT = 'docuType_updatedAt';
     const DELETED_AT = 'docuType_deletedAt';
 
+    protected $fillable = [
+        'docuType_name',
+        'docuType_document',
+    ];
+
+    protected $dates = [
+        'docuType_createdAt',
+        'docuType_updatedAt',
+        'docuType_deletedAt',
+    ];
+
 }

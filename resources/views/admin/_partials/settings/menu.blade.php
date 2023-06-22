@@ -9,7 +9,7 @@
         <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
             <li class="nav-item me-0 mb-md-2">
                 <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.documents.*') ? 'active' : '' }}"
-                    href="">
+                    href="{{ route('settings.documents.index') }}">
                     <span class="d-flex flex-column align-items-start">
                         <span class="fs-5">Documents</span>
                     </span>
@@ -17,7 +17,7 @@
             </li>
             <li class="nav-item me-0 mb-md-2">
                 <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.courses.*') ? 'active' : '' }}"
-                    href="">
+                    href="{{ route('settings.courses.index') }}">
                     <span class="d-flex flex-column align-items-start">
                         <span class="fs-5">Courses</span>
                     </span>

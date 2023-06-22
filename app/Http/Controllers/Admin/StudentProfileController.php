@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Term;
 use Faker\Generator;
 use App\Models\Honor;
-use App\Models\Documents;
+use App\Models\Document;
 use Illuminate\Http\Request;
 use App\Models\DocumentsType;
 use App\Models\StudentGrades;
@@ -201,7 +201,7 @@ class StudentProfileController extends Controller
         $yearLevel = YearLevel::all();
 
 
-        $dti = new Documents();
+        $dti = new Document();
         $dtsi = new DocumentsType();
 
         $dt_ent = $dti->where(["docu_category" => "ENTRANCE"])
@@ -251,7 +251,7 @@ class StudentProfileController extends Controller
             $yearLevel = YearLevel::all();
 
 
-            $dti = new Documents();
+            $dti = new Document();
             $dtsi = new DocumentsType();
 
             $dt_ent = $dti->where(["docu_category" => "ENTRANCE"])
@@ -759,7 +759,7 @@ class StudentProfileController extends Controller
             "stud_dateExited" => ($request->dateExited) ? date('Y-m-d', strtotime($request->dateExited)) : NULL,
             "stud_honor" => $request->honor,
             "stud_createdAt" => NOW(),
-            "user_stud_id" => \Auth::user()->id
+            "user_stud_id" => auth()->user()->id
         ];
 
         $ishd = $request->isHonorableDismissed;

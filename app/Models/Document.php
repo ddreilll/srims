@@ -32,4 +32,13 @@ class Document extends Model
     {
         return ($this->docu_isPermanent == "YES") ? true : false;
     }
+
+    public function scopeOrder($query)
+    {
+        return $query->orderBy('docu_isPermanent')->orderBy('docu_name');
+    }
+    public function types()
+    {
+        return $this->hasMany(DocumentsType::class, 'docuType_document', $this->primaryKey);
+    }
 }

@@ -74,6 +74,7 @@ class YearLevelController extends Controller
     public function store(StoreYearLevelRequest $request)
     {
         $yearLevel = YearLevel::create($request->all());
+        
         session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.yearLevel.title_singular'))]));
 
         return redirect()->route('settings.year-levels.index');

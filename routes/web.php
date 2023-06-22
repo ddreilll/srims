@@ -94,23 +94,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
 
     /*
-    |--------------------------------------------------------------------------
-    |                       Documents
-    |--------------------------------------------------------------------------
-    |
-    */
-    Route::get('documents/list', 'DocumentsController@index')->name('documents');
-    Route::get('documents/retrieveAll', 'DocumentsController@ajax_retrieveAll');
-    Route::post('documents/retrieve', 'DocumentsController@ajax_retrieve');
-    Route::post('documents/add', 'DocumentsController@ajax_insert');
-    Route::post('documents/update', 'DocumentsController@ajax_update');
-    Route::post('documents/delete', 'DocumentsController@ajax_delete');
-
-    // Documents Type
-    Route::get('documents/category/{category}', 'DocumentsController@ajax_retrieve_by_category');
-    Route::post('documents/document-types', 'DocumentsController@ajax_retrieveTypes');
-
-    /*
 
     |--------------------------------------------------------------------------
     |                       Course
@@ -191,9 +174,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
             return redirect()->route('settings.documents.index');
         });
 
-
         // Documents
         Route::resource('documents', 'DocumentController');
+
+        // Courses 
+        Route::resource('courses', 'CourseController');
 
         // Year Level
         Route::resource('year-levels', 'YearLevelController');
@@ -209,6 +194,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::resource('school-years', 'SchoolYearController');
         Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
     });
+
+    // Documents Type
+    Route::get('documents/category/{category}', 'DocumentController@ajax_retrieve_by_category');
+    Route::post('documents/document-types', 'DocumentController@ajax_retrieveTypes');
 
     Route::post('select2/settings/school-year/base', 'SchoolYearController@ajax_select2_base_search');
 });
