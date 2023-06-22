@@ -59,7 +59,7 @@
                 <div class="menu-item">
                     <a class="menu-link {{ $menu === 'dashboard' ? 'active' : '' }}" href="{{ url('/dashboard') }}">
                         <span class="menu-icon">
-                            <i class="fa-duotone fa-chart-network"></i>
+                            <i class="fa-duotone fa-chart-mixed"></i>
                         </span>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -76,9 +76,9 @@
                         <a class="menu-link {{ $menu === 'student-profile' ? 'active' : '' }}"
                             href="{{ url('/student/profile') }}">
                             <span class="menu-icon">
-                                <i class="fa-duotone fa-user-graduate"></i>
+                                <i class="fa-duotone fa-screen-users"></i>
                             </span>
-                            <span class="menu-title">Student Profile</span>
+                            <span class="menu-title">Students</span>
                         </a>
                     </div>
 

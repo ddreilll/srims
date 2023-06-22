@@ -3,6 +3,8 @@
 return [
     'actions'                              => 'Actions',
     'add'                                  => 'Add',
+    'list'                                  => 'List',
+    'list_of'                                  => 'List of :attribute',
     'new'                                  => 'New',
     'cancel'                                  => 'Cancel',
     'allRightsReserved'                    => 'All rights reserved.',
