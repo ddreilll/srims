@@ -16,13 +16,13 @@
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div class="card-header border-0">
                                     <div class="card-title">
-                                        <h2>{{ __('cruds.room.title') }}</h2>
+                                        <h2>{{ __('cruds.instructor.title') }}</h2>
                                     </div>
                                     <div class="card-toolbar">
-                                        <a href="{{ route('settings.rooms.create') }}"
+                                        <a href="{{ route('settings.instructors.create') }}"
                                             class="btn btn-sm btn-light-primary">
                                             <i class="fa-solid fa-plus me-2"></i>
-                                            {{ __('global.add') }} {{ __('cruds.room.title') }}
+                                            {{ __('global.add') }} {{ __('cruds.instructor.title') }}
                                         </a>
                                     </div>
                                 </div>
@@ -31,30 +31,34 @@
                                         class="table border table-rounded table-row-bordered gy-5 gs-7">
                                         <thead>
                                             <tr class="fw-bolder fs-6 text-gray-800 px-7">
-                                                <th>{{ __('cruds.room.fields.room_name') }}</th>
+                                                <th>{{ __('cruds.instructor.fields.inst_empNo') }}</th>
+                                                <th>{{ __('cruds.instructor.fields.full_name') }}</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($rooms as $room)
+                                            @forelse ($instructors as $instructor)
                                                 <tr>
                                                     <td class="align-middle">
-                                                        {{ $room->room_name }}
+                                                        {{ $instructor->inst_empNo }}
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        {{ $instructor->fullname }}
                                                     </td>
                                                     <td class="align-middle">
                                                         @include('admin._partials.tableActions', [
                                                             'viewGate' => false,
                                                             'editGate' => true,
                                                             'deleteGate' => true,
-                                                            'row' => $room,
-                                                            'crudRoutePart' => 'rooms',
-                                                            'primaryKey' => 'room_id',
+                                                            'row' => $instructor,
+                                                            'crudRoutePart' => 'instructors',
+                                                            'primaryKey' => 'inst_id',
                                                         ])
                                                     </td>
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="2" class="align-middle text-center">
+                                                    <td colspan="3" class="align-middle text-center">
                                                         {{ __('global.no_entries_in_table') }}
                                                     </td>
                                                 </tr>
@@ -62,7 +66,7 @@
                                         </tbody>
                                     </table>
 
-                                    {!! $rooms->links() !!}
+                                    {!! $instructors->links() !!}
 
                                 </div>
                             </div>
