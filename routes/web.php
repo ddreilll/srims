@@ -188,8 +188,12 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
 
         Route::get('/', function () {
-            return redirect()->route('settings.year-levels.index');
+            return redirect()->route('settings.documents.index');
         });
+
+
+        // Documents
+        Route::resource('documents', 'DocumentController');
 
         // Year Level
         Route::resource('year-levels', 'YearLevelController');
