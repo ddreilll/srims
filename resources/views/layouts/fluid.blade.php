@@ -162,7 +162,8 @@
                             class="container-fluid py-6 py-lg-0 d-flex flex-column flex-lg-row align-items-lg-stretch justify-content-lg-between">
 
                             <div class="page-title d-flex justify-content-center flex-column me-5">
-                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">{{ $title }}</h1>
+                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">
+                                    {{ $title ? $title : '' }}</h1>
 
                                 @isset($breadcrumb)
 
@@ -204,7 +205,7 @@
                                                 <a href="{{ url('/') }}"
                                                     class="text-muted text-hover-primary">Dashboard</a>
                                             </li>
-                                            <li class="breadcrumb-item text-dark">{{ $title }}</li>
+                                            <li class="breadcrumb-item text-dark"> {{ $title ? $title : '' }}</li>
                                         </ul>
                                     @endif
 
