@@ -93,7 +93,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
     Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
 
-  
+
     /*
     |--------------------------------------------------------------------------
     |                       Subject
@@ -142,6 +142,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::resource('instructors', 'InstructorController');
 
         // Subjects
+        Route::resource('subjects', 'SubjectController', ['except' => 'show']);
 
         // Year Level
         Route::resource('year-levels', 'YearLevelController');
