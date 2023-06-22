@@ -102,17 +102,6 @@
                         </div>
                     </div>
 
-                    @can('access_course')
-                        <div class="menu-item">
-                            <a class="menu-link {{ $menu === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">
-                                <span class="menu-icon">
-                                    <i class="fa-duotone fa-diploma"></i>
-                                </span>
-                                <span class="menu-title">Course</span>
-                            </a>
-                        </div>
-                    @endcan
-
                     @can('menu_schedules')
                         <div data-kt-menu-trigger="click"
                             class="menu-item menu-accordion {{ $menu == 'schedules-menu' ? 'here show' : '' }}">
@@ -180,7 +169,7 @@
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-users"></i>
                                 </span>
-                                <span class="menu-title">User Accounts</span>
+                                <span class="menu-title">User Account Access & Management</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -206,7 +195,7 @@
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-sliders-simple"></i>
                                 </span>
-                                <span class="menu-title">System Settings</span>
+                                <span class="menu-title">System Setup & Maintenance</span>
                             </a>
                         </div>
                     @endcan

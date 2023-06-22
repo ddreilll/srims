@@ -93,23 +93,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
     Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
 
-    /*
-
-    |--------------------------------------------------------------------------
-    |                       Course
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    Route::get('course', 'CourseController@index')->name('course');
-    Route::post('course/add', 'CourseController@ajax_insert');
-    Route::get('course/retrieveAll', 'CourseController@ajax_retrieveAll');
-    Route::post('course/retrieve', 'CourseController@ajax_retrieve');
-    Route::post('course/update', 'CourseController@ajax_update');
-    Route::post('course/delete', 'CourseController@ajax_delete');
-
-    Route::post('select2/course', 'CourseController@select2');
-
+  
     /*
     |--------------------------------------------------------------------------
     |                       Subject
@@ -126,38 +110,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('subject/checkDelete', 'SubjectController@ajax_checkDelete');
 
     Route::post('subject/select2', 'SubjectController@ajax_select2_search');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    |                       Room Setup
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    Route::get('room', 'RoomController@index')->name('room');
-    Route::post('room/add', 'RoomController@ajax_insert');
-    Route::get('room/retrieveAll', 'RoomController@ajax_retrieveAll');
-    Route::post('room/retrieve', 'RoomController@ajax_retrieve');
-    Route::post('room/update', 'RoomController@ajax_update');
-    Route::post('room/delete', 'RoomController@ajax_delete');
-
-    Route::post('room/select2', 'RoomController@ajax_select2_search');
-    /*
-    |--------------------------------------------------------------------------
-    |                       Instructor Setup
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    Route::get('instructor', 'InstructorController@index')->name('instructor');
-    Route::post('instructor/add', 'InstructorController@ajax_insert');
-    Route::get('instructor/retrieveAll', 'InstructorController@ajax_retrieveAll');
-    Route::post('instructor/retrieve', 'InstructorController@ajax_retrieve');
-    Route::post('instructor/update', 'InstructorController@ajax_update');
-    Route::post('instructor/delete', 'InstructorController@ajax_delete');
-
-    Route::post('instructor/select2', 'InstructorController@ajax_select2_search');
 
 
 
@@ -180,6 +132,17 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         // Courses 
         Route::resource('courses', 'CourseController');
 
+        // Honors
+        Route::resource('honors', 'HonorsController');
+
+        // Rooms
+        Route::resource('rooms', 'RoomController');
+
+        // Instructors
+        Route::resource('instructors', 'InstructorController');
+
+        // Subjects
+
         // Year Level
         Route::resource('year-levels', 'YearLevelController');
 
@@ -187,17 +150,25 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::resource('semesters', 'SemesterController');
         Route::post('semester/select2', 'SemesterController@ajax_select2_search');
 
-        // Honors
-        Route::resource('honors', 'HonorsController');
 
         // School year
         Route::resource('school-years', 'SchoolYearController');
         Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
     });
 
+    // Instructor
+    Route::post('instructor/select2', 'InstructorController@ajax_select2_search');
+
+    // Course
+    Route::post('select2/course', 'CourseController@select2');
+
+    // Room
+    Route::post('room/select2', 'RoomController@ajax_select2_search');
+
     // Documents Type
     Route::get('documents/category/{category}', 'DocumentController@ajax_retrieve_by_category');
     Route::post('documents/document-types', 'DocumentController@ajax_retrieveTypes');
 
+    // School Year
     Route::post('select2/settings/school-year/base', 'SchoolYearController@ajax_select2_base_search');
 });

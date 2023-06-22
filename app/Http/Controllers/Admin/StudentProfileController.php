@@ -16,9 +16,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DocumentsSubmitted;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Controllers\Admin\CourseController as Course;
 use App\Models\SchoolYear;
 use App\Models\YearLevel;
 
@@ -195,7 +195,7 @@ class StudentProfileController extends Controller
     public function create_profile()
     {
         $acadYears = SchoolYear::all();
-        $course = (new Course)->getAllCourses();
+        $course = Course::all();
         $honors = Honor::all();
         $terms = Term::all();
         $yearLevel = YearLevel::all();
@@ -245,7 +245,7 @@ class StudentProfileController extends Controller
         if (sizeof($tp) == 1) {
 
             $acadYears = SchoolYear::all();
-            $course = (new Course)->getAllCourses();
+            $course = Course::all();
             $honors = Honor::all();
             $terms = Term::all();
             $yearLevel = YearLevel::all();
@@ -373,6 +373,10 @@ class StudentProfileController extends Controller
 
     public function generateEnvelopeDocumentEvaluation(StudentProfile $student, Request $request)
     {
+        $student = StudentProfile::where('stud_id', $student->stud_id)->with('course', function ($query) {
+            return $query->withTrashed();
+        })->first();
+
         $dsi = new DocumentsSubmitted();
         $documents['all']["entrance"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
             ->where(["subm_documentCategory" => "ENTRANCE", "subm_student" => $student->stud_id])->get();
@@ -668,20 +672,8 @@ class StudentProfileController extends Controller
             return $pdf->stream();
         } else {
 
-            return view('errors.not-found', ['menu_header' => 'Menu', 'title' => "Profile not found", "menu" => "student-records", "sub_menu" => "student-profile"]);
+            return response(NULL, 404);
         };
-
-        // $pdf = Pdf::loadView('admin.student_profile.pdf.scholastic-data', compact('student'));
-
-        // $pdf->render();
-        // $canvas = $pdf->getCanvas();
-
-        // $height = $canvas->get_height();
-
-        // $canvas->set_opacity(.5, "Multiply");
-        // $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
-
-        // return $pdf->stream();
     }
 
     // -- Begin::Ajax Requests -- //

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -29,7 +31,9 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        // abort_if(Gate::denies('course_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.courses.create');
     }
 
     /**
@@ -38,20 +42,15 @@ class CourseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCourseRequest $request)
     {
-        //
-    }
+        // abort_if(Gate::denies('course_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $course = Course::create($request->all());
+
+        session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.course.title_singular'))]));
+
+        return redirect()->route('settings.courses.index');
     }
 
     /**
@@ -60,9 +59,11 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Course $course)
     {
-        //
+        // abort_if(Gate::denies('course_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.courses.edit', compact('course'));
     }
 
     /**
@@ -72,9 +73,13 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $course->update($request->all());
+
+        session()->flash('message', __('global.update_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.course.title_singular'))]));
+
+        return redirect()->route('settings.courses.index');
     }
 
     /**
@@ -83,8 +88,14 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        //
+        // abort_if(Gate::denies('course_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $course->delete();
+
+        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.course.title_singular'))]));
+
+        return redirect()->route('settings.courses.index');
     }
 }
