@@ -201,10 +201,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         // Honors
         Route::resource('honors', 'HonorsController');
 
-
         // School year
         Route::resource('school-years', 'SchoolYearController');
-        Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
-        Route::post('select2/settings/school-year/base', 'SchoolYearController@ajax_select2_base_search');
     });
+
+    Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
+    Route::post('select2/settings/school-year/base', 'SchoolYearController@ajax_select2_base_search');
 });
