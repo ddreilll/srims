@@ -36,6 +36,28 @@
                     </div>
 
                 </div>
+
+                <div class="card mb-5 mb-xl-8">
+                    <div class="card-header border-0">
+                        <div class="card-title">
+                            <h3 class="fw-bolder m-0">Student Profile</h3>
+                        </div>
+                    </div>
+
+                    <div class="card-body pt-2">
+                        <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
+                            <li class="nav-item me-0 mb-md-2">
+                                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder"
+                                    data-bs-toggle="tab" href="#settings_curriculum_yearLevel">
+                                    <span class="d-flex flex-column align-items-start">
+                                        <span class="fs-5">Honor</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
             </div>
 
             <div class="flex-lg-row-fluid ms-lg-15">

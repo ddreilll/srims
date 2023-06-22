@@ -1128,7 +1128,7 @@
 
                 $(honorableDissmisalForm).attr("style", "display: none !important");
                 $(honorableDissmisalForm).find(".fv-row").attr("style", "display: none !important");
-                $(honorableDissmisalForm).find(".").val("").trigger(
+                $(honorableDissmisalForm).find("select.form-select").val("").trigger(
                     "change");
 
                 if (acadStatus == "GRD") {
@@ -1211,9 +1211,9 @@
             }
             const resetFormData = function() {
 
-                $('#kt_form_add_student_profile .').val('').trigger(
+                $('#kt_form_add_student_profile select.form-select').val('').trigger(
                     'change');
-                $('#kt_form_add_student_profile .').val('');
+                $('#kt_form_add_student_profile input.form-control').val('');
 
             }
 

@@ -12,8 +12,8 @@ class Instructor extends Model
 
     use SoftDeletes, HasFactory;
 
-    protected $table = 's_instructor';
-    protected $primaryKey = 'inst_id';
+    public $table = 's_instructor';
+    public $primaryKey = 'inst_id';
 
     const CREATED_AT = 'inst_createdAt';
     const UPDATED_AT = 'inst_updatedAt';

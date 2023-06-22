@@ -9,8 +9,8 @@ class TimeSlot extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_time_slot';
-    protected $primaryKey = 'time_id';
+    public $table = 's_time_slot';
+    public $primaryKey = 'time_id';
 
     const CREATED_AT = 'time_createdAt';
     const UPDATED_AT = 'time_updatedAt';

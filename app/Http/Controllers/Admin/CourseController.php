@@ -23,7 +23,7 @@ class CourseController extends Controller
     public function index()
     {
 
-        return view('admin.course.index', ['menu_header' => 'System Setup', 'title' => "Course", "menu" => "course-curiculum", "sub_menu" => "course", "breadcrumb" => [["name" => "System Setup"]]]);
+        return view('admin.course.index', ['menu_header' => 'System Setup', 'title' => "Course", "menu" => "course", "sub_menu" => "", "breadcrumb" => [["name" => "System Setup"]]]);
     }
 
     /*

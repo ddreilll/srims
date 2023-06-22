@@ -9,8 +9,8 @@ class Course extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_course';
-    protected $primaryKey = 'cour_id';
+    public $table = 's_course';
+    public $primaryKey = 'cour_id';
 
     const CREATED_AT = 'cour_createdAt';
     const UPDATED_AT = 'cour_updatedAt';

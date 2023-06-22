@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="post d-flex flex-column-fluid">
-        <div id="kt_content_container" class="container-fluid">
+        <div class="container-xxl">
             <div class="card mb-5 mb-xl-8">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">
@@ -118,7 +118,6 @@
             $('#dataTableSearch').on('keyup', function() {
                 table.search($(this).val()).draw();
             });
-
         }));
     </script>
 @endsection

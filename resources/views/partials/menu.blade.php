@@ -213,39 +213,13 @@
                     @endcan
 
                     @can('menu_system_settings')
-                        <div data-kt-menu-trigger="click"
-                            class="menu-item menu-accordion {{ $menu == 'system-settings' ? 'here show' : '' }}">
-                            <span class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link {{ $menu === 'system-settings' ? 'active' : '' }}" href="{{ url('settings') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-sliders-simple"></i>
                                 </span>
                                 <span class="menu-title">System Settings</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                @can('access_system_settings_curriculum')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'settings-curriculum' ? 'active' : '' }}"
-                                            href="{{ url('/settings/curriculum') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Curriculum</span>
-                                        </a>
-                                    </div>
-                                @endcan
-                                @can('access_system_settings_student_profile')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'settings-student-profile' ? 'active' : '' }}"
-                                            href="{{ url('/settings/student-profile') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Student Profile</span>
-                                        </a>
-                                    </div>
-                                @endcan
-                            </div>
+                            </a>
                         </div>
                     @endcan
                 @endcan

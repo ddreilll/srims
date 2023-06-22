@@ -14,7 +14,6 @@ class UpdateUserRequest extends FormRequest
         // abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
-
     }
 
     public function rules()
@@ -23,11 +22,11 @@ class UpdateUserRequest extends FormRequest
             'name'    => [
                 'string',
                 'required',
-                'unique:users,name,'. request()->route('user')->id,
+                sprintf('unique:users,name,%s,id,deleted_at,NULL', request()->route('user')->id),
             ],
             'email'   => [
                 'required',
-                'unique:users,email,' . request()->route('user')->id,
+                sprintf('unique:users,email,%s,id,deleted_at,NULL', request()->route('user')->id),
             ],
             'roles.*' => [
                 'integer',
@@ -37,6 +36,5 @@ class UpdateUserRequest extends FormRequest
                 'array',
             ],
         ];
-
     }
 }

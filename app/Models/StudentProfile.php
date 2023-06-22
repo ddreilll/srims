@@ -11,8 +11,8 @@ class StudentProfile extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'r_student';
-    protected $primaryKey = 'stud_id';
+    public $table = 'r_student';
+    public $primaryKey = 'stud_id';
 
     const CREATED_AT = 'stud_createdAt';
     const UPDATED_AT = 'stud_updatedAt';

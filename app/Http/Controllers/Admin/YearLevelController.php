@@ -2,149 +2,140 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-//Model
 use App\Models\YearLevel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreYearLevelRequest;
+use App\Http\Requests\UpdateYearLevelRequest;
 
 class YearLevelController extends Controller
 {
 
-    /*
-|--------------------------------------------------------------------------
-|    Begin::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
+    protected $menuHeader = "System Settings";
+    protected $menu = "system-settings";
 
-
-    public function createYearLevel($data)
-    {   
-        (new YearLevel)->insertOne($data);
-    }
-
-    public function getAllYearLevel($filter = null)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return (new YearLevel)->fetchAll($filter);
+        // abort_if(Gate::denies('year_level_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $menuHeader = $this->menuHeader;
+        $menu = $this->menu;
+
+        $title = "Year Levels";
+        $breadcrumb = [
+            [
+                "name" => "Year Levels"
+            ]
+        ];
+
+        $yearLevels = YearLevel::order()->get();
+
+        return view('admin.year_levels.index', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'yearLevels'));
     }
 
-    public function getYearLevel($md5Id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        return (new YearLevel)->fetchOne($md5Id);
+        // abort_if(Gate::denies('year_level_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $menuHeader = $this->menuHeader;
+        $menu = $this->menu;
+
+        $title = "Add Year Level";
+        $breadcrumb = [
+            [
+                "name" => "Year Levels",
+                "url" => route('settings.year-levels.index')
+            ],
+            [
+                "name" => "Add Year Level"
+            ]
+        ];
+
+        return view('admin.year_levels.create', compact('menuHeader', 'title', 'menu', 'breadcrumb'));
     }
 
-    public function updateYearLevelOrder($md5Id_list)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreYearLevelRequest $request)
     {
-        $year = new YearLevel;
-        for ($i = 0; $i < sizeOf($md5Id_list); $i++) {
-            $year->edit($md5Id_list[$i], ["year_order" => $i + 1]);
-        }
+        $yearLevel = YearLevel::create($request->all());
+        session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.yearLevel.title_singular'))]));
+
+        return redirect()->route('settings.year-levels.index');
     }
 
-    public function updateYearLevel($md5Id, $details)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(YearLevel $yearLevel)
     {
-        (new YearLevel)->edit($md5Id, ["year_name" => $details['name']]);
+        // abort_if(Gate::denies('year_level_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $menuHeader = $this->menuHeader;
+        $menu = $this->menu;
+
+        $title = "Edit Year Level";
+        $breadcrumb = [
+            [
+                "name" => "Year Levels",
+                "url" => route('settings.year-levels.index')
+            ],
+            [
+                "name" => "Edit Year Level"
+            ]
+        ];
+
+        return view('admin.year_levels.edit', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'yearLevel'));
     }
 
-    public function removeYearLevel($md5Id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateYearLevelRequest $request, YearLevel $yearLevel)
     {
-        (new YearLevel)->remove($md5Id);
+        $yearLevel->update($request->all());
+
+        session()->flash('message', __('global.update_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.yearLevel.title_singular'))]));
+
+        return redirect()->route('settings.year-levels.index');
     }
 
-    // -- Begin::Ajax Requests -- //
-
-    public function ajax_insert(Request $request)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(YearLevel $yearLevel)
     {
+        // abort_if(Gate::denies('year_level_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $request->validate([
-            'name' => 'required|max:255'
-        ]);
+        $yearLevel->delete();
 
+        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.yearLevel.title_singular'))]));
 
-        $this->createYearLevel($request);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'status' => "200",
-            'message' => __('modal.added_success', ['attribute' => 'Year Level'])
-        ]);
+        return back();
     }
-
-    public function ajax_retrieveAll()
-    {
-
-        header('Content-Type: application/json');
-        echo json_encode($this->getAllYearLevel([]));
-    }
-
-    public function ajax_reorder(Request $request)
-    {
-        $request->validate([
-            'id_list' => 'required'
-        ]);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'status' => "200",
-            'data' => $this->updateYearLevelOrder($request->id_list),
-            'message' => __('modal.updated_success', ['attribute' => 'Changes'])
-        ]);
-    }
-
-    public function ajax_retrieve(Request $request)
-    {
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'status' => "200",
-            'data' => $this->getYearLevel($request->id)
-        ]);
-    }
-
-    public function ajax_update(Request $request)
-    {
-
-        $request->validate([
-            'id' => 'required',
-            'name' => 'required|max:255',
-        ]);
-
-        $this->updateYearLevel($request['id'], ['name' => $request['name']]);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'status' => "200",
-            'message' => __('modal.updated_success', ['attribute' => 'Year Level'])
-        ]);
-    }
-
-    public function ajax_delete(Request $request)
-    {
-
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        $this->removeYearLevel($request->id);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'status' => "401",
-            'message' => __('modal.deleted_success', ['attribute' => 'Year Level'])
-        ]);
-    }
-
-    // -- End::Ajax Requests -- //
-
-
-    /*
-|--------------------------------------------------------------------------
-|    End::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
 }

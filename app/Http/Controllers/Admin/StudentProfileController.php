@@ -2,30 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Term;
 use Faker\Generator;
+use App\Models\Honor;
 use App\Models\Documents;
 use Illuminate\Http\Request;
 use App\Models\DocumentsType;
 use App\Models\StudentGrades;
 use Illuminate\Http\Response;
 use App\Models\PreviousSchool;
-
-//Controller 
 use App\Models\StudentProfile;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DocumentsSubmitted;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
-//Model
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Controllers\Admin\TermController as Terms;
-
-use App\Http\Controllers\Admin\HonorController as Honors;
 use App\Http\Controllers\Admin\CourseController as Course;
 use App\Http\Controllers\Admin\AcadYearController as AcadYears;
-use App\Http\Controllers\Admin\YearLevelController as YearLevel;
+use App\Models\YearLevel;
 
 class StudentProfileController extends Controller
 {
@@ -201,9 +196,9 @@ class StudentProfileController extends Controller
     {
         $acadYears = (new AcadYears)->getAllYears();
         $course = (new Course)->getAllCourses();
-        $honors = (new Honors)->getAllHonors();
-        $terms = (new Terms)->getAllTerm();
-        $yearLevel = (new YearLevel)->getAllYearLevel();
+        $honors = Honor::all();
+        $terms = Term::all();
+        $yearLevel = YearLevel::all();
 
 
         $dti = new Documents();
@@ -251,9 +246,9 @@ class StudentProfileController extends Controller
 
             $acadYears = (new AcadYears)->getAllYears();
             $course = (new Course)->getAllCourses();
-            $honors = (new Honors)->getAllHonors();
-            $terms = (new Terms)->getAllTerm();
-            $yearLevel = (new YearLevel)->getAllYearLevel();
+            $honors = Honor::all();
+            $terms = Term::all();
+            $yearLevel = YearLevel::all();
 
 
             $dti = new Documents();

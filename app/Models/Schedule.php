@@ -9,8 +9,8 @@ class Schedule extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_class';
-    protected $primaryKey = 'class_id';
+    public $table = 's_class';
+    public $primaryKey = 'class_id';
 
     const CREATED_AT = 'class_createdAt';
     const UPDATED_AT = 'class_updatedAt';

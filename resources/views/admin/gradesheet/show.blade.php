@@ -139,10 +139,6 @@
                                         @if ($class->class_flink)
                                             <div
                                                 class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-5 p-6 mt-3">
-                                                <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-                                                    <img width="40" alt="Google Drive icon"
-                                                        src="https://img.icons8.com/3d-fluency/256/cloud.png">
-                                                </span>
                                                 <div class="d-flex flex-stack flex-grow-1">
                                                     <div class="fw-bold">
                                                         <div class="fs-6 text-gray-700">Access the gradesheet file

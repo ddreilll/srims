@@ -94,11 +94,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
 
     /*
-|--------------------------------------------------------------------------
-|                       Documents
-|--------------------------------------------------------------------------
-|
-*/
+    |--------------------------------------------------------------------------
+    |                       Documents
+    |--------------------------------------------------------------------------
+    |
+    */
     Route::get('documents/list', 'DocumentsController@index')->name('documents');
     Route::get('documents/retrieveAll', 'DocumentsController@ajax_retrieveAll');
     Route::post('documents/retrieve', 'DocumentsController@ajax_retrieve');
@@ -112,11 +112,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     /*
 
-|--------------------------------------------------------------------------
-|                       Course
-|--------------------------------------------------------------------------
-|
-*/
+    |--------------------------------------------------------------------------
+    |                       Course
+    |--------------------------------------------------------------------------
+    |
+    */
 
     Route::get('course', 'CourseController@index')->name('course');
     Route::post('course/add', 'CourseController@ajax_insert');
@@ -128,11 +128,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('select2/course', 'CourseController@select2');
 
     /*
-|--------------------------------------------------------------------------
-|                       Subject
-|--------------------------------------------------------------------------
-|
-*/
+    |--------------------------------------------------------------------------
+    |                       Subject
+    |--------------------------------------------------------------------------
+    |
+    */
 
     Route::get('subject', 'SubjectController@index')->name('subject');
     Route::post('subject/add', 'SubjectController@ajax_insert');
@@ -146,11 +146,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
 
     /*
-|--------------------------------------------------------------------------
-|                       Room Setup
-|--------------------------------------------------------------------------
-|
-*/
+    |--------------------------------------------------------------------------
+    |                       Room Setup
+    |--------------------------------------------------------------------------
+    |
+    */
 
     Route::get('room', 'RoomController@index')->name('room');
     Route::post('room/add', 'RoomController@ajax_insert');
@@ -161,11 +161,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     Route::post('room/select2', 'RoomController@ajax_select2_search');
     /*
-|--------------------------------------------------------------------------
-|                       Instructor Setup
-|--------------------------------------------------------------------------
-|
-*/
+    |--------------------------------------------------------------------------
+    |                       Instructor Setup
+    |--------------------------------------------------------------------------
+    |
+    */
 
     Route::get('instructor', 'InstructorController@index')->name('instructor');
     Route::post('instructor/add', 'InstructorController@ajax_insert');
@@ -179,40 +179,32 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
 
     /*
-|--------------------------------------------------------------------------
-|                       System Settings
-|--------------------------------------------------------------------------
-|
-*/
+    |--------------------------------------------------------------------------
+    |                       System Settings
+    |--------------------------------------------------------------------------
+    |
+    */
 
-    Route::get('settings/curriculum', 'SystemSettingsController@view_curriculum')->name('settings-student-profile');
+    Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
 
-    // Year Level
-    Route::post('settings/year-level/add', 'YearLevelController@ajax_insert');
-    Route::get('settings/year-level/retrieveAll', 'YearLevelController@ajax_retrieveAll');
-    Route::post('settings/year-level/retrieve', 'YearLevelController@ajax_retrieve');
-    Route::post('settings/year-level/updateOrder', 'YearLevelController@ajax_reorder');
-    Route::post('settings/year-level/update', 'YearLevelController@ajax_update');
-    Route::post('settings/year-level/delete', 'YearLevelController@ajax_delete');
+        Route::get('/', function () {
+            return redirect()->route('settings.year-levels.index');
+        });
 
-    // Term
-    Route::post('settings/term/add', 'TermController@ajax_insert');
-    Route::get('settings/term/retrieveAll', 'TermController@ajax_retrieveAll');
-    Route::post('settings/term/retrieve', 'TermController@ajax_retrieve');
-    Route::post('settings/term/updateOrder', 'TermController@ajax_reorder');
-    Route::post('settings/term/update', 'TermController@ajax_update');
-    Route::post('settings/term/delete', 'TermController@ajax_delete');
+        // Year Level
+        Route::resource('year-levels', 'YearLevelController');
 
-    Route::post('settings/semester/select2', 'TermController@ajax_select2_search');
+        // Semesters
+        Route::resource('semesters', 'SemesterController');
+        Route::post('semester/select2', 'SemesterController@ajax_select2_search');
 
-    // School year
-    Route::post('settings/school-year/select2', 'AcadYearController@ajax_select2_plus_search');
-    Route::post('select2/settings/school-year/base', 'AcadYearController@ajax_select2_base_search');
+        // Honors
+        Route::resource('honors', 'HonorsController');
 
-    Route::get('settings/student-profile', 'SystemSettingsController@view_student_profile')->name('settings-student-profile');
-    Route::post('settings/student-profile/add', 'HonorController@ajax_insert');
-    Route::get('settings/student-profile/retrieveAll', 'HonorController@ajax_retrieveAll');
-    Route::post('settings/student-profile/retrieve', 'HonorController@ajax_retrieve');
-    Route::post('settings/student-profile/update', 'HonorController@ajax_update');
-    Route::post('settings/student-profile/delete', 'HonorController@ajax_delete');
+
+        // School year
+        Route::resource('school-years', 'SchoolYearController');
+        Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
+        Route::post('select2/settings/school-year/base', 'SchoolYearController@ajax_select2_base_search');
+    });
 });

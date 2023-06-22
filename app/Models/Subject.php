@@ -9,8 +9,8 @@ class Subject extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_subject';
-    protected $primaryKey = 'subj_id';
+    public $table = 's_subject';
+    public $primaryKey = 'subj_id';
 
     const CREATED_AT = 'subj_createdAt';
     const UPDATED_AT = 'subj_updatedAt';
