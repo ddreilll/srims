@@ -62,7 +62,7 @@
             </li>
             <li class="nav-item me-0 mb-md-2">
                 <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.subjects.*') ? 'active' : '' }}"
-                    href="">
+                    href="{{ route('settings.subjects.index') }}">
                     <span class="d-flex flex-column align-items-start">
                         <span class="fs-5">Subjects</span>
                     </span>
