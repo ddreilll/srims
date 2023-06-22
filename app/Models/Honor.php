@@ -9,47 +9,20 @@ class Honor extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_honor';
+    public $table = 's_honor';
+    public $primaryKey = 'honor_id';
 
     const CREATED_AT = 'honor_createdAt';
     const UPDATED_AT = 'honor_updatedAt';
     const DELETED_AT = 'honor_deletedAt';
 
-    public function insertOne($data)
-    {
-        $this->honor_name = $data['name'];
-        $this->save();
+    protected $fillable = [
+        'honor_name',
+    ];
 
-        return $this->id;
-    }
-
-    public function fetchAll($filter)
-    {
-        $data = $this->where($filter)
-            ->selectRaw('s_honor.*, md5(honor_id) as honor_id_md5')
-            ->get();
-
-        return $data;
-    }
-
-    public function fetchOne($md5Id)
-    {
-        $data = $this->whereRaw('md5(honor_id) = "' . $md5Id . '"')
-            ->selectRaw('s_honor.*, md5(honor_id) AS honor_id_md5')
-            ->get();
-
-        return $data;
-    }
-
-    public function edit($md5Id, $data)
-    {
-        $this->whereRaw('md5(honor_id) = "' . $md5Id . '"')
-            ->update($data);
-    }
-
-    public function remove($md5Id)
-    {
-        $this->whereRaw('md5(honor_id) = "' . $md5Id . '"')
-            ->delete();
-    }
+    protected $dates = [
+        'honor_createdAt',
+        'honor_updatedAt',
+        'honor_deletedAt',
+    ];
 }

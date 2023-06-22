@@ -9,8 +9,8 @@ class Room extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_room';
-    protected $primaryKey = 'room_id';
+    public $table = 's_room';
+    public $primaryKey = 'room_id';
 
     const CREATED_AT = 'room_createdAt';
     const UPDATED_AT = 'room_updatedAt';

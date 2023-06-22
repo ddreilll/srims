@@ -37,12 +37,6 @@
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
                             data-kt-menu="true">
 
-                            <div class="menu-item px-5 my-1">
-                                <a href="#" class="menu-link px-5 disabled">Account
-                                    Settings <span
-                                        class="badge badge-light-danger fw-bolder fs-8 px-2 py-1 ms-2">Soon</span></a>
-                            </div>
-
                             <div class="menu-item px-5">
                                 <a href="#"
                                     onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
@@ -65,7 +59,7 @@
                 <div class="menu-item">
                     <a class="menu-link {{ $menu === 'dashboard' ? 'active' : '' }}" href="{{ url('/dashboard') }}">
                         <span class="menu-icon">
-                            <i class="fa-duotone fa-chart-network"></i>
+                            <i class="fa-duotone fa-chart-mixed"></i>
                         </span>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -82,9 +76,9 @@
                         <a class="menu-link {{ $menu === 'student-profile' ? 'active' : '' }}"
                             href="{{ url('/student/profile') }}">
                             <span class="menu-icon">
-                                <i class="fa-duotone fa-user-graduate"></i>
+                                <i class="fa-duotone fa-screen-users"></i>
                             </span>
-                            <span class="menu-title">Student Profile</span>
+                            <span class="menu-title">Students</span>
                         </a>
                     </div>
 
@@ -110,7 +104,8 @@
 
                     @can('menu_admission_requirements')
                         <div class="menu-item">
-                            <a class="menu-link {{ $menu === 'admission-requirements' ? 'active' : '' }}" href="{{ url('/documents/list') }}">
+                            <a class="menu-link {{ $menu === 'admission-requirements' ? 'active' : '' }}"
+                                href="{{ url('/documents/list') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-file-certificate"></i>
                                 </span>
@@ -120,14 +115,14 @@
                     @endcan
 
                     @can('access_course')
-                    <div class="menu-item">
-                        <a class="menu-link {{ $menu === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">
-                            <span class="menu-icon">
-                                <i class="fa-duotone fa-diploma"></i>
-                            </span>
-                            <span class="menu-title">Course</span>
-                        </a>
-                    </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ $menu === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">
+                                <span class="menu-icon">
+                                    <i class="fa-duotone fa-diploma"></i>
+                                </span>
+                                <span class="menu-title">Course</span>
+                            </a>
+                        </div>
                     @endcan
 
                     @can('menu_schedules')
@@ -191,7 +186,8 @@
                     </div>
 
                     @can('menu_user_accounts')
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <div data-kt-menu-trigger="click"
+                            class="menu-item menu-accordion {{ $menu == 'user-accounts' ? 'here show' : '' }}">
                             <span class="menu-link">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-users"></i>
@@ -203,7 +199,8 @@
 
                                 @can('access_users')
                                     <div class="menu-item">
-                                        <a class="menu-link" href="#">
+                                        <a class="menu-link {{ $sub_menu === 'manage-users' ? 'active' : '' }}"
+                                            href="{{ route('users.index') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -216,39 +213,13 @@
                     @endcan
 
                     @can('menu_system_settings')
-                        <div data-kt-menu-trigger="click"
-                            class="menu-item menu-accordion {{ $menu == 'system-settings' ? 'here show' : '' }}">
-                            <span class="menu-link">
+                        <div class="menu-item">
+                            <a class="menu-link {{ $menu === 'system-settings' ? 'active' : '' }}" href="{{ url('settings') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-sliders-simple"></i>
                                 </span>
                                 <span class="menu-title">System Settings</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                @can('access_system_settings_curriculum')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'settings-curriculum' ? 'active' : '' }}"
-                                            href="{{ url('/settings/curriculum') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Curriculum</span>
-                                        </a>
-                                    </div>
-                                @endcan
-                                @can('access_system_settings_student_profile')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'settings-student-profile' ? 'active' : '' }}"
-                                            href="{{ url('/settings/student-profile') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Student Profile</span>
-                                        </a>
-                                    </div>
-                                @endcan
-                            </div>
+                            </a>
                         </div>
                     @endcan
                 @endcan

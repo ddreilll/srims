@@ -38,7 +38,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row mb-7">
-                                    <input type="text" class="form-control form-control-solid" name="studentNo"
+                                    <input type="text" class="form-control " name="studentNo"
                                         value="{!! $stud_profile->stud_studentNo ? $stud_profile->stud_studentNo : '' !!}" />
                                     <div class="text-muted fs-7 mb-5 mt-2">This is required and recommended to be unique
                                     </div>
@@ -46,7 +46,7 @@
 
                                 <div class="fv-row">
                                     <label class="form-label">Course</label>
-                                    <select class="form-select form-select-solid" data-control="select2"
+                                    <select class="form-select " data-control="select2"
                                         data-placeholder="Select a course"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="course">
                                         <option></option>
@@ -67,7 +67,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row mb-7">
-                                    <select class="form-select form-select-solid" data-control="select2"
+                                    <select class="form-select " data-control="select2"
                                         data-placeholder="Admission Type"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="admissionType">
                                         <option></option>
@@ -80,7 +80,7 @@
 
                                 <div class="fv-row">
                                     <label class="form-label">Year of Admission</label>
-                                    <select class="form-select form-select-solid" data-control="select2"
+                                    <select class="form-select " data-control="select2"
                                         data-placeholder="Select a year" data-dropdown-parent="#kt_form_add_student_profile"
                                         name="yearOfAdmission">
                                         <option></option>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row mb-7">
-                                    <select class="form-select form-select-solid" data-control="select2"
+                                    <select class="form-select " data-control="select2"
                                         data-placeholder="Academic Status"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="academicStatus">
                                         <option></option>
@@ -115,12 +115,12 @@
 
                                 <div class="fv-row mb-7" style="display:none !important">
                                     <label class="form-label">Date Exited</label>
-                                    <input class="form-control form-control-solid" value="{!! $stud_profile->stud_dateExited ? date('m/d/Y', strtotime($stud_profile->stud_dateExited)) : '' !!}"
+                                    <input class="form-control " value="{!! $stud_profile->stud_dateExited ? date('m/d/Y', strtotime($stud_profile->stud_dateExited)) : '' !!}"
                                         name="dateExited">
                                 </div>
 
                                 <div class="fv-row" style="display:none !important">
-                                    <select class="form-select form-select-solid" data-control="select2"
+                                    <select class="form-select " data-control="select2"
                                         data-allow-clear="true" data-placeholder="Honor"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="honor">
                                         <option></option>
@@ -144,7 +144,7 @@
                                 <div class="fv-row mb-7" style="display:none !important">
                                     <label class="form-label">Have granted an Honorable Dismissal?</label>
 
-                                    <select class="form-select form-select-solid" data-control="select2"
+                                    <select class="form-select " data-control="select2"
                                         data-placeholder="Yes or No" data-dropdown-parent="#kt_form_add_student_profile"
                                         name="isHonorableDismissed">
                                         <option></option>
@@ -154,7 +154,7 @@
                                 </div>
 
                                 <div class="fv-row mb-7" style="display:none !important">
-                                    <select class="form-select form-select-solid" data-control="select2"
+                                    <select class="form-select " data-control="select2"
                                         data-placeholder="Status" data-dropdown-parent="#kt_form_add_student_profile"
                                         name="honorableDismissedStatus">
                                         <option></option>
@@ -165,7 +165,7 @@
 
                                 <div class="fv-row mb-7" style="display:none !important">
                                     <label class="form-label ">Date Issued</label>
-                                    <input class="form-control form-control-solid" value="{!! $stud_profile->stud_honorableDismissedDate
+                                    <input class="form-control " value="{!! $stud_profile->stud_honorableDismissedDate
                                         ? date('m/d/Y', strtotime($stud_profile->stud_honorableDismissedDate))
                                         : '' !!}"
                                         name="honorableDismissedDate">
@@ -173,7 +173,7 @@
 
                                 <div class="fv-row" style="display:none !important">
                                     <label class="form-label ">School name and Address</label>
-                                    <input class="form-control form-control-solid" value="{!! $stud_profile->stud_honorableDismissedSchool ? $stud_profile->stud_honorableDismissedSchool : '' !!}"
+                                    <input class="form-control " value="{!! $stud_profile->stud_honorableDismissedSchool ? $stud_profile->stud_honorableDismissedSchool : '' !!}"
                                         name="honorableDismissedSchool">
                                     <div class=" fs-7 mb-5 mt-2">The school where the document will be transferred
                                     </div>
@@ -191,7 +191,7 @@
                                     </div>
                                     <div>
                                         <div class="fv-row">
-                                            <select class="form-select form-select-solid" data-control="select2"
+                                            <select class="form-select " data-control="select2"
                                                 data-placeholder="Select a record type"
                                                 data-dropdown-parent="#kt_form_add_student_profile" name="recordType">
                                                 <option></option>
@@ -238,14 +238,14 @@
 
                                             <div class="col-md-6 fv-row">
                                                 <label class="required form-label">First name</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     oninput="this.value = this.value.toUpperCase()"
                                                     value="{!! $stud_profile->stud_firstName ? $stud_profile->stud_firstName : '' !!}" name="firstName">
                                             </div>
 
                                             <div class="col-md-6 fv-row">
                                                 <label class="form-label">Middle name</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     oninput="this.value = this.value.toUpperCase()"
                                                     value="{!! $stud_profile->stud_middleName ? $stud_profile->stud_middleName : '' !!}" name="middleName">
                                             </div>
@@ -255,7 +255,7 @@
 
                                             <div class="col-md-12 fv-row">
                                                 <label class="required form-label">Last name</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     oninput="this.value = this.value.toUpperCase()"
                                                     value="{!! $stud_profile->stud_lastName ? $stud_profile->stud_lastName : '' !!}" name="lastName">
                                             </div>
@@ -268,7 +268,7 @@
 
                                         <div class="fv-row mb-7">
                                             <label class="form-label">Permanent Address</label>
-                                            <input class="form-control form-control-solid"
+                                            <input class="form-control "
                                                 oninput="this.value = this.value.toUpperCase()"
                                                 value="{!! $stud_profile->stud_addressLine ? $stud_profile->stud_addressLine : '' !!}" name="addressLine">
                                         </div>
@@ -276,7 +276,7 @@
                                         <div class="row mb-7">
                                             <div class="col-md-6 fv-row">
                                                 <label class="form-label fs-5 fw-bold mb-3">Province</label>
-                                                <select class="form-select form-select-solid" data-control="select2"
+                                                <select class="form-select " data-control="select2"
                                                     data-placeholder="Select a province"
                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                     data-allow-clear="true" name="addressProvince">
@@ -285,7 +285,7 @@
                                             </div>
                                             <div class="col-md-6 fv-row">
                                                 <label class="form-label fs-5 fw-bold mb-3">City</label>
-                                                <select class="form-select form-select-solid" data-control="select2"
+                                                <select class="form-select " data-control="select2"
                                                     data-placeholder="Select a city"
                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                     data-allow-clear="true" name="addressCity">
@@ -308,7 +308,7 @@
 
                                             <div class="col-md-9 fv-row">
                                                 <label class="form-label">Elementary School name</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     oninput="this.value = this.value.toUpperCase()"
                                                     @if ($stud_profile->stud_sPrimary) value="{!! $stud_profile->stud_sPrimary->extsch_name ? $stud_profile->stud_sPrimary->extsch_name : '' !!}" 
                                                     @else 
@@ -319,7 +319,7 @@
 
                                             <div class="col-md-3 fv-row">
                                                 <label class="form-label">Year graduated</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     @if ($stud_profile->stud_sPrimary) value="{!! $stud_profile->stud_sPrimary->extsch_yearExit ? $stud_profile->stud_sPrimary->extsch_yearExit : '' !!}"
                                                     @else 
                                                     value="" @endif
@@ -331,7 +331,7 @@
 
                                             <div class="col-md-9 fv-row">
                                                 <label class="form-label">High School name</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     oninput="this.value = this.value.toUpperCase()"
                                                     @if ($stud_profile->stud_sSecondary) value=" {!! $stud_profile->stud_sSecondary->extsch_name ? $stud_profile->stud_sSecondary->extsch_name : '' !!}"
                                                 @else
@@ -342,7 +342,7 @@
 
                                             <div class="col-md-3 fv-row">
                                                 <label class="form-label">Year graduated</label>
-                                                <input class="form-control form-control-solid"
+                                                <input class="form-control "
                                                     @if ($stud_profile->stud_sSecondary) value=" {!! $stud_profile->stud_sSecondary->extsch_yearExit ? $stud_profile->stud_sSecondary->extsch_yearExit : '' !!}"
                                                 @else
                                                 value="" @endif
@@ -365,7 +365,7 @@
                                             <div class="col-8">
                                                 <div class="fv-row">
                                                     <input placeholder="School name and address"
-                                                        class="form-control form-control-solid"
+                                                        class="form-control "
                                                         oninput="this.value = this.value.toUpperCase()"
                                                         name="college[0][name]">
                                                 </div>
@@ -375,7 +375,7 @@
                                             <div class="col-3">
                                                 <div class="fv-row">
                                                     <input placeholder="Year Exited"
-                                                        class="form-control form-control-solid"
+                                                        class="form-control "
                                                         name="college[0][yearExited]">
                                                 </div>
                                             </div>
@@ -395,7 +395,7 @@
                                                 <div class="fv-row">
                                                     <input placeholder="School name and address" data-name="college.name"
                                                         oninput="this.value = this.value.toUpperCase()"
-                                                        class="form-control form-control-solid">
+                                                        class="form-control ">
                                                 </div>
                                             </div>
 
@@ -403,7 +403,7 @@
 
                                                 <div class="fv-row">
                                                     <input placeholder="Year Exited" data-name="college.yearExited"
-                                                        class="form-control form-control-solid">
+                                                        class="form-control ">
                                                 </div>
                                             </div>
 
@@ -464,7 +464,7 @@
                                                     <div class="d-flex justify-content-between">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-control="select2" data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
@@ -479,7 +479,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-control="select2" data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
@@ -491,7 +491,7 @@
 
                                                         <div class="fv-row">
                                                             <input placeholder="Date Submitted"
-                                                                class="form-control form-control-solid"
+                                                                class="form-control "
                                                                 name="documents[entrance][0][date_submitted]">
                                                         </div>
 
@@ -507,7 +507,7 @@
                                                         style="display:none !important;">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.docu">
@@ -521,7 +521,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.type">
@@ -531,7 +531,7 @@
 
                                                         <div class="fv-row">
                                                             <input placeholder="Date Submitted"
-                                                                class="form-control form-control-solid"
+                                                                class="form-control "
                                                                 data-name="documents.date_submitted">
                                                         </div>
 
@@ -558,7 +558,7 @@
                                                         <div class="row">
 
                                                             <div class="col-3">
-                                                                <select class="form-select form-select-solid"
+                                                                <select class="form-select "
                                                                     data-placeholder="School Year"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true"
@@ -574,7 +574,7 @@
                                                             </div>
 
                                                             <div class="col-3">
-                                                                <select class="form-select form-select-solid"
+                                                                <select class="form-select "
                                                                     data-placeholder="Semester"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true"
@@ -588,7 +588,7 @@
                                                             </div>
 
                                                             <div class="col-2">
-                                                                <select class="form-select form-select-solid"
+                                                                <select class="form-select "
                                                                     data-placeholder="Year level"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true"
@@ -603,7 +603,7 @@
 
                                                             <div class="col-3">
                                                                 <input placeholder="Date Submitted"
-                                                                    class="form-control form-control-solid"
+                                                                    class="form-control "
                                                                     name="documents_fix[records][regcert][0][date_submitted]">
                                                             </div>
 
@@ -619,7 +619,7 @@
                                                             class="mt-5 row" style="display:none !important;">
 
                                                             <div class="col-3">
-                                                                <select class="form-select form-select-solid"
+                                                                <select class="form-select "
                                                                     data-placeholder="School Year"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true" data-name="documents_fix.sy">
@@ -634,7 +634,7 @@
                                                             </div>
 
                                                             <div class="col-3">
-                                                                <select class="form-select form-select-solid"
+                                                                <select class="form-select "
                                                                     data-placeholder="Semester"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true" data-name="documents_fix.sem">
@@ -647,7 +647,7 @@
                                                             </div>
 
                                                             <div class="col-2">
-                                                                <select class="form-select form-select-solid"
+                                                                <select class="form-select "
                                                                     data-placeholder="Year level"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true"
@@ -662,7 +662,7 @@
 
                                                             <div class="col-3">
                                                                 <input placeholder="Date Submitted"
-                                                                    class="form-control form-control-solid"
+                                                                    class="form-control "
                                                                     data-name="documents_fix.date_submitted">
                                                             </div>
 
@@ -685,7 +685,7 @@
                                                     <div class="d-flex justify-content-between">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-control="select2" data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
@@ -700,7 +700,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-control="select2" data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
@@ -712,7 +712,7 @@
 
                                                         <div class="fv-row">
                                                             <input placeholder="Date Submitted"
-                                                                class="form-control form-control-solid"
+                                                                class="form-control "
                                                                 name="documents[records][0][date_submitted]">
                                                         </div>
 
@@ -728,7 +728,7 @@
                                                         style="display:none !important;">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.docu">
@@ -742,7 +742,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.type">
@@ -752,7 +752,7 @@
 
                                                         <div class="fv-row">
                                                             <input placeholder="Date Submitted"
-                                                                class="form-control form-control-solid"
+                                                                class="form-control "
                                                                 data-name="documents.date_submitted">
                                                         </div>
 
@@ -776,7 +776,7 @@
                                                     <div class="d-flex justify-content-between">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-control="select2" data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" name="documents[exit][0][docu]">
@@ -790,7 +790,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-control="select2" data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" name="documents[exit][0][type]">
@@ -801,7 +801,7 @@
 
                                                         <div class="fv-row">
                                                             <input placeholder="Date Submitted"
-                                                                class="form-control form-control-solid"
+                                                                class="form-control "
                                                                 name="documents[exit][0][date_submitted]">
                                                         </div>
 
@@ -817,7 +817,7 @@
                                                         style="display:none !important;">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.docu">
@@ -831,7 +831,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select form-select-solid"
+                                                            <select class="form-select "
                                                                 data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.type">
@@ -841,7 +841,7 @@
 
                                                         <div class="fv-row">
                                                             <input placeholder="Date Submitted"
-                                                                class="form-control form-control-solid"
+                                                                class="form-control "
                                                                 data-name="documents.date_submitted">
                                                         </div>
 
@@ -1128,7 +1128,7 @@
 
                 $(honorableDissmisalForm).attr("style", "display: none !important");
                 $(honorableDissmisalForm).find(".fv-row").attr("style", "display: none !important");
-                $(honorableDissmisalForm).find(".form-select-solid").val("").trigger(
+                $(honorableDissmisalForm).find("select.form-select").val("").trigger(
                     "change");
 
                 if (acadStatus == "GRD") {
@@ -1211,9 +1211,9 @@
             }
             const resetFormData = function() {
 
-                $('#kt_form_add_student_profile .form-select-solid').val('').trigger(
+                $('#kt_form_add_student_profile select.form-select').val('').trigger(
                     'change');
-                $('#kt_form_add_student_profile .form-control-solid').val('');
+                $('#kt_form_add_student_profile input.form-control').val('');
 
             }
 

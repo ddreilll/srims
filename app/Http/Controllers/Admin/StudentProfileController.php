@@ -2,30 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Term;
 use Faker\Generator;
+use App\Models\Honor;
 use App\Models\Documents;
 use Illuminate\Http\Request;
 use App\Models\DocumentsType;
 use App\Models\StudentGrades;
 use Illuminate\Http\Response;
 use App\Models\PreviousSchool;
-
-//Controller 
 use App\Models\StudentProfile;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DocumentsSubmitted;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
-//Model
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Controllers\Admin\TermController as Terms;
-
-use App\Http\Controllers\Admin\HonorController as Honors;
 use App\Http\Controllers\Admin\CourseController as Course;
 use App\Http\Controllers\Admin\AcadYearController as AcadYears;
-use App\Http\Controllers\Admin\YearLevelController as YearLevel;
+use App\Models\YearLevel;
 
 class StudentProfileController extends Controller
 {
@@ -64,11 +59,6 @@ class StudentProfileController extends Controller
             ')
             ->where(['stud_uuid' => $profile_uuid])
             ->get();
-
-        activity()
-            ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $tp[0]->stud_id])
-            ->event('viewed')
-            ->log(__('activity_logs.viewed', ["resource" => "Student profile " . "[" . $tp[0]->stud_studentNo . "]", "resource_id" =>  "id - " . $tp[0]->stud_id, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
 
         if (sizeof($tp) == 1) {
 
@@ -206,9 +196,9 @@ class StudentProfileController extends Controller
     {
         $acadYears = (new AcadYears)->getAllYears();
         $course = (new Course)->getAllCourses();
-        $honors = (new Honors)->getAllHonors();
-        $terms = (new Terms)->getAllTerm();
-        $yearLevel = (new YearLevel)->getAllYearLevel();
+        $honors = Honor::all();
+        $terms = Term::all();
+        $yearLevel = YearLevel::all();
 
 
         $dti = new Documents();
@@ -256,9 +246,9 @@ class StudentProfileController extends Controller
 
             $acadYears = (new AcadYears)->getAllYears();
             $course = (new Course)->getAllCourses();
-            $honors = (new Honors)->getAllHonors();
-            $terms = (new Terms)->getAllTerm();
-            $yearLevel = (new YearLevel)->getAllYearLevel();
+            $honors = Honor::all();
+            $terms = Term::all();
+            $yearLevel = YearLevel::all();
 
 
             $dti = new Documents();
@@ -541,15 +531,157 @@ class StudentProfileController extends Controller
 
         $pdf = Pdf::loadView('admin.student_profile.pdf.scholastic-data', compact('student', 'vd'))->setPaper($paper_size);
 
-        $pdf->render();
-        $canvas = $pdf->getCanvas();
 
-        $height = $canvas->get_height();
+        if (sizeof($tp) == 1) {
 
-        $canvas->set_opacity(.5, "Multiply");
-        $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+            $vd = [];
 
-        return $pdf->stream();
+            $fp = $tp[0];
+            $sId = $fp['stud_id'];
+
+            $ps = new PreviousSchool();
+            $fp['stud_sPrimary'] = $ps->where(["extsch_stud_id" => $sId, "extsch_educType" => "PRIMARY"])
+                ->get();
+
+            $fp['stud_sSecondary'] = $ps->where(["extsch_stud_id" => $sId, "extsch_educType" => "SECONDARY"])
+                ->get();
+
+            $fp['stud_sPrimary'] = (sizeOf($fp['stud_sPrimary']) == 1) ? $fp['stud_sPrimary'][0] : [];
+            $fp['stud_sSecondary'] = (sizeOf($fp['stud_sSecondary']) == 1) ? $fp['stud_sSecondary'][0] : [];
+
+
+            if ($fp['stud_admissionType'] == "TRANSFEREE" || $fp['stud_admissionType'] == "LADDERIZED") {
+
+                $fp['stud_sTertiary'] = $ps->where(["extsch_stud_id" => $sId, "extsch_educType" => "TRANSFER"])
+                    ->get();
+            }
+
+            if ($fp['stud_recordType'] == "NONSIS") {
+                $g = [];
+                $g['total_semester'] = 0;
+                $g['total_summer_semester'] = 0;
+
+                $sg = new StudentGrades();
+                $school_year = $sg->leftJoin('s_class', 'class_enrsub_id', '=', 'class_id')
+                    ->selectRaw('DISTINCT class_acadYear as acad_year
+                        , CONCAT(class_acadYear, " - ", class_acadYear + 1) as acad_year_long
+                        , CONCAT(class_acadYear, "-\'" ,SUBSTRING(class_acadYear + 1, 3, 2)) as acad_year_short
+                        ')
+                    ->whereRaw('stud_enrsub_id = "' . $sId . '"')
+                    ->orderBy('acad_year', 'desc')
+                    ->get();
+
+                $i = 0;
+                foreach ($school_year as $year) {
+
+                    $semesters = $sg->leftJoin('s_class', 'class_enrsub_id', '=', 'class_id')
+                        ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
+                        ->selectRaw('DISTINCT term_name, term_order')
+                        ->whereRaw('stud_enrsub_id = "' . $sId . '" and class_acadYear = "' . $year->acad_year . '"')
+                        ->orderBy('term_order', 'desc')
+                        ->get();
+
+                    $a = 0;
+                    foreach ($semesters as $semester) {
+                        $g['total_semester'] += 1;
+
+                        if ($semester['term_name'] == "Summer Semester") {
+                            $g['total_summer_semester'] += 1;
+                        }
+
+                        $grades = $sg->leftJoin('r_student', 'stud_enrsub_id', '=', 'stud_id')
+                            ->leftJoin('s_class', 'class_enrsub_id', '=', 'class_id')
+                            ->leftJoin('s_instructor', 'class_inst_id', '=', 'inst_id')
+                            ->leftJoin('s_subject', 'class_subj_id', '=', 'subj_id')
+                            ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
+                            ->selectRaw('t_student_enrolled_subjects.*
+                    , md5(enrsub_id) as enrsub_id_md5
+                    , inst_firstName as enrsub_inst_firstName
+                    , inst_middleName as enrsub_inst_middleName
+                    , inst_lastName as enrsub_inst_lastName
+                    , inst_suffix as enrsub_inst_suffixName
+                    , subj_code as enrsub_subj_code
+                    , subj_name as enrsub_subj_name
+                    , subj_units as enrsub_subj_units
+                    , class_section as enrsub_sche_section
+                    ')
+                            ->whereRaw('stud_enrsub_id = "' . $sId . '" and term_name = "' . $semester->term_name . '"and class_acadYear = "' . $year->acad_year . '"')
+                            ->get();
+
+                        $b = 0;
+                        foreach ($grades as $grade) {
+
+
+                            $grades[$b]['enrsub_grade_display'] = $grade['enrsub_finalRating'];
+                            $grades[$b]['enrsub_grade_display_status'] = $grade['enrsub_grade_status'];
+
+                            $grades[$b]['enrsub_inst_fullName'] = format_name(1, "",  $grades[$b]['enrsub_inst_firstName'], $grades[$b]['enrsub_inst_middleName'], $grades[$b]['enrsub_inst_lastName'], $grades[$b]['enrsub_inst_suffixName']);
+
+                            $b++;
+                        }
+
+                        $semesters[$a]['subjects'] = $grades;
+                        $a++;
+                    }
+
+                    $school_year[$i]['semesters'] = $semesters;
+                    $i++;
+                }
+
+                $g["grades"] = $school_year;
+
+                $vd = array_merge($vd, [
+                    "stud_grades" => $g['grades'], "stud_total_semester" => $g['total_semester'], "stud_total_summer_semester" => $g['total_summer_semester']
+                ]);
+            }
+
+            $dsi = new DocumentsSubmitted();
+            $ds["entrance"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+                ->where(["subm_documentCategory" => "ENTRANCE", "subm_student" => $sId])->get();
+            $ds["records"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+                ->where(["subm_documentCategory" => "RECORDS", "subm_student" => $sId, "docu_isPermanent" => "NO"])->get();
+            $ds["exit"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+                ->where(["subm_documentCategory" => "EXIT", "subm_student" => $sId])->get();
+
+
+            // Get fixed Documents
+
+            // -- Records
+
+            // --- Registration Cards
+            $dfs["records"]['regcert'] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
+                ->where(["subm_documentCategory" => "RECORDS", "subm_student" => $sId, "docu_id" => "1"])
+                ->orderBy('subm_documentType', 'desc')
+                ->orderBy('subm_documentType_1', 'desc')->get();
+
+            // return $vd['stud_grades'][0];
+            $pdf = Pdf::loadView('admin.student_profile.pdf.scholastic-data', compact('student', 'vd'));
+
+            $pdf->render();
+            $canvas = $pdf->getCanvas();
+
+            $height = $canvas->get_height();
+
+            $canvas->set_opacity(.5, "Multiply");
+            $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+
+            return $pdf->stream();
+        } else {
+
+            return view('errors.not-found', ['menu_header' => 'Menu', 'title' => "Profile not found", "menu" => "student-records", "sub_menu" => "student-profile"]);
+        };
+
+        // $pdf = Pdf::loadView('admin.student_profile.pdf.scholastic-data', compact('student'));
+
+        // $pdf->render();
+        // $canvas = $pdf->getCanvas();
+
+        // $height = $canvas->get_height();
+
+        // $canvas->set_opacity(.5, "Multiply");
+        // $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
+
+        // return $pdf->stream();
     }
 
     // -- Begin::Ajax Requests -- //
@@ -753,11 +885,6 @@ class StudentProfileController extends Controller
             }
         }
 
-        activity()
-            ->withProperties(["module" => "STUDENT-PROFILE", "stud_id" => $spId])
-            ->event('created')
-            ->log(__('activity_logs.created', ["resource" => "Student profile " . "[" . $request->studentNo . "]", "resource_id" =>  "id - " . $spId, "user" => "user [" . Auth::user()->name . "]", "user_id" => "id - " . Auth::user()->id]));
-
         header('Content-Type: application/json');
         echo json_encode([
             'message' => __('modal.added_success', ['attribute' => 'Student Profile']),
@@ -915,10 +1042,6 @@ class StudentProfileController extends Controller
 
                     <button type="button" kt_student_profile_table_restore class="btn btn-icon btn-light-warning btn-sm mx-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="Restore">
                         <i class="fa-solid fa-rotate-left fs-6"></i>
-                    </button>
-
-                    <button disabled type="button" kt_student_profile_table_force_delete class="btn btn-icon btn-sm btn btn-bg-light btn-color-muted" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="Permanently delete">
-                        <i class="fa-solid fa-trash-xmark fs-6"></i>
                     </button>
                 </div>';
             })

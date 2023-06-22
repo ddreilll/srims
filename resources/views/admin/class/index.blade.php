@@ -35,7 +35,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-student-grades-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-15" placeholder="Search" />
+                                class="form-control  w-250px ps-15" placeholder="Search" />
                         </div>
                     </div>
                 </div>

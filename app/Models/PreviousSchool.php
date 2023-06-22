@@ -9,8 +9,8 @@ class PreviousSchool extends Model
 {
     use SoftDeletes;
 
-    protected $table = 't_external_school';
-    protected $primaryKey = 'extsch_id';
+    public $table = 't_external_school';
+    public $primaryKey = 'extsch_id';
 
     const CREATED_AT = 'extsch_createdAt';
     const UPDATED_AT = 'extsch_updatedAt';

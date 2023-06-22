@@ -35,7 +35,7 @@
                             <div class="fv-row mb-10">
                                 <label class="form-label fs-6 fw-bolder text-dark">Email</label>
                                 <input
-                                    class="form-control form-control-lg form-control-solid {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                    class="form-control form-control-lg  {{ $errors->has('email') ? ' is-invalid' : '' }}"
                                     required autofocus type="text" name="email" autocomplete="off"
                                     value="{{ old('email', null) }}" />
                                 @if ($errors->has('email'))
@@ -49,7 +49,7 @@
                                     <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
                                 </div>
                                 <input
-                                    class="form-control form-control-lg form-control-solid {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                    class="form-control form-control-lg  {{ $errors->has('password') ? ' is-invalid' : '' }}"
                                     type="password" name="password" required autocomplete="off" />
                                 @if ($errors->has('password'))
                                     <div class="invalid-feedback">

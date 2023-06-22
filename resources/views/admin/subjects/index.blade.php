@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="post d-flex flex-column-fluid" id="kt_post">
+<div class="post d-flex flex-column-fluid">
     <div id="kt_content_container" class="container-fluid">
         <div class="card mb-5 mb-xl-8">
             <div class="card-header border-0 pt-6">
@@ -15,7 +15,7 @@
                                 <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
                             </svg>
                         </span>
-                        <input type="text" data-kt-subject-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Subject" />
+                        <input type="text" data-kt-subject-table-filter="search" class="form-control  w-250px ps-15" placeholder="Search Subject" />
                     </div>
                 </div>
                 <div class="card-toolbar">
@@ -89,17 +89,17 @@
 
                         <div class="fv-row mb-7">
                             <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
+                            <input type="text" class="form-control " placeholder="" name="code" />
                         </div>
 
                         <div class="fv-row mb-7">
                             <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                            <input type="text" class="form-control " placeholder="" name="name" />
                         </div>
 
                         <div class="fv-row mb-15">
                             <label class="required fs-6 fw-bold mb-2">Units</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="units" />
+                            <input type="text" class="form-control " placeholder="" name="units" />
                         </div>
 
                         <div class="fv-row mb-7">
@@ -107,7 +107,7 @@
                             <div class="input-group input-group-solid">
                                 <span class="input-group-text"><i class="bi bi-card-checklist fs-4"></i></span>
                                 <div class="flex-grow-1">
-                                    <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Select a Prerequisite" multiple="multiple" data-dropdown-parent="#kt_modal_add_subject_form" name="prerequisite[]" data-allow-clear="true">
+                                    <select class="form-select  rounded-start-0 border-start" data-control="select2" data-placeholder="Select a Prerequisite" multiple="multiple" data-dropdown-parent="#kt_modal_add_subject_form" name="prerequisite[]" data-allow-clear="true">
                                         <option></option>
                                         @foreach ($formData_subjects as $subject)
                                         <option value="{{ $subject->subj_id }}">{{ $subject->subj_code . ' ― '. $subject->subj_name }}</option>
@@ -156,17 +156,17 @@
 
                         <div class="fv-row mb-7">
                             <label class="required fs-6 fw-bold mb-2">Code</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="code" />
+                            <input type="text" class="form-control " placeholder="" name="code" />
                         </div>
 
                         <div class="fv-row mb-7">
                             <label class="required fs-6 fw-bold mb-2">Name</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                            <input type="text" class="form-control " placeholder="" name="name" />
                         </div>
 
                         <div class="fv-row mb-15">
                             <label class="required fs-6 fw-bold mb-2">Units</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="units" />
+                            <input type="text" class="form-control " placeholder="" name="units" />
                         </div>
 
                         <div class="fv-row mb-7">
@@ -174,7 +174,7 @@
                             <div class="input-group input-group-solid">
                                 <span class="input-group-text"><i class="bi bi-card-checklist fs-4"></i></span>
                                 <div class="flex-grow-1">
-                                    <select class="form-select form-select-solid rounded-start-0 border-start" data-control="select2" data-placeholder="Select a Prerequisite" multiple="multiple" data-dropdown-parent="#kt_modal_edit_subject_form" name="prerequisite[]" data-allow-clear="true">
+                                    <select class="form-select  rounded-start-0 border-start" data-control="select2" data-placeholder="Select a Prerequisite" multiple="multiple" data-dropdown-parent="#kt_modal_edit_subject_form" name="prerequisite[]" data-allow-clear="true">
                                         <option></option>
                                         @foreach ($formData_subjects as $subject)
                                         <option value="{{ $subject->subj_id }}">{{ $subject->subj_code . ' ― '. $subject->subj_name }}</option>
@@ -211,8 +211,8 @@
 
         function reset_form(type) {
 
-            $('#kt_modal_' + type + '_subject_form .form-control-solid').val('');
-            $('#kt_modal_' + type + '_subject_form .form-select-solid[multiple=""]').val([]).trigger('change');
+            $('#kt_modal_' + type + '_subject_form .').val('');
+            $('#kt_modal_' + type + '_subject_form .[multiple=""]').val([]).trigger('change');
         }
 
         function init_inputmask(type) {

@@ -18,7 +18,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-document-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-15" placeholder="Search Document" />
+                                class="form-control  w-250px ps-15" placeholder="Search Document" />
                         </div>
                     </div>
                     <div class="card-toolbar">
@@ -77,7 +77,7 @@
 
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Name</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                                <input type="text" class="form-control " placeholder="" name="name" />
                             </div>
 
                             <div id="kt_modal_add_document_types_list" class="mb-10">
@@ -86,7 +86,7 @@
                                 <div class="row">
 
                                     <div class="col-10">
-                                        <input placeholder="" name="type[0][name]" class="form-control form-control-solid">
+                                        <input placeholder="" name="type[0][name]" class="form-control ">
                                     </div>
 
                                     <div class="col-2 d-flex flex-center">
@@ -99,7 +99,7 @@
                                     style="display: none !important">
 
                                     <div class="col-10">
-                                        <input placeholder="" data-name="type.name" class="form-control form-control-solid">
+                                        <input placeholder="" data-name="type.name" class="form-control ">
                                     </div>
 
                                     <div class="col-2 d-flex flex-center">
@@ -112,7 +112,7 @@
 
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Category</label>
-                                <select class="form-select form-select-solid" data-control="select2"
+                                <select class="form-select " data-control="select2"
                                     data-placeholder="Select a category" data-dropdown-parent="#kt_modal_add_document_form"
                                     name="category">
                                     <option></option>
@@ -124,7 +124,7 @@
 
                             <div class="fv-row mb-15">
                                 <label class="fs-6 fw-bold mb-2">Description</label>
-                                <textarea class="form-control form-control-solid" placeholder="Type the description here" style="height: 100px"
+                                <textarea class="form-control " placeholder="Type the description here" style="height: 100px"
                                     name="description"></textarea>
                             </div>
 
@@ -171,7 +171,7 @@
 
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Name</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="" name="name" />
+                                <input type="text" class="form-control " placeholder="" name="name" />
                             </div>
 
                             <div id="kt_modal_edit_document_types_list" class="mb-10">
@@ -180,7 +180,7 @@
                                 <div class="row">
 
                                     <div class="col-10">
-                                        <input placeholder="" name="type[0][name]" class="form-control form-control-solid">
+                                        <input placeholder="" name="type[0][name]" class="form-control ">
                                     </div>
 
                                     <div class="col-2 d-flex flex-center">
@@ -193,7 +193,7 @@
                                     style="display: none !important">
 
                                     <div class="col-10">
-                                        <input placeholder="" data-name="type.name" class="form-control form-control-solid">
+                                        <input placeholder="" data-name="type.name" class="form-control ">
                                     </div>
 
                                     <div class="col-2 d-flex flex-center">
@@ -206,7 +206,7 @@
 
                             <div class="fv-row mb-7">
                                 <label class="required fs-6 fw-bold mb-2">Category</label>
-                                <select class="form-select form-select-solid" data-control="select2"
+                                <select class="form-select " data-control="select2"
                                     data-placeholder="Select a category" data-dropdown-parent="#kt_modal_edit_document_form"
                                     name="category">
                                     <option></option>
@@ -218,7 +218,7 @@
 
                             <div class="fv-row mb-15">
                                 <label class="fs-6 fw-bold mb-2">Description</label>
-                                <textarea class="form-control form-control-solid" placeholder="Type the description here" style="height: 100px"
+                                <textarea class="form-control " placeholder="Type the description here" style="height: 100px"
                                     name="description"></textarea>
                             </div>
 
@@ -247,8 +247,8 @@
             }
 
             const resetFormData = function(formAction) {
-                $('#kt_modal_' + formAction + '_document_form .form-control-solid').val('');
-                $('#kt_modal_' + formAction + '_document_form .form-select-solid').val('').trigger(
+                $('#kt_modal_' + formAction + '_document_form .').val('');
+                $('#kt_modal_' + formAction + '_document_form .').val('').trigger(
                     'change');
             }
 

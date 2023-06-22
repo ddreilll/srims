@@ -24,9 +24,6 @@
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div id="kt_content_container" class="container-fluid">
-
-            
-
             <div class="card mb-5 mb-xl-8">
                 <div class="card-header border-0 pt-6">
                     <div class="card-title">

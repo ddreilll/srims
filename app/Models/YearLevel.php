@@ -9,50 +9,31 @@ class YearLevel extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_year_level';
-    protected $primaryKey = 'year_id';
+    public $table = 's_year_level';
+    public $primaryKey = 'year_id';
 
     const CREATED_AT = 'year_createdAt';
     const UPDATED_AT = 'year_updatedAt';
     const DELETED_AT = 'year_deletedAt';
 
-    public function insertOne($data)
-    {
-        $this->year_name = $data['name'];
-        $this->year_order = sizeOf($this->fetchAll([])) + 1;
-        $this->save();
+    protected $fillable = [
+        'year_order',
+        'year_name',
+    ];
 
-        return $this->year_id;
+    protected $dates = [
+        'year_createdAt',
+        'year_updatedAt',
+        'year_deletedAt',
+    ];
+
+    public function scopeOrder($query)
+    {
+        return $query->orderBy('year_order');
     }
 
-    public function fetchAll($filter)
+    public function scopeOrderDesc($query)
     {
-        $data = $this->where($filter)
-            ->selectRaw('s_year_level.*, md5(year_id) as year_id_md5')
-            ->orderBy('year_order')
-            ->get();
-
-        return $data;
-    }
-
-    public function fetchOne($md5Id)
-    {
-        $data = $this->whereRaw('md5(year_id) = "' . $md5Id . '"')
-            ->selectRaw('s_year_level.*, md5(year_id) AS year_id_md5')
-            ->get();
-
-        return $data;
-    }
-
-    public function edit($md5Id, $data)
-    {
-        $this->whereRaw('md5(year_id) = "' . $md5Id . '"')
-            ->update($data);
-    }
-
-    public function remove($md5Id)
-    {
-        $this->whereRaw('md5(year_id) = "' . $md5Id . '"')
-            ->delete();
+        return $query->orderBy('year_order', 'desc');
     }
 }

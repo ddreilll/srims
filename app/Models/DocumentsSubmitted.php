@@ -9,8 +9,8 @@ class DocumentsSubmitted extends Model
 {
     use SoftDeletes;
 
-    protected $table = 't_submitted_documents';
-    protected $primaryKey = 'subm_id';
+    public $table = 't_submitted_documents';
+    public $primaryKey = 'subm_id';
 
     const CREATED_AT = 'subm_createdAt';
     const UPDATED_AT = 'subm_updatedAt';

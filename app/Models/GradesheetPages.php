@@ -9,8 +9,8 @@ class GradesheetPages extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_gradesheet_page';
-    protected $primaryKey = 'grdsheetpg_id';
+    public $table = 's_gradesheet_page';
+    public $primaryKey = 'grdsheetpg_id';
 
     const CREATED_AT = 'grdsheetpg_createdAt';
     const UPDATED_AT = 'grdsheetpg_updatedAt';

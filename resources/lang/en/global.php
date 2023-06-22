@@ -3,6 +3,10 @@
 return [
     'actions'                              => 'Actions',
     'add'                                  => 'Add',
+    'list'                                  => 'List',
+    'list_of'                                  => 'List of :attribute',
+    'new'                                  => 'New',
+    'cancel'                                  => 'Cancel',
     'allRightsReserved'                    => 'All rights reserved.',
     'areYouSure'                           => 'Are you sure?',
     'clickHereToVerify'                    => 'Click here to verify',
@@ -246,4 +250,7 @@ return [
     'you_have_no_messages'                 => 'You have no messages.',
     'content'                              => 'Content',
     'no_alerts'                            => 'No alerts',
+    'create_success'                       => 'The :attribute has been successfully saved.',
+    'update_success'                       => 'The :attribute has been successfully updated.',
+    'delete_success'                       => 'The :attribute has been successfully deleted.',
 ];

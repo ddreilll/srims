@@ -58,7 +58,7 @@
                                 <div class="fs-5 fw-bold text-muted mb-3">{{ $stud_profile->stud_course }}</div>
 
                                 {!! $stud_profile->stud_recordType == 'SIS'
-                                    ? '<span class="badge badge-warning fs-6">SIS Record</span>'
+                                    ? '<span class="badge badge-light-dark fs-6">SIS Record</span>'
                                     : '<span class="badge badge-light-dark fs-6">NON-SIS Record</span>' !!}
 
                                 @if ($stud_profile->stud_recordType == 'NONSIS')
@@ -333,14 +333,6 @@
                                 data-kt-countup-tabs="true" data-bs-toggle="tab"
                                 href="#kt_customer_view_overview_statements">Envelope Documents
                             </a>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                href="#kt_customer_view_overview_events_and_logs_tab">Activity </a>
-                        </li>
-                        <li class="nav-item ms-auto">
                         </li>
                     </ul>
 

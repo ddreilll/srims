@@ -9,8 +9,8 @@ class SubjectPrerequisite extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_subject_prereq';
-    protected $primaryKey = 'subjpreq_id';
+    public $table = 's_subject_prereq';
+    public $primaryKey = 'subjpreq_id';
 
     const CREATED_AT = 'subjpreq_createdAt';
     const UPDATED_AT = 'subjpreq_updatedAt';

@@ -9,8 +9,8 @@ class DocumentsType extends Model
 {
     use SoftDeletes;
 
-    protected $table = 's_documents_type';
-    protected $primaryKey = 'docuType_id';
+    public $table = 's_documents_type';
+    public $primaryKey = 'docuType_id';
 
     const CREATED_AT = 'docuType_createdAt';
     const UPDATED_AT = 'docuType_updatedAt';
