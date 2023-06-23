@@ -20,9 +20,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 pb-5">
-                                    <p class="mb-7">This is a crucial aspect of SRIMS, as it involves organizing and
-                                        configuring the software components necessary for the application to function
-                                        optimally.</p>
+                                    <p class="mb-7">{{ __('panel.panel_description.system_setups') }}</p>
 
                                     <ul class="nav nav-pills d-flex justify-content-around nav-pills-custom gap-3 mb-6">
 
@@ -37,7 +35,8 @@
                                                 <div class="">
                                                     <span
                                                         class="text-gray-800 fw-bold fs-5 d-block">{{ __('cruds.document.title') }}</span>
-                                                    <span class="text-gray-400 fw-semibold fs-7">Students</span>
+                                                    <span
+                                                        class="text-gray-400 fw-semibold fs-7">{{ __('cruds.student.title') }}</span>
                                                 </div>
                                             </a>
                                         </li>
@@ -50,8 +49,10 @@
                                                 </div>
 
                                                 <div class="">
-                                                    <span class="text-gray-800 fw-bold fs-5 d-block">Courses</span>
-                                                    <span class="text-gray-400 fw-semibold fs-7">Students</span>
+                                                    <span
+                                                        class="text-gray-800 fw-bold fs-5 d-block">{{ __('cruds.course.title') }}</span>
+                                                    <span
+                                                        class="text-gray-400 fw-semibold fs-7">{{ __('cruds.student.title') }}</span>
                                                 </div>
                                             </a>
                                         </li>
@@ -64,8 +65,10 @@
                                                 </div>
 
                                                 <div class="">
-                                                    <span class="text-gray-800 fw-bold fs-5 d-block">Honors</span>
-                                                    <span class="text-gray-400 fw-semibold fs-7">Students</span>
+                                                    <span
+                                                        class="text-gray-800 fw-bold fs-5 d-block">{{ __('cruds.honor.title') }}</span>
+                                                    <span
+                                                        class="text-gray-400 fw-semibold fs-7">{{ __('cruds.student.title') }}</span>
                                                 </div>
                                             </a>
                                         </li>
@@ -80,8 +83,10 @@
                                                 </div>
 
                                                 <div class="">
-                                                    <span class="text-gray-800 fw-bold fs-5 d-block">Rooms</span>
-                                                    <span class="text-gray-400 fw-semibold fs-7">Gradesheets</span>
+                                                    <span
+                                                        class="text-gray-800 fw-bold fs-5 d-block">{{ __('cruds.room.title') }}</span>
+                                                    <span
+                                                        class="text-gray-400 fw-semibold fs-7">{{ __('cruds.gradesheet.title') }}</span>
                                                 </div>
                                             </a>
                                         </li>
@@ -93,8 +98,10 @@
                                                 </div>
 
                                                 <div class="">
-                                                    <span class="text-gray-800 fw-bold fs-5 d-block">Subjects</span>
-                                                    <span class="text-gray-400 fw-semibold fs-7">Gradesheets</span>
+                                                    <span
+                                                        class="text-gray-800 fw-bold fs-5 d-block">{{ __('cruds.subject.title') }}</span>
+                                                    <span
+                                                        class="text-gray-400 fw-semibold fs-7">{{ __('cruds.gradesheet.title') }}</span>
                                                 </div>
                                             </a>
                                         </li>
@@ -107,8 +114,10 @@
                                                 </div>
 
                                                 <div class="">
-                                                    <span class="text-gray-800 fw-bold fs-5 d-block">Instructors</span>
-                                                    <span class="text-gray-400 fw-semibold fs-7">Gradesheets</span>
+                                                    <span
+                                                        class="text-gray-800 fw-bold fs-5 d-block">{{ __('cruds.instructor.title') }}</span>
+                                                    <span
+                                                        class="text-gray-400 fw-semibold fs-7">{{ __('cruds.gradesheet.title') }}</span>
                                                 </div>
                                             </a>
                                         </li>
