@@ -881,7 +881,7 @@ class StudentProfileController extends Controller
             }
         }
 
-        (new StudentActionObserver)->created(StudentProfile::where(['stud_id' => $spId])->first());
+        (new StudentActionObserver)->stored(StudentProfile::where(['stud_id' => $spId])->first());
 
         header('Content-Type: application/json');
         echo json_encode([
@@ -1295,7 +1295,7 @@ class StudentProfileController extends Controller
             }
         }
 
-        (new StudentActionObserver)->updated(StudentProfile::where(['stud_id' => $request->id])->first());
+        (new StudentActionObserver)->updates(StudentProfile::where(['stud_id' => $request->id])->first());
 
         header('Content-Type: application/json');
         echo json_encode([
@@ -1357,7 +1357,7 @@ class StudentProfileController extends Controller
         $sp->whereRaw('md5(stud_id) = "' . $request->id . '"')
             ->delete();
 
-        (new StudentActionObserver)->deleted(StudentProfile::where(['stud_id' => $request->id])->first());
+        (new StudentActionObserver)->archived(StudentProfile::where(['stud_id' => $request->id])->first());
 
         header('Content-Type: application/json');
         echo json_encode([

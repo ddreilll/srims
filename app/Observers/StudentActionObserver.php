@@ -16,7 +16,7 @@ class StudentActionObserver
             ->log(sprintf('User: %s (%s) viewed: %s (%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_id));
     }
 
-    public function created(StudentProfile $student)
+    public function stored(StudentProfile $student)
     {
         activity()
             ->performedOn($student)
@@ -25,7 +25,7 @@ class StudentActionObserver
             ->log(sprintf('User: %s (%s) created: %s (%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_id));
     }
 
-    public function updated(StudentProfile $student)
+    public function updates(StudentProfile $student)
     {
         activity()
             ->performedOn($student)
@@ -34,7 +34,7 @@ class StudentActionObserver
             ->log(sprintf('User: %s (%s) updated: %s (%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_id));
     }
 
-    public function deleted(StudentProfile $student)
+    public function archived(StudentProfile $student)
     {
         activity()
             ->performedOn($student)
