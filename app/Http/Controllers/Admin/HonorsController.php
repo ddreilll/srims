@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Honor;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreHonorRequest;
 use App\Http\Requests\UpdateHonorRequest;
 
 class HonorsController extends Controller
 {
-
-    protected $menuHeader = "System Settings";
-    protected $menu = "system-settings";
 
     /**
      * Display a listing of the resource.
@@ -21,22 +20,11 @@ class HonorsController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('honor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-
-        $title = "Honors";
-        $breadcrumb = [
-            [
-                "name" => "Honors"
-            ]
-        ];
+        abort_if(Gate::denies('honor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $honors = Honor::all();
 
-        return view('admin.honors.index', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'honors'));
+        return view('admin.honors.index', compact('honors'));
     }
 
     /**
@@ -46,24 +34,9 @@ class HonorsController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('honor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('honor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-
-        $title = "Add Honor";
-        $breadcrumb = [
-            [
-                "name" => "Honors",
-                "url" => route('settings.honors.index')
-            ],
-            [
-                "name" => "Add Honor"
-            ]
-        ];
-
-        return view('admin.honors.create', compact('menuHeader', 'title', 'menu', 'breadcrumb'));
+        return view('admin.honors.create');
     }
 
     /**
@@ -88,24 +61,9 @@ class HonorsController extends Controller
      */
     public function edit(Honor $honor)
     {
-        // abort_if(Gate::denies('honor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('honor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-
-        $title = "Edit Honor";
-        $breadcrumb = [
-            [
-                "name" => "Honors",
-                "url" => route('settings.honors.index')
-            ],
-            [
-                "name" => "Edit Honor"
-            ]
-        ];
-
-        return view('admin.honors.edit', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'honor'));
+        return view('admin.honors.edit', compact('honor'));
     }
 
     /**
@@ -132,7 +90,7 @@ class HonorsController extends Controller
      */
     public function destroy(Honor $honor)
     {
-        // abort_if(Gate::denies('honor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('honor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $honor->delete();
 

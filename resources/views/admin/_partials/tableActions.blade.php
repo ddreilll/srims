@@ -23,7 +23,7 @@
             id="{{ $row[$primaryKey] }}-destroy">
             @method('DELETE')
             @csrf
-            <button type="button" {{ $crudRoutePart }}-component="deleteBtn"
+            <button type="button" destroy-resource="true"
                 class="btn btn-icon btn-light-danger btn-active-danger btn-sm" data-id="{{ $row[$primaryKey] }}">
                 <span class="svg-icon">
                     <i class="fa-solid fa-trash"></i>

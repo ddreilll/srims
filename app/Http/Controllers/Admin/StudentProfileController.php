@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Term;
 use Faker\Generator;
 use App\Models\Honor;
-use App\Models\Documents;
+use App\Models\Course;
+use App\Models\Document;
+use App\Models\YearLevel;
+use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use App\Models\DocumentsType;
 use App\Models\StudentGrades;
@@ -16,11 +19,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DocumentsSubmitted;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Observers\StudentActionObserver;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Controllers\Admin\CourseController as Course;
-use App\Models\SchoolYear;
-use App\Models\YearLevel;
 
 class StudentProfileController extends Controller
 {
@@ -49,6 +50,7 @@ class StudentProfileController extends Controller
         $sp = new StudentProfile();
         $tp = $sp->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
             ->selectRaw('r_student.*
+
             , md5(stud_id) as stud_id_md5
             , cour_name as stud_course_name
             , cour_code as stud_course 
@@ -59,6 +61,8 @@ class StudentProfileController extends Controller
             ')
             ->where(['stud_uuid' => $profile_uuid])
             ->get();
+
+        (new StudentActionObserver)->viewed($sp::where(['stud_uuid' => $profile_uuid])->first());
 
         if (sizeof($tp) == 1) {
 
@@ -195,13 +199,13 @@ class StudentProfileController extends Controller
     public function create_profile()
     {
         $acadYears = SchoolYear::all();
-        $course = (new Course)->getAllCourses();
+        $course = Course::all();
         $honors = Honor::all();
         $terms = Term::all();
         $yearLevel = YearLevel::all();
 
 
-        $dti = new Documents();
+        $dti = new Document();
         $dtsi = new DocumentsType();
 
         $dt_ent = $dti->where(["docu_category" => "ENTRANCE"])
@@ -245,13 +249,13 @@ class StudentProfileController extends Controller
         if (sizeof($tp) == 1) {
 
             $acadYears = SchoolYear::all();
-            $course = (new Course)->getAllCourses();
+            $course = Course::all();
             $honors = Honor::all();
             $terms = Term::all();
             $yearLevel = YearLevel::all();
 
 
-            $dti = new Documents();
+            $dti = new Document();
             $dtsi = new DocumentsType();
 
             $dt_ent = $dti->where(["docu_category" => "ENTRANCE"])
@@ -324,7 +328,7 @@ class StudentProfileController extends Controller
 
     public function createStudentProfile($student_details)
     {
-        (new StudentProfile)->insertOne($student_details);
+        $student = StudentProfile::find((new StudentProfile)->insertOne($student_details));
     }
 
     public function getAllStudentProfile($filter = null)
@@ -373,6 +377,10 @@ class StudentProfileController extends Controller
 
     public function generateEnvelopeDocumentEvaluation(StudentProfile $student, Request $request)
     {
+        $student = StudentProfile::where('stud_id', $student->stud_id)->with('course', function ($query) {
+            return $query->withTrashed();
+        })->first();
+
         $dsi = new DocumentsSubmitted();
         $documents['all']["entrance"] = $dsi->leftjoin("s_documents", 'subm_document', '=', 'docu_id')
             ->where(["subm_documentCategory" => "ENTRANCE", "subm_student" => $student->stud_id])->get();
@@ -668,20 +676,8 @@ class StudentProfileController extends Controller
             return $pdf->stream();
         } else {
 
-            return view('errors.not-found', ['menu_header' => 'Menu', 'title' => "Profile not found", "menu" => "student-records", "sub_menu" => "student-profile"]);
+            return response(NULL, 404);
         };
-
-        // $pdf = Pdf::loadView('admin.student_profile.pdf.scholastic-data', compact('student'));
-
-        // $pdf->render();
-        // $canvas = $pdf->getCanvas();
-
-        // $height = $canvas->get_height();
-
-        // $canvas->set_opacity(.5, "Multiply");
-        // $canvas->page_text(35, $height - 30, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 10, array(0, 0, 0));
-
-        // return $pdf->stream();
     }
 
     // -- Begin::Ajax Requests -- //
@@ -759,7 +755,7 @@ class StudentProfileController extends Controller
             "stud_dateExited" => ($request->dateExited) ? date('Y-m-d', strtotime($request->dateExited)) : NULL,
             "stud_honor" => $request->honor,
             "stud_createdAt" => NOW(),
-            "user_stud_id" => \Auth::user()->id
+            "user_stud_id" => auth()->user()->id
         ];
 
         $ishd = $request->isHonorableDismissed;
@@ -884,6 +880,8 @@ class StudentProfileController extends Controller
                 ]);
             }
         }
+
+        (new StudentActionObserver)->stored(StudentProfile::where(['stud_id' => $spId])->first());
 
         header('Content-Type: application/json');
         echo json_encode([
@@ -1297,6 +1295,8 @@ class StudentProfileController extends Controller
             }
         }
 
+        (new StudentActionObserver)->updates(StudentProfile::where(['stud_id' => $request->id])->first());
+
         header('Content-Type: application/json');
         echo json_encode([
             'message' => __('modal.updated_success', ['attribute' => 'Student Profile']),
@@ -1356,6 +1356,8 @@ class StudentProfileController extends Controller
         $sp = new StudentProfile();
         $sp->whereRaw('md5(stud_id) = "' . $request->id . '"')
             ->delete();
+
+        (new StudentActionObserver)->archived(StudentProfile::where(['stud_id' => $request->id])->first());
 
         header('Content-Type: application/json');
         echo json_encode([

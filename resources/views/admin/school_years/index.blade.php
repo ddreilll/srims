@@ -2,17 +2,17 @@
 
 @section('content')
     <div class="post d-flex flex-column-fluid">
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 
-                    @include('partials.settings-menu')
+                    @include('admin._partials.settings.menu')
                 </div>
 
                 <div class="flex-lg-row-fluid ms-lg-15">
                     <div class="tab-content">
 
-                        <div class="tab-pane fade show active"  role="tabpanel">
+                        <div class="tab-pane fade show active" role="tabpanel">
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div class="card-header border-0">
                                     <div class="card-title">
@@ -53,21 +53,14 @@
                                                         {{ $schoolYear->syear_year }}
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex justify-content-end flex-shrink-0">
-                                                            <form
-                                                                action="{{ route('settings.school-years.destroy', $schoolYear->syear_id) }}"
-                                                                method="POST" id="{{ $schoolYear->syear_id }}-destroy">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <a href="#"
-                                                                    class="btn btn-icon btn-light-danger btn-active-danger btn-sm deleteBtn"
-                                                                    data-id="{{ $schoolYear->syear_id }}">
-                                                                    <span class="svg-icon">
-                                                                        <i class="fa-solid fa-trash"></i>
-                                                                    </span>
-                                                                </a>
-                                                            </form>
-                                                        </div>
+                                                        @include('admin._partials.tableActions', [
+                                                            'viewGate' => false,
+                                                            'editGate' => false,
+                                                            'deleteGate' => true,
+                                                            'row' => $schoolYear,
+                                                            'crudRoutePart' => 'school-years',
+                                                            'primaryKey' => 'syear_id',
+                                                        ])
                                                     </td>
                                                 </tr>
                                             @empty

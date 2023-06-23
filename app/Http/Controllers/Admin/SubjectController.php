@@ -4,259 +4,102 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
-
-//Model
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\SubjectPrerequisite as SubjPrereq;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreSubjectRequest;
+use App\Http\Requests\UpdateSubjectRequest;
 
 class SubjectController extends Controller
 {
-
-    /*
-|--------------------------------------------------------------------------
-|    Begin::Views
-|--------------------------------------------------------------------------
-|
-|    All functions that renders or display a page
-|
-*/
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $subjects = (new Subject)->fetchAll([]);
+        abort_if(Gate::denies('subject_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.subjects.index', ['menu_header' => 'System Setup', "title" => 'Subjects', "menu" => "course-curiculum", "sub_menu" => "subject", "breadcrumb" => [["name" => "System Setup"]], "formData_subjects" => $subjects]);
+        $subjects = Subject::paginate(10);
+
+        return view('admin.subjects.index', compact('subjects'));
     }
 
-    /*
-|--------------------------------------------------------------------------
-|    End::Views
-|--------------------------------------------------------------------------
-|
-*/
-
-
-    /*
-|--------------------------------------------------------------------------
-|    Begin::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
-
-    // Subject details
-    public function createSubject($details, $prerequisite)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $subjectId = (new Subject())->insertOne($details);
-
-        for ($i = 0; $i < sizeof($prerequisite); $i++) {
-            $this->addPrerequisite($subjectId, $prerequisite[$i]['id']);
-        }
+        abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('admin.subjects.create');
     }
 
-    public function getSubject($md5Id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreSubjectRequest $request)
     {
+        abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subject = new Subject;
+        $subject = Subject::create($request->all());
 
-        $subjects = $subject->fetchOne($md5Id);
-        $subjects[0]['subj_prerequisite'] = $subject->fetchPrerequisite($subjects[0]['subj_id_md5']);
+        session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.subject.title_singular'))]));
 
-        return $subjects;
+        return redirect()->route('settings.subjects.index');
     }
 
-    public function getAllSubjects($filter = null)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Subject $subject)
     {
-        $subject = new Subject;
-        $subjects = $subject->fetchAll($filter);
+        abort_if(Gate::denies('subject_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        for ($i = 0; $i < sizeOf($subjects); $i++) {
-            $subjects[$i]['subj_prerequisite'] = $subject->fetchPrerequisite($subjects[$i]['subj_id_md5']);
-        }
-
-        return $subjects;
+        return view('admin.subjects.edit', compact('subject'));
     }
 
-    public function updateSubject($md5Id, $details, $prerequisite)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateSubjectRequest $request, Subject $subject)
     {
-        $subj = $this->getSubject($md5Id)[0];
+        $subject->update($request->all());
 
-        $subject = new Subject;
-        $subject->edit($md5Id, $details);
+        session()->flash('message', __('global.update_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.subject.title_singular'))]));
 
-        $d = $subject->fetchPrerequisite($md5Id);
-
-        if (sizeOf($d) >= 1) {
-            $orig_prerequisite = [];
-            for ($i = 0; $i < sizeof($d); $i++) {
-                array_push($orig_prerequisite, $d[$i]['subjpreq_subjectId']);
-            }
-
-            $diff_prerequisite_1 = array_diff($orig_prerequisite, $prerequisite);
-            $diff_prerequisite_2 = array_diff($prerequisite, $orig_prerequisite);
-
-            $diff_prerequisite = array_merge($diff_prerequisite_1, $diff_prerequisite_2);
-
-            for ($a = 0; $a < sizeOf($diff_prerequisite); $a++) {
-                for ($b = 0; $b < sizeOf($orig_prerequisite); $b++) {
-
-                    if (sizeOf($diff_prerequisite) >= 1) {
-                        if ($diff_prerequisite[$a] == $orig_prerequisite[$b]) {
-                            $this->removePrerequisite($subj['subj_id'], $diff_prerequisite[$a]);
-                            \array_splice($diff_prerequisite, $a, 1);
-                        }
-                    }
-                }
-            }
-
-            for ($c = 0; $c < sizeOf($diff_prerequisite); $c++) {
-                $this->addPrerequisite($subj['subj_id'], $diff_prerequisite[$c]);
-            }
-        } else {
-            for ($c = 0; $c < sizeOf($prerequisite); $c++) {
-                $this->addPrerequisite($subj['subj_id'], $prerequisite[$c]);
-            }
-        }
+        return redirect()->route('settings.subjects.index');
     }
 
-    public function removeSubject($md5Id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Subject $subject)
     {
-        (new Subject)->remove($md5Id);
+        abort_if(Gate::denies('subject_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $subject->delete();
+
+        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.subject.title_singular'))]));
+
+        return redirect()->route('settings.subjects.index');
     }
-
-    // Subject Prerequisite
-    public function addPrerequisite($subjectId, $prerequisiteId)
-    {
-        (new SubjPrereq)->insertOne($subjectId, $prerequisiteId);
-    }
-
-    public function removePrerequisite($subjectId, $prerequisiteId)
-    {
-        (new SubjPrereq)->remove($subjectId, $prerequisiteId);
-    }
-
-    public function checkAnyPrerequisite($subjectMd5Id)
-    {
-        $assocSubj = (new SubjPrereq)->fetchAssocSubject($subjectMd5Id);
-
-        if (sizeOf($assocSubj) >= 1) {
-            return true;
-        } else if (sizeOf($assocSubj) == 0) {
-            return false;
-        }
-    }
-
-    // -- Begin::Ajax Requests -- //
-
-    public function ajax_insert(Request $request)
-    {
-
-        $request->validate([
-            'code' => 'required|max:15',
-            'name' => 'required|max:255',
-            'units' => 'required|numeric'
-        ]);
-
-        $details = [
-            'code' => $request->code, 'name' => $request->name, 'units' => $request->units
-        ];
-
-        $prerequisite = [];
-        if ($request['prerequisite']) {
-            for ($i = 0; $i < sizeOf($request['prerequisite']); $i++) {
-                ($request['prerequisite'][$i] != null) ? array_push($prerequisite, ['id' => $request['prerequisite'][$i]]) : null;
-            }
-        }
-
-        $this->createSubject($details, $prerequisite);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.added_success', ['attribute' => 'Subject'])
-        ]);
-    }
-
-    public function ajax_retrieveAll()
-    {
-
-        header('Content-Type: application/json');
-        echo json_encode($this->getAllSubjects());
-    }
-
-    public function ajax_retrieve(Request $request)
-    {
-
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        header('Content-Type: application/json');
-        echo json_encode($this->getSubject($request->id));
-    }
-
-    public function ajax_update(Request $request)
-    {
-
-        $request->validate([
-            'id' => 'required',
-            'code' => 'required|max:15',
-            'name' => 'required|max:255',
-            'units' => 'required|numeric'
-        ]);
-
-        $details = [
-            'code' => $request->code, 'name' => $request->name, 'units' => $request->units
-        ];
-
-        $prerequisite = [];
-        if ($request['prerequisite']) {
-            for ($i = 0; $i < sizeOf($request['prerequisite']); $i++) {
-                array_push($prerequisite, $request['prerequisite'][$i] * 1);
-            }
-        }
-
-        $this->updateSubject($request['id'], $details, $prerequisite);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.updated_success', ['attribute' => 'Subject'])
-        ]);
-    }
-
-    public function ajax_delete(Request $request)
-    {
-
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        $this->removeSubject($request->id);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.deleted_success', ['attribute' => 'Subject'])
-        ]);
-    }
-
-    public function ajax_checkDelete(Request $request)
-    {
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        if (!$this->checkAnyPrerequisite($request->id)) {
-            $availability = true;
-        } else {
-            $availability = false;
-        }
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'isDeletable' => $availability
-        ]);
-    }
-
-    // -- End::Ajax Requests -- //
 
     public function ajax_select2_search(Request $request)
     {
@@ -290,11 +133,4 @@ class SubjectController extends Controller
             return response()->json($results);
         }
     }
-
-    /*
-|--------------------------------------------------------------------------
-|    End::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
 }

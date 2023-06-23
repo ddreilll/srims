@@ -3,16 +3,16 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
-    <title>{{ trans('panel.site_title') }}</title>
+    <title>{{ trans('panel.site_title_short') }}</title>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/assets/media/logo/favicon/apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/assets/media/logo/favicon_io/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32"
-        href="{{ asset('/assets/media/logo/favicon/favicon-32x32.png') }}">
+        href="{{ asset('/assets/media/logo/favicon_io/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16"
-        href="{{ asset('/assets/media/logo/favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('/assets/media/logo/favicon/site.webmanifest') }}">
+        href="{{ asset('/assets/media/logo/favicon_io/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('/assets/media/logo/favicon_io/site.webmanifest') }}">
     <meta name="theme-color" content="#ffffff">
 
     <style>
@@ -81,7 +81,6 @@
 
     <link href="{{ asset('/assets/plugins/custom/fontawesome-pro/css/all.min.css') }}" rel="stylesheet"
         type="text/css" />
-
 
     <style>
         .select2-container--bootstrap5 .select2-selection--multiple:not(.form-select-sm):not(.form-select-lg) .select2-search.select2-search--inline .select2-search__field {
@@ -162,55 +161,7 @@
                             class="container-fluid py-6 py-lg-0 d-flex flex-column flex-lg-row align-items-lg-stretch justify-content-lg-between">
 
                             <div class="page-title d-flex justify-content-center flex-column me-5">
-                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">
-                                    {{ $title ? $title : '' }}</h1>
-
-                                @isset($breadcrumb)
-
-                                    @if (sizeOf($breadcrumb) >= 1)
-                                        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
-
-                                            @if (sizeOf($breadcrumb) == 1 && $breadcrumb[0]['name'] == 'Dashboard')
-                                                <li class="breadcrumb-item text-dark">Dashboard
-                                                </li>
-                                            @else
-                                                <li class="breadcrumb-item text-muted">
-                                                    <a href="{{ url('/dashboard') }}"
-                                                        class="text-muted text-hover-primary">Dashboard</a>
-                                                </li>
-
-                                                @for ($i = 0; $i < sizeOf($breadcrumb); $i++)
-                                                    <li class="breadcrumb-item">
-                                                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
-                                                    </li>
-
-                                                    @if (sizeOf($breadcrumb) != $i + 1)
-                                                        <li class="breadcrumb-item text-muted"><a
-                                                                href="{{ url($breadcrumb[$i]['url']) }}"
-                                                                class="text-muted text-hover-primary">{{ $breadcrumb[$i]['name'] }}</a>
-                                                        </li>
-                                                    @else
-                                                        <li class="breadcrumb-item text-dark">
-                                                            {{ $breadcrumb[$i]['name'] }}
-                                                        </li>
-                                                    @endif
-                                                @endfor
-                                            @endif
-
-
-                                        </ul>
-                                    @else
-                                        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
-                                            <li class="breadcrumb-item text-muted">
-                                                <a href="{{ url('/') }}"
-                                                    class="text-muted text-hover-primary">Dashboard</a>
-                                            </li>
-                                            <li class="breadcrumb-item text-dark"> {{ $title ? $title : '' }}</li>
-                                        </ul>
-                                    @endif
-
-                                @endisset
-
+                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0"></h1>
                             </div>
 
                             <div class="d-flex align-items-stretch overflow-auto pt-3 pt-lg-0">
@@ -225,7 +176,7 @@
                                             <span class="pulse-ring border-3"></span>
                                         </a>
 
-                                        <a href="{{ route('student-profile') }}"
+                                        <a href="{{ route('admin.student.index') }}"
                                             class="btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary"
                                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
                                             title="View List of Students">
@@ -243,18 +194,14 @@
                 </div>
 
                 <div class="footer py-6 d-flex flex-lg-column" id="kt_footer">
-                    <!--begin::Container-->
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
-                        <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">2021©</span>
                             <a href="#" target="_blank" class="text-gray-800 text-hover-primary">PUPQC</a>
                         </div>
-                        <!--end::Copyright-->
 
                     </div>
-                    <!--end::Container-->
                 </div>
             </div>
         </div>
@@ -448,6 +395,59 @@
             return new KTStepper(document.getElementById(stepperId));
 
         }
+
+        function initializedFormSubmitConfirmation(dom, formId, action, btnColor, icon = "info") {
+
+            $(`${dom}`).on("click", function(e) {
+                e.preventDefault();
+
+                var resourceId = $(this).attr("data-id");
+
+                Swal.fire({
+                    text: ("{{ __('modal.confirmation', ['action' => ':action']) }}").replace(":action", action),
+                    icon: icon,
+                    showCancelButton: !0,
+                    buttonsStyling: !1,
+                    confirmButtonText: ("{{ __('modal.confirm_btn', ['action' => ':action']) }}").replace(":action", action),
+                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                    customClass: {
+                        confirmButton: `btn btn-${btnColor}`,
+                        cancelButton: 'btn btn-active-light',
+                    },
+                }).then(function(t) {
+                    if (t.value) {
+                        $(`form#${resourceId}${formId}`).submit();
+                    }
+                });
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        KTUtil.onDOMContentLoaded((function() {
+
+            $(`[destroy-resource="true"]`).on("click", function() {
+
+                var documentId = $(this).attr("data-id");
+
+                Swal.fire({
+                    text: "{{ __('modal.confirmation', ['action' => 'delete']) }}",
+                    icon: 'warning',
+                    showCancelButton: !0,
+                    buttonsStyling: !1,
+                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'delete']) }}",
+                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
+                    customClass: {
+                        confirmButton: 'btn btn-danger',
+                        cancelButton: 'btn btn-active-light',
+                    },
+                }).then(function(t) {
+                    if (t.value) {
+                        $(`form#${documentId}-destroy`).submit();
+                    }
+                });
+            });
+        }));
     </script>
 
     @yield('scripts')

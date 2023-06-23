@@ -57,7 +57,8 @@
                 id="#kt_aside_menu" data-kt-menu="true">
 
                 <div class="menu-item">
-                    <a class="menu-link {{ $menu === 'dashboard' ? 'active' : '' }}" href="{{ url('/dashboard') }}">
+                    <a class="menu-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}"
+                        href="{{ url('/dashboard') }}">
                         <span class="menu-icon">
                             <i class="fa-duotone fa-chart-mixed"></i>
                         </span>
@@ -65,146 +66,67 @@
                     </a>
                 </div>
 
-                @can('category_transaction')
+                @if (Gate::check(['student_access']) || Gate::check(['gradesheet_access']))
                     <div class="menu-item">
                         <div class="menu-content pt-8 pb-2">
                             <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
                         </div>
                     </div>
 
-                    <div class="menu-item">
-                        <a class="menu-link {{ $menu === 'student-profile' ? 'active' : '' }}"
-                            href="{{ url('/student/profile') }}">
-                            <span class="menu-icon">
-                                <i class="fa-duotone fa-screen-users"></i>
-                            </span>
-                            <span class="menu-title">Students</span>
-                        </a>
-                    </div>
-
-                    <div class="menu-item">
-                        <a class="menu-link {{ $menu === 'class' ? 'active' : '' }}" href="{{ url('/gradesheet') }}">
-                            <span class="menu-icon">
-                                <i class="fa-duotone fa-file-lines"></i>
-                            </span>
-                            <span class="menu-title">Gradesheets</span>
-                            <span class="menu-badge"><span class="badge badge-secondary">NON-SIS</span></span>
-                        </a>
-                    </div>
-                @endcan
-
-
-                @can('category_system_setup')
-
-                    <div class="menu-item">
-                        <div class="menu-content pt-8 pb-2">
-                            <span class="menu-section text-muted text-uppercase fs-8 ls-1">System Setup</span>
-                        </div>
-                    </div>
-
-                    @can('menu_admission_requirements')
+                    @can('student_access')
                         <div class="menu-item">
-                            <a class="menu-link {{ $menu === 'admission-requirements' ? 'active' : '' }}"
-                                href="{{ url('/documents/list') }}">
+                            <a class="menu-link {{ request()->routeIs('admin.student.*') ? 'active' : '' }}"
+                                href="{{ url('/student/profile') }}">
                                 <span class="menu-icon">
-                                    <i class="fa-duotone fa-file-certificate"></i>
+                                    <i class="fa-duotone fa-screen-users"></i>
                                 </span>
-                                <span class="menu-title">Documents</span>
+                                <span class="menu-title">{{ __('cruds.student.title') }}</span>
                             </a>
                         </div>
                     @endcan
 
-                    @can('access_course')
+                    @can('gradesheet_access')
                         <div class="menu-item">
-                            <a class="menu-link {{ $menu === 'course' ? 'active' : '' }}" href="{{ url('/course') }}">
-                                <span class="menu-icon">
-                                    <i class="fa-duotone fa-diploma"></i>
-                                </span>
-                                <span class="menu-title">Course</span>
-                            </a>
-                        </div>
-                    @endcan
-
-                    @can('menu_schedules')
-                        <div data-kt-menu-trigger="click"
-                            class="menu-item menu-accordion {{ $menu == 'schedules-menu' ? 'here show' : '' }}">
-                            <span class="menu-link">
+                            <a class="menu-link {{ request()->routeIs('admin.gradesheet.*') ? 'active' : '' }}"
+                                href="{{ url('/gradesheet') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-file-lines"></i>
                                 </span>
-                                <span class="menu-title">Gradesheet</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-
-                                @can('access_rooms')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'room' ? 'active' : '' }}"
-                                            href="{{ url('/room') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Rooms</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('access_instructors')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'instructor' ? 'active' : '' }}"
-                                            href="{{ url('/instructor') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Instructors</span>
-                                        </a>
-                                    </div>
-                                @endcan
-
-                                @can('access_subject')
-                                    <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'subject' ? 'active' : '' }}"
-                                            href="{{ url('/subject') }} ">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Subjects</span>
-                                        </a>
-                                    </div>
-                                @endcan
-                            </div>
+                                <span class="menu-title">{{ __('cruds.gradesheet.title') }}</span>
+                                <span class="menu-badge"><span class="badge badge-secondary">NON-SIS</span></span>
+                            </a>
                         </div>
                     @endcan
+                @endif
 
-                @endcan
+                @if (Gate::check(['user_management_access']) || Gate::check(['system_setup_access']))
 
-                @can('category_system_settings')
                     <div class="menu-item">
                         <div class="menu-content pt-8 pb-2">
                             <span class="menu-section text-muted text-uppercase fs-8 ls-1">Settings</span>
                         </div>
                     </div>
 
-                    @can('menu_user_accounts')
+                    @can('user_management_access')
                         <div data-kt-menu-trigger="click"
-                            class="menu-item menu-accordion {{ $menu == 'user-accounts' ? 'here show' : '' }}">
+                            class="menu-item menu-accordion {{ request()->routeIs('user.*') ? 'here show' : '' }}">
                             <span class="menu-link">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-users"></i>
                                 </span>
-                                <span class="menu-title">User Accounts</span>
+                                <span class="menu-title">{{ __('cruds.userManagement.title') }}</span>
                                 <span class="menu-arrow"></span>
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
 
-                                @can('access_users')
+                                @can('user_access')
                                     <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'manage-users' ? 'active' : '' }}"
+                                        <a class="menu-link {{ request()->routeIs('user.*') ? 'active' : '' }}"
                                             href="{{ route('users.index') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Manage Users</span>
+                                            <span class="menu-title">{{ __('cruds.user.title') }}</span>
                                         </a>
                                     </div>
                                 @endcan
@@ -212,18 +134,19 @@
                         </div>
                     @endcan
 
-                    @can('menu_system_settings')
+                    @can('system_setup_access')
                         <div class="menu-item">
-                            <a class="menu-link {{ $menu === 'system-settings' ? 'active' : '' }}" href="{{ url('settings') }}">
+                            <a class="menu-link {{ request()->routeIs('settings.*') ? 'active' : '' }}"
+                                href="{{ url('settings') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-sliders-simple"></i>
                                 </span>
-                                <span class="menu-title">System Settings</span>
+                                <span class="menu-title">{{ __('cruds.systemSetup.title') }}</span>
                             </a>
                         </div>
                     @endcan
-                @endcan
 
+                @endif
             </div>
         </div>
     </div>

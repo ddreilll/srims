@@ -3,15 +3,12 @@
 @section('content')
     <div class="d-flex flex-column flex-root">
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative" style="background-color: #F2C98A">
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative" style="background-color: #009ef7">
                 <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
                     <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
                         <a href="#" class="py-9 mb-5">
                             <img alt="Logo" src="{{ asset('/assets/media/logo/logo_main.png') }}" class="h-60px" />
                         </a>
-                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">PUP Quezon City Branch</h1>
-                        <p class="fw-bold fs-2" style="color: #986923;">Student Records <br>Information Management System
-                        </p>
                     </div>
                     <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
                         style="background-image: url(assets/media/illustrations/sketchy-1/13.png"></div>
@@ -25,15 +22,15 @@
                                 {{ \Session::get('message') }}
                             </p>
                         @endif
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
-                            action="{{ route('login') }}" method="POST">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}"
+                            method="POST">
                             {{ csrf_field() }}
 
                             <div class="text-center mb-10">
-                                <h1 class="text-dark mb-3">Sign In</h1>
+                                <h1 class="text-dark mb-3">{{ __('global.login') }}</h1>
                             </div>
                             <div class="fv-row mb-10">
-                                <label class="form-label fs-6 fw-bolder text-dark">Email</label>
+                                <label class="form-label fs-6 fw-bolder text-dark">{{ __('global.login_email') }}</label>
                                 <input
                                     class="form-control form-control-lg  {{ $errors->has('email') ? ' is-invalid' : '' }}"
                                     required autofocus type="text" name="email" autocomplete="off"
@@ -46,7 +43,8 @@
                             </div>
                             <div class="fv-row mb-10">
                                 <div class="d-flex flex-stack mb-2">
-                                    <label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
+                                    <label
+                                        class="form-label fw-bolder text-dark fs-6 mb-0">{{ __('global.login_password') }}</label>
                                 </div>
                                 <input
                                     class="form-control form-control-lg  {{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -57,13 +55,27 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="mb-8">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="remember" />
+                                    <span class="form-check-label">{{ trans('global.remember_me') }}</span>
+                                </label>
+                            </div>
                             <div class="text-center">
                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-                                    <span class="indicator-label">Continue</span>
-                                    <span class="indicator-progress">Please wait...
-                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    {{ __('global.proceed_to', ['attribute' => __('global.login')]) }}
                                 </button>
                             </div>
+
+                            <p class="text-center mt-5"> &copy; {{ date('Y') }}
+                                <a href="." class="link-dark">{{ config('app.name') }}</a>. <br>
+                                {{ __('global.allRightsReserved') }}
+                            </p>
+                            <p class="text-center">
+                                <a href="#" class="link-dark" rel="noopener">
+                                    v{{ config('app.version') }}
+                                </a>
+                            </p>
                         </form>
                     </div>
                 </div>

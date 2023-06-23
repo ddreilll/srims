@@ -4,148 +4,104 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-
-// Models
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreInstructorRequest;
+use App\Http\Requests\UpdateInstructorRequest;
+
 
 class InstructorController extends Controller
 {
-    /*
-|--------------------------------------------------------------------------
-|    Begin::Views
-|--------------------------------------------------------------------------
-|
-|    All functions that renders or display a page
-|
-*/
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
+        abort_if(Gate::denies('instructor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.instructors.index', ['menu_header' => 'System Setup', 'title' => "Instructor", "menu" => "schedules-menu", "sub_menu" => "instructor", "breadcrumb" => [["name" => "System Setup"]]]);
+        $instructors = Instructor::order()->paginate(10);
+
+        return view('admin.instructors.index', compact('instructors'));
     }
 
-    /*
-|--------------------------------------------------------------------------
-|    End::Views
-|--------------------------------------------------------------------------
-|
-*/
-
-
-
-    /*
-|--------------------------------------------------------------------------
-|    Begin::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
-    public function createInstructor($data)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        (new Instructor)->insertOne($data);
+        abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.instructors.create');
     }
 
-    public function getAllInstructors($filter = null)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreInstructorRequest $request)
     {
-        return (new Instructor)->fetchAll($filter);
+        abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $instructor = Instructor::create($request->all());
+
+        session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.instructor.title_singular'))]));
+
+        return redirect()->route('settings.instructors.index');
     }
 
-    public function getOneInstructor($md5Id)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Instructor $instructor)
     {
-        return (new Instructor)->fetchOne($md5Id);
+        abort_if(Gate::denies('instructor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.instructors.edit', compact('instructor'));
     }
 
-    public function updateInstructor($md5Id, $details)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateInstructorRequest $request, Instructor $instructor)
     {
-        (new Instructor)->edit($md5Id, $details);
+        $instructor->update($request->all());
+
+        session()->flash('message', __('global.update_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.instructor.title_singular'))]));
+
+        return redirect()->route('settings.instructors.index');
     }
 
-    public function removeInstructor($md5Id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Instructor $instructor)
     {
-        (new Instructor)->remove($md5Id);
+        abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $instructor->delete();
+
+        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.instructor.title_singular'))]));
+
+        return redirect()->route('settings.instructors.index');
     }
-
-
-
-    // -- Begin::Ajax Requests -- //
-
-    public function ajax_insert(Request $request)
-    {
-
-        $request->validate([
-            'emp_no' => 'string|max:20|required',
-            'first_name' => 'string|max:50|required',
-            'middle_name' => 'string|max:50|nullable',
-            'last_name' => 'string|max:50|required',
-            'suffix_name' => 'string|max:10|nullable'
-        ]);
-
-        $this->createInstructor($request);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.added_success', ['attribute' => 'Instructor'])
-        ]);
-    }
-
-    public function ajax_retrieveAll()
-    {
-        header('Content-Type: application/json');
-        echo json_encode($this->getAllInstructors());
-    }
-
-    public function ajax_retrieve(Request $request)
-    {
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        header('Content-Type: application/json');
-        echo json_encode($this->getOneInstructor($request->id));
-    }
-
-    public function ajax_update(Request $request)
-    {
-        $request->validate([
-            'id' => 'required',
-            'emp_no' => 'string|max:20|required',
-            'first_name' => 'string|max:50|required',
-            'middle_name' => 'string|max:50|nullable',
-            'last_name' => 'string|max:50|required',
-            'suffix_name' => 'string|max:10|nullable'
-        ]);
-
-        $details = [
-            'emp_no' => $request['emp_no'],
-            'first_name' => $request['first_name'],
-            'middle_name' => $request['middle_name'],
-            'last_name' => $request['last_name'],
-            'suffix_name' => $request['suffix_name']
-        ];
-
-        $this->updateInstructor($request['id'], $details);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.updated_success', ['attribute' => 'Instructor'])
-        ]);
-    }
-
-    public function ajax_delete(Request $request)
-    {
-
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        $this->removeInstructor($request['id']);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.deleted_success', ['attribute' => 'Instructor'])
-        ]);
-    }
-
 
 
     public function ajax_select2_search(Request $request)
@@ -181,10 +137,4 @@ class InstructorController extends Controller
             return response()->json($results);
         }
     }
-    /*
-|--------------------------------------------------------------------------
-|    End::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
 }

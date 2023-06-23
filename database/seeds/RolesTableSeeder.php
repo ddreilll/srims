@@ -11,20 +11,10 @@ class RolesTableSeeder extends Seeder
             [
                 'id'         => 1,
                 'title'      => 'Systems Administrator',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
             ],
             [
                 'id'         => 2,
                 'title'      => 'Encoder',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
-            ],
-            [
-                'id'         => 3,
-                'title'      => 'Verifier',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
             ],
         ];
 

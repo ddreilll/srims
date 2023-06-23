@@ -3,7 +3,7 @@
 @section('content')
     <div class="post" id="kt_post">
 
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
 
             <div class="d-flex justify-content-between mt-10 mb-20">
                 <div class="d-flex flex-center">
@@ -895,7 +895,7 @@
 
                                     case "kt_class_gradesheet_file_component_saveBtn":
                                         window_location = (
-                                            "{{ route('admin.gradesheet') }}"
+                                            "{{ route('admin.gradesheet.index') }}"
                                         );
                                         break;
                                 }

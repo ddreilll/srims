@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Document;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Models\DocumentsType;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
 
@@ -19,9 +23,9 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $documents = Document::paginate(10);
+        $documents = Document::order()->with('types')->paginate(10);
 
         return view('admin.documents.index', compact('documents'));
     }
@@ -33,7 +37,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.documents.create');
     }
@@ -46,8 +50,11 @@ class DocumentController extends Controller
      */
     public function store(StoreDocumentRequest $request)
     {
-        $yearLevel = Document::create($request->all());
-        session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.yearLevel.title_singular'))]));
+        $document = Document::create(Arr::except($request->all(), ['types']));
+
+        $document->types()->createMany($request->input('types', []));
+
+        session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.document.title_singular'))]));
 
         return redirect()->route('settings.documents.index');
     }
@@ -60,7 +67,9 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        // abort_if(Gate::denies('document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $document = Document::where((new Document)->primaryKey, $document->docu_id)->with('types')->first();
 
         return view('admin.documents.show', compact('document'));
     }
@@ -71,11 +80,12 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Document $yearLevel)
+    public function edit(Document $document)
     {
-        // abort_if(Gate::denies('document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $document = Document::where((new Document)->primaryKey, $document->docu_id)->with('types')->first();
 
-        return view('admin.documents.edit', compact('yearLevel'));
+        return view('admin.documents.edit', compact('document'));
     }
 
     /**
@@ -85,11 +95,15 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDocumentRequest $request, Document $yearLevel)
+    public function update(UpdateDocumentRequest $request, Document $document)
     {
-        $yearLevel->update($request->all());
+        $document->update(Arr::except($request->all(), ['types']));
 
-        session()->flash('message', __('global.update_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.yearLevel.title_singular'))]));
+        $document->types()->forceDelete();
+        $document->types()->createMany($request->input('types', []));
+
+
+        session()->flash('message', __('global.update_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.document.title_singular'))]));
 
         return redirect()->route('settings.documents.index');
     }
@@ -100,14 +114,34 @@ class DocumentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Document $yearLevel)
+    public function destroy(Document $document)
     {
-        // abort_if(Gate::denies('document_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $yearLevel->delete();
+        $document->delete();
 
-        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.yearLevel.title_singular'))]));
+        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.document.title_singular'))]));
 
-        return back();
+        return redirect()->route('settings.documents.index');
+    }
+
+    public function ajax_retrieve_by_category($category)
+    {
+        $di = new Document();
+        $dd = $di->selectRaw('docu_id as `id`
+        , docu_name as `text`
+        ')->where(["docu_category" => strtoupper($category)])->get();
+
+        header('Content-Type: application/json');
+        echo json_encode($dd);
+    }
+
+    public function ajax_retrieveTypes(Request $request)
+    {
+        $dti = new DocumentsType();
+        $dt = $dti->where(["docuType_document" => $request->id])->get();
+
+        header('Content-Type: application/json');
+        echo json_encode($dt);
     }
 }

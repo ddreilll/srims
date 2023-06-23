@@ -2,14 +2,15 @@
 
 namespace App\Http\Requests;
 
-use Gate;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateHonorRequest extends FormRequest
 {
     public function authorize()
     {
-        // abort_if(Gate::denies('honor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('honor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

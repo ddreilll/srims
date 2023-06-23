@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
@@ -7,249 +8,213 @@ class PermissionsTableSeeder extends Seeder
 {
     public function run()
     {
-        // $permissions = [
-        //     [
-        //         'id'         => '1',
-        //         'title'      => 'permission_create',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '2',
-        //         'title'      => 'permission_edit',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '3',
-        //         'title'      => 'permission_show',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '4',
-        //         'title'      => 'permission_delete',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '5',
-        //         'title'      => 'permission_access',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '6',
-        //         'title'      => 'role_create',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '7',
-        //         'title'      => 'role_edit',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '8',
-        //         'title'      => 'role_show',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '9',
-        //         'title'      => 'role_delete',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '10',
-        //         'title'      => 'role_access',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '11',
-        //         'title'      => 'user_management_access',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '12',
-        //         'title'      => 'user_create',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '13',
-        //         'title'      => 'user_edit',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '14',
-        //         'title'      => 'user_show',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '15',
-        //         'title'      => 'user_delete',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        //     [
-        //         'id'         => '16',
-        //         'title'      => 'user_access',
-        //         'created_at' => '2019-09-10 14:00:26',
-        //         'updated_at' => '2019-09-10 14:00:26',
-        //     ],
-        // ];
-
         $permissions = [
             [
-                'id' => '1',
-                'title'      => 'category_transaction',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'system_setup_access',
             ],
             [
-                'id' => '2',
-                'title'      => 'menu_student_request',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'user_management_access',
             ],
             [
-                'id' => '3',
-                'title'      => 'menu_student_records',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'role_create',
             ],
             [
-                'id' => '4',
-                'title'      => 'access_student_profile',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'role_edit',
             ],
             [
-                'id' => '5',
-                'title'      => 'access_student_grades',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'role_show',
             ],
             [
-                'id' => '6',
-                'title'      => 'category_system_setup',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'role_delete',
             ],
             [
-                'id' => '7',
-                'title'      => 'menu_admission_requirements',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'role_access',
             ],
             [
-                'id' => '8',
-                'title'      => 'access_requirements',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'user_create',
             ],
             [
-                'id' => '9',
-                'title'      => 'access_requirements_criteria',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'user_edit',
             ],
             [
-                'id' => '10',
-                'title'      => 'menu_course_curriculum',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'user_show',
             ],
             [
-                'id' => '11',
-                'title'      => 'access_curriculum',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'user_delete',
             ],
             [
-                'id' => '12',
-                'title'      => 'access_course',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'user_access',
             ],
             [
-                'id' => '13',
-                'title'      => 'access_subject',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'course_create',
             ],
             [
-                'id' => '14',
-                'title'      => 'menu_schedules',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'course_edit',
             ],
             [
-                'id' => '15',
-                'title'      => 'access_schedules',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'course_show',
             ],
             [
-                'id' => '16',
-                'title'      => 'access_rooms',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'course_delete',
             ],
             [
-                'id' => '17',
-                'title'      => 'access_instructors',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'course_access',
             ],
             [
-                'id' => '18',
-                'title'      => 'category_system_settings',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'document_create',
             ],
             [
-                'id' => '19',
-                'title'      => 'menu_user_accounts',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'document_edit',
             ],
             [
-                'id' => '20',
-                'title'      => 'access_users',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'document_show',
             ],
             [
-                'id' => '21',
-                'title'      => 'access_user_roles',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'document_delete',
             ],
             [
-                'id' => '22',
-                'title'      => 'menu_system_settings',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'document_access',
             ],
             [
-                'id' => '23',
-                'title'      => 'access_system_settings_curriculum',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'gradesheet_create',
             ],
             [
-                'id' => '24',
-                'title'      => 'access_system_settings_student_profile',
-                'created_at' => '2019-09-10 14:00:26',
-                'updated_at' => '2019-09-10 14:00:26',
+                'title' => 'gradesheet_edit',
+            ],
+            [
+                'title' => 'gradesheet_show',
+            ],
+            [
+                'title' => 'gradesheet_delete',
+            ],
+            [
+                'title' => 'gradesheet_access',
+            ],
+            [
+                'title' => 'gradesheet_encode',
+            ],
+            [
+                'title' => 'instructor_create',
+            ],
+            [
+                'title' => 'instructor_edit',
+            ],
+            [
+                'title' => 'instructor_show',
+            ],
+            [
+                'title' => 'instructor_delete',
+            ],
+            [
+                'title' => 'instructor_access',
+            ],
+            [
+                'title' => 'room_create',
+            ],
+            [
+                'title' => 'room_edit',
+            ],
+            [
+                'title' => 'room_show',
+            ],
+            [
+                'title' => 'room_delete',
+            ],
+            [
+                'title' => 'room_access',
+            ],
+            [
+                'title' => 'year_level_create',
+            ],
+            [
+                'title' => 'school_year_edit',
+            ],
+            [
+                'title' => 'school_year_show',
+            ],
+            [
+                'title' => 'school_year_delete',
+            ],
+            [
+                'title' => 'school_year_access',
+            ],
+            [
+                'title' => 'year_level_create',
+            ],
+            [
+                'title' => 'year_level_edit',
+            ],
+            [
+                'title' => 'year_level_show',
+            ],
+            [
+                'title' => 'year_level_delete',
+            ],
+            [
+                'title' => 'year_level_access',
+            ],
+            [
+                'title' => 'semester_create',
+            ],
+            [
+                'title' => 'semester_edit',
+            ],
+            [
+                'title' => 'semester_show',
+            ],
+            [
+                'title' => 'semester_delete',
+            ],
+            [
+                'title' => 'semester_access',
+            ],
+            [
+                'title' => 'student_create',
+            ],
+            [
+                'title' => 'student_edit',
+            ],
+            [
+                'title' => 'student_show',
+            ],
+            [
+                'title' => 'student_delete',
+            ],
+            [
+                'title' => 'student_access',
+            ],
+            [
+                'title' => 'subject_create',
+            ],
+            [
+                'title' => 'subject_edit',
+            ],
+            [
+                'title' => 'subject_show',
+            ],
+            [
+                'title' => 'subject_delete',
+            ],
+            [
+                'title' => 'subject_access',
+            ],
+            [
+                'title' => 'honor_create',
+            ],
+            [
+                'title' => 'honor_edit',
+            ],
+            [
+                'title' => 'honor_show',
+            ],
+            [
+                'title' => 'honor_delete',
+            ],
+            [
+                'title' => 'honor_access',
+            ],
+            [
+                'title' => 'profile_password_edit',
             ],
         ];
 

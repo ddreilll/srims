@@ -4,136 +4,103 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
-
-// Model
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreRoomRequest;
+use App\Http\Requests\UpdateRoomRequest;
 
 class RoomController extends Controller
 {
-    /*
-|--------------------------------------------------------------------------
-|    Begin::Views
-|--------------------------------------------------------------------------
-|
-|    All functions that renders or display a page
-|
-*/
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return view('admin.rooms.index', ['title' => "Room", "menu" => "schedules-menu", "sub_menu" => "room", "menu_header" => "System Setup", "breadcrumb" => [["name" => "System Setup"]]]);
+        abort_if(Gate::denies('room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $rooms = Room::paginate(10);
+
+        return view('admin.rooms.index', compact('rooms'));
     }
 
-    /*
-|
-|--------------------------------------------------------------------------
-|    End::Views
-|--------------------------------------------------------------------------
-|
-*/
-
-
-
-    /*
-|--------------------------------------------------------------------------
-|    Begin::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
-
-    public function createRoom($data)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        (new Room)->insertOne($data);
+        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.rooms.create');
     }
 
-    public function getAllRooms($filter = null)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreRoomRequest $request)
     {
-        return (new Room)->fetchAll($filter);
+        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $room = Room::create($request->all());
+
+        session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.room.title_singular'))]));
+
+        return redirect()->route('settings.rooms.index');
     }
 
-    public function getOneRoom($md5Id)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Room $room)
     {
-        return (new Room)->fetchOne($md5Id);
+        abort_if(Gate::denies('room_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.rooms.edit', compact('room'));
     }
 
-    public function updateRoom($md5Id, $details)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRoomRequest $request, Room $room)
     {
-        (new Room)->edit($md5Id, $details);
+        $room->update($request->all());
+
+        session()->flash('message', __('global.update_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.room.title_singular'))]));
+
+        return redirect()->route('settings.rooms.index');
     }
 
-    public function removeRoom($md5Id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Room $room)
     {
-        (new Room)->remove($md5Id);
+        abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $room->delete();
+
+        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.room.title_singular'))]));
+
+        return redirect()->route('settings.rooms.index');
     }
-
-
-
-    // -- Begin::Ajax Requests -- //
-
-    public function ajax_insert(Request $request)
-    {
-
-        $request->validate([
-            'name' => 'required|max:50'
-        ]);
-
-        $this->createRoom($request);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.added_success', ['attribute' => 'Room'])
-        ]);
-    }
-
-    public function ajax_retrieveAll()
-    {
-        header('Content-Type: application/json');
-        echo json_encode($this->getAllRooms());
-    }
-
-    public function ajax_retrieve(Request $request)
-    {
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        header('Content-Type: application/json');
-        echo json_encode($this->getOneRoom($request->id));
-    }
-
-    public function ajax_update(Request $request)
-    {
-        $request->validate([
-            'id' => 'required',
-            'name' => 'required|max:50'
-        ]);
-
-        $details = ['name' => $request['name']];
-
-        $this->updateRoom($request['id'], $details);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.updated_success', ['attribute' => 'Room'])
-        ]);
-    }
-
-    public function ajax_delete(Request $request)
-    {
-
-        $request->validate([
-            'id' => 'required'
-        ]);
-
-        $this->removeRoom($request['id']);
-
-        header('Content-Type: application/json');
-        echo json_encode([
-            'message' => __('modal.deleted_success', ['attribute' => 'Room'])
-        ]);
-    }
-
 
     public function ajax_select2_search(Request $request)
     {
@@ -145,7 +112,7 @@ class RoomController extends Controller
                 DB::raw('room_id as id'),
                 DB::raw('room_name as text'),
             )->where('room_name', 'LIKE',  '%' . $term . '%')
-            ->orderBy('room_name', 'asc')
+                ->orderBy('room_name', 'asc')
                 ->simplePaginate(10);
 
             $morePages = true;
@@ -164,10 +131,4 @@ class RoomController extends Controller
             return response()->json($results);
         }
     }
-    /*
-|--------------------------------------------------------------------------
-|    End::Functions
-|-------------------------------------------------------------------------- 
-|
-*/
 }
