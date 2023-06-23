@@ -25,7 +25,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.documents.*') ? 'active' : '' }}"
                                 href="{{ route('settings.documents.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-folder-open me-2"></i>Documents</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-folder-open me-2"></i>{{ __('cruds.document.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -35,7 +36,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.courses.*') ? 'active' : '' }}"
                                 href="{{ route('settings.courses.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-diploma me-2"></i>Courses</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-diploma me-2"></i>{{ __('cruds.course.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -45,7 +47,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.honors.*') ? 'active' : '' }}"
                                 href="{{ route('settings.honors.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-file-certificate me-2"></i>Honors</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-file-certificate me-2"></i>{{ __('cruds.honor.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -61,7 +64,7 @@
         <div class="card-body pb-5">
             <div class="fw-bolder rotate collapsible {{ request()->routeIs('settings.rooms.*') || request()->routeIs('settings.instructors.*') || request()->routeIs('settings.subjects.*') ? '' : 'collapsed' }} h3 mb-4"
                 data-bs-toggle="collapse" href="#gradesheets" role="button" aria-expanded="true"
-                aria-controls="gradesheets">Gradesheets
+                aria-controls="gradesheets">{{ __('cruds.gradesheet.title') }}
                 <span class="ms-2 rotate-180">
                     <span class="svg-icon svg-icon-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -82,7 +85,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.rooms.*') ? 'active' : '' }}"
                                 href="{{ route('settings.rooms.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-door-open me-2"></i>Rooms</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-door-open me-2"></i>{{ __('cruds.room.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -93,7 +97,7 @@
                                 href="{{ route('settings.instructors.index') }}">
                                 <span class="d-flex flex-column align-items-start">
                                     <span class="fs-5"><i
-                                            class="fa-duotone fa-chalkboard-user me-2"></i>Instructors</span>
+                                            class="fa-duotone fa-chalkboard-user me-2"></i>{{ __('cruds.instructor.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -103,7 +107,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.subjects.*') ? 'active' : '' }}"
                                 href="{{ route('settings.subjects.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-book-bookmark me-2"></i>Subjects</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-book-bookmark me-2"></i>{{ __('cruds.subject.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -140,7 +145,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.year-levels.*') ? 'active' : '' }}"
                                 href="{{ route('settings.year-levels.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-list-ol me-2"></i>Year Levels</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-list-ol me-2"></i>{{ __('cruds.yearLevel.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -150,7 +156,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.semesters.*') ? 'active' : '' }}"
                                 href="{{ route('settings.semesters.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-list-ol me-2"></i>Semesters</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-list-ol me-2"></i>{{ __('cruds.semester.title') }}</span>
                                 </span>
                             </a>
                         </li>
@@ -160,7 +167,8 @@
                             <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.school-years.*') ? 'active' : '' }}"
                                 href="{{ route('settings.school-years.index') }}">
                                 <span class="d-flex flex-column align-items-start">
-                                    <span class="fs-5"><i class="fa-duotone fa-list-ol me-2"></i>School Years</span>
+                                    <span class="fs-5"><i
+                                            class="fa-duotone fa-list-ol me-2"></i>{{ __('cruds.schoolYear.title') }}</span>
                                 </span>
                             </a>
                         </li>
