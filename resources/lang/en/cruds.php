@@ -40,8 +40,8 @@ return [
         'title_singular' => 'User Account and Management',
     ],
     'systemSetup' => [
-        'title'          => 'System Setup and Maintenance',
-        'title_singular' => 'System Setup and Maintenance',
+        'title'          => 'System Setups',
+        'title_singular' => 'System Setup',
     ],
     'user'           => [
         'title'          => 'Users',

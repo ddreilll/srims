@@ -162,55 +162,7 @@
                             class="container-fluid py-6 py-lg-0 d-flex flex-column flex-lg-row align-items-lg-stretch justify-content-lg-between">
 
                             <div class="page-title d-flex justify-content-center flex-column me-5">
-                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">
-                                    {{ $title ? $title : '' }}</h1>
-
-                                @isset($breadcrumb)
-
-                                    @if (sizeOf($breadcrumb) >= 1)
-                                        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
-
-                                            @if (sizeOf($breadcrumb) == 1 && $breadcrumb[0]['name'] == 'Dashboard')
-                                                <li class="breadcrumb-item text-dark">Dashboard
-                                                </li>
-                                            @else
-                                                <li class="breadcrumb-item text-muted">
-                                                    <a href="{{ url('/dashboard') }}"
-                                                        class="text-muted text-hover-primary">Dashboard</a>
-                                                </li>
-
-                                                @for ($i = 0; $i < sizeOf($breadcrumb); $i++)
-                                                    <li class="breadcrumb-item">
-                                                        <span class="bullet bg-gray-200 w-5px h-2px"></span>
-                                                    </li>
-
-                                                    @if (sizeOf($breadcrumb) != $i + 1)
-                                                        <li class="breadcrumb-item text-muted"><a
-                                                                href="{{ url($breadcrumb[$i]['url']) }}"
-                                                                class="text-muted text-hover-primary">{{ $breadcrumb[$i]['name'] }}</a>
-                                                        </li>
-                                                    @else
-                                                        <li class="breadcrumb-item text-dark">
-                                                            {{ $breadcrumb[$i]['name'] }}
-                                                        </li>
-                                                    @endif
-                                                @endfor
-                                            @endif
-
-
-                                        </ul>
-                                    @else
-                                        <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
-                                            <li class="breadcrumb-item text-muted">
-                                                <a href="{{ url('/') }}"
-                                                    class="text-muted text-hover-primary">Dashboard</a>
-                                            </li>
-                                            <li class="breadcrumb-item text-dark"> {{ $title ? $title : '' }}</li>
-                                        </ul>
-                                    @endif
-
-                                @endisset
-
+                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0"></h1>
                             </div>
 
                             <div class="d-flex align-items-stretch overflow-auto pt-3 pt-lg-0">
@@ -225,7 +177,7 @@
                                             <span class="pulse-ring border-3"></span>
                                         </a>
 
-                                        <a href="{{ route('student-profile') }}"
+                                        <a href="{{ route('admin.student.index') }}"
                                             class="btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary"
                                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
                                             title="View List of Students">

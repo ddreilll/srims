@@ -964,7 +964,7 @@
 
                                     case "kt_class_gradesheet_file_component_saveBtn":
                                         window_location =
-                                            "{{ route('admin.gradesheet') }}";
+                                            "{{ route('admin.gradesheet.index') }}";
                                         break;
                                 }
 

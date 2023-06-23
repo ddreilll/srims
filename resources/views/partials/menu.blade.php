@@ -57,7 +57,8 @@
                 id="#kt_aside_menu" data-kt-menu="true">
 
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ url('/dashboard') }}">
+                    <a class="menu-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}"
+                        href="{{ url('/dashboard') }}">
                         <span class="menu-icon">
                             <i class="fa-duotone fa-chart-mixed"></i>
                         </span>
@@ -74,7 +75,8 @@
 
                     @can('student_access')
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ url('/student/profile') }}">
+                            <a class="menu-link {{ request()->routeIs('admin.student.*') ? 'active' : '' }}"
+                                href="{{ url('/student/profile') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-screen-users"></i>
                                 </span>
@@ -85,7 +87,8 @@
 
                     @can('gradesheet_access')
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ url('/gradesheet') }}">
+                            <a class="menu-link {{ request()->routeIs('admin.gradesheet.*') ? 'active' : '' }}"
+                                href="{{ url('/gradesheet') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-file-lines"></i>
                                 </span>
@@ -106,7 +109,7 @@
 
                     @can('user_management_access')
                         <div data-kt-menu-trigger="click"
-                            class="menu-item menu-accordion {{ $menu == 'user-accounts' ? 'here show' : '' }}">
+                            class="menu-item menu-accordion {{ request()->routeIs('user.*') ? 'here show' : '' }}">
                             <span class="menu-link">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-users"></i>
@@ -118,7 +121,7 @@
 
                                 @can('user_access')
                                     <div class="menu-item">
-                                        <a class="menu-link {{ $sub_menu === 'manage-users' ? 'active' : '' }}"
+                                        <a class="menu-link {{ request()->routeIs('user.*') ? 'active' : '' }}"
                                             href="{{ route('users.index') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>

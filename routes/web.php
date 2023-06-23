@@ -32,7 +32,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
 
 
-    Route::get('/dashboard', 'DashboardController@dashboard_1')->name('admin.dashboard.1');
+    Route::get('dashboard', 'DashboardController@dashboard_1')->name('dashboard');
     Route::get('ajax/student-per-year', 'DashboardController@ajax_retrieve_total_student_per_year');
 
 
@@ -42,7 +42,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     |--------------------------------------------------------------------------
     |
     */
-    Route::get('gradesheet', 'GradesheetController@index')->name('admin.gradesheet');
+    Route::get('gradesheet', 'GradesheetController@index')->name('admin.gradesheet.index');
     Route::get('gradesheet/create', 'GradesheetController@create')->name('admin.gradesheet.create');;
     Route::get('gradesheet/{gradesheet}', 'GradesheetController@show')->whereNumber('gradesheet')->name('admin.gradesheet.show');
     Route::post('gradesheet/{gradesheet}/validate/student-enrollment', 'GradesheetController@validateStudentEnrollment')->name('admin.gradesheet.validate.student-enrollment');
@@ -70,7 +70,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     */
 
 
-    Route::get('student/profile', 'StudentProfileController@index')->name('student-profile');
+    Route::get('student/profile', 'StudentProfileController@index')->name('admin.student.index');
     Route::get('student/profile/archived', 'StudentProfileController@archived');
     Route::post('student/profile/add', 'StudentProfileController@ajax_insert');
     Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve')->name('admin.student.ajaxRetrieve');
@@ -93,26 +93,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
     Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
 
-
-    /*
-    |--------------------------------------------------------------------------
-    |                       Subject
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    // Route::get('subject', 'SubjectController@index')->name('subject');
-    // Route::post('subject/add', 'SubjectController@ajax_insert');
-    // Route::get('subject/retrieveAll', 'SubjectController@ajax_retrieveAll');
-    // Route::post('subject/retrieve', 'SubjectController@ajax_retrieve');
-    // Route::post('subject/update', 'SubjectController@ajax_update');
-    // Route::post('subject/delete', 'SubjectController@ajax_delete');
-    // Route::post('subject/checkDelete', 'SubjectController@ajax_checkDelete');
-
-    Route::post('subject/select2', 'SubjectController@ajax_select2_search');
-
-
-
     /*
     |--------------------------------------------------------------------------
     |                       System Settings
@@ -123,7 +103,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
 
         Route::get('/', function () {
-            return redirect()->route('settings.documents.index');
+            return view('admin.settings.index');
         });
 
         // Documents
@@ -151,11 +131,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
         Route::resource('semesters', 'SemesterController');
         Route::post('semester/select2', 'SemesterController@ajax_select2_search');
 
-
         // School year
         Route::resource('school-years', 'SchoolYearController');
         Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
     });
+
+    // Subject
+    Route::post('subject/select2', 'SubjectController@ajax_select2_search');
 
     // Instructor
     Route::post('instructor/select2', 'InstructorController@ajax_select2_search');
