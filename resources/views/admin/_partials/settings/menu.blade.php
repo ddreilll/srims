@@ -37,7 +37,7 @@
                                 href="{{ route('settings.courses.index') }}">
                                 <span class="d-flex flex-column align-items-start">
                                     <span class="fs-5"><i
-                                            class="fa-duotone fa-diploma me-2"></i>{{ __('crud.course.title') }}</span>
+                                            class="fa-duotone fa-diploma me-2"></i>{{ __('cruds.course.title') }}</span>
                                 </span>
                             </a>
                         </li>

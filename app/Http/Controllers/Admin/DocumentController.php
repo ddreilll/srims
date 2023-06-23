@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
 
@@ -21,13 +22,50 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $documents = Document::order()->with('types')->paginate(10);
+        if ($request->ajax()) {
+            $query = Document::with(['types'])->select(sprintf('%s.*', (new Document)->table));
 
-        return view('admin.documents.index', compact('documents'));
+            $table = Datatables::of($query);
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'document_edit';
+                $deleteGate    = 'document_delete';
+                $crudRoutePart = 'documents';
+
+                return view('admin.users.partials.datatableActions', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('docu_name', function ($row) {
+                return $row->docu_name ? $row->docu_name : '';
+            });
+            $table->editColumn('docu_description', function ($row) {
+                return $row->docu_description ? $row->docu_description : '';
+            });
+            $table->editColumn('docu_category', function ($row) {
+                return $row->docu_category ? $row->docu_category : '';
+            });
+            $table->editColumn('types', function ($row) {
+                return $row->types ? count($row->types) : '';
+            });
+            $table->rawColumns(['actions', 'type']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.documents.index');
+
+        // $documents = Document::order()->with('types')->paginate(10);
+
+        // return view('admin.documents.index', compact('documents'));
     }
 
     /**
