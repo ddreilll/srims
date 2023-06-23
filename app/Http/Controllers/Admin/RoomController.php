@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 
@@ -18,7 +20,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rooms = Room::paginate(10);
 
@@ -32,7 +34,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.rooms.create');
     }
@@ -45,7 +47,7 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
-        // abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $room = Room::create($request->all());
 
@@ -62,7 +64,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        // abort_if(Gate::denies('room_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.rooms.edit', compact('room'));
     }
@@ -91,7 +93,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        // abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $room->delete();
 

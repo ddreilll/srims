@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCourseRequest;
-use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 
 class CourseController extends Controller
 {
@@ -17,7 +19,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('course_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('course_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $courses = Course::paginate(10);
 
@@ -31,7 +33,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('course_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('course_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.courses.create');
     }
@@ -44,7 +46,7 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        // abort_if(Gate::denies('course_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('course_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $course = Course::create($request->all());
 
@@ -61,7 +63,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        // abort_if(Gate::denies('course_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('course_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.courses.edit', compact('course'));
     }
@@ -90,7 +92,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        // abort_if(Gate::denies('course_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('course_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $course->delete();
 

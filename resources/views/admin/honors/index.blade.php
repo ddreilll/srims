@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="post d-flex flex-column-fluid">
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 
@@ -12,11 +12,11 @@
                 <div class="flex-lg-row-fluid ms-lg-15">
                     <div class="tab-content">
 
-                        <div class="tab-pane fade show active"  role="tabpanel">
+                        <div class="tab-pane fade show active" role="tabpanel">
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div class="card-header border-0">
                                     <div class="card-title">
-                                        <h2>Honor</h2>
+                                        <h2>{{ __('cruds.honor.title') }}</h2>
                                     </div>
                                     <div class="card-toolbar">
                                         <a href="{{ route('settings.honors.create') }}"
@@ -33,7 +33,7 @@
                                                         rx="1" fill="black" />
                                                 </svg>
                                             </span>
-                                            Add Honor
+                                            {{ __('global.add') }} {{ __('cruds.honor.title_singular') }}
                                         </a>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                         class="table border table-rounded table-row-bordered gy-5 gs-7">
                                         <thead>
                                             <tr class="fw-bolder fs-6 text-gray-800 px-7">
-                                                <th>Name</th>
+                                                <th>{{ __('cruds.honor.fields.honor_name') }}</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -53,33 +53,20 @@
                                                         {{ $honor->honor_name }}
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex justify-content-end flex-shrink-0">
-                                                            <a href="{{ route('settings.honors.edit', $honor->honor_id) }}"
-                                                                class="btn btn-icon btn-light-success btn-active-success btn-sm me-1">
-                                                                <span class="svg-icon">
-                                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                                </span>
-                                                            </a>
-                                                            <form
-                                                                action="{{ route('settings.honors.destroy', $honor->honor_id) }}"
-                                                                method="POST" id="{{ $honor->honor_id }}-destroy">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <a href="#"
-                                                                    class="btn btn-icon btn-light-danger btn-active-danger btn-sm deleteBtn"
-                                                                    data-id="{{ $honor->honor_id }}">
-                                                                    <span class="svg-icon">
-                                                                        <i class="fa-solid fa-trash"></i>
-                                                                    </span>
-                                                                </a>
-                                                            </form>
-                                                        </div>
+                                                        @include('admin._partials.tableActions', [
+                                                            'viewGate' => false,
+                                                            'editGate' => true,
+                                                            'deleteGate' => true,
+                                                            'row' => $honor,
+                                                            'crudRoutePart' => 'honors',
+                                                            'primaryKey' => 'honor_id',
+                                                        ])
                                                     </td>
                                                 </tr>
                                             @empty
                                                 <tr>
                                                     <td colspan="2" class="align-middle text-center">
-                                                        No available entries
+                                                        {{ __('global.no_entries_in_table') }}
                                                     </td>
                                                 </tr>
                                             @endforelse
@@ -94,34 +81,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    @parent
-    <script type="text/javascript">
-        KTUtil.onDOMContentLoaded((function() {
-
-            $(".deleteBtn").on("click", function() {
-
-                var honorId = $(this).attr("data-id");
-
-                Swal.fire({
-                    text: "{{ __('modal.confirmation', ['action' => 'delete']) }}",
-                    icon: 'warning',
-                    showCancelButton: !0,
-                    buttonsStyling: !1,
-                    confirmButtonText: "{{ __('modal.confirm_btn', ['action' => 'delete']) }}",
-                    cancelButtonText: "{{ __('modal.cancel_btn') }}",
-                    customClass: {
-                        confirmButton: 'btn btn-danger',
-                        cancelButton: 'btn btn-active-light',
-                    },
-                }).then(function(t) {
-                    if (t.value) {
-                        $(`form#${honorId}-destroy`).submit();
-                    }
-                });
-            });
-        }));
-    </script>
 @endsection

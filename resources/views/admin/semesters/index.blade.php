@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="post d-flex flex-column-fluid">
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 
@@ -57,27 +57,14 @@
                                                         {{ $semester->term_name }}
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex justify-content-end flex-shrink-0">
-                                                            <a href="{{ route('settings.semesters.edit', $semester->term_id) }}"
-                                                                class="btn btn-icon btn-light-success btn-active-success btn-sm me-1">
-                                                                <span class="svg-icon">
-                                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                                </span>
-                                                            </a>
-                                                            <form
-                                                                action="{{ route('settings.semesters.destroy', $semester->term_id) }}"
-                                                                method="POST" id="{{ $semester->term_id }}-destroy">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <a href="#"
-                                                                    class="btn btn-icon btn-light-danger btn-active-danger btn-sm deleteBtn"
-                                                                    data-id="{{ $semester->term_id }}">
-                                                                    <span class="svg-icon">
-                                                                        <i class="fa-solid fa-trash"></i>
-                                                                    </span>
-                                                                </a>
-                                                            </form>
-                                                        </div>
+                                                        @include('admin._partials.tableActions', [
+                                                            'viewGate' => false,
+                                                            'editGate' => true,
+                                                            'deleteGate' => true,
+                                                            'row' => $semester,
+                                                            'crudRoutePart' => 'semesters',
+                                                            'primaryKey' => 'term_id',
+                                                        ])
                                                     </td>
                                                 </tr>
                                             @empty

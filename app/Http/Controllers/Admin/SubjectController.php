@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
 
@@ -18,7 +20,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('subject_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subject_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subjects = Subject::paginate(10);
 
@@ -32,7 +34,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.subjects.create');
     }
 
@@ -44,7 +46,7 @@ class SubjectController extends Controller
      */
     public function store(StoreSubjectRequest $request)
     {
-        // abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subject = Subject::create($request->all());
 
@@ -61,7 +63,7 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        // abort_if(Gate::denies('subject_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subject_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.subjects.edit', compact('subject'));
     }
@@ -90,7 +92,7 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        // abort_if(Gate::denies('subject_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subject_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $subject->delete();
 
@@ -105,23 +107,24 @@ class SubjectController extends Controller
         if ($request->ajax()) {
 
             $term = trim($request->term);
-            $subject = Subject::select(
+            $subjects = Subject::select(
                 DB::raw('subj_id as id'),
-                DB::raw('subj_code as text'),
                 DB::raw('subj_name as text'),
-                DB::raw('subj_units as text'),
+                'subj_code',
+                'subj_name',
+                'subj_units',
             )->where('subj_name', 'LIKE',  '%' . $term . '%')
-                ->orderBy('subj_name', 'asc')
+                ->orWhere('subj_code', 'LIKE',  '%' . $term . '%')
                 ->simplePaginate(10);
 
             $morePages = true;
 
-            if (empty($subject->nextPageUrl())) {
+            if (empty($subjects->nextPageUrl())) {
                 $morePages = false;
             }
 
             $results = array(
-                "results" => $subject->items(),
+                "results" => $subjects->items(),
                 "pagination" => array(
                     "more" => $morePages
                 )

@@ -36,8 +36,12 @@ return [
         ],
     ],
     'userManagement' => [
-        'title'          => 'User Management',
-        'title_singular' => 'User Management',
+        'title'          => 'User Account and Management',
+        'title_singular' => 'User Account and Management',
+    ],
+    'systemSetup' => [
+        'title'          => 'System Setup and Maintenance',
+        'title_singular' => 'System Setup and Maintenance',
     ],
     'user'           => [
         'title'          => 'Users',
@@ -309,9 +313,13 @@ return [
             'docuType_deletedAt_helper'   => '',
         ],
     ],
+    'gradesheet'           => [
+        'title'          => 'Gradesheets',
+        'title_singular' => 'Gradesheet'
+    ],
     'gradesheetPage'           => [
-        'title'          => 'Gradesheet Pages',
-        'title_singular' => 'Gradesheet Page',
+        'title'          => 'Gradesheets',
+        'title_singular' => 'Gradesheet',
         'fields'         => [
             'grdsheetpg_id'                 => 'ID',
             'grdsheetpg_id_helper'          => '',
@@ -365,5 +373,5 @@ return [
             'subj_deletedAt_helper'   => '',
         ],
     ],
-    
+
 ];

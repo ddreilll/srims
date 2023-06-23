@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSubjectRequest extends FormRequest
@@ -13,7 +15,7 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function authorize()
     {
-        // abort_if(Gate::denies('subject_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subject_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return true;
     }
 
@@ -24,15 +26,20 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function rules()
     {
-        $subject = request()->route('subject');
-        $subjectTable = $subject->table;
-        $subjectPrimaryKey = $subject->primaryKey;
-        $subjectId = $subject->subj_id;
-
         return [
-            'subj_code' => sprintf('required|string|unique:%s,subj_code,%s,%s,subj_deletedAt,NULL', $subjectTable, $subjectId, $subjectPrimaryKey),
-            'subj_name' => sprintf('required|string|unique:%s,subj_name,%s,%s,subj_deletedAt,NULL', $subjectTable, $subjectId, $subjectPrimaryKey),
-            'subj_units' => 'required|numeric|min:1',
+            'subj_code' => [
+                'required',
+                'string'
+            ],
+            'subj_name' => [
+                'required',
+                'string'
+            ],
+            'subj_units' => [
+                'required',
+                'numeric',
+                'min:1'
+            ],
         ];
     }
 }

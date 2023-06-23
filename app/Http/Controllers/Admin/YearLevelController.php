@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\YearLevel;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreYearLevelRequest;
 use App\Http\Requests\UpdateYearLevelRequest;
 
 class YearLevelController extends Controller
 {
-
-    protected $menuHeader = "System Settings";
-    protected $menu = "system-settings";
 
     /**
      * Display a listing of the resource.
@@ -22,21 +21,11 @@ class YearLevelController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('year_level_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-        $title = "Year Levels";
-        $breadcrumb = [
-            [
-                "name" => "Year Levels"
-            ]
-        ];
+        abort_if(Gate::denies('year_level_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $yearLevels = YearLevel::order()->get();
 
-        return view('admin.year_levels.index', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'yearLevels'));
+        return view('admin.year_levels.index', compact('yearLevels'));
     }
 
     /**
@@ -46,23 +35,9 @@ class YearLevelController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('year_level_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('year_level_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-        $title = "Add Year Level";
-        $breadcrumb = [
-            [
-                "name" => "Year Levels",
-                "url" => route('settings.year-levels.index')
-            ],
-            [
-                "name" => "Add Year Level"
-            ]
-        ];
-
-        return view('admin.year_levels.create', compact('menuHeader', 'title', 'menu', 'breadcrumb'));
+        return view('admin.year_levels.create');
     }
 
     /**
@@ -88,23 +63,9 @@ class YearLevelController extends Controller
      */
     public function edit(YearLevel $yearLevel)
     {
-        // abort_if(Gate::denies('year_level_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('year_level_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-        $title = "Edit Year Level";
-        $breadcrumb = [
-            [
-                "name" => "Year Levels",
-                "url" => route('settings.year-levels.index')
-            ],
-            [
-                "name" => "Edit Year Level"
-            ]
-        ];
-
-        return view('admin.year_levels.edit', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'yearLevel'));
+        return view('admin.year_levels.edit', compact('yearLevel'));
     }
 
     /**
@@ -131,7 +92,7 @@ class YearLevelController extends Controller
      */
     public function destroy(YearLevel $yearLevel)
     {
-        // abort_if(Gate::denies('year_level_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('year_level_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $yearLevel->delete();
 

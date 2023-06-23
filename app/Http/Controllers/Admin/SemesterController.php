@@ -4,17 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Term;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreSemesterRequest;
 use App\Http\Requests\UpdateSemesterRequest;
 
 class SemesterController extends Controller
 {
-
-    protected $menuHeader = "System Settings";
-    protected $menu = "system-settings";
-
     /**
      * Display a listing of the resource.
      *
@@ -22,21 +20,11 @@ class SemesterController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('semester_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-        $title = "Semesters";
-        $breadcrumb = [
-            [
-                "name" => "Semesters"
-            ]
-        ];
+        abort_if(Gate::denies('semester_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $semesters = Term::order()->get();
 
-        return view('admin.semesters.index', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'semesters'));
+        return view('admin.semesters.index', compact('semesters'));
     }
 
     /**
@@ -46,23 +34,9 @@ class SemesterController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('semester_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('semester_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-        $title = "Add Semester";
-        $breadcrumb = [
-            [
-                "name" => "Semesters",
-                "url" => route('settings.semesters.index')
-            ],
-            [
-                "name" => "Add Semester"
-            ]
-        ];
-
-        return view('admin.semesters.create', compact('menuHeader', 'title', 'menu', 'breadcrumb'));
+        return view('admin.semesters.create');
     }
 
     /**
@@ -87,23 +61,9 @@ class SemesterController extends Controller
      */
     public function edit(Term $semester)
     {
-        // abort_if(Gate::denies('semester_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('semester_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $menuHeader = $this->menuHeader;
-        $menu = $this->menu;
-
-        $title = "Edit Semester";
-        $breadcrumb = [
-            [
-                "name" => "Semesters",
-                "url" => route('settings.semesters.index')
-            ],
-            [
-                "name" => "Edit Semester"
-            ]
-        ];
-
-        return view('admin.semesters.edit', compact('menuHeader', 'title', 'menu', 'breadcrumb', 'semester'));
+        return view('admin.semesters.edit', compact('semester'));
     }
 
     /**
@@ -130,7 +90,7 @@ class SemesterController extends Controller
      */
     public function destroy(Term $semester)
     {
-        // abort_if(Gate::denies('semester_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('semester_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $semester->delete();
 

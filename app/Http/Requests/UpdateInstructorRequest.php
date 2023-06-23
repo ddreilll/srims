@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateInstructorRequest extends FormRequest
@@ -13,7 +15,7 @@ class UpdateInstructorRequest extends FormRequest
      */
     public function authorize()
     {
-        // abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

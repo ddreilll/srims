@@ -1,110 +1,148 @@
-<div class="card mb-5 mb-xl-8">
-    <div class="card-header border-0">
-        <div class="card-title">
-            <h3 class="fw-bolder m-0">Students</h3>
-        </div>
-    </div>
 
-    <div class="card-body pt-2">
-        <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.documents.*') ? 'active' : '' }}"
-                    href="{{ route('settings.documents.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Documents</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.courses.*') ? 'active' : '' }}"
-                    href="{{ route('settings.courses.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Courses</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.honors.*') ? 'active' : '' }}"
-                    href="{{ route('settings.honors.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Honors</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
+
+<div class="card mb-5 mb-xl-8">
+    <div class="card-body pb-5">
+        <div class="fw-bolder rotate collapsible {{ request()->routeIs('settings.documents.*') || request()->routeIs('settings.courses.*') || request()->routeIs('settings.honors.*') ? '' : 'collapsed' }} h3 mb-4"
+            data-bs-toggle="collapse" href="#students" role="button" aria-expanded="true" aria-controls="students">Students
+            <span class="ms-2 rotate-180">
+                <span class="svg-icon svg-icon-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
+                        <path
+                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                            fill="black"></path>
+                    </svg>
+                </span>
+            </span>
+        </div>
+
+        <div id="students"
+            class="{{ request()->routeIs('settings.documents.*') || request()->routeIs('settings.courses.*') || request()->routeIs('settings.honors.*') ? '' : 'collapse' }}"
+            style="">
+            <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.documents.*') ? 'active' : '' }}"
+                        href="{{ route('settings.documents.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-folder-open me-2"></i>Documents</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.courses.*') ? 'active' : '' }}"
+                        href="{{ route('settings.courses.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-diploma me-2"></i>Courses</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.honors.*') ? 'active' : '' }}"
+                        href="{{ route('settings.honors.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-file-certificate me-2"></i>Honors</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
 <div class="card mb-5 mb-xl-8">
-    <div class="card-header border-0">
-        <div class="card-title">
-            <h3 class="fw-bolder m-0">Gradesheets</h3>
+    <div class="card-body pb-5">
+        <div class="fw-bolder rotate collapsible {{ request()->routeIs('settings.rooms.*') || request()->routeIs('settings.instructors.*') || request()->routeIs('settings.subjects.*') ? '' : 'collapsed' }} h3 mb-4"
+            data-bs-toggle="collapse" href="#gradesheets" role="button" aria-expanded="true"
+            aria-controls="gradesheets">Gradesheets
+            <span class="ms-2 rotate-180">
+                <span class="svg-icon svg-icon-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
+                        <path
+                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                            fill="black"></path>
+                    </svg>
+                </span>
+            </span>
         </div>
-    </div>
-
-    <div class="card-body pt-2">
-        <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.rooms.*') ? 'active' : '' }}"
-                    href="{{ route('settings.rooms.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Rooms</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.instuctors.*') ? 'active' : '' }}"
-                    href="{{ route('settings.instructors.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Instructors</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.subjects.*') ? 'active' : '' }}"
-                    href="{{ route('settings.subjects.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Subjects</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
+        <div id="gradesheets"
+            class="{{ request()->routeIs('settings.rooms.*') || request()->routeIs('settings.instructors.*') || request()->routeIs('settings.subjects.*') ? '' : 'collapse' }}"
+            style="">
+            <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.rooms.*') ? 'active' : '' }}"
+                        href="{{ route('settings.rooms.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-door-open me-2"></i>Rooms</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.instructors.*') ? 'active' : '' }}"
+                        href="{{ route('settings.instructors.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-chalkboard-user me-2"></i>Instructors</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.subjects.*') ? 'active' : '' }}"
+                        href="{{ route('settings.subjects.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-book-bookmark me-2"></i>Subjects</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
 <div class="card mb-5 mb-xl-8">
-    <div class="card-header border-0">
-        <div class="card-title">
-            <h3 class="fw-bolder m-0">Misc</h3>
-        </div>
-    </div>
+    <div class="card-body pb-5">
 
-    <div class="card-body pt-2">
-        <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.year-levels.*') ? 'active' : '' }}"
-                    href="{{ route('settings.year-levels.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Year Levels</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.semesters.*') ? 'active' : '' }}"
-                    href="{{ route('settings.semesters.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">Semesters</span>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item me-0 mb-md-2">
-                <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.school-years.*') ? 'active' : '' }}"
-                    href="{{ route('settings.school-years.index') }}">
-                    <span class="d-flex flex-column align-items-start">
-                        <span class="fs-5">School Years</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
+        <div class="fw-bolder rotate collapsible {{ request()->routeIs('settings.year-levels.*') || request()->routeIs('settings.semesters.*') || request()->routeIs('settings.school-years.*') ? '' : 'collapsed' }} h3 mb-4"
+            data-bs-toggle="collapse" href="#misc" role="button" aria-expanded="true" aria-controls="misc">Misc
+            <span class="ms-2 rotate-180">
+                <span class="svg-icon svg-icon-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none">
+                        <path
+                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                            fill="black"></path>
+                    </svg>
+                </span>
+            </span>
+        </div>
+        <div id="misc"
+            class="{{ request()->routeIs('settings.year-levels.*') || request()->routeIs('settings.semesters.*') || request()->routeIs('settings.school-years.*') ? '' : 'collapse' }}"
+            style="">
+            <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column mb-3 mb-md-0 fs-6">
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.year-levels.*') ? 'active' : '' }}"
+                        href="{{ route('settings.year-levels.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-list-ol me-2"></i>Year Levels</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.semesters.*') ? 'active' : '' }}"
+                        href="{{ route('settings.semesters.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-list-ol me-2"></i>Semesters</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item me-0 mb-md-2">
+                    <a class="nav-link btn btn-active-light-dark text-black-50 fw-bolder {{ request()->routeIs('settings.school-years.*') ? 'active' : '' }}"
+                        href="{{ route('settings.school-years.index') }}">
+                        <span class="d-flex flex-column align-items-start">
+                            <span class="fs-5"><i class="fa-duotone fa-list-ol me-2"></i>School Years</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

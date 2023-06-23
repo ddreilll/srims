@@ -3,7 +3,7 @@
 @section('content')
     <div class="post" id="kt_post">
 
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-fluid">
 
             <div class="d-flex justify-content-between mt-10 mb-20">
                 <div class="d-flex flex-center">

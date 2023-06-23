@@ -6,8 +6,10 @@ use App\Models\Document;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\DocumentsType;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
 
@@ -21,7 +23,7 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $documents = Document::order()->with('types')->paginate(10);
 
@@ -35,7 +37,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.documents.create');
     }
@@ -65,7 +67,7 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        // abort_if(Gate::denies('document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $document = Document::where((new Document)->primaryKey, $document->docu_id)->with('types')->first();
 
@@ -80,7 +82,7 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
-        // abort_if(Gate::denies('document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $document = Document::where((new Document)->primaryKey, $document->docu_id)->with('types')->first();
 
         return view('admin.documents.edit', compact('document'));
@@ -114,7 +116,7 @@ class DocumentController extends Controller
      */
     public function destroy(Document $document)
     {
-        // abort_if(Gate::denies('document_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('document_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $document->delete();
 

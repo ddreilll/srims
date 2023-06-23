@@ -2,13 +2,15 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateYearLevelRequest extends FormRequest
 {
     public function authorize()
     {
-        // abort_if(Gate::denies('year_level_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('year_level_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

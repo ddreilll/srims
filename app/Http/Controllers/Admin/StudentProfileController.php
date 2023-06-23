@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Term;
 use Faker\Generator;
 use App\Models\Honor;
+use App\Models\Course;
 use App\Models\Document;
+use App\Models\YearLevel;
+use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use App\Models\DocumentsType;
 use App\Models\StudentGrades;
@@ -16,11 +19,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DocumentsSubmitted;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\SchoolYear;
-use App\Models\YearLevel;
 
 class StudentProfileController extends Controller
 {

@@ -8,9 +8,9 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
-use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
 {
@@ -77,14 +77,6 @@ class RolesController extends Controller
         $role->delete();
 
         return back();
-
-    }
-
-    public function massDestroy(MassDestroyRoleRequest $request)
-    {
-        Role::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
 
     }
 }

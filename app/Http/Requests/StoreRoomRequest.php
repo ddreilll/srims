@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Models\Room;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRoomRequest extends FormRequest
@@ -14,7 +16,7 @@ class StoreRoomRequest extends FormRequest
      */
     public function authorize()
     {
-        // abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }

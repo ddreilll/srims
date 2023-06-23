@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="post d-flex flex-column-fluid">
-        <div class="container-xxl">
+        <div class="container-fluid">
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreInstructorRequest;
 use App\Http\Requests\UpdateInstructorRequest;
+
 
 class InstructorController extends Controller
 {
@@ -18,7 +21,7 @@ class InstructorController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('instructor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('instructor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $instructors = Instructor::order()->paginate(10);
 
@@ -32,7 +35,7 @@ class InstructorController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.instructors.create');
     }
@@ -45,7 +48,7 @@ class InstructorController extends Controller
      */
     public function store(StoreInstructorRequest $request)
     {
-        // abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('instructor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $instructor = Instructor::create($request->all());
 
@@ -62,7 +65,7 @@ class InstructorController extends Controller
      */
     public function edit(Instructor $instructor)
     {
-        // abort_if(Gate::denies('instructor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('instructor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.instructors.edit', compact('instructor'));
     }
@@ -91,7 +94,7 @@ class InstructorController extends Controller
      */
     public function destroy(Instructor $instructor)
     {
-        // abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $instructor->delete();
 

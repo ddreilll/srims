@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Subject;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSubjectRequest extends FormRequest
@@ -14,7 +15,7 @@ class StoreSubjectRequest extends FormRequest
      */
     public function authorize()
     {
-        // abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('subject_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return true;
     }
 
@@ -25,12 +26,20 @@ class StoreSubjectRequest extends FormRequest
      */
     public function rules()
     {
-        $subjectTable = (new Subject())->table;
-
         return [
-            'subj_code' => sprintf('required|string|unique:%s,subj_code,NULL,id,subj_deletedAt,NULL', $subjectTable),
-            'subj_name' => sprintf('required|string|unique:%s,subj_name,NULL,id,subj_deletedAt,NULL', $subjectTable),
-            'subj_units' => 'required|numeric|min:1',
+            'subj_code' => [
+                'required',
+                'string'
+            ],
+            'subj_name' => [
+                'required',
+                'string'
+            ],
+            'subj_units' => [
+                'required',
+                'numeric',
+                'min:1'
+            ],
         ];
     }
 }
