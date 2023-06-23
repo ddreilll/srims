@@ -15,11 +15,6 @@ class Kernel extends HttpKernel
     ];
 
     protected $middlewareGroups = [
-        'api' => [
-            'throttle:60,1',
-            'bindings',
-            \App\Http\Middleware\AuthGates::class,
-        ],
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
@@ -30,6 +25,13 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
             \Illuminate\Session\Middleware\AuthenticateSession::class,
+            // Other middleware entries...
+            \App\Http\Middleware\UserLastSeen::class,
+        ],
+        'api' => [
+            'throttle:60,1',
+            'bindings',
+            \App\Http\Middleware\AuthGates::class,
         ],
     ];
 
@@ -42,5 +44,6 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'user.status' => \App\Http\Middleware\VerifyAccountStatus::class,
     ];
 }

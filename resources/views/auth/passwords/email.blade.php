@@ -4,7 +4,7 @@
     <div class="container justify-content-center">
         <div class="navbar-wrapper text-center">
             <a href="#" class="navbar-brand">
-                {{ trans('panel.site_title') }}
+                {{ trans('panel.site_title_short') }}
             </a>
         </div>
     </div>

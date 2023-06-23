@@ -36,8 +36,8 @@ return [
         ],
     ],
     'userManagement' => [
-        'title'          => 'User Account and Management',
-        'title_singular' => 'User Account and Management',
+        'title'          => 'User Account and Access Management',
+        'title_singular' => 'User Account and Access Management',
     ],
     'systemSetup' => [
         'title'          => 'System Setups',

@@ -164,7 +164,7 @@
                                 </div>
                             </div>
 
-                            @can('add_student_profile')
+                            @can('student_create')
                                 <a href="{{ url('student/profile/add') }}" class="btn btn-primary">Add Student Profile</a>
                             @endcan
                             <a href="{{ url('student/profile/archived') }}" class="mx-2 btn btn-icon btn-danger"

@@ -2,7 +2,13 @@
 
 return [
     'actions'                              => 'Actions',
+    'proceed_to'                              => 'Proceed to :attribute',
+    'return_to'                              => 'Return to :attribute',
     'add'                                  => 'Add',
+    'activate'                                  => 'Activate',
+    'active'                                  => 'Active',
+    'deactivate'                                  => 'Deactivate',
+    'deactivated'                                  => 'Deactivated',
     'list'                                  => 'List',
     'list_of'                                  => 'List of :attribute',
     'new'                                  => 'New',
@@ -257,4 +263,7 @@ return [
     'create_success'                       => 'The :attribute has been successfully saved.',
     'update_success'                       => 'The :attribute has been successfully updated.',
     'delete_success'                       => 'The :attribute has been successfully deleted.',
+    'deactivated_account'                  => 'We\'re sorry, but your user account is currently deactivated. As a result, you do not have access to certain features or areas of the application.',
+    'account'                              => 'Account',
+    'user_account'                              => 'User Account'
 ];

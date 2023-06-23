@@ -19,6 +19,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DocumentsSubmitted;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Observers\StudentActionObserver;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -49,6 +50,7 @@ class StudentProfileController extends Controller
         $sp = new StudentProfile();
         $tp = $sp->leftJoin('s_course', 'cour_stud_id', '=', 'cour_id')
             ->selectRaw('r_student.*
+
             , md5(stud_id) as stud_id_md5
             , cour_name as stud_course_name
             , cour_code as stud_course 
@@ -59,6 +61,8 @@ class StudentProfileController extends Controller
             ')
             ->where(['stud_uuid' => $profile_uuid])
             ->get();
+
+        (new StudentActionObserver)->viewed($sp::where(['stud_uuid' => $profile_uuid])->first());
 
         if (sizeof($tp) == 1) {
 
@@ -324,7 +328,7 @@ class StudentProfileController extends Controller
 
     public function createStudentProfile($student_details)
     {
-        (new StudentProfile)->insertOne($student_details);
+        $student = StudentProfile::find((new StudentProfile)->insertOne($student_details));
     }
 
     public function getAllStudentProfile($filter = null)
@@ -877,6 +881,8 @@ class StudentProfileController extends Controller
             }
         }
 
+        (new StudentActionObserver)->created(StudentProfile::where(['stud_id' => $spId])->first());
+
         header('Content-Type: application/json');
         echo json_encode([
             'message' => __('modal.added_success', ['attribute' => 'Student Profile']),
@@ -1289,6 +1295,8 @@ class StudentProfileController extends Controller
             }
         }
 
+        (new StudentActionObserver)->updated(StudentProfile::where(['stud_id' => $request->id])->first());
+
         header('Content-Type: application/json');
         echo json_encode([
             'message' => __('modal.updated_success', ['attribute' => 'Student Profile']),
@@ -1348,6 +1356,8 @@ class StudentProfileController extends Controller
         $sp = new StudentProfile();
         $sp->whereRaw('md5(stud_id) = "' . $request->id . '"')
             ->delete();
+
+        (new StudentActionObserver)->deleted(StudentProfile::where(['stud_id' => $request->id])->first());
 
         header('Content-Type: application/json');
         echo json_encode([

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\StudentActionObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Faker\Generator;
@@ -11,6 +12,13 @@ class StudentProfile extends Model
 {
     use SoftDeletes;
 
+    public static function boot()
+    {
+        parent::boot();
+
+        User::observe(StudentActionObserver::class);
+    }
+
     public $table = 'r_student';
     public $primaryKey = 'stud_id';
 
@@ -18,21 +26,54 @@ class StudentProfile extends Model
     const UPDATED_AT = 'stud_updatedAt';
     const DELETED_AT = 'stud_deletedAt';
 
+    protected $fillable = [
+        'stud_uuid',
+        'stud_studentNo',
+        'stud_firstName',
+        'stud_middleName',
+        'stud_lastName',
+        'stud_addressLine',
+        'stud_addressCity',
+        'stud_addressProvince',
+        'stud_yearOfAdmission',
+        'stud_admissionType',
+        'stud_isGraduated',
+        'stud_dateExited',
+        'stud_honor',
+        'stud_recordType',
+        'stud_academicStatus',
+        'stud_recordStatus',
+        'stud_isHonorableDismissed',
+        'stud_honorableDismissedStatus',
+        'stud_honorableDismissedDate',
+        'stud_honorableDismissedSchool',
+        'stud_validationStatus',
+        'stud_remarks',
+        'cour_stud_id',
+        'curr_stud_id',
+        'user_stud_id'
+    ];
+
+    protected $dates = [
+        'stud_createdAt',
+        'stud_updatedAt',
+        'stud_deletedAt',
+    ];
+
+    public function getFullNameAttribute()
+    {
+        return sprintf('%s, %s %s', $this->stud_lastName, $this->stud_firstName, $this->stud_middleName);
+    }
+
     public function course()
     {
-        return $this->hasOne(Course::class, 'cour_id', 'cour_stud_id' );
+        return $this->hasOne(Course::class, 'cour_id', 'cour_stud_id');
     }
 
     public function documents()
     {
         return $this->belongsToMany(Documents::class, 't_submitted_documents', 'subm_student', 'subm_document')->withPivot([
-            'subm_documentType'
-            ,'subm_documentType_1'
-            ,'subm_documentType_2'
-            ,'subm_documentType_3'
-            ,'subm_documentCategory'
-            ,'subm_remarks'
-            ,'subm_dateSubmitted'
+            'subm_documentType', 'subm_documentType_1', 'subm_documentType_2', 'subm_documentType_3', 'subm_documentCategory', 'subm_remarks', 'subm_dateSubmitted'
         ]);
     }
 

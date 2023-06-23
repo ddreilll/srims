@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreCourseRequest;
@@ -99,5 +100,30 @@ class CourseController extends Controller
         session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.course.title_singular'))]));
 
         return redirect()->route('settings.courses.index');
+    }
+
+    public function select2(Request $request)
+    {
+        $term = trim($request->term);
+        $course = Course::select(
+            DB::raw('cour_id as id'),
+            DB::raw('cour_code as text'),
+        )->where('cour_code', 'LIKE',  '%' . $term . '%')
+            ->simplePaginate(10);
+
+        $morePages = true;
+
+        if (empty($course->nextPageUrl())) {
+            $morePages = false;
+        }
+
+        $results = array(
+            "results" => $course->items(),
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+
+        return response()->json($results);
     }
 }

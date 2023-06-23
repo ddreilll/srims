@@ -27,6 +27,7 @@ class User extends Authenticatable
         'created_at',
         'deleted_at',
         'email_verified_at',
+        'last_seen',
     ];
 
     protected $fillable = [
@@ -38,11 +39,25 @@ class User extends Authenticatable
         'deleted_at',
         'remember_token',
         'email_verified_at',
+        'last_seen',
+        'is_active'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i:s A');
+    }
+
+    public function scopeOnline($query, $minutes)
+    {
+        $targetDatetime = (Carbon::now())->subMinutes($minutes);
+
+        return $query->whereDate('last_seen', $targetDatetime->toDateString())
+            ->whereTime('last_seen', '>=', $targetDatetime->toTimeString());
     }
 
     public function getIsAdminAttribute()

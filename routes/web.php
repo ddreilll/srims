@@ -10,27 +10,7 @@ Route::redirect('/home', url('/dashboard'));
 
 Auth::routes(['register' => false]);
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
-    // Permissions
-    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
-    Route::resource('permissions', 'PermissionsController');
-
-    // Roles
-    Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
-    Route::resource('roles', 'RolesController');
-
-    // Users
-    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-    Route::resource('users', 'UsersController');
-});
-
-
-Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
-
-    // User Accounts
-    Route::resource('users', 'UsersController');
-
-
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'user.status']], function () {
 
     Route::get('dashboard', 'DashboardController@dashboard_1')->name('dashboard');
     Route::get('ajax/student-per-year', 'DashboardController@ajax_retrieve_total_student_per_year');
@@ -99,6 +79,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     |--------------------------------------------------------------------------
     |
     */
+
+    // User Accounts
+    Route::resource('users', 'UsersController');
+    Route::put('users/{user}', 'UsersController@updateStatus')->name('users.update-status');
+    Route::get('deactivated', 'UsersController@showDeactivated')->name('users.deactivated');
 
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
 

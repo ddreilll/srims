@@ -1,6 +1,5 @@
 <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click"
     data-kt-menu-placement="bottom-end">Actions
-    <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
     <span class="svg-icon svg-icon-5 m-0">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -14,19 +13,21 @@
     <div class="menu-item px-3 ">
         <a href="{{ route('users.edit', $row->id) }}" class="menu-link px-3">Edit</a>
     </div>
-    <div class="separator my-3 opacity-75"></div>
-    <div class="menu-item px-3">
+    @if ($row->id != auth()->user()->id)
+        <div class="separator my-3 opacity-75"></div>
+        <div class="menu-item px-3">
 
-        <form action="{{ route('users.destroy', $row->id) }}" method="POST"
-            id="{{ $row->id }}-destroy">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <a href="#" class="menu-link px-3 menu-hover-warning deleteBtn" data-id="{{ $row->id }}">
-                <span class="menu-icon">
-                    <i class="fa-duotone fa-trash fs-5"></i>
-                </span>
-                <span class="menu-title">Delete</span>
-            </a>
-        </form>
-    </div>
+            <form action="{{ route('users.destroy', $row->id) }}" method="POST" id="{{ $row->id }}-user-destroy">
+                @method('DELETE')
+                @csrf
+                <a href="#" class="menu-link px-3 menu-hover-warning" data-id="{{ $row->id }}"
+                    user-destroy="true">
+                    <span class="menu-icon">
+                        <i class="fa-duotone fa-trash fs-5"></i>
+                    </span>
+                    <span class="menu-title">Delete</span>
+                </a>
+            </form>
+        </div>
+    @endif
 </div>

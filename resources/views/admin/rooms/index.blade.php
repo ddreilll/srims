@@ -5,13 +5,10 @@
         <div class="container-fluid">
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
-
                     @include('admin._partials.settings.menu')
                 </div>
-
                 <div class="flex-lg-row-fluid ms-lg-15">
                     <div class="tab-content">
-
                         <div class="tab-pane fade show active">
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div class="card-header border-0">
@@ -19,8 +16,7 @@
                                         <h2>{{ __('cruds.room.title') }}</h2>
                                     </div>
                                     <div class="card-toolbar">
-                                        <a href="{{ route('settings.rooms.create') }}"
-                                            class="btn btn-sm btn-light-primary">
+                                        <a href="{{ route('settings.rooms.create') }}" class="btn btn-sm btn-light-primary">
                                             <i class="fa-solid fa-plus me-2"></i>
                                             {{ __('global.add') }} {{ __('cruds.room.title') }}
                                         </a>

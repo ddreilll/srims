@@ -2,6 +2,31 @@
 
 use Illuminate\Support\Str;
 
+
+if (!function_exists('formatDatetime')) {
+
+    /**
+     * Format datetime
+     *
+     * @param int $timestamp Time timestamp parameter is an integer Unix timerstamp
+     */
+
+    function formatDatetime($timestamp)
+    {
+        // Get configuration from db
+
+        return date('m/d/Y h:i:s A', strtotime($timestamp));
+    }
+}
+
+if (!function_exists('pluralized')) {
+
+    function pluralized($word, $size)
+    {
+        return ($size > 1) ? sprintf('%ss', $word) : $word;
+    }
+}
+
 if (!function_exists('format_datetime')) {
 
     /**
