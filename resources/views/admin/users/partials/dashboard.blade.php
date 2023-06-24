@@ -6,7 +6,7 @@
     </div>
 </a>
 
-<div class="card card-xl-stretch mb-5 mb-xl-8">
+<div class="card card-xl-stretch mb-5 mb-xl-8 bg-gray-300">
     <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
             <span class="fw-bold text-dark">Two-Factor Authentication</span>
@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="card card-xl-stretch mb-5 mb-xl-8">
+<div class="card card-xl-stretch mb-5 mb-xl-8 bg-gray-200">
 
     <div class="card-body">
         <div class="d-flex">
@@ -46,10 +46,10 @@
 </div>
 
 <div class="card card-xl-stretch">
-    <div class="card-header pt-7 pb-5">
+    <div class="card-header pt-7 pb-5 bg-gray-200">
         <h3 class="card-title align-items-start flex-column">
             <span class="card-label fw-bold text-gray-800">User's Logs</span>
-            <span class="text-gray-400 mt-1 fw-semibold fs-7">as of {{ formatDatetime(now()) }}</span>
+            <span class="text-gray-400 mt-1 fw-semibold fs-8">as of {{ formatDatetime(now()) }}</span>
         </h3>
         <div class="card-toolbar">
             <a href="#" class="btn btn-sm btn-light">Show More</a>
