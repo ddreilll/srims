@@ -20,7 +20,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 pb-5">
-                                    <p class="mb-7">{{ __('panel.panel_description.system_setups') }}</p>
+                                    <p class="mb-7">{{ __('panel.setup_description') }}</p>
 
                                     <ul class="nav nav-pills d-flex justify-content-around nav-pills-custom gap-3 mb-6">
 
