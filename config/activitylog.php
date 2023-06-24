@@ -19,6 +19,13 @@ return [
      */
     'default_log_name' => 'default',
 
+    'log_name' => [
+        'default' => 'default',
+        // Add your additional log names here
+        'transaction' => 'transaction',
+        'activity' => 'activity',
+    ],
+
     /*
      * You can specify an auth driver here that gets user models.
      * If this is null we'll use the current Laravel auth driver.
