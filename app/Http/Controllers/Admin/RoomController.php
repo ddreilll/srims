@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class RoomController extends Controller
 {
@@ -18,9 +19,41 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = Room::select(sprintf('%s.*', (new Room)->table));
+
+            $table = Datatables::eloquent($query);
+
+            $table->editColumn('room_name', function ($row) {
+                return $row->room_name ? $row->room_name : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'room_edit';
+                $deleteGate    = 'room_delete';
+
+                $crudRoutePart = 'settings.rooms';
+                $primaryKey = 'room_id';
+                $resource = 'room';
+
+                return view('partials.dataTables.actionBtns', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'primaryKey',
+                    'resource',
+                    'row'
+                ));
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $rooms = Room::paginate(10);
 

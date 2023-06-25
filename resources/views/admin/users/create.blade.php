@@ -84,12 +84,12 @@
                                         </div>
 
                                         <div class="text-end">
-                                            <a href="{{ route('users.index') }}" class="btn btn-secondary me-3">
-                                                {{ trans('global.cancel') }}
-                                            </a>
-                                            <button class="btn btn-primary" type="submit">
-                                                <i class="fa-light fa-floppy-disk me-2"></i> {{ trans('global.save') }}
-                                            </button>
+
+                                            @include('partials.buttons.cancel', [
+                                                'returnRoute' => route('users.index'),
+                                            ])
+
+                                            @include('partials.buttons.submit')
                                         </div>
                                     </form>
                                 </div>

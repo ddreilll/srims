@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreSemesterRequest;
 use App\Http\Requests\UpdateSemesterRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class SemesterController extends Controller
 {
@@ -18,9 +19,45 @@ class SemesterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('semester_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = Term::select(sprintf('%s.*', (new Term)->table));
+
+            $table = Datatables::eloquent($query);
+
+            $table->editColumn('term_order', function ($row) {
+                return $row->term_order ? $row->term_order : '';
+            });
+
+            $table->editColumn('term_name', function ($row) {
+                return $row->term_name ? $row->term_name : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'semester_edit';
+                $deleteGate    = 'semester_delete';
+
+                $crudRoutePart = 'settings.semesters';
+                $primaryKey = 'term_id';
+                $resource = 'semester';
+
+                return view('partials.dataTables.actionBtns', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'primaryKey',
+                    'resource',
+                    'row'
+                ));
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $semesters = Term::order()->get();
 

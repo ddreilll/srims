@@ -23,7 +23,7 @@ class UsersController extends Controller
         if ($request->ajax()) {
             $query = User::with(['roles'])->select(sprintf('%s.*', (new User)->table));
 
-            $table = Datatables::of($query);
+            $table = Datatables::eloquent($query);
 
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
@@ -51,12 +51,42 @@ class UsersController extends Controller
                 $deleteGate    = 'user_delete';
                 $crudRoutePart = 'users';
 
-                return view('admin.users.partials.datatableActions', compact(
+                return view('partials.dataTables.actionBtns', compact(
                     'editGate',
                     'deleteGate',
                     'crudRoutePart',
                     'row'
                 ));
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate = 'user_edit';
+                $deleteGate = 'user_delete';
+
+                $crudRoutePart = 'users';
+                $resource = 'user';
+
+                $viewData = [];
+
+                if ($row->id != auth()->user()->id) {
+                    $viewData = [
+                        "editGate" => $editGate,
+                        "deleteGate" => $deleteGate,
+                        "crudRoutePart" => $crudRoutePart,
+                        "resource" => $resource,
+                        "row" => $row,
+                    ];
+                } else {
+                    $viewData = [
+                        "editGate" => $editGate,
+                        "crudRoutePart" => $crudRoutePart,
+                        "resource" => $resource,
+                        "row" => $row,
+                    ];
+                }
+
+
+                return view('partials.dataTables.actionBtns', $viewData);
             });
 
             $table->rawColumns(['actions', 'role']);

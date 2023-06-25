@@ -109,7 +109,7 @@
 
                     @can('user_management_access')
                         <div data-kt-menu-trigger="click"
-                            class="menu-item menu-accordion {{ request()->routeIs('user.*') ? 'here show' : '' }}">
+                            class="menu-item menu-accordion {{ request()->routeIs('users.*') ? 'here show' : '' }}">
                             <span class="menu-link">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-users"></i>
@@ -121,7 +121,7 @@
 
                                 @can('user_access')
                                     <div class="menu-item">
-                                        <a class="menu-link {{ request()->routeIs('user.*') ? 'active' : '' }}"
+                                        <a class="menu-link {{ request()->routeIs('users.*') ? 'active' : '' }}"
                                             href="{{ route('users.index') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>

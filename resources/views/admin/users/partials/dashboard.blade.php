@@ -1,8 +1,24 @@
-<a href="#" class="card bg-success hoverable card-xl-stretch mb-xl-8">
+{{-- <a href="#" class="card bg-success hoverable card-xl-stretch mb-xl-8">
     <div class="card-body">
         <i class="fa-duotone fa-circle-user text-gray-100 fs-2x ms-n1"></i>
         <div class="text-gray-100 fw-bold fs-2 mb-2 mt-5">{{ $onlineUsers }}</div>
         <div class="fw-semibold text-gray-100">Online {{ pluralized('user', $onlineUsers) }}</div>
+    </div>
+</a> --}}
+
+<a href="#" class="card card-xl-stretch mb-5 mb-xl-8 bg-success hoverable">
+    <div class="card-body p-2">
+        <div class="d-flex">
+            <span class="d-flex align-items-center rounded p-4 me-3">
+                <i class="fa-duotone text-gray-100 fa-circle-user display-6"></i>
+            </span>
+            <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
+                <div class="flex-grow-1 my-lg-0 my-2 me-2">
+                    <span class="text-gray-100 fw-bold fs-6">{{ $onlineUsers }}</span>
+                    <span class="text-gray-100 fw-bold d-block fw-semibold ">Online {{ pluralized('user', $onlineUsers) }}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </a>
 
@@ -14,29 +30,29 @@
         </h3>
     </div>
     <div class="card-body pt-3">
-        <a href="#" class="btn btn-danger">
+        <a href="#" class="btn btn-dark">
             <i class="fa-duotone fa-lock-keyhole-open me-2"></i>
             Unsecured
         </a>
     </div>
 </div>
 
-<div class="card card-xl-stretch mb-5 mb-xl-8 bg-gray-200">
+<div class="card card-xl-stretch mb-5 mb-xl-8 bg-gray-300">
 
     <div class="card-body">
         <div class="d-flex">
-            <span class="d-flex align-items-center bg-light-dark rounded p-4 me-3">
+            <span class="d-flex align-items-center rounded p-4 me-3">
                 <i class="fa-duotone fa-envelope-circle-check fs-1"></i>
             </span>
             <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
                 <div class="flex-grow-1 my-lg-0 my-2 me-2">
-                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Email
-                        verification</a>
+                    <span class="text-gray-800 fw-bold text-hover-primary fs-6">Email
+                        verification</span>
                     <span class="text-muted fw-bold d-block pt-1">Enhanced security and <br>
                         trust.</span>
                 </div>
                 <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-icon btn-danger btn-sm border-0">
+                    <a href="#" class="btn btn-icon btn-dark btn-sm border-0">
                         <i class="fa-solid fa-xmark fs-2"></i>
                     </a>
                 </div>
@@ -46,7 +62,7 @@
 </div>
 
 <div class="card card-xl-stretch">
-    <div class="card-header pt-7 pb-5 bg-gray-200">
+    <div class="card-header pt-7 pb-5">
         <h3 class="card-title align-items-start flex-column">
             <span class="card-label fw-bold text-gray-800">User's Logs</span>
             <span class="text-gray-400 mt-1 fw-semibold fs-8">as of {{ formatDatetime(now()) }}</span>

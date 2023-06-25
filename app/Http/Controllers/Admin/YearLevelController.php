@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreYearLevelRequest;
 use App\Http\Requests\UpdateYearLevelRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class YearLevelController extends Controller
 {
@@ -19,9 +20,45 @@ class YearLevelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('year_level_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = YearLevel::select(sprintf('%s.*', (new YearLevel)->table));
+
+            $table = Datatables::eloquent($query);
+
+            $table->editColumn('year_order', function ($row) {
+                return $row->year_order ? $row->year_order : '';
+            });
+
+            $table->editColumn('year_name', function ($row) {
+                return $row->year_name ? $row->year_name : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'year_level_edit';
+                $deleteGate    = 'year_level_delete';
+
+                $crudRoutePart = 'settings.year-levels';
+                $primaryKey = 'year_id';
+                $resource = 'yearlevel';
+
+                return view('partials.dataTables.actionBtns', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'primaryKey',
+                    'resource',
+                    'row'
+                ));
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $yearLevels = YearLevel::order()->get();
 
@@ -49,7 +86,7 @@ class YearLevelController extends Controller
     public function store(StoreYearLevelRequest $request)
     {
         $yearLevel = YearLevel::create($request->all());
-        
+
         session()->flash('message', __('global.create_success', ["attribute" => sprintf("<b>%s %s</b>", __('global.new'), __('cruds.yearLevel.title_singular'))]));
 
         return redirect()->route('settings.year-levels.index');

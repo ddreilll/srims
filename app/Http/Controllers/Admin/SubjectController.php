@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class SubjectController extends Controller
 {
@@ -18,9 +19,49 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('subject_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = Subject::select(sprintf('%s.*', (new Subject)->table));
+
+            $table = Datatables::eloquent($query);
+
+            $table->editColumn('subj_code', function ($row) {
+                return $row->subj_code ? $row->subj_code : '';
+            });
+
+            $table->editColumn('subj_name', function ($row) {
+                return $row->subj_name ? $row->subj_name : '';
+            });
+
+            $table->editColumn('subj_units', function ($row) {
+                return $row->subj_units ? $row->subj_units : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'subject_edit';
+                $deleteGate    = 'subject_delete';
+
+                $crudRoutePart = 'settings.subjects';
+                $primaryKey = 'subj_id';
+                $resource = 'subject';
+
+                return view('partials.dataTables.actionBtns', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'primaryKey',
+                    'resource',
+                    'row'
+                ));
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $subjects = Subject::paginate(10);
 

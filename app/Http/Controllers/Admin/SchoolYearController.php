@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreSchoolYearRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class SchoolYearController extends Controller
 {
@@ -18,9 +19,41 @@ class SchoolYearController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('school_year_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = SchoolYear::select(sprintf('%s.*', (new SchoolYear)->table));
+
+            $table = Datatables::eloquent($query);
+
+            $table->editColumn('syear_year', function ($row) {
+                return $row->syear_year ? $row->syear_year : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'school_year_edit';
+                $deleteGate    = 'school_year_delete';
+
+                $crudRoutePart = 'settings.school-years';
+                $primaryKey = 'syear_id';
+                $resource = 'schoolyear';
+
+                return view('partials.dataTables.actionBtns', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'primaryKey',
+                    'resource',
+                    'row'
+                ));
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $schoolYears = SchoolYear::order()->paginate(10);
 

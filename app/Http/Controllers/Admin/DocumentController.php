@@ -10,6 +10,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Enums\DocumentCategoriesEnum;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
 
@@ -21,9 +23,86 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = Document::with(['types'])->select(sprintf('%s.*', (new Document)->table));
+
+            $table = Datatables::of($query);
+
+            $table->editColumn('docu_name', function ($row) {
+                return $row->docu_name ? $row->docu_name : '';
+            });
+
+            $table->editColumn('docu_category', function ($row) {
+                return $row->docu_category ? (new DocumentCategoriesEnum())->getDisplayNames()[$row->docu_category] : '';
+            });
+
+            $table->editColumn('docu_types', function ($row) {
+
+                return  sizeOf($row->types) >= 1 ?  sizeOf($row->types) : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $viewGate = 'document_show';
+                $editGate = 'document_edit';
+                $deleteGate = 'document_delete';
+
+                $crudRoutePart = 'settings.documents';
+                $primaryKey = 'docu_id';
+                $resource = 'document';
+
+                $viewData = [];
+
+                if ($row->is_permanent) {
+                    if (sizeOf($row->types) <= 0) {
+                        $viewData = [
+                            "crudRoutePart" => $crudRoutePart,
+                            "primaryKey" => $primaryKey,
+                            "resource" => $resource,
+                            "row" => $row,
+                        ];
+                    } else {
+                        $viewData = [
+                            "viewGate" => $viewGate,
+                            "crudRoutePart" => $crudRoutePart,
+                            "primaryKey" => $primaryKey,
+                            "resource" => $resource,
+                            "row" => $row,
+                        ];
+                    }
+                } else {
+                    if (sizeOf($row->types) <= 0) {
+                        $viewData = [
+                            "editGate" => $editGate,
+                            "deleteGate" => $deleteGate,
+                            "crudRoutePart" => $crudRoutePart,
+                            "primaryKey" => $primaryKey,
+                            "resource" => $resource,
+                            "row" => $row,
+                        ];
+                    } else {
+                        $viewData = [
+                            "viewGate" => $viewGate,
+                            "editGate" => $editGate,
+                            "deleteGate" => $deleteGate,
+                            "crudRoutePart" => $crudRoutePart,
+                            "primaryKey" => $primaryKey,
+                            "resource" => $resource,
+                            "row" => $row,
+                        ];
+                    }
+                }
+
+                return view('partials.dataTables.actionBtns', $viewData);
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $documents = Document::order()->with('types')->paginate(10);
 
