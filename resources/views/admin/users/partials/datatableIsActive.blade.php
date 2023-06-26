@@ -1,5 +1,5 @@
 <form action="{{ route('users.update-status', $row->id) }}" method="POST" id="{{ $row->id }}-user-update-status">
-    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <div class="form-check form-switch">

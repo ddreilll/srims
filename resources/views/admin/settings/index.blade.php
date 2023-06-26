@@ -16,7 +16,7 @@
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div class="card-header border-0">
                                     <div class="card-title">
-                                        <h2>{{ __('cruds.systemSetup.title') }}</h2>
+                                        <h2>{{ __('cruds.systemConfigMaintenance.title') }}</h2>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 pb-5">

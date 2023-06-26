@@ -178,3 +178,19 @@
         </div>
     </div>
 @endif
+
+<a href="{{ route('log-viewer.index') }}" target="_blank" class="card card-xl-stretch mb-5 mb-xl-8 hoverable bg-gray-700">
+    <div class="card-body p-2">
+        <div class="d-flex">
+            <span class="d-flex align-items-center rounded p-4 me-3">
+                <i class="fa-solid text-gray-100 fa-bug fs-3"></i>
+            </span>
+            <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
+                <div class="flex-grow-1 my-lg-0 my-2 me-2">
+                    <span class="text-gray-100 fw-bold fs-5">Error Logs</span>
+                    <span class="text-gray-100 d-block fw-semibold">Diagnotic Tool and Viewer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

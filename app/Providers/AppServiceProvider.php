@@ -3,30 +3,23 @@
 namespace App\Providers;
 
 use App\Models\StudentProfile;
-use App\Observers\StudentActionObserver;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        Paginator::useBootstrap();
-        StudentProfile::observe(StudentActionObserver::class);
+        //
     }
 }

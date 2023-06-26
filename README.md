@@ -6,19 +6,23 @@ This boilerplate provides a strong foundation for your Laravel 9 project with es
 
 # System Requirements
 
-* Laravel 8.0&#x20;
-* PHP >= 7.3
+* Laravel 10.0&#x20;
+* PHP 8.1 or higher
   * With the following extension:
-    * BCMath PHP Extension
     * Ctype PHP Extension
+    * cURL PHP Extension
+    * DOM PHP Extension
     * Fileinfo PHP Extension
-    * JSON PHP Extension
+    * Filter PHP Extension
+    * Hash PHP Extension
     * Mbstring PHP Extension
     * OpenSSL PHP Extension
+    * PCRE PHP Extension
     * PDO PHP Extension
+    * Session PHP Extension
     * Tokenizer PHP Extension
     * XML PHP Extension
-* MySQL Database
+* MySQL **** 8.0.22 or higher
 * Composer
 
 ### **Server Configuration**
@@ -94,19 +98,26 @@ For more details see: https://laravel.com/docs/10.x/structure#introduction
 
 The application uses a `MySQL database`. The database design can be found in the `database/migrations` directory in the application's source code.
 
+Or, run the PHP Artisan command to inspect the Database Information
 
-<p align="center"><img src="/public/docs/database/db_schema.png" alt="Database Schema"></p>
+```
+php artisan db:table
+```
+
+<p align="center"><img src="/public/docs/database/db_schema-06-18-2023.png" alt="Database Schema"></p>
 
 # Third-Party Libraries
 
 The application makes use of the following third-party libraries:
 
+* [laraveldaily/laravel-charts : ^0.1.29](https://github.com/LaravelDaily/laravel-charts) Package to generate Chart.js charts directly from Laravel/Blade, without interacting with JavaScript.
+* [nuovo/spreadsheet-reader : ^0.5.11](https://github.com/nuovo/spreadsheet-reader) is a PHP spreadsheet reader that differs from others in that the main goal for it was efficient data extraction that could handle large (as in really large) files.
 * [yajra/laravel-datatables-oracle : ^10.3](https://github.com/yajra/laravel-datatables) for handling [server-side](https://www.datatables.net/manual/server-side) works of [DataTables](http://datatables.net/) jQuery Plugin via [AJAX option](https://datatables.net/reference/option/ajax) by using Eloquent ORM, Fluent Query Builder or Collection.
 * [fakerphp/faker : ^1.9.1](https://github.com/fakerphp/faker) is a PHP library that generates fake data for you. Whether you need to bootstrap your database, create good-looking XML documents, fill-in your persistence to stress test it, or anonymize data taken from a production service, Faker is for you.
 * [spatie/laravel-activitylog : ^4.6](https://github.com/spatie/laravel-activitylog) provides easy to use functions to log the activities of the users of your app.
 
 
-The application makes use of the [Eloquent ORM](https://laravel.com/docs/8.x/eloquent) for database operations, which allows us to interact with the database using an object-oriented syntax. It also use the [Blade templating engine](https://laravel.com/docs/8.x/blade#main-content) for views, which provides a simple and lightweight way to create reusable templates.
+The application makes use of the [Eloquent ORM](https://laravel.com/docs/9.x/eloquent) for database operations, which allows us to interact with the database using an object-oriented syntax. It also use the [Blade templating engine](https://laravel.com/docs/9.x/blade#main-content) for views, which provides a simple and lightweight way to create reusable templates.
 
 # Deployment
 

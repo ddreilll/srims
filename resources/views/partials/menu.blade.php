@@ -141,7 +141,7 @@
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-sliders-simple"></i>
                                 </span>
-                                <span class="menu-title">{{ __('cruds.systemSetup.title') }}</span>
+                                <span class="menu-title">{{ __('cruds.systemConfigMaintenance.title') }}</span>
                             </a>
                         </div>
                     @endcan

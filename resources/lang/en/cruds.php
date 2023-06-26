@@ -39,9 +39,9 @@ return [
         'title'          => 'User Account and Access Management',
         'title_singular' => 'User Account and Access Management',
     ],
-    'systemSetup' => [
-        'title'          => 'System Setups',
-        'title_singular' => 'System Setup',
+    'systemConfigMaintenance' => [
+        'title'          => 'System Configuration and Maintenance',
+        'title_singular' => 'System Configuration and Maintenance',
     ],
     'user'           => [
         'title'          => 'Users',

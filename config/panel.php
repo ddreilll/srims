@@ -6,6 +6,7 @@ return [
     'primary_language'    => 'en',
     'available_languages' => [
         'en' => 'English',
-        'lt' => 'Lithuanian',
     ],
+    "2fa" => 'off',
+    "email_verified" => 'on'
 ];
