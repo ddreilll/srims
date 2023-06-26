@@ -1,11 +1,3 @@
-{{-- <a href="#" class="card bg-success hoverable card-xl-stretch mb-xl-8">
-    <div class="card-body">
-        <i class="fa-duotone fa-circle-user text-gray-100 fs-2x ms-n1"></i>
-        <div class="text-gray-100 fw-bold fs-2 mb-2 mt-5">{{ $onlineUsers }}</div>
-        <div class="fw-semibold text-gray-100">Online {{ pluralized('user', $onlineUsers) }}</div>
-    </div>
-</a> --}}
-
 <a href="#" class="card card-xl-stretch mb-5 mb-xl-8 bg-success hoverable">
     <div class="card-body p-2">
         <div class="d-flex">
@@ -15,7 +7,8 @@
             <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
                 <div class="flex-grow-1 my-lg-0 my-2 me-2">
                     <span class="text-gray-100 fw-bold fs-6">{{ $onlineUsers }}</span>
-                    <span class="text-gray-100 fw-bold d-block fw-semibold ">Online {{ pluralized('user', $onlineUsers) }}</span>
+                    <span class="text-gray-100 fw-bold d-block fw-semibold ">Online
+                        {{ pluralized('user', $onlineUsers) }}</span>
                 </div>
             </div>
         </div>
@@ -30,10 +23,18 @@
         </h3>
     </div>
     <div class="card-body pt-3">
-        <a href="#" class="btn btn-dark">
-            <i class="fa-duotone fa-lock-keyhole-open me-2"></i>
-            Unsecured
-        </a>
+        <form method="POST" action="{{ route('users.updateConfig', $twoFactorKey) }}" enctype="multipart/form-data">
+
+            @method('PUT')
+            @csrf
+            @if ($twoFactor == 'on')
+                <button type="submit" value="off" name="value" class="btn btn-success"><i
+                        class="fa-solid fa-lock-keyhole me-2"></i> Secured</button>
+            @else
+                <button type="submit" value="on" name="value" class="btn btn-dark"> <i
+                        class="fa-solid fa-lock-keyhole-open me-2"></i> Unsecured</button>
+            @endif
+        </form>
     </div>
 </div>
 
@@ -52,9 +53,23 @@
                         trust.</span>
                 </div>
                 <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-icon btn-dark btn-sm border-0">
-                        <i class="fa-solid fa-xmark fs-2"></i>
-                    </a>
+
+                    <form method="POST" action="{{ route('users.updateConfig', $emailVerifiedKey) }}"
+                        enctype="multipart/form-data">
+
+                        @method('PUT')
+                        @csrf
+                        @if ($emailVerified == 'on')
+                            <button type="submit" value="off" name="value"
+                                class="btn btn-icon btn-success btn-sm border-0"><i
+                                    class="fa-solid fa-shield-check fs-2"></i></button>
+                        @else
+                            <button type="submit" value="on" name="value"
+                                class="btn btn-icon btn-dark btn-sm border-0"><i
+                                    class="fa-solid fa-shield-xmark fs-2"></i></button>
+                        @endif
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -72,7 +87,7 @@
         </div>
     </div>
     <div class="card-body pt-5">
-        @foreach ($activityLogs as $key => $activityLog)
+        @forelse ($activityLogs as $key => $activityLog)
             @if ($key >= 1)
                 <div class="separator separator-dashed my-4"></div>
             @endif
@@ -84,6 +99,8 @@
                 </div>
                 <span class="text-gray-800 fw-bold fs-7">{{ formatDatetime($activityLog->created_at) }}</span>
             </div>
-        @endforeach
+        @empty
+            <p class="text-center mb-0 text-muted">{{ __('global.no_available', ['attribute' => 'Logs']) }}</p>
+        @endforelse
     </div>
 </div>

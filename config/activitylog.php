@@ -19,6 +19,7 @@ return [
      */
     'default_log_name' => 'default',
 
+
     'log_name' => [
         'default' => 'default',
         // Add your additional log names here

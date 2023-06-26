@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Services\ConfigurationService;
+use Illuminate\Support\Facades\Config;
 use App\Http\Requests\StoreUserRequest;
 use Spatie\Activitylog\Models\Activity;
 use App\Http\Requests\UpdateUserRequest;
@@ -30,7 +32,11 @@ class UsersController extends Controller
             });
 
             $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
+                if ($row->email_verified_at) {
+                    return sprintf('<span>%s<i class="fa-duotone fa-badge-check ms-2 text-primary"></i></span>', $row->email);
+                } else {
+                    return $row->email ? $row->email : '';
+                }
             });
 
             $table->editColumn('role', function ($row) {
@@ -89,15 +95,21 @@ class UsersController extends Controller
                 return view('partials.dataTables.actionBtns', $viewData);
             });
 
-            $table->rawColumns(['actions', 'role']);
+            $table->rawColumns(['actions', 'role', 'email']);
 
             return $table->make(true);
         }
 
+        $twoFactorKey = 'panel.2fa';
+        $twoFactor = Config::get($twoFactorKey);
+
+        $emailVerifiedKey = 'panel.email_verified';
+        $emailVerified = Config::get($emailVerifiedKey);
+
         $activityLogs = Activity::where('causer_type', 'App\Models\User')->orderBy('created_at', 'desc')->limit(4)->get();
         $onlineUsers = User::online(5)->count();
 
-        return view('admin.users.index', compact('activityLogs', 'onlineUsers'));
+        return view('admin.users.index', compact('twoFactor', 'twoFactorKey', 'emailVerified', 'emailVerifiedKey', 'activityLogs', 'onlineUsers'));
     }
 
     public function create()
@@ -108,7 +120,14 @@ class UsersController extends Controller
         $activityLogs = Activity::where('causer_type', 'App\Models\User')->orderBy('created_at', 'desc')->limit(4)->get();
         $onlineUsers = User::online(5)->count();
 
-        return view('admin.users.create', compact('roles', 'activityLogs', 'onlineUsers'));
+        $twoFactorKey = 'panel.2fa';
+        $twoFactor = Config::get($twoFactorKey);
+
+        $emailVerifiedKey = 'panel.email_verified';
+        $emailVerified = Config::get($emailVerifiedKey);
+
+
+        return view('admin.users.create', compact('twoFactor', 'twoFactorKey', 'emailVerified', 'emailVerifiedKey', 'roles', 'activityLogs', 'onlineUsers'));
     }
 
     public function store(StoreUserRequest $request)
@@ -131,7 +150,13 @@ class UsersController extends Controller
         $activityLogs = Activity::where('causer_type', 'App\Models\User')->orderBy('created_at', 'desc')->limit(4)->get();
         $onlineUsers = User::online(5)->count();
 
-        return view('admin.users.edit', compact('user', 'roles', 'activityLogs', 'onlineUsers'));
+        $twoFactorKey = 'panel.2fa';
+        $twoFactor = Config::get($twoFactorKey);
+
+        $emailVerifiedKey = 'panel.email_verified';
+        $emailVerified = Config::get($emailVerifiedKey);
+
+        return view('admin.users.edit', compact('twoFactor', 'twoFactorKey', 'emailVerified', 'emailVerifiedKey', 'user', 'roles', 'activityLogs', 'onlineUsers'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -167,5 +192,15 @@ class UsersController extends Controller
     public function showDeactivated()
     {
         return view('auth.deactivated');
+    }
+
+    public function updateConfig($configKey, Request $request)
+    {
+        $configService = new ConfigurationService();
+        $configService->updateConfigByKey($configKey, $request->input('value'));
+
+        session()->flash('message', __('global.action_prompt', ["attribute" => ($configKey == "panel.email_verified") ? "<b>Email Verification</b>" : "<b>Two-Factor Authentication</b>", "action" => sprintf('turned %s successfully', $request->input('value'))]));
+
+        return redirect()->route('users.index');
     }
 }

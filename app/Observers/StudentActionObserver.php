@@ -14,7 +14,7 @@ class StudentActionObserver
             ->causedBy(auth()->user())
             ->event('viewed')
             ->useLog('activity')
-            ->log(sprintf('User: %s (%s) viewed: %s (%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_id));
+            ->log(sprintf('User: %s (%s) viewed a student: %s [%s](%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_studentNo, $student->stud_id));
     }
 
     public function stored(StudentProfile $student)
@@ -24,7 +24,7 @@ class StudentActionObserver
             ->causedBy(auth()->user())
             ->event('created')
             ->useLog('activity')
-            ->log(sprintf('User: %s (%s) created: %s (%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_id));
+            ->log(sprintf('User: %s (%s) created a student: %s [%s](%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_studentNo, $student->stud_id));
     }
 
     public function updates(StudentProfile $student)
@@ -34,7 +34,7 @@ class StudentActionObserver
             ->causedBy(auth()->user())
             ->event('updated')
             ->useLog('activity')
-            ->log(sprintf('User: %s (%s) updated: %s (%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_id));
+            ->log(sprintf('User: %s (%s) updated a student: %s [%s](%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_studentNo, $student->stud_id));
     }
 
     public function archived(StudentProfile $student)
@@ -44,6 +44,6 @@ class StudentActionObserver
             ->causedBy(auth()->user())
             ->event('archived')
             ->useLog('activity')
-            ->log(sprintf('User: %s (%s) archived: %s (%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_id));
+            ->log(sprintf('User: %s (%s) archived a student: %s [%s](%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_studentNo, $student->stud_id));
     }
 }
