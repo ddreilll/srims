@@ -6,7 +6,7 @@
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 
-                    @include('admin._partials.settings.menu')
+                    @include('admin.settings.partials.menu')
 
                 </div>
                 <div class="flex-lg-row-fluid ms-lg-15">
@@ -15,26 +15,17 @@
                             <div class="card mb-6 mb-xl-9">
                                 <div class="card-header border-0">
                                     <div class="card-title">
-                                        <h2><a href="{{ route('settings.documents.index') }}" class="btn btn-light me-1 btn-sm">
+                                        <h2><a href="{{ route('settings.documents.index') }}"
+                                                class="btn btn-light me-1 btn-sm">
                                                 <i class="fa-solid fa-arrow-left"></i></a>
                                             {{ __('global.show') }} {{ __('cruds.document.title') }}</h2>
                                     </div>
                                     <div class="card-toolbar">
-                                        <a href="{{ route('settings.documents.edit', $document->docu_id) }}"
-                                            class="btn btn-sm btn-light-warning">
-                                            <i class="fa-solid fa-pen-to-square me-2"></i>
-                                            {{ __('global.edit') }} {{ __('cruds.documentType.title') }}
-                                        </a>
 
-                                        <form action="{{ route('settings.documents.destroy', $document->docu_id) }}"
-                                            method="POST" id="{{ $document->docu_id }}-destroy">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="button" destroy-resource="true"
-                                                class="btn btn-light-danger btn-active-danger btn-sm ms-2"
-                                                data-id="{{ $document->docu_id }}"> {{ __('global.delete') }}
-                                            </button>
-                                        </form>
+                                        @include('partials.buttons.edit', [
+                                            'editRoute' => route('settings.documents.edit', $document->docu_id),
+                                            'resourceDisplay' => __('cruds.document.title_singular'),
+                                        ])
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 pb-5">

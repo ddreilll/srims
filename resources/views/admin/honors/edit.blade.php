@@ -6,7 +6,7 @@
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 
-                    @include('admin._partials.settings.menu')
+                    @include('admin.settings.partials.menu')
                 </div>
 
                 <div class="flex-lg-row-fluid ms-lg-15">

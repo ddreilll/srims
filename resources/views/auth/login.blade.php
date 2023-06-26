@@ -18,7 +18,7 @@
                 <div class="d-flex flex-center flex-column flex-column-fluid">
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
                         @if (\Session::has('message'))
-                            <p class="alert alert-info">
+                            <p class="alert alert-secondary mb-10">
                                 {{ \Session::get('message') }}
                             </p>
                         @endif

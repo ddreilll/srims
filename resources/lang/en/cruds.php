@@ -39,9 +39,9 @@ return [
         'title'          => 'User Account and Access Management',
         'title_singular' => 'User Account and Access Management',
     ],
-    'systemSetup' => [
-        'title'          => 'System Setups',
-        'title_singular' => 'System Setup',
+    'systemConfigMaintenance' => [
+        'title'          => 'System Configuration and Maintenance',
+        'title_singular' => 'System Configuration and Maintenance',
     ],
     'user'           => [
         'title'          => 'Users',
@@ -57,6 +57,10 @@ return [
             'email_verified_at_helper' => '',
             'password'                 => 'Password',
             'password_helper'          => '',
+            'is_active'                    => 'Status',
+            'is_active_helper'             => '',
+            'last_seen'                    => 'Last seen',
+            'last_seen_helper'             => '',
             'roles'                    => 'Role',
             'roles_helper'             => '',
             'remember_token'           => 'Remember Token',
@@ -175,6 +179,8 @@ return [
             'docu_category_helper'      => '',
             'docu_isPermanent'          => 'Is Permanent',
             'docu_isPermanent_helper'   => '',
+            'docu_types'          => 'Types',
+            'docu_types_helper'   => '',
             'docu_createdAt'            => 'Created at',
             'docu_createdAt_helper'     => '',
             'docu_updatedAt'            => 'Updated at',

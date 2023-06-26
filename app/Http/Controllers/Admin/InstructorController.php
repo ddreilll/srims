@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreInstructorRequest;
 use App\Http\Requests\UpdateInstructorRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 
 class InstructorController extends Controller
@@ -19,9 +20,45 @@ class InstructorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('instructor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = Instructor::select(sprintf('%s.*', (new Instructor)->table));
+
+            $table = Datatables::eloquent($query);
+
+            $table->editColumn('inst_empNo', function ($row) {
+                return $row->inst_empNo ? $row->inst_empNo : '';
+            });
+
+            $table->addColumn('full_name', function ($row) {
+                return $row->full_name ? $row->full_name : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'instructor_edit';
+                $deleteGate    = 'instructor_delete';
+
+                $crudRoutePart = 'settings.instructors';
+                $primaryKey = 'inst_id';
+                $resource = 'instructor';
+
+                return view('partials.dataTables.actionBtns', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'primaryKey',
+                    'resource',
+                    'row'
+                ));
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $instructors = Instructor::order()->paginate(10);
 

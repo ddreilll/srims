@@ -197,8 +197,12 @@
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
                         <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2021©</span>
-                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">PUPQC</a>
+                            <span class="text-muted fw-bold me-1">{{ date('Y') }}©</span>
+                            <a href="#" target="_blank"
+                                class="text-gray-800 text-hover-primary">{{ __('panel.site_title') }}</a>
+                            <a href="#" class="ms-2 link-dark" rel="noopener">
+                                v{{ config('app.version') }}
+                            </a>
                         </div>
 
                     </div>
@@ -251,12 +255,6 @@
                 },
             });
         @endif
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
         toastr.options = {
             "closeButton": false,
@@ -404,17 +402,22 @@
                 var resourceId = $(this).attr("data-id");
 
                 Swal.fire({
-                    text: ("{{ __('modal.confirmation', ['action' => ':action']) }}").replace(":action", action),
+                    text: ("{{ __('modal.confirmation', ['action' => ':action']) }}").replace(":action",
+                        action),
                     icon: icon,
                     showCancelButton: !0,
                     buttonsStyling: !1,
-                    confirmButtonText: ("{{ __('modal.confirm_btn', ['action' => ':action']) }}").replace(":action", action),
+                    confirmButtonText: ("{{ __('modal.confirm_btn', ['action' => ':action']) }}").replace(
+                        ":action", action),
                     cancelButtonText: "{{ __('modal.cancel_btn') }}",
                     customClass: {
                         confirmButton: `btn btn-${btnColor}`,
                         cancelButton: 'btn btn-active-light',
                     },
                 }).then(function(t) {
+
+                    console.log(`${resourceId}${formId}`);
+                    
                     if (t.value) {
                         $(`form#${resourceId}${formId}`).submit();
                     }
@@ -425,6 +428,68 @@
 
     <script type="text/javascript">
         KTUtil.onDOMContentLoaded((function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
+            let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
+            let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
+            let pdfButtonTrans = '{{ trans('global.datatables.pdf') }}'
+            let printButtonTrans = '{{ trans('global.datatables.print') }}'
+            let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
+
+            let languages = {
+                'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json'
+            };
+
+            $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
+                className: 'btn'
+            });
+
+            $.extend(true, $.fn.dataTable.defaults, {
+                responsive: {
+                    details: {
+                        renderer: function(api, rowIdx, columns) {
+
+                            var dl = $('<dl class="row" style="font-size: .9rem"/>');
+
+                            columns.forEach((col, i) => {
+                                if (col.hidden) {
+                                    col.title = (col.title).trim();
+                                    $(dl).append(`<dt class="col-5">${(col.title && col.title != "&nbsp;") ? col.title + ':' : ''}</dt>
+                            <dd class="col-7">${col.data}</dd>`);
+                                }
+                            });
+
+                            return columns.length >= 1 ? dl : false;
+                        }
+                    }
+                },
+                language: {
+                    buttons: {
+                        pageLength: {
+                            _: "Show %d entries",
+                            '-1': "Show All"
+                        }
+                    }
+                },
+                columnDefs: [{
+                    orderable: false,
+                    searchable: false,
+                    responsivePriority: 2,
+                    targets: -1
+                }, {
+                    responsivePriority: 1,
+                    targets: 0
+                }, ],
+                pageLength: 10,
+            });
+
+            $.fn.dataTable.ext.classes.sPageButton = '';
 
             $(`[destroy-resource="true"]`).on("click", function() {
 

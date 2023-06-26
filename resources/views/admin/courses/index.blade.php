@@ -6,7 +6,7 @@
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
 
-                    @include('admin._partials.settings.menu')
+                    @include('admin.settings.partials.menu')
                 </div>
 
                 <div class="flex-lg-row-fluid ms-lg-15">
@@ -16,19 +16,20 @@
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div class="card-header border-0">
                                     <div class="card-title">
-                                        <h2>{{ __('cruds.course.title') }}</h2>
+                                        @include('partials.dataTables.search', [
+                                            'resourceDisplay' => __('cruds.course.title_singular'),
+                                            'resource' => 'course',
+                                        ])
                                     </div>
                                     <div class="card-toolbar">
-                                        <a href="{{ route('settings.courses.create') }}"
-                                            class="btn btn-sm btn-light-primary">
-                                            <i class="fa-solid fa-plus me-2"></i>
-                                            {{ __('global.add') }} {{ __('cruds.course.title') }}
-                                        </a>
+                                        @include('partials.buttons.create', [
+                                            'createRoute' => route('settings.courses.create'),
+                                            'resourceDisplay' => __('cruds.course.title_singular'),
+                                        ])
                                     </div>
                                 </div>
                                 <div class="card-body pt-0 pb-5">
-                                    <table id="kt_honor_table"
-                                        class="table border table-rounded table-row-bordered gy-5 gs-7">
+                                    <table id="dataTable" class="table border table-rounded table-row-bordered gy-5 gs-7">
                                         <thead>
                                             <tr class="fw-bolder fs-6 text-gray-800 px-7">
                                                 <th>{{ __('cruds.course.fields.cour_code') }}</th>
@@ -37,36 +38,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($courses as $course)
-                                                <tr>
-                                                    <td class="align-middle">
-                                                        {{ $course->cour_code }}
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        {{ $course->cour_name }}
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        @include('admin._partials.tableActions', [
-                                                            'viewGate' => false,
-                                                            'editGate' => true,
-                                                            'deleteGate' => true,
-                                                            'row' => $course,
-                                                            'crudRoutePart' => 'courses',
-                                                            'primaryKey' => 'cour_id',
-                                                        ])
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="2" class="align-middle text-center">
-                                                        {{ __('global.no_entries_in_table') }}
-                                                    </td>
-                                                </tr>
-                                            @endforelse
                                         </tbody>
                                     </table>
-
-                                    {!! $courses->links() !!}
 
                                 </div>
                             </div>
@@ -77,4 +50,61 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    @parent
+    <script type="text/javascript">
+        KTUtil.onDOMContentLoaded((function() {
+
+            const resource = 'course';
+
+            let table = $("#dataTable").DataTable({
+                buttons: $.extend(true, [], $.fn.dataTable.defaults.buttons),
+                serverSide: true,
+                processing: true,
+                retrieve: true,
+                searchDelay: 400,
+                ajax: {
+                    url: "{{ route('settings.courses.index') }}"
+                },
+                columns: [{
+                        data: 'cour_code',
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'cour_name',
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'actions',
+                        searchable: false,
+                        orderable: false,
+                        className: "text-end align-middle"
+                    },
+                ],
+                orderCellsTop: true,
+                order: [
+                    [0, 'asc']
+                ],
+                lengthMenu: [
+                    [10, 25, 50, 100],
+                    ['10', '25', '50', '100']
+                ],
+                pageLength: 10,
+                drawCallback: function(settings, json) {
+                    KTMenu.createInstances();
+
+                    initializedFormSubmitConfirmation(`[${resource}-destroy="true"]`,
+                        `-${resource}-destroy`,
+                        "delete", "danger", "warning");
+                }
+            });
+
+            $(`#${resource}DataTableSearch`).on('keyup', function() {
+                table.search($(this).val()).draw();
+            });
+        }));
+    </script>
 @endsection

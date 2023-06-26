@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class CourseController extends Controller
 {
@@ -18,9 +19,45 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('course_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = Course::select(sprintf('%s.*', (new Course)->table));
+
+            $table = Datatables::eloquent($query);
+
+            $table->editColumn('cour_code', function ($row) {
+                return $row->cour_code ? $row->cour_code : '';
+            });
+
+            $table->editColumn('cour_name', function ($row) {
+                return $row->cour_name ? $row->cour_name : '';
+            });
+
+            $table->addColumn('actions', function ($row) {
+                $editGate      = 'course_edit';
+                $deleteGate    = 'course_delete';
+
+                $crudRoutePart = 'settings.courses';
+                $primaryKey = 'cour_id';
+                $resource = 'course';
+
+                return view('partials.dataTables.actionBtns', compact(
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'primaryKey',
+                    'resource',
+                    'row'
+                ));
+            });
+
+            $table->rawColumns(['actions']);
+
+            return $table->make(true);
+        }
 
         $courses = Course::paginate(10);
 

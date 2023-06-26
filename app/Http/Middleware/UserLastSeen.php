@@ -3,8 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class UserLastSeen
 {
@@ -13,14 +11,15 @@ class UserLastSeen
         $response = $next($request);
 
         // Update last_seen column if the user is authenticated
-        if (Auth::check()) {
-            User::withoutEvents(function () {
-                $user = Auth::user();
-                $user->last_seen = now();
-                $user->save();
-            });
+        if (auth()->check() && auth()->user()->is_active) {
+            $user = auth()->user();
+            $user->last_seen = now();
+            $user->save();
         }
 
         return $response;
     }
 }
+
+
+
