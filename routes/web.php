@@ -91,11 +91,7 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
         Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
 
-    // Course
-    Route::post('select2/course', 'CourseController@select2');
 
-    // Room
-    Route::post('room/select2', 'RoomController@ajax_select2_search');
 
         // User Accounts
         Route::patch('users/{user}/status', 'UsersController@updateStatus')->name('users.update-status');
