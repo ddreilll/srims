@@ -87,7 +87,7 @@
         </div>
     </div>
     <div class="card-body pt-5">
-        @foreach ($activityLogs as $key => $activityLog)
+        @forelse ($activityLogs as $key => $activityLog)
             @if ($key >= 1)
                 <div class="separator separator-dashed my-4"></div>
             @endif
@@ -99,6 +99,8 @@
                 </div>
                 <span class="text-gray-800 fw-bold fs-7">{{ formatDatetime($activityLog->created_at) }}</span>
             </div>
-        @endforeach
+        @empty
+            <p class="text-center mb-0 text-muted">{{ __('global.no_available', ['attribute' => 'Logs']) }}</p>
+        @endforelse
     </div>
 </div>

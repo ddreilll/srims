@@ -32,7 +32,11 @@ class UsersController extends Controller
             });
 
             $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
+                if ($row->email_verified_at) {
+                    return sprintf('<span>%s<i class="fa-duotone fa-badge-check ms-2 text-primary"></i></span>', $row->email);
+                } else {
+                    return $row->email ? $row->email : '';
+                }
             });
 
             $table->editColumn('role', function ($row) {
@@ -91,7 +95,7 @@ class UsersController extends Controller
                 return view('partials.dataTables.actionBtns', $viewData);
             });
 
-            $table->rawColumns(['actions', 'role']);
+            $table->rawColumns(['actions', 'role', 'email']);
 
             return $table->make(true);
         }

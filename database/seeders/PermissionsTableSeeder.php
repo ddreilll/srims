@@ -11,10 +11,28 @@ class PermissionsTableSeeder extends Seeder
     {
         $permissions = [
             [
-                'title' => 'user_management_access',
+                'title' => 'system_setup_access',
             ],
             [
-                'title' => 'permission_access',
+                'title' => 'system_backup_create',
+            ],
+            [
+                'title' => 'system_backup_download',
+            ],
+            [
+                'title' => 'system_backup_delete',
+            ],
+            [
+                'title' => 'system_backup_access',
+            ],
+            [
+                'title' => 'system_error_logs_access',
+            ],
+            [
+                'title' => 'profile_password_edit',
+            ],
+            [
+                'title' => 'user_management_access',
             ],
             [
                 'title' => 'role_create',
@@ -45,18 +63,6 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'title' => 'user_access',
-            ],
-            [
-                'title' => 'user_alert_create',
-            ],
-            [
-                'title' => 'user_alert_show',
-            ],
-            [
-                'title' => 'user_alert_delete',
-            ],
-            [
-                'title' => 'user_alert_access',
             ],
             [
                 'title' => 'course_create',
@@ -137,7 +143,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'room_access',
             ],
             [
-                'title' => 'school_year_create',
+                'title' => 'year_level_create',
             ],
             [
                 'title' => 'school_year_edit',
@@ -150,6 +156,21 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'title' => 'school_year_access',
+            ],
+            [
+                'title' => 'year_level_create',
+            ],
+            [
+                'title' => 'year_level_edit',
+            ],
+            [
+                'title' => 'year_level_show',
+            ],
+            [
+                'title' => 'year_level_delete',
+            ],
+            [
+                'title' => 'year_level_access',
             ],
             [
                 'title' => 'semester_create',
@@ -197,31 +218,19 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'subject_access',
             ],
             [
-                'title' => 'student_honor_create',
+                'title' => 'honor_create',
             ],
             [
-                'title' => 'student_honor_edit',
+                'title' => 'honor_edit',
             ],
             [
-                'title' => 'student_honor_show',
+                'title' => 'honor_show',
             ],
             [
-                'title' => 'student_honor_delete',
+                'title' => 'honor_delete',
             ],
             [
-                'title' => 'student_honor_access',
-            ],
-            [
-                'title' => 'profile_password_edit',
-            ],
-            [
-                'title' => 'config_access',
-            ],
-            [
-                'title' => 'config_2fa_update',
-            ],
-            [
-                'title' => 'config_email_verified_update',
+                'title' => 'honor_access',
             ],
         ];
 

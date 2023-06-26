@@ -179,18 +179,68 @@
     </div>
 @endif
 
-<a href="{{ route('log-viewer.index') }}" target="_blank" class="card card-xl-stretch mb-5 mb-xl-8 hoverable bg-gray-700">
-    <div class="card-body p-2">
-        <div class="d-flex">
-            <span class="d-flex align-items-center rounded p-4 me-3">
-                <i class="fa-solid text-gray-100 fa-bug fs-3"></i>
-            </span>
-            <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
-                <div class="flex-grow-1 my-lg-0 my-2 me-2">
-                    <span class="text-gray-100 fw-bold fs-5">Error Logs</span>
-                    <span class="text-gray-100 d-block fw-semibold">Diagnotic Tool and Viewer</span>
-                </div>
-            </div>
+<div class="card mb-5 mb-xl-8">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="fw-bolder  m-0">Backup & Maintenance</h3>
         </div>
     </div>
-</a>
+
+    <div class="card-body pt-2">
+
+        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+            <i class="ki-duotone ki-design-1 fs-2tx text-primary me-4"></i>
+
+            <div class="d-flex flex-stack flex-grow-1 ">
+                <div class=" fw-semibold">
+
+                    <div class="fs-6 text-gray-700 ">{{ __('panel.setup_maintenance_description') }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="py-2">
+            <div class="d-flex flex-stack">
+                <div class="d-flex">
+                    <i class="fa-duotone fa-database fs-3 text-gray-500 me-6 my-auto"></i>
+
+                    <div class="d-flex flex-column">
+                        <a href="#"
+                            class="fs-5 text-dark text-hover-primary fw-bold">{{ __('Database Backup') }}</a>
+                        <div class="fs-6 fw-semibold text-muted">{{ __('Automated Tool') }}</div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('settings.backups.index') }}" class="btn btn-icon btn-primary btn-sm">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="separator separator-dashed my-5"></div>
+
+            <div class="d-flex flex-stack">
+                <div class="d-flex">
+                    <i class="fa-duotone text-gray-500 fa-bug fs-3 me-6 my-auto"></i>
+
+                    <div class="d-flex flex-column">
+                        <a href="#"
+                            class="fs-5 text-dark text-hover-primary fw-bold">{{ __('Error Logs') }}</a>
+                        <div class="fs-6 fw-semibold text-muted">{{ __('Diagnostic Tool and Viewer') }}</div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('log-viewer.index') }}" target="_blank"
+                        class="btn btn-icon btn-primary btn-sm">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

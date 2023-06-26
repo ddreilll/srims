@@ -98,42 +98,6 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         Route::put('users/config/{configKey}', 'UsersController@updateConfig')->name('users.updateConfig');
         Route::resource('users', 'UsersController');
 
-        Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
-
-            Route::get('/', function () {
-                return view('admin.settings.index');
-            });
-
-            // Documents
-            Route::resource('documents', 'DocumentController');
-
-            // Courses 
-            Route::resource('courses', 'CourseController');
-
-            // Honors
-            Route::resource('honors', 'HonorsController');
-
-            // Rooms
-            Route::resource('rooms', 'RoomController');
-
-            // Instructors
-            Route::resource('instructors', 'InstructorController');
-
-            // Subjects
-            Route::resource('subjects', 'SubjectController');
-
-            // Year Level
-            Route::resource('year-levels', 'YearLevelController');
-
-            // Semesters
-            Route::resource('semesters', 'SemesterController');
-            Route::post('semester/select2', 'SemesterController@ajax_select2_search');
-
-            // School year
-            Route::resource('school-years', 'SchoolYearController');
-            Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
-        });
-
         // Subject
         Route::post('subject/select2', 'SubjectController@ajax_select2_search');
 
@@ -174,6 +138,48 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         Route::delete('messenger/{topic}', 'MessengerController@destroyTopic')->name('messenger.destroyTopic');
         Route::post('messenger/{topic}/reply', 'MessengerController@replyToTopic')->name('messenger.reply');
         Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
+    });
+
+    Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+        Route::resource('backups', 'BackupController');
+        Route::get('backups/download/{file_name}', 'BackupController@download')->name('backups.export');
+
+
+        Route::group(['namespace' => 'Admin'], function () {
+
+            Route::get('/', function () {
+                return view('admin.settings.index');
+            });
+
+            // Documents
+            Route::resource('documents', 'DocumentController');
+
+            // Courses 
+            Route::resource('courses', 'CourseController');
+
+            // Honors
+            Route::resource('honors', 'HonorsController');
+
+            // Rooms
+            Route::resource('rooms', 'RoomController');
+
+            // Instructors
+            Route::resource('instructors', 'InstructorController');
+
+            // Subjects
+            Route::resource('subjects', 'SubjectController');
+
+            // Year Level
+            Route::resource('year-levels', 'YearLevelController');
+
+            // Semesters
+            Route::resource('semesters', 'SemesterController');
+            Route::post('semester/select2', 'SemesterController@ajax_select2_search');
+
+            // School year
+            Route::resource('school-years', 'SchoolYearController');
+            Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
+        });
     });
 
     Route::group(['prefix' => 'my-profile', 'as' => 'my-profile.', 'namespace' => 'Auth'], function () {

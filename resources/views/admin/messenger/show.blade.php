@@ -7,7 +7,7 @@
     <p>
         @if($topic->receiverOrCreator() !== null && !$topic->receiverOrCreator()->trashed())
             <a href="{{ route('messenger.reply', [$topic->id]) }}" class="btn btn-primary">
-                {{ trans('global.reply') }}
+                <i class="fa-solid fa-reply me-1"></i> {{ trans('global.reply') }}
             </a>
         @endif
     </p>

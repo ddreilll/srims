@@ -57,12 +57,25 @@
                 id="#kt_aside_menu" data-kt-menu="true">
 
                 <div class="menu-item">
-                    <a class="menu-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}"
-                        href="{{ url('/dashboard') }}">
+                    <a class="menu-link {{ request()->routeIs('home*') ? 'active' : '' }}"
+                        href="{{ route('home') }}">
                         <span class="menu-icon">
                             <i class="fa-duotone fa-chart-mixed"></i>
                         </span>
                         <span class="menu-title">Dashboard</span>
+                    </a>
+                </div>
+
+                <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('messenger*') ? 'active' : '' }}"
+                        href="{{ route('messenger.index') }}">
+                        <span class="menu-icon">
+                            <i class="fa-duotone fa-inbox"></i>
+                        </span>
+                        <span class="menu-title">{{ __('global.messages') }}</span>
+                        @if (!request()->routeIs('messenger*') && ($unreadCounts = (new App\Models\QaTopic())->unreadCount() > 0))
+                            <span class="menu-badge"><span class="badge badge-warning">{{ $unreadCounts }}</span></span>
+                        @endif
                     </a>
                 </div>
 

@@ -18,10 +18,6 @@ class RolesTableSeeder extends Seeder
                 'id'    => 2,
                 'title' => 'Encoder',
             ],
-            [
-                'id'    => 3,
-                'title' => 'Verifier',
-            ],
         ];
 
         Role::insert($roles);

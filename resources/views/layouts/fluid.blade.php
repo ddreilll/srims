@@ -197,8 +197,12 @@
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
                         <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2021©</span>
-                            <a href="#" target="_blank" class="text-gray-800 text-hover-primary">PUPQC</a>
+                            <span class="text-muted fw-bold me-1">{{ date('Y') }}©</span>
+                            <a href="#" target="_blank"
+                                class="text-gray-800 text-hover-primary">{{ __('panel.site_title') }}</a>
+                            <a href="#" class="ms-2 link-dark" rel="noopener">
+                                v{{ config('app.version') }}
+                            </a>
                         </div>
 
                     </div>
@@ -411,6 +415,9 @@
                         cancelButton: 'btn btn-active-light',
                     },
                 }).then(function(t) {
+
+                    console.log(`${resourceId}${formId}`);
+                    
                     if (t.value) {
                         $(`form#${resourceId}${formId}`).submit();
                     }
@@ -479,7 +486,7 @@
                     responsivePriority: 1,
                     targets: 0
                 }, ],
-                pageLength: 10, 
+                pageLength: 10,
             });
 
             $.fn.dataTable.ext.classes.sPageButton = '';
