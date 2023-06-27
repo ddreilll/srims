@@ -111,6 +111,9 @@ class GradesheetController extends Controller
                 ->filterColumn('instructor', function ($query, $keyword) {
                     $query->whereRaw('CONCAT(inst_firstName, COALESCE(inst_middleName, ""), " ", inst_lastName) like ?', ["%%{$keyword}%%"]);
                 })
+                ->orderColumn('sche_acadYear', function ($query, $order) {
+                    $query->orderBy('class_acadYear', $order);
+                })
                 ->rawColumns(['subject_code', 'action'])
                 ->toJson();
         }
