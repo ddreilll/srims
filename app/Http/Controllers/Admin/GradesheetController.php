@@ -45,7 +45,7 @@ class GradesheetController extends Controller
                 ->leftJoin('s_instructor', 'class_inst_id', '=', 'inst_id')
                 ->leftJoin('s_term', 'class_term_id', '=', 'term_id')
                 ->select([
-                    'class_id', DB::raw('md5(class_id) as class_id_md5'), 'subj_code', DB::raw('subj_name as subject_name'), DB::raw('class_section as section'), DB::raw('CONCAT(term_name, ", SY ", CONCAT(class_acadYear, "-", class_acadYear + 1)) as semester_sy'), DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as instructor'), DB::raw('(SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE class_enrsub_id = class_id AND enrsub_deletedAt IS NULL) as enrolled_student_count'), DB::raw('(SELECT  SUM(s_gradesheet_page.grdsheetpg_rowNo) FROM s_gradesheet_page WHERE grdsheetpg_gradesheet_id = class_id AND grdsheetpg_deletedAt IS NULL) as enrolled_student_total'), 'class_createdAt', 'class_updatedAt'
+                    'class_id', DB::raw('md5(class_id) as class_id_md5'), 'subj_id', 'subj_code', 'term_id', DB::raw('subj_name as subject_name'), DB::raw('class_section as section'), DB::raw('CONCAT(term_name, ", SY ", CONCAT(class_acadYear, "-", class_acadYear + 1)) as semester_sy'), 'inst_id', DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as instructor'), DB::raw('(SELECT COUNT(*) FROM t_student_enrolled_subjects WHERE class_enrsub_id = class_id AND enrsub_deletedAt IS NULL) as enrolled_student_count'), DB::raw('(SELECT  SUM(s_gradesheet_page.grdsheetpg_rowNo) FROM s_gradesheet_page WHERE grdsheetpg_gradesheet_id = class_id AND grdsheetpg_deletedAt IS NULL) as enrolled_student_total'), 'class_createdAt', 'class_updatedAt'
                 ]);
 
             return Datatables::eloquent($query)
@@ -100,7 +100,7 @@ class GradesheetController extends Controller
                     return view('admin.gradesheet.partials.datatableActions', compact('row'));
                 })
                 ->filterColumn('subject_code', function ($query, $keyword) {
-                    $query->whereRaw("subj_code like ?", ["%%{$keyword}%%"]);
+                    $query->where('subj_id', $keyword);
                 })
                 ->filterColumn('subject_name', function ($query, $keyword) {
                     $query->whereRaw("subj_name like ?", ["%%{$keyword}%%"]);
@@ -109,7 +109,13 @@ class GradesheetController extends Controller
                     $query->whereRaw("class_section like ?", ["%%{$keyword}%%"]);
                 })
                 ->filterColumn('instructor', function ($query, $keyword) {
-                    $query->whereRaw('CONCAT(inst_firstName, COALESCE(inst_middleName, ""), " ", inst_lastName) like ?', ["%%{$keyword}%%"]);
+                    $query->whereRaw('CONCAT(inst_firstName, COALESCE(inst_middleName, ""), " ", inst_lastName) like ?', ["%%{$keyword}%%"])->orWhere('inst_id', $keyword);
+                })
+                ->filterColumn('sche_acadYear', function ($query, $keyword) {
+                    $query->where('class_acadYear', $keyword)->orWhere('term_id', $keyword);;
+                })
+                ->orderColumn('sche_acadYear', function ($query, $order) {
+                    $query->orderBy('class_acadYear', $order);
                 })
                 ->rawColumns(['subject_code', 'action'])
                 ->toJson();

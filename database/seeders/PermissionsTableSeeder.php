@@ -143,7 +143,7 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'room_access',
             ],
             [
-                'title' => 'year_level_create',
+                'title' => 'school_year_create',
             ],
             [
                 'title' => 'school_year_edit',

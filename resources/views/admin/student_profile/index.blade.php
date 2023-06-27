@@ -87,13 +87,11 @@
                                             class="form-select  fw-bold" data-control="select2"
                                             data-placeholder="Select option" data-allow-clear="true"
                                             data-kt-student-profile-filter-column="3">
-                                            {{-- 'UNG - Undergraduate', 'RTN - Returnee', 'DIS - Honorable Dismissal', 'GRD - Graduated' --}}
                                             <option></option>
                                             <option value="UNG">Undergraduate</option>
                                             <option value="RTN">Returnee</option>
                                             <option value="DIS">Honorable Dismissal</option>
                                             <option value="GRD">Graduated</option>
-                                            <option value="NA">------------ Undefined ------------</option>
                                         </select>
                                     </div>
                                     <div class="mb-5">
