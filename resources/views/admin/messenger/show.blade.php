@@ -17,7 +17,7 @@
                 <div class="row list-group-item">
                     <div class="row">
                         <div class="col col-lg-10">
-                            <strong>{{ $message->sender->email }}</strong>
+                            <strong>{{ $message->sender->name }}</strong>
                         </div>
                         <div class="col col-lg-2">
                             {{ $message->created_at->diffForHumans() }}
