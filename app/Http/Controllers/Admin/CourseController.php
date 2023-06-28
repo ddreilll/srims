@@ -59,9 +59,7 @@ class CourseController extends Controller
             return $table->make(true);
         }
 
-        $courses = Course::paginate(10);
-
-        return view('admin.courses.index', compact('courses'));
+        return view('admin.courses.index');
     }
 
     /**

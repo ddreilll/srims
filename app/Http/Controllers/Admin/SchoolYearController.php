@@ -55,9 +55,7 @@ class SchoolYearController extends Controller
             return $table->make(true);
         }
 
-        $schoolYears = SchoolYear::order()->paginate(10);
-
-        return view('admin.school_years.index', compact('schoolYears'));
+        return view('admin.school_years.index');
     }
 
     /**

@@ -55,9 +55,7 @@ class HonorsController extends Controller
             return $table->make(true);
         }
 
-        $honors = Honor::all();
-
-        return view('admin.honors.index', compact('honors'));
+        return view('admin.honors.index');
     }
 
     /**

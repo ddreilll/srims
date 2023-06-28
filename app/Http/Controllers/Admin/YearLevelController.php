@@ -60,9 +60,7 @@ class YearLevelController extends Controller
             return $table->make(true);
         }
 
-        $yearLevels = YearLevel::order()->get();
-
-        return view('admin.year_levels.index', compact('yearLevels'));
+        return view('admin.year_levels.index');
     }
 
     /**

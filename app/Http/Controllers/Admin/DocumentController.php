@@ -104,9 +104,7 @@ class DocumentController extends Controller
             return $table->make(true);
         }
 
-        $documents = Document::order()->with('types')->paginate(10);
-
-        return view('admin.documents.index', compact('documents'));
+        return view('admin.documents.index');
     }
 
     /**
