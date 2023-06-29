@@ -55,9 +55,7 @@ class RoomController extends Controller
             return $table->make(true);
         }
 
-        $rooms = Room::paginate(10);
-
-        return view('admin.rooms.index', compact('rooms'));
+        return view('admin.rooms.index');
     }
 
     /**

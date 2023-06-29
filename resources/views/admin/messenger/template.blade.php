@@ -1,54 +1,6 @@
 @extends('layouts.fluid')
 
 @section('content')
-    {{-- <div class="post d-flex flex-column-fluid">
-        <div class="container-fluid">
-            <div class="d-flex flex-column flex-xl-row">
-                <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
-
-                    <p>
-                        <a href="{{ route('messenger.createTopic') }}" class="btn btn-primary btn-block">
-                            {{ trans('global.new_message') }}
-                        </a>
-                    </p>
-                    <div class="list-group">
-                        <a href="{{ route('messenger.index') }}" class="list-group-item">
-                            {{ trans('global.all_messages') }}
-                        </a>
-                        <a href="{{ route('messenger.showInbox') }}" class="list-group-item">
-                            @if ($unreads['inbox'] > 0)
-                                <strong>
-                                    {{ trans('global.inbox') }}
-                                    ({{ $unreads['inbox'] }})
-                                </strong>
-                            @else
-                                {{ trans('global.inbox') }}
-                            @endif
-                        </a>
-                        <a href="{{ route('messenger.showOutbox') }}" class="list-group-item">
-                            @if ($unreads['outbox'] > 0)
-                                <strong>
-                                    {{ trans('global.outbox') }}
-                                    ({{ $unreads['outbox'] }})
-                                </strong>
-                            @else
-                                {{ trans('global.outbox') }}
-                            @endif
-                        </a>
-                    </div>
-                </div>
-
-                <div class="flex-lg-row-fluid ms-lg-15">
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active">
-                            @yield('messenger-content')
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <div class="container-fluid">
         <div class="row g-7">
             <div class="col-sm-3">

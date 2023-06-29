@@ -59,9 +59,7 @@ class SemesterController extends Controller
             return $table->make(true);
         }
 
-        $semesters = Term::order()->get();
-
-        return view('admin.semesters.index', compact('semesters'));
+        return view('admin.semesters.index');
     }
 
     /**

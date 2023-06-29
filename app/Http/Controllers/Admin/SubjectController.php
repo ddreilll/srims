@@ -63,9 +63,7 @@ class SubjectController extends Controller
             return $table->make(true);
         }
 
-        $subjects = Subject::paginate(10);
-
-        return view('admin.subjects.index', compact('subjects'));
+        return view('admin.subjects.index');
     }
 
     /**

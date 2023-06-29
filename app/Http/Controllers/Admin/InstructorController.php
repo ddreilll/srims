@@ -60,9 +60,7 @@ class InstructorController extends Controller
             return $table->make(true);
         }
 
-        $instructors = Instructor::order()->paginate(10);
-
-        return view('admin.instructors.index', compact('instructors'));
+        return view('admin.instructors.index');
     }
 
     /**
