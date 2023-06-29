@@ -190,6 +190,20 @@
                 </div>
 
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+                    @if (strtoupper(config('app.env')) == 'TEST')
+                        <div class="container-fluid mb-9 ">
+                            <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
+                                <div class="d-flex flex-stack flex-grow-1 ">
+                                    <div class="fs-6 text-danger fw-semibold"><i
+                                            class="fa-solid fa-triangle-exclamation fs-3 me-2 text-danger"></i>
+                                        {!! __('panel.test_environment_advisory') !!}</div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+
                     @yield('content')
                 </div>
 
@@ -417,7 +431,7 @@
                 }).then(function(t) {
 
                     console.log(`${resourceId}${formId}`);
-                    
+
                     if (t.value) {
                         $(`form#${resourceId}${formId}`).submit();
                     }

@@ -15,8 +15,22 @@
                 </div>
             </div>
             <div class="d-flex flex-column flex-lg-row-fluid py-10">
+
                 <div class="d-flex flex-center flex-column flex-column-fluid">
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+                        
+                        @if (strtoupper(config('app.env')) == 'TEST')
+                            <div class="container-fluid mb-9 ">
+                                <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
+                                    <div class="d-flex flex-stack flex-grow-1 ">
+                                        <div class="fs-6 text-danger fw-semibold"><i
+                                                class="fa-solid fa-triangle-exclamation fs-3 me-2 text-danger"></i>
+                                            {!! __('panel.test_environment_advisory') !!}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         @if (\Session::has('message'))
                             <p class="alert alert-secondary mb-10">
                                 {{ \Session::get('message') }}
