@@ -113,6 +113,9 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'gradesheet_encode',
             ],
             [
+                'title' => 'gradesheet_generate',
+            ],
+            [
                 'title' => 'instructor_create',
             ],
             [
@@ -197,10 +200,31 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'student_show',
             ],
             [
-                'title' => 'student_delete',
+                'title' => 'student_show_documents',
+            ],
+            [
+                'title' => 'student_show_scholastic',
+            ],
+            [
+                'title' => 'student_archive',
+            ],
+            [
+                'title' => 'student_archive_access',
+            ],
+            [
+                'title' => 'student_archive_restore',
             ],
             [
                 'title' => 'student_access',
+            ],
+            [
+                'title' => 'student_logs_access',
+            ],
+            [
+                'title' => 'student_generate_scholastic_data',
+            ],
+            [
+                'title' => 'student_generate_document_evaluation',
             ],
             [
                 'title' => 'subject_create',

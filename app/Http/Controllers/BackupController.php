@@ -2,25 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Spatie\Backup\Helpers\Format;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class BackupController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -71,11 +60,6 @@ class BackupController extends Controller
         return view("backups.index");
     }
 
-    /**
-     * Downloads a backup zip file.
-     *
-     * TODO: make it work no matter the flysystem driver (S3 Bucket, etc).
-     */
     public function download($file_name)
     {
         $file = config('backup.backup.name') . '/' . $file_name;
@@ -88,9 +72,7 @@ class BackupController extends Controller
             return redirect()->route('settings.backups.index');
         }
     }
-    /**
-     * Deletes a backup file.
-     */
+
     public function destroy($file_name)
     {
         $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
