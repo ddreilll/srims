@@ -36,7 +36,7 @@
                 @endcan
 
                 @can('student_generate_document_evaluation')
-                    <a href="{{ route('admin.student.generate.envelope-document-evaluation', $student->stud_id) }}"
+                    <a href="{{ route('admin.student.generate.envelope-document-evaluation', $student->stud_id) }}" target="_blank"
                         class="btn fw-bold btn-primary">Export to PDF </a>
                 @endcan
             </div>
