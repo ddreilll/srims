@@ -109,7 +109,7 @@
                                 <td class="text-center">{{ $subject['enrsub_subj_code'] }}</td>
                                 <td>{{ $subject['enrsub_subj_name'] }}</td>
                                 <td class="text-center">{{ $subject['enrsub_subj_units'] }}</td>
-                                <td class="text-center">{{ $subject['enrsub_finalGrade'] }}</td>
+                                <td class="text-center">{{ $subject['enrsub_finalRating'] }}</td>
                                 <td class="text-center">{{ $subject['enrsub_grade_status'] }}</td>
                             </tr>
                         @endforeach
