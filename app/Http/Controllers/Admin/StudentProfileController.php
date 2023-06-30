@@ -19,8 +19,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\DocumentsSubmitted;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Observers\StudentActionObserver;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Observers\StudentActionObserver;
 use Yajra\DataTables\Facades\DataTables;
 
 class StudentProfileController extends Controller
@@ -918,8 +919,11 @@ class StudentProfileController extends Controller
             return Datatables::eloquent($query)
                 ->setRowId('stud_id_md5')
                 ->addColumn('stud_studNo', function ($row) {
-
-                    return '<a href="' . url('/student/profile') . "/" . $row->stud_uuid . '" target="_blank">' . $row->stud_studentNo . '</a>';
+                    if (Gate::check('student_show')) {
+                        return '<a href="' . route('students.show', $row->stud_id) . '" target="_blank">' . $row->stud_studentNo . '</a>';
+                    } else {
+                        return $row->stud_studentNo;
+                    }
                 })
                 ->addColumn('stud_name', function ($row) {
                     return format_name("2", null, $row->stud_firstName, $row->stud_middleName, $row->stud_lastName);

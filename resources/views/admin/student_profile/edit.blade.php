@@ -46,8 +46,7 @@
 
                                 <div class="fv-row">
                                     <label class="form-label">Course</label>
-                                    <select class="form-select " data-control="select2"
-                                        data-placeholder="Select a course"
+                                    <select class="form-select " data-control="select2" data-placeholder="Select a course"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="course">
                                         <option></option>
                                         @foreach ($formData_course as $course)
@@ -67,8 +66,7 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row mb-7">
-                                    <select class="form-select " data-control="select2"
-                                        data-placeholder="Admission Type"
+                                    <select class="form-select " data-control="select2" data-placeholder="Admission Type"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="admissionType">
                                         <option></option>
                                         <option value="FRESHMEN">Freshmen</option>
@@ -80,9 +78,8 @@
 
                                 <div class="fv-row">
                                     <label class="form-label">Year of Admission</label>
-                                    <select class="form-select " data-control="select2"
-                                        data-placeholder="Select a year" data-dropdown-parent="#kt_form_add_student_profile"
-                                        name="yearOfAdmission">
+                                    <select class="form-select " data-control="select2" data-placeholder="Select a year"
+                                        data-dropdown-parent="#kt_form_add_student_profile" name="yearOfAdmission">
                                         <option></option>
                                         @foreach ($formData_year as $year)
                                             <option value="{{ $year->syear_year }}">{{ $year->syear_year }}
@@ -101,28 +98,27 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="fv-row mb-7">
-                                    <select class="form-select " data-control="select2"
-                                        data-placeholder="Academic Status"
+                                    <select class="form-select " data-control="select2" data-placeholder="Academic Status"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="academicStatus">
                                         <option></option>
-                                        <option value="UNG">Undergraduate</option>
-                                        <option value="RTN">Returnee</option>
-                                        <option value="DIS">Dismissed</option>
-                                        <option value="GRD">Graduated</option>
+                                        @foreach ((new App\Enums\AcademicStatusEnum())->getDisplayNames() as $value => $displayName)
+                                            <option value="{{ $value }}">
+                                                {{ $displayName }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     <div class="text-muted fs-7 mb-5 mt-2">Set the Academic Status</div>
                                 </div>
 
                                 <div class="fv-row mb-7" style="display:none !important">
                                     <label class="form-label">Date Exited</label>
-                                    <input class="form-control " value="{!! $stud_profile->stud_dateExited ? date('m/d/Y', strtotime($stud_profile->stud_dateExited)) : '' !!}"
-                                        name="dateExited">
+                                    <input class="form-control " value="{!! $stud_profile->stud_dateExited ? date('m/d/Y', strtotime($stud_profile->stud_dateExited)) : '' !!}" name="dateExited">
                                 </div>
 
                                 <div class="fv-row" style="display:none !important">
-                                    <select class="form-select " data-control="select2"
-                                        data-allow-clear="true" data-placeholder="Honor"
-                                        data-dropdown-parent="#kt_form_add_student_profile" name="honor">
+                                    <select class="form-select " data-control="select2" data-allow-clear="true"
+                                        data-placeholder="Honor" data-dropdown-parent="#kt_form_add_student_profile"
+                                        name="honor">
                                         <option></option>
                                         @foreach ($formData_honors as $honor)
                                             <option value="{{ $honor->honor_id }}">
@@ -144,9 +140,8 @@
                                 <div class="fv-row mb-7" style="display:none !important">
                                     <label class="form-label">Have granted an Honorable Dismissal?</label>
 
-                                    <select class="form-select " data-control="select2"
-                                        data-placeholder="Yes or No" data-dropdown-parent="#kt_form_add_student_profile"
-                                        name="isHonorableDismissed">
+                                    <select class="form-select " data-control="select2" data-placeholder="Yes or No"
+                                        data-dropdown-parent="#kt_form_add_student_profile" name="isHonorableDismissed">
                                         <option></option>
                                         <option value="YES">Yes</option>
                                         <option value="NO">No</option>
@@ -154,8 +149,8 @@
                                 </div>
 
                                 <div class="fv-row mb-7" style="display:none !important">
-                                    <select class="form-select " data-control="select2"
-                                        data-placeholder="Status" data-dropdown-parent="#kt_form_add_student_profile"
+                                    <select class="form-select " data-control="select2" data-placeholder="Status"
+                                        data-dropdown-parent="#kt_form_add_student_profile"
                                         name="honorableDismissedStatus">
                                         <option></option>
                                         <option value="ISSUED">Issued</option>
@@ -268,8 +263,7 @@
 
                                         <div class="fv-row mb-7">
                                             <label class="form-label">Permanent Address</label>
-                                            <input class="form-control "
-                                                oninput="this.value = this.value.toUpperCase()"
+                                            <input class="form-control " oninput="this.value = this.value.toUpperCase()"
                                                 value="{!! $stud_profile->stud_addressLine ? $stud_profile->stud_addressLine : '' !!}" name="addressLine">
                                         </div>
 
@@ -364,8 +358,7 @@
                                         <div class="row">
                                             <div class="col-8">
                                                 <div class="fv-row">
-                                                    <input placeholder="School name and address"
-                                                        class="form-control "
+                                                    <input placeholder="School name and address" class="form-control "
                                                         oninput="this.value = this.value.toUpperCase()"
                                                         name="college[0][name]">
                                                 </div>
@@ -374,8 +367,7 @@
 
                                             <div class="col-3">
                                                 <div class="fv-row">
-                                                    <input placeholder="Year Exited"
-                                                        class="form-control "
+                                                    <input placeholder="Year Exited" class="form-control "
                                                         name="college[0][yearExited]">
                                                 </div>
                                             </div>
@@ -464,8 +456,8 @@
                                                     <div class="d-flex justify-content-between">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-control="select2" data-placeholder="Document"
+                                                            <select class="form-select " data-control="select2"
+                                                                data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
                                                                 name="documents[entrance][0][docu]">
@@ -479,8 +471,8 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-control="select2" data-placeholder="Type"
+                                                            <select class="form-select " data-control="select2"
+                                                                data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
                                                                 name="documents[entrance][0][type]">
@@ -490,8 +482,7 @@
                                                         </div>
 
                                                         <div class="fv-row">
-                                                            <input placeholder="Date Submitted"
-                                                                class="form-control "
+                                                            <input placeholder="Date Submitted" class="form-control "
                                                                 name="documents[entrance][0][date_submitted]">
                                                         </div>
 
@@ -507,8 +498,7 @@
                                                         style="display:none !important;">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-placeholder="Document"
+                                                            <select class="form-select " data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.docu">
                                                                 <option></option>
@@ -521,8 +511,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-placeholder="Type"
+                                                            <select class="form-select " data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.type">
                                                                 <option></option>
@@ -530,8 +519,7 @@
                                                         </div>
 
                                                         <div class="fv-row">
-                                                            <input placeholder="Date Submitted"
-                                                                class="form-control "
+                                                            <input placeholder="Date Submitted" class="form-control "
                                                                 data-name="documents.date_submitted">
                                                         </div>
 
@@ -574,8 +562,7 @@
                                                             </div>
 
                                                             <div class="col-3">
-                                                                <select class="form-select "
-                                                                    data-placeholder="Semester"
+                                                                <select class="form-select " data-placeholder="Semester"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true"
                                                                     name="documents_fix[records][regcert][0][sem]">
@@ -588,8 +575,7 @@
                                                             </div>
 
                                                             <div class="col-2">
-                                                                <select class="form-select "
-                                                                    data-placeholder="Year level"
+                                                                <select class="form-select " data-placeholder="Year level"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true"
                                                                     name="documents_fix[records][regcert][0][yrlvl]">
@@ -602,8 +588,7 @@
                                                             </div>
 
                                                             <div class="col-3">
-                                                                <input placeholder="Date Submitted"
-                                                                    class="form-control "
+                                                                <input placeholder="Date Submitted" class="form-control "
                                                                     name="documents_fix[records][regcert][0][date_submitted]">
                                                             </div>
 
@@ -634,8 +619,7 @@
                                                             </div>
 
                                                             <div class="col-3">
-                                                                <select class="form-select "
-                                                                    data-placeholder="Semester"
+                                                                <select class="form-select " data-placeholder="Semester"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true" data-name="documents_fix.sem">
                                                                     <option></option>
@@ -647,8 +631,7 @@
                                                             </div>
 
                                                             <div class="col-2">
-                                                                <select class="form-select "
-                                                                    data-placeholder="Year level"
+                                                                <select class="form-select " data-placeholder="Year level"
                                                                     data-dropdown-parent="#kt_form_add_student_profile"
                                                                     data-allow-clear="true"
                                                                     data-name="documents_fix.yrlvl">
@@ -661,8 +644,7 @@
                                                             </div>
 
                                                             <div class="col-3">
-                                                                <input placeholder="Date Submitted"
-                                                                    class="form-control "
+                                                                <input placeholder="Date Submitted" class="form-control "
                                                                     data-name="documents_fix.date_submitted">
                                                             </div>
 
@@ -685,8 +667,8 @@
                                                     <div class="d-flex justify-content-between">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-control="select2" data-placeholder="Document"
+                                                            <select class="form-select " data-control="select2"
+                                                                data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
                                                                 name="documents[records][0][docu]">
@@ -700,8 +682,8 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-control="select2" data-placeholder="Type"
+                                                            <select class="form-select " data-control="select2"
+                                                                data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true"
                                                                 name="documents[records][0][type]">
@@ -711,8 +693,7 @@
                                                         </div>
 
                                                         <div class="fv-row">
-                                                            <input placeholder="Date Submitted"
-                                                                class="form-control "
+                                                            <input placeholder="Date Submitted" class="form-control "
                                                                 name="documents[records][0][date_submitted]">
                                                         </div>
 
@@ -728,8 +709,7 @@
                                                         style="display:none !important;">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-placeholder="Document"
+                                                            <select class="form-select " data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.docu">
                                                                 <option></option>
@@ -742,8 +722,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-placeholder="Type"
+                                                            <select class="form-select " data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.type">
                                                                 <option></option>
@@ -751,8 +730,7 @@
                                                         </div>
 
                                                         <div class="fv-row">
-                                                            <input placeholder="Date Submitted"
-                                                                class="form-control "
+                                                            <input placeholder="Date Submitted" class="form-control "
                                                                 data-name="documents.date_submitted">
                                                         </div>
 
@@ -776,8 +754,8 @@
                                                     <div class="d-flex justify-content-between">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-control="select2" data-placeholder="Document"
+                                                            <select class="form-select " data-control="select2"
+                                                                data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" name="documents[exit][0][docu]">
                                                                 <option></option>
@@ -790,8 +768,8 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-control="select2" data-placeholder="Type"
+                                                            <select class="form-select " data-control="select2"
+                                                                data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" name="documents[exit][0][type]">
                                                                 <option></option>
@@ -800,8 +778,7 @@
                                                         </div>
 
                                                         <div class="fv-row">
-                                                            <input placeholder="Date Submitted"
-                                                                class="form-control "
+                                                            <input placeholder="Date Submitted" class="form-control "
                                                                 name="documents[exit][0][date_submitted]">
                                                         </div>
 
@@ -817,8 +794,7 @@
                                                         style="display:none !important;">
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-placeholder="Document"
+                                                            <select class="form-select " data-placeholder="Document"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.docu">
                                                                 <option></option>
@@ -831,8 +807,7 @@
                                                         </div>
 
                                                         <div class="fv-row w-25">
-                                                            <select class="form-select "
-                                                                data-placeholder="Type"
+                                                            <select class="form-select " data-placeholder="Type"
                                                                 data-dropdown-parent="#kt_form_add_student_profile"
                                                                 data-allow-clear="true" data-name="documents.type">
                                                                 <option></option>
@@ -840,8 +815,7 @@
                                                         </div>
 
                                                         <div class="fv-row">
-                                                            <input placeholder="Date Submitted"
-                                                                class="form-control "
+                                                            <input placeholder="Date Submitted" class="form-control "
                                                                 data-name="documents.date_submitted">
                                                         </div>
 
@@ -913,7 +887,7 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data: {
-                                studentId : "{{ $stud_profile->stud_id }}"
+                                studentId: "{{ $stud_profile->stud_id }}"
                             },
                             message: 'Student number is already in use',
                             method: 'POST',

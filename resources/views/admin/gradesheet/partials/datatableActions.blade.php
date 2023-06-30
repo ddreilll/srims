@@ -12,25 +12,32 @@
     </a>
     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
         data-kt-menu="true">
-        <div class="menu-item px-3">
-            <a href="{{ route('admin.gradesheet.show', $row->class_id) }}" class="menu-link px-3">View</a>
-        </div>
-        <div class="menu-item px-3 ">
-            <a href="{{ route('admin.gradesheet.edit', $row->class_id) }}" class="menu-link px-3">Edit</a>
-        </div>
-        <div class="separator my-3 opacity-75"></div>
-        <div class="menu-item px-3">
-            <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
-                <span class="menu-icon">
-                    <i class="fa-duotone fa-trash fs-5"></i>
-                </span>
-                <span class="menu-title">Delete</span>
-            </a>
-        </div>
+        @can('gradesheet_show')
+            <div class="menu-item px-3">
+                <a href="{{ route('admin.gradesheet.show', $row->class_id) }}" class="menu-link px-3">View</a>
+            </div>
+        @endcan
+        @can('gradesheet_edit')
+            <div class="menu-item px-3 ">
+                <a href="{{ route('admin.gradesheet.edit', $row->class_id) }}" class="menu-link px-3">Edit</a>
+            </div>
+        @endcan
+        @can('gradesheet_delete')
+            <div class="separator my-3 opacity-75"></div>
+            <div class="menu-item px-3">
+                <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
+                    <span class="menu-icon">
+                        <i class="fa-duotone fa-trash fs-5"></i>
+                    </span>
+                    <span class="menu-title">Delete</span>
+                </a>
+            </div>
+        @endcan
     </div>
-
-    <a href="{{ route('admin.gradesheet.generate.pdf', $row->class_id) }}"
-        class="btn btn-icon btn-sm btn-light btn-active-light-dark" target="_blank">
-        <i class="fa-solid fa-print"></i>
-    </a>
+    @can('gradesheet_generate')
+        <a href="{{ route('admin.gradesheet.generate.pdf', $row->class_id) }}"
+            class="btn btn-icon btn-sm btn-light btn-active-light-dark" target="_blank">
+            <i class="fa-solid fa-print"></i>
+        </a>
+    @endcan
 </td>

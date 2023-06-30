@@ -23,7 +23,8 @@ class PermissionRoleTableSeeder extends Seeder
                 && substr($permission->title, 0, 9) != 'semester_'
                 && substr($permission->title, 0, 12) != 'school_year_'
                 && substr($permission->title, 0, 14) != 'system_backup_'
-                && substr($permission->title, 0, 18) != 'system_error_logs_';
+                && substr($permission->title, 0, 18) != 'system_error_logs_'
+                && substr($permission->title, 0, 13) != 'student_logs_';
         });
         Role::findOrFail(2)->permissions()->sync($encoder_permissions);
     }

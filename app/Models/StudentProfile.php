@@ -6,7 +6,7 @@ use App\Observers\StudentActionObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Faker\Generator;
-
+use Spatie\Activitylog\Models\Activity;
 
 class StudentProfile extends Model
 {
@@ -72,14 +72,94 @@ class StudentProfile extends Model
 
     public function documents()
     {
-        return $this->belongsToMany(Documents::class, 't_submitted_documents', 'subm_student', 'subm_document')->withPivot([
+        return $this->belongsToMany(Document::class, 't_submitted_documents', 'subm_student', 'subm_document')->withPivot([
             'subm_documentType', 'subm_documentType_1', 'subm_documentType_2', 'subm_documentType_3', 'subm_documentCategory', 'subm_remarks', 'subm_dateSubmitted'
         ]);
     }
 
-    public function gradesheet()
+    public function getEntranceDocuments()
     {
-        return $this->belongsTo(Gradesheet::class, 'grdsheetpg_gradesheet_id');
+        return $this->documents()->where('docu_category', \App\Enums\DocumentCategoriesEnum::ENTRANCE)->where('docu_isPermanent', 'NO')->get();
+    }
+
+    public function getRecordsDocuments()
+    {
+        return $this->documents()->where('docu_category', \App\Enums\DocumentCategoriesEnum::RECORDS)->where('docu_isPermanent', 'NO')->get();
+    }
+
+    public function getExitDocuments()
+    {
+        return $this->documents()->where('docu_category', \App\Enums\DocumentCategoriesEnum::EXIT)->where('docu_isPermanent', 'NO')->get();
+    }
+
+    public function getRegistrationCerts()
+    {
+        return $this->documents()
+            ->where('docu_category', \App\Enums\DocumentCategoriesEnum::RECORDS)
+            ->where('docu_id', '1')
+            ->get();
+    }
+
+    public function gradesheets()
+    {
+        return $this->belongsToMany(Gradesheet::class, 't_student_enrolled_subjects', 'stud_enrsub_id', 'class_enrsub_id')->withPivot([
+            'enrsub_midtermGrade', 'enrsub_finalGrade', 'enrsub_finalRating', 'enrsub_grade_status', 'enrsub_status',
+        ]);
+    }
+
+    public function getGrades()
+    {
+        $studentGrades = [];
+
+        $studentGradesQuery = $this->with(['gradesheets', 'gradesheets.subject', 'gradesheets.instructor', 'gradesheets.semester'])->whereHas('gradesheets', function ($query) {
+            $query->where('stud_enrsub_id', $this->stud_id);
+        })->get()->map(function ($student) {
+            return $student->gradesheets->groupBy('class_acadYear')->map(function ($gradesheets) {
+                return $gradesheets->groupBy(function ($gradesheet) {
+                    return $gradesheet->semester->term_name;
+                })->map(function ($gradesheet) {
+                    return $gradesheet->sortByDesc(function ($gradesheet) {
+                        return $gradesheet->semester->term_order;
+                    });
+                });
+            });
+        })->first();
+
+        if ($studentGradesQuery) {
+            $studentGrades = $studentGradesQuery;
+        }
+
+        return $studentGrades;
+    }
+
+    public function getScholasticSummary()
+    {
+        $totalSemesters['all'] = 0;
+        $totalSemesters['summer'] = 0;
+
+        $studentGrades = $this->getGrades();
+
+        foreach ($studentGrades as $year => $schoolYears) {
+            foreach ($schoolYears as $semester => $semesters) {
+                if ($semester == "Summer Semester") {
+                    $totalSemesters['summer']++;
+                }
+
+                $totalSemesters['all']++;
+            }
+        }
+
+        return $totalSemesters;
+    }
+
+    public function schools()
+    {
+        return $this->hasMany(PreviousSchool::class, 'extsch_stud_id', 'stud_id');
+    }
+
+    public function getActivityLogs()
+    {
+        return ActivityLog::with(['user'])->where(['subject_type' => 'App\Models\StudentProfile', 'subject_id' => $this->stud_id])->orderBy('created_at', 'desc')->limit(4)->get();
     }
 
 
