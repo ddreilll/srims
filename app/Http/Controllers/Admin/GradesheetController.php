@@ -434,7 +434,12 @@ class GradesheetController extends Controller
             $o++;
         }
 
-        TimeSlot::whereNotIn('time_id', $retainedGrdSheetTimeSlot)->delete();
+        if (sizeOf($retainedGrdSheetTimeSlot) >= 1) {
+            TimeSlot::where('time_class_id', $gradesheet->class_id)->whereNotIn('time_id', $retainedGrdSheetTimeSlot)->delete();
+        } else if (sizeOf($retainedGrdSheetTimeSlot) <= 0) {
+            TimeSlot::where('time_class_id', $gradesheet->class_id)->delete();
+        }
+
         TimeSlot::insert($newGrdSheetTimeSlot);
 
         return response()->json([
