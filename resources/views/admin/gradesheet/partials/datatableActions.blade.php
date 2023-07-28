@@ -24,16 +24,27 @@
         @endcan
         @can('gradesheet_delete')
             <div class="separator my-3 opacity-75"></div>
+
+            @php
+                $formId = bin2hex(random_bytes(5));
+            @endphp
+
             <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3 menu-hover-warning" kt_student_profile_table_archive>
-                    <span class="menu-icon">
-                        <i class="fa-duotone fa-trash fs-5"></i>
-                    </span>
-                    <span class="menu-title">Delete</span>
-                </a>
+                <form action="{{ route('admin.gradesheet.destroy', $row->class_id) }}" method="POST"
+                    id="{{ $formId }}-gradesheet-destroy">
+                    @method('DELETE')
+                    @csrf
+                    <a href="#" gradesheet-destroy="true" data-id="{{ $formId }}" class="menu-link px-3 menu-hover-warning">
+                        <span class="menu-icon">
+                            <i class="fa-duotone fa-trash fs-5"></i>
+                        </span>
+                        <span class="menu-title">Delete</span>
+                    </a>
+                </form>
             </div>
         @endcan
     </div>
+
     @can('gradesheet_generate')
         <a href="{{ route('admin.gradesheet.generate.pdf', $row->class_id) }}"
             class="btn btn-icon btn-sm btn-light btn-active-light-dark" target="_blank">

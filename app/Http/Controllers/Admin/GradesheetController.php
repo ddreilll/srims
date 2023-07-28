@@ -12,6 +12,7 @@ use App\Models\GradesheetPages;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class GradesheetController extends Controller
@@ -695,4 +696,22 @@ class GradesheetController extends Controller
 |-------------------------------------------------------------------------- 
 |
 */
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Gradesheet $gradesheet)
+    {
+        abort_if(Gate::denies('gradesheet_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $gradesheet->delete();
+
+        session()->flash('info', __('global.delete_success', ["attribute" => sprintf("<b>%s</b>", __('cruds.gradesheet.title_singular'))]));
+
+        return redirect()->route('admin.gradesheet.index');
+    }
 }
