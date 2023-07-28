@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="card-body py-3">
-                    <table id="kt_student_grades_table" class="align-middle table table-row-bordered gy-7 gs-10">
+                    <table id="gradesheet_table" class="align-middle table table-row-bordered gy-7 gs-10">
                         <thead>
                             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                                 <th class="min-w-125px" data-priority="2">Subject Code</th>
@@ -179,7 +179,7 @@
     <script type="text/javascript">
         KTUtil.onDOMContentLoaded((function() {
 
-            var table = $("#kt_student_grades_table").DataTable({
+            var table = $("#gradesheet_table").DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -263,10 +263,13 @@
                 order: [
                     [7, 'desc']
                 ],
-            });
+                drawCallback: function(settings, json) {
+                    KTMenu.createInstances();
 
-            table.on('draw', function() {
-                KTMenu.createInstances();
+                    initializedFormSubmitConfirmation(`[gradesheet-destroy="true"]`,
+                        `-gradesheet-destroy`,
+                        "delete", "danger", "warning");
+                }
             });
 
             // Search bar
@@ -440,7 +443,7 @@
                 },
             });
 
-            
+
             $(`[data-kt-student-profile-filter-field="instructor"]`).select2({
                 ajax: {
                     url: "{{ url('/instructor/select2') }}",
