@@ -93,8 +93,7 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
 
         // Students
-        // Route::resource('students', 'StudentController');
-        Route::get('students/{student}', 'StudentController@show')->name('students.show');
+        Route::resource('students', 'StudentController');
 
         // User Accounts
         Route::patch('users/{user}/status', 'UsersController@updateStatus')->name('users.update-status');
