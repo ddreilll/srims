@@ -89,7 +89,7 @@
                     @can('student_access')
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('admin.student.*') || request()->routeIs('students.*')? 'active' : '' }}"
-                                href="{{ url('/student/profile') }}">
+                                href="{{ route('students.index') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-screen-users"></i>
                                 </span>

@@ -275,6 +275,7 @@ return [
     'create_success'                       => 'The :attribute has been successfully saved.',
     'update_success'                       => 'The :attribute has been successfully updated.',
     'delete_success'                       => 'The :attribute has been successfully deleted.',
+    'archive_success'                       => 'The :attribute has been successfully archived.',
     'action_prompt'                       => 'The :attribute has been :action.',
     'deactivated_account'                  => 'We\'re sorry, but your user account is currently deactivated. As a result, you do not have access to certain features or areas of the application.',
     'account'                              => 'Account',

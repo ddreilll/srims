@@ -320,3 +320,17 @@ if (!function_exists('maskEmail')) {
         return $maskedUsername . '@' . $domain;
     }
 }
+
+if (!function_exists('convertToSnakeCase')) {
+
+    function convertToSnakeCase($string)
+    {
+        // Replace spaces with underscores
+        $string = str_replace(' ', '_', $string);
+
+        // Convert to lowercase
+        $string = strtolower($string);
+
+        return $string;
+    }
+}
