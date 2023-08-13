@@ -100,8 +100,8 @@
 
                     @can('gradesheet_access')
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('admin.gradesheet.*') ? 'active' : '' }}"
-                                href="{{ url('/gradesheet') }}">
+                            <a class="menu-link {{ request()->routeIs('admin.gradesheet.*') || request()->routeIs('gradesheets.*')? 'active' : '' }}"
+                                href="{{ route('gradesheets.index') }}">
                                 <span class="menu-icon">
                                     <i class="fa-duotone fa-file-lines"></i>
                                 </span>

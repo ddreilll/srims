@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Course;
+use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\StudentProfile;
 use App\Enums\AcademicStatusEnum;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\SchoolYear;
 use Illuminate\Support\Facades\Gate;
 use App\Observers\StudentActionObserver;
 use Yajra\DataTables\Facades\DataTables;

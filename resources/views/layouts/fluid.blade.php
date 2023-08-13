@@ -408,6 +408,9 @@
 
         }
 
+
+
+
         function initializedFormSubmitConfirmation(dom, formId, action, btnColor, icon = "info") {
 
             $(`${dom}`).on("click", function(e) {
@@ -437,6 +440,100 @@
                     }
                 });
             });
+        }
+
+        function initializedTagify(dom, selection, inline = false) {
+            return new Tagify(dom, {
+                whitelist: selection,
+                enforceWhitelist: true,
+                originalInputValueFormat: valuesArr => valuesArr.map(item => item.id).join(','),
+                dropdown: {
+                    maxItems: 20, // <- mixumum allowed rendered suggestions
+                    classname: inline ? "tagify__inline__suggestions" :
+                    "", // <- custom classname for this dropdown, so it could be targeted
+                    enabled: 0, // <- show suggestions on focus
+                    closeOnSelect: false // <- do not hide the suggestions dropdown once an item has been selected
+                }
+            });
+        }
+
+        function initializedFlatpickr(dom, mode = "range", clearable = false) {
+            var flatpickr = $(dom).flatpickr({
+                altInput: !0,
+                altFormat: 'm/d/Y',
+                dateFormat: 'Y-m-d',
+                mode: mode,
+            });
+
+            if (clearable) {
+                $($(dom).closest("div.input-group")).find("button").on("click", function() {
+                    flatpickr.clear();
+                });
+            }
+
+            return flatpickr;
+        }
+
+        function getFlatpickrDates(flatpickr) {
+            var selectedDates = flatpickr.selectedDates;
+            if (selectedDates.length >= 1) {
+
+                var filterData = moment(selectedDates[0]).format("YYYY-MM-DD");
+
+                if (selectedDates.length == 2) {
+                    filterData += "," + moment(selectedDates[1]).format(
+                        "YYYY-MM-DD");
+                } else {
+                    filterData += "," + moment(selectedDates[0]).format(
+                        "YYYY-MM-DD");
+                }
+
+                return filterData;
+            }
+        }
+
+        function initializedNoSlider(dom) {
+            var slider = document.querySelector(dom);
+            var max = ($(dom).attr("max") * 1) + 20;
+
+            noUiSlider.create(slider, {
+                start: [1, max],
+                connect: true,
+                range: {
+                    "min": 0,
+                    "max": max,
+                },
+                tooltips: true,
+                format: wNumb({
+                    decimals: 0
+                }),
+            });
+
+            slider.noUiSlider.on("update", function(values, handle) {
+                if (handle) {
+                    $(`${dom}Max`).val(values[handle]);
+                } else {
+                    $(`${dom}Min`).val(values[handle]);
+                }
+            });
+        }
+
+        function getCheckedValues(dom) {
+            return $(`${dom}:checked`)
+                .map(function() {
+                    return this.value;
+                })
+                .get()
+                .join(",");
+
+        }
+
+        function getNoSliderValue(dom) {
+
+            var minDOM = $(`${dom}Min`).val();
+            var maxDOM = $(`${dom}Max`).val();
+
+            return minDOM && maxDOM ? `${minDOM},${maxDOM}` : "";
         }
     </script>
 

@@ -394,7 +394,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <a href="{{ url('/gradesheet') }}" class="btn btn-light me-5">Cancel</a>
+                            <a href="{{ route('gradesheets.index') }}" class="btn btn-light me-5">Cancel</a>
                             <button type="button" gradesheet-component="saveBtn"
                                 id="kt_class_gradesheet_file_component_saveViewBtn" class="btn btn-primary me-2">
                                 <span class="indicator-label">Save and Add Students</span>
@@ -895,7 +895,7 @@
 
                                     case "kt_class_gradesheet_file_component_saveBtn":
                                         window_location = (
-                                            "{{ route('admin.gradesheet.index') }}"
+                                            "{{ route('gradesheets.index') }}"
                                         );
                                         break;
                                 }

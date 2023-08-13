@@ -47,26 +47,24 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
 
         Route::get('ajax/student-per-year', 'DashboardController@ajax_retrieve_total_student_per_year');
 
-        Route::get('gradesheet', 'GradesheetController@index')->name('admin.gradesheet.index');
-        Route::get('gradesheet/create', 'GradesheetController@create')->name('admin.gradesheet.create');
-        Route::get('gradesheet/{gradesheet}', 'GradesheetController@show')->whereNumber('gradesheet')->name('admin.gradesheet.show');
-        Route::post('gradesheet/{gradesheet}/validate/student-enrollment', 'GradesheetController@validateStudentEnrollment')->name('admin.gradesheet.validate.student-enrollment');
-        Route::post('gradesheet/{gradesheet}/form-validate/student', 'GradesheetController@validateStudent')->name('admin.gradesheet.form-validate.student');
-        Route::get('gradesheet/{gradesheet}/pages', 'GradesheetController@getPages')->name('admin.gradesheet.pages');
-        Route::get('gradesheet/{gradesheet}/page-rows', 'GradesheetController@getPageRows')->name('admin.gradesheet.page.rows');
-        Route::post('gradesheet/{gradesheet}/page-details', 'GradesheetController@getPageDetails')->name('admin.gradesheet.pages-details');
-        Route::delete('gradesheet/{gradesheet}', 'GradesheetController@destroy')->name('admin.gradesheet.destroy');
+        Route::get('gradesheet/create', 'GradesheetsController@create')->name('admin.gradesheet.create');
+        Route::get('gradesheet/{gradesheet}', 'GradesheetsController@show')->whereNumber('gradesheet')->name('admin.gradesheet.show');
+        Route::post('gradesheet/{gradesheet}/validate/student-enrollment', 'GradesheetsController@validateStudentEnrollment')->name('admin.gradesheet.validate.student-enrollment');
+        Route::post('gradesheet/{gradesheet}/form-validate/student', 'GradesheetsController@validateStudent')->name('admin.gradesheet.form-validate.student');
+        Route::get('gradesheet/{gradesheet}/pages', 'GradesheetsController@getPages')->name('admin.gradesheet.pages');
+        Route::get('gradesheet/{gradesheet}/page-rows', 'GradesheetsController@getPageRows')->name('admin.gradesheet.page.rows');
+        Route::post('gradesheet/{gradesheet}/page-details', 'GradesheetsController@getPageDetails')->name('admin.gradesheet.pages-details');
 
-        Route::post('gradesheet/store', 'GradesheetController@store');
-        Route::get('gradesheet/{gradesheet}/edit', 'GradesheetController@edit')->name('admin.gradesheet.edit');
-        Route::post('gradesheet/{gradesheet}', 'GradesheetController@save')->name('admin.gradesheet.update');
+        Route::post('gradesheet/store', 'GradesheetsController@store');
+        Route::get('gradesheet/{gradesheet}/edit', 'GradesheetsController@edit')->name('admin.gradesheet.edit');
+        Route::post('gradesheet/{gradesheet}', 'GradesheetsController@save')->name('admin.gradesheet.update');
 
-        Route::post('gradesheet/{gradesheet}/students', 'GradesheetController@storeStudents')->name('admin.gradesheet-students.store');
-        Route::get('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@showStudent')->name('admin.gradesheet-students.show');
-        Route::post('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@updateStudent')->name('admin.gradesheet-students.update');
-        Route::delete('gradesheet/{gradesheet}/students/{student}', 'GradesheetController@destroyStudent')->name('admin.gradesheet-students.destroy');
+        Route::post('gradesheet/{gradesheet}/students', 'GradesheetsController@storeStudents')->name('admin.gradesheet-students.store');
+        Route::get('gradesheet/{gradesheet}/students/{student}', 'GradesheetsController@showStudent')->name('admin.gradesheet-students.show');
+        Route::post('gradesheet/{gradesheet}/students/{student}', 'GradesheetsController@updateStudent')->name('admin.gradesheet-students.update');
+        Route::delete('gradesheet/{gradesheet}/students/{student}', 'GradesheetsController@destroyStudent')->name('admin.gradesheet-students.destroy');
 
-        Route::get('gradesheet/{gradesheet}/generate/pdf', 'GradesheetController@generatePdf')->name('admin.gradesheet.generate.pdf');
+        Route::get('gradesheet/{gradesheet}/generate/pdf', 'GradesheetsController@generatePdf')->name('admin.gradesheet.generate.pdf');
 
 
         Route::get('student/profile', 'StudentProfileController@index')->name('admin.student.index');
@@ -91,6 +89,9 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
 
         Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
         Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
+
+        // Students
+        Route::resource('gradesheets', 'GradesheetController');
 
         // Students
         Route::resource('students', 'StudentController');
@@ -119,12 +120,8 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         // School Year
         Route::post('select2/settings/school-year/base', 'SchoolYearController@ajax_select2_base_search');
 
-
         // Roles
         Route::resource('roles', 'RolesController');
-
-        // Users
-        Route::resource('users', 'UsersController');
 
         // User Alerts
         Route::get('user-alerts/read', 'UserAlertsController@read');
