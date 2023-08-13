@@ -300,4 +300,5 @@ return [
         'disable'        => 'Disable',
         'resend'         => 'Resend',
     ],
+    'export'         => 'Export',
 ];

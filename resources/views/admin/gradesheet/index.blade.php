@@ -185,7 +185,7 @@
                 responsive: true,
                 searchDelay: 2000,
                 ajax: {
-                    url: "{{ route('admin.gradesheet.index') }}",
+                    url: "{{ route('gradesheets.index') }}",
                     error: function(xhr, error, code) {
 
                         console.log(error);

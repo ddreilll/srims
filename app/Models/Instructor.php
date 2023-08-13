@@ -32,7 +32,7 @@ class Instructor extends Model
         'inst_deletedAt',
     ];
 
-    public function getFullnameAttribute()
+    public function getFullNameAttribute()
     {
         return sprintf('%s %s', $this->inst_firstName, $this->inst_lastName);
     }
