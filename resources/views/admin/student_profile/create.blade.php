@@ -134,8 +134,8 @@
                                     <select class="form-select " data-control="select2" data-placeholder="Yes or No"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="isHonorableDismissed">
                                         <option></option>
-                                        <option value="YES">Yes</option>
-                                        <option value="NO">No</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
                                     </select>
                                 </div>
 
@@ -1091,7 +1091,7 @@
                             "change");
                         let v = $(this).val();
 
-                        if (v == "YES") {
+                        if (v == "1") {
 
                             fv.enableValidator("honorableDismissedStatus");
                             $(status).attr("style", "");
@@ -1122,7 +1122,7 @@
 
                     fv.enableValidator("isHonorableDismissed");
                     $(honorableDissmisalForm).attr("style", "");
-                    $($(isDismissed).find("[name='isHonorableDismissed']")).val("YES").trigger("change");
+                    $($(isDismissed).find("[name='isHonorableDismissed']")).val("1").trigger("change");
 
                     fv.enableValidator("honorableDismissedStatus");
                     $(status).attr("style", "");

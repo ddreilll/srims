@@ -225,9 +225,7 @@
                             <span class="text-muted fw-bold me-1">{{ date('Y') }}©</span>
                             <a href="#" target="_blank"
                                 class="text-gray-800 text-hover-primary">{{ __('panel.site_title') }}</a>
-                            <a href="#" class="ms-2 link-dark" rel="noopener">
-                                v{{ config('app.version') }}
-                            </a>
+                            - @include('partials.version')
                         </div>
 
                     </div>
@@ -545,6 +543,10 @@
             var maxDOM = $(`${dom}Max`).val();
 
             return minDOM && maxDOM ? `${minDOM},${maxDOM}` : "";
+        }
+
+        function getToggleValues(dom) {
+            return $(dom).is(":checked") ? 1 : 0;
         }
     </script>
 

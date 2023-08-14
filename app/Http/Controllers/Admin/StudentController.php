@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\StudentProfile;
 use App\Enums\AcademicStatusEnum;
+use App\Enums\AdmissionStatusEnum;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -33,14 +34,22 @@ class StudentController extends Controller
                     });
                 })->when($request->has('academic_status') && $request->academic_status, function ($query) use ($request) {
                     $query->whereIn('stud_academicStatus', explode(",", $request->academic_status));
+                })->when($request->has('admission_type') && $request->admission_type, function ($query) use ($request) {
+                    $query->whereIn('stud_admissionType', explode(",", $request->admission_type));
                 })->when($request->has('admission_year') && $request->admission_year, function ($query) use ($request) {
                     $query->whereIn('stud_yearOfAdmission', explode(",", $request->admission_year));
                 })->when($request->has('record_type') && $request->record_type, function ($query) use ($request) {
                     $query->whereIn('stud_recordType', explode(",", $request->record_type));
+                })->when($request->has('honorable_dismissed') && $request->honorable_dismissed, function ($query) use ($request) {
+                    $query->where('stud_isHonorableDismissed', $request->honorable_dismissed);
                 })->when($request->has('created_at') && $request->created_at, function ($query) use ($request) {
                     $query->whereBetween('stud_createdAt', explode(",", $request->created_at));
                 })->when($request->has('updated_at') && $request->updated_at, function ($query) use ($request) {
                     $query->whereBetween('stud_createdAt', explode(",", $request->updated_at));
+                })->when($request->has('deleted_at') && $request->deleted_at, function ($query) use ($request) {
+                    $query->whereBetween('stud_deletedAt', explode(",", $request->deleted_at));
+                })->when($request->has('show_archived') && $request->show_archived == "1", function ($query) use ($request) {
+                    $query->onlyTrashed();
                 });
 
 
@@ -86,19 +95,26 @@ class StudentController extends Controller
             DB::raw('`cour_code` as `value`'),
         ])->get()->toArray();
 
-        $filterAcademicStatus = AcademicStatusEnum::getDisplayNames();
-        $filterAcademicStatus = array_map(function ($id, $value) {
+        $filterAcademicStatus = collect(AcademicStatusEnum::getDisplayNames())->map(function ($academicStatus, $key) {
             return [
-                "id" => $id,
-                "value" => $value
+                "id" => $key,
+                "value" => $academicStatus,
             ];
-        }, array_keys($filterAcademicStatus), $filterAcademicStatus);
+        })->values()->all();
+
+        $filterAdmissionType = collect(AdmissionStatusEnum::getDisplayNames())->map(function ($admissionType, $key) {
+            return [
+                "id" => $key,
+                "value" => $admissionType,
+            ];
+        })->values()->all();
 
         $filterYearOfAdmission = SchoolYear::select([
+            DB::raw('`syear_year` as `id`'),
             DB::raw('`syear_year` as `value`'),
         ])->get()->toArray();
 
-        return view('admin.students.index', compact('filterCourses', 'filterAcademicStatus', 'filterYearOfAdmission'));
+        return view('admin.students.index', compact('filterCourses', 'filterAcademicStatus', 'filterYearOfAdmission', 'filterAdmissionType'));
     }
 
     /** 

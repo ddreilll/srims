@@ -18,7 +18,7 @@
 
                 <div class="d-flex flex-center flex-column flex-column-fluid">
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
-                        
+
                         @if (strtoupper(config('app.env')) == 'TEST')
                             <div class="container-fluid mb-9 ">
                                 <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
@@ -86,9 +86,7 @@
                                 {{ __('global.allRightsReserved') }}
                             </p>
                             <p class="text-center">
-                                <a href="#" class="link-dark" rel="noopener">
-                                    v{{ config('app.version') }}
-                                </a>
+                                @include('partials.version')
                             </p>
                         </form>
                     </div>
