@@ -79,12 +79,24 @@
 
     <link href="{{ asset('/assets/plugins/custom/fontawesome-pro/css/all.min.css') }}" rel="stylesheet"
         type="text/css" />
+
+    <script type="text/javascript">
+        window.$sleek = [];
+        window.SLEEK_PRODUCT_ID = 887606659;
+        (function() {
+            d = document;
+            s = d.createElement("script");
+            s.src = "https://client.sleekplan.com/sdk/e.js";
+            s.async = 1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+    </script>
 </head>
 
 <body id="kt_body" class="bg-body">
-    
+
     @yield('content')
-    
+
     <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
     @yield('scripts')
 </body>
