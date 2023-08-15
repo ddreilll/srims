@@ -197,6 +197,9 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'student_edit',
             ],
             [
+                'title' => 'student_delete',
+            ],
+            [
                 'title' => 'student_show',
             ],
             [
@@ -212,7 +215,16 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'student_archive_access',
             ],
             [
-                'title' => 'student_archive_restore',
+                'title' => 'student_archive_show',
+            ],
+            [
+                'title' => 'student_archive_show_documents',
+            ],
+            [
+                'title' => 'student_archive_show_scholastic',
+            ],
+            [
+                'title' => 'student_archive_unarchive',
             ],
             [
                 'title' => 'student_access',

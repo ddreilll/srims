@@ -283,6 +283,10 @@ return [
             'stud_updatedAt_helper'                     => '',
             'stud_deletedAt'                            => 'Deleted at',
             'stud_deletedAt_helper'                     => '',
+            'remarks'                            => 'Remarks',
+            'remarks_helper'                     => '',
+            'archived_at'                            => 'Archived at',
+            'archived_at_helper'                     => '',
         ],
     ],
     'course'           => [

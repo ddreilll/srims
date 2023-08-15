@@ -101,20 +101,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-10" hidden>
-                                <label class="form-label fw-semibold">Deleted at</label>
-                                <div class="d-flex">
-                                    <div class="input-group">
-                                        <input class="form-control  rounded rounded-end-0" id="filterDeletedAt"
-                                            placeholder="Pick date range" />
-                                        <button class="btn btn-icon btn-light">
-                                            <span class="svg-icon svg-icon-5">
-                                                <i class="fa-light fa-xmark"></i>
-                                            </span>
-                                        </button>
+
+                            @can('student_archive_access')
+                                <div class="mb-10" hidden>
+                                    <label class="form-label fw-semibold">Archived at</label>
+                                    <div class="d-flex">
+                                        <div class="input-group">
+                                            <input class="form-control  rounded rounded-end-0" id="filterArchivedAt"
+                                                placeholder="Pick date range" />
+                                            <button class="btn btn-icon btn-light">
+                                                <span class="svg-icon svg-icon-5">
+                                                    <i class="fa-light fa-xmark"></i>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endcan
+
                             <button class="btn btn-primary d-block w-100 fw-semibold px-6 mb-2" id="filterApplyBtn">Apply
                                 filter</button>
 
@@ -123,22 +127,25 @@
                 </div>
 
                 <div class="flex-lg-row-fluid ms-lg-15">
-                    <div class="rounded border p-10 bg-white mb-10">
-                        <div class="d-flex flex-stack">
-                            <div class="me-5">
-                                <label class="fs-6 fw-semibold form-label">{{ __('Show archived students') }}</label>
-                                <div class="fs-7 fw-semibold text-muted">{{ __('Only archived students will be shown') }}
-                                </div>
-                            </div>
 
-                            <label class="form-check form-switch form-check-custom form-check-solid">
-                                <input id="showArchived" class="form-check-input" type="checkbox">
-                                <span class="form-check-label fw-semibold text-nowrap text-muted" id="showArchivedLabel">
-                                    Hidden
-                                </span>
-                            </label>
+                    @can('student_archive_access')
+                        <div class="rounded border p-10 bg-white mb-10">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{ __('Show archived students') }}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{ __('Only archived students will be shown') }}
+                                    </div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input id="showArchived" class="form-check-input" type="checkbox">
+                                    <span class="form-check-label fw-semibold text-nowrap text-muted" id="showArchivedLabel">
+                                        Hidden
+                                    </span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
 
                     <div class="card mb-6 mb-xl-9">
                         <div class="card-header border-0 pt-6">
@@ -169,9 +176,14 @@
                                         <th>{{ __('cruds.student.fields.stud_studentNo') }}</th>
                                         <th>{{ __('cruds.student.fields.stud_name') }}</th>
                                         <th>{{ __('cruds.student.fields.stud_cour_stud_id') }}</th>
-                                        <th>{{ __('cruds.student.fields.stud_academicStatus') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_admissionType') }}</th>
                                         <th>{{ __('cruds.student.fields.stud_yearOfAdmission') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_academicStatus') }}</th>
                                         <th>{{ __('cruds.student.fields.stud_recordType') }}</th>
+                                        <th>{{ __('cruds.student.fields.remarks') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_createdAt') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_updatedAt') }}</th>
+                                        <th>{{ __('cruds.student.fields.archived_at') }}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -201,7 +213,7 @@
 
             var filterCreatedAt = initializedFlatpickr("#filterCreatedAt", "range", true);
             var filterUpdatedAt = initializedFlatpickr("#filterUpdatedAt", "range", true);
-            var filterDeletedAt = initializedFlatpickr("#filterDeletedAt", "range", true);
+            var filterArchivedAt = initializedFlatpickr("#filterArchivedAt", "range", true);
 
             const resource = "student";
 
@@ -238,13 +250,13 @@
                         "updated_at": function() {
                             getFlatpickrDates(filterUpdatedAt);
                         },
-                        "deleted_at": function() {
-                            return !$($("#filterDeletedAt").parent().parent().parent()).is(
-                                ":hidden") ? getFlatpickrDates(filterDeletedAt) : "";
+                        "archived_at": function() {
+                            return !$($("#filterArchivedAt").parent().parent().parent()).is(
+                                ":hidden") ? getFlatpickrDates(filterArchivedAt) : "";
                         },
                         "show_archived": function() {
-                            return !$($("#filterDeletedAt").parent().parent().parent()).is(
-                                ":hidden") ? "1": "0";
+                            return !$($("#filterArchivedAt").parent().parent().parent()).is(
+                                ":hidden") ? "1" : "0";
                         },
                     }
                 },
@@ -263,9 +275,8 @@
                         className: "align-middle"
                     },
                     {
-                        data: 'stud_academicStatus',
+                        data: 'stud_admissionType',
                         searchable: false,
-                        orderable: false,
                         className: "align-middle"
                     },
                     {
@@ -274,10 +285,38 @@
                         className: "align-middle"
                     },
                     {
+                        data: 'stud_academicStatus',
+                        searchable: false,
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
                         data: 'stud_recordType',
                         searchable: false,
                         orderable: false,
                         className: "align-middle"
+                    },
+                    {
+                        data: 'remarks',
+                        searchable: false,
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'stud_createdAt',
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'stud_updatedAt',
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'archived_at',
+                        orderable: false,
+                        className: "align-middle",
+                        visible: false
                     },
                     {
                         data: 'actions',
@@ -298,9 +337,15 @@
                 drawCallback: function(settings, json) {
                     KTMenu.createInstances();
 
-                    initializedFormSubmitConfirmation(`[${resource}-destroy="true"]`,
-                        `-${resource}-destroy`,
-                        "archive", "danger", "warning");
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+
+                    initializedFormSubmitConfirmation(`[${resource}-unarchive="true"]`,
+                        `-${resource}-unarchive`,
+                        "unarchive", "warning", "warning");
+
+                    initializedFormSubmitConfirmation(`[${resource}-archive="true"]`,
+                        `-${resource}-archive`,
+                        "archive", "dark", "warning");
                 }
             });
 
@@ -312,20 +357,23 @@
                 table.ajax.reload();
             });
 
+            @can('student_archive_access')
+                $("#showArchived").on("click", function(e) {
+                    var parent = $("#filterArchivedAt").parent().parent().parent();
 
-            $("#showArchived").on("click", function(e) {
-                var parent = $("#filterDeletedAt").parent().parent().parent();
+                    if (!$(parent).is(":hidden")) {
+                        $(parent).prop("hidden", true);
+                        $("#showArchivedLabel").text("Hidden");
+                        table.column(10).visible(false);
+                    } else {
+                        $(parent).prop("hidden", false);
+                        $("#showArchivedLabel").text("Showing");
+                        table.column(10).visible(true);
+                    }
 
-                if (!$(parent).is(":hidden")) {
-                    $(parent).prop("hidden", true);
-                    $("#showArchivedLabel").text("Hidden");
-                } else {
-                    $(parent).prop("hidden", false);
-                    $("#showArchivedLabel").text("Showing");
-                }
-
-                table.ajax.reload();
-            });
+                    table.ajax.reload();
+                });
+            @endcan
         }));
     </script>
 @endsection

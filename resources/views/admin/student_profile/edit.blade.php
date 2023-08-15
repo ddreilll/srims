@@ -101,7 +101,7 @@
                                     <select class="form-select " data-control="select2" data-placeholder="Academic Status"
                                         data-dropdown-parent="#kt_form_add_student_profile" name="academicStatus">
                                         <option></option>
-                                        @foreach ((new App\Enums\AcademicStatusEnum())->getDisplayNames() as $value => $displayName)
+                                        @foreach ((new App\Enums\AcademicStatusEnum())->getSelectable() as $value => $displayName)
                                             <option value="{{ $value }}">
                                                 {{ $displayName }}
                                             </option>
@@ -1224,7 +1224,7 @@
 
                                 setInterval(() => {
                                     window.location =
-                                        "{{ url('/student/profile') }}";
+                                        "{{ route('students.index') }}";
                                 }, 1500);
                             } else {
 
@@ -1266,10 +1266,9 @@
                                 display_axios_success(respond.data.message);
 
                                 setInterval(() => {
-                                    window.location =
-                                        "{{ url('/student/profile') }}" +
-                                        "/" +
-                                        respond.data.id;
+                                    window.location = (
+                                        "{{ route('students.show', ['student' => ':student']) }}"
+                                        ).replace(':student', respond.data.id);
                                 }, 1500);
                             } else {
 

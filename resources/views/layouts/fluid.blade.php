@@ -187,7 +187,7 @@
                                             <span class="pulse-ring border-3"></span>
                                         </a>
 
-                                        <a href="{{ route('admin.student.index') }}"
+                                        <a href="{{ route('students.index') }}"
                                             class="btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary"
                                             data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
                                             title="View List of Students">

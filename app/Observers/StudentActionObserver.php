@@ -46,4 +46,24 @@ class StudentActionObserver
             ->useLog('activity')
             ->log(sprintf('User: %s (%s) archived a student: %s [%s](%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_studentNo, $student->stud_id));
     }
+
+    public function unarchived(StudentProfile $student)
+    {
+        activity()
+            ->performedOn($student)
+            ->causedBy(auth()->user())
+            ->event('unarchived')
+            ->useLog('activity')
+            ->log(sprintf('User: %s (%s) unarchived a student: %s [%s](%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_studentNo, $student->stud_id));
+    }
+
+    public function deleted(StudentProfile $student)
+    {
+        activity()
+            ->performedOn($student)
+            ->causedBy(auth()->user())
+            ->event('deleted')
+            ->useLog('activity')
+            ->log(sprintf('User: %s (%s) deleted a student: %s [%s](%s)', auth()->user()->name, auth()->user()->id, $student->fullName, $student->stud_studentNo, $student->stud_id));
+    }
 }

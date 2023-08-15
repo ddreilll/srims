@@ -65,36 +65,31 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         Route::delete('gradesheet/{gradesheet}/students/{student}', 'GradesheetsController@destroyStudent')->name('admin.gradesheet-students.destroy');
 
         Route::get('gradesheet/{gradesheet}/generate/pdf', 'GradesheetsController@generatePdf')->name('admin.gradesheet.generate.pdf');
-
-
-        Route::get('student/profile', 'StudentProfileController@index')->name('admin.student.index');
-        Route::get('student/profile/archived', 'StudentProfileController@archived');
         Route::post('student/profile/add', 'StudentProfileController@ajax_insert');
         Route::post('student/profile/retrieve', 'StudentProfileController@ajax_retrieve')->name('admin.student.ajaxRetrieve');
         Route::post('student/profile/edit', 'StudentProfileController@ajax_edit');
-        Route::post('student/profile/update-remarks', 'StudentProfileController@ajax_update_remarks');
-        Route::post('student/profile/archive', 'StudentProfileController@ajax_archive');
 
         Route::get('ajax/student/profile/retrieve-all', 'StudentProfileController@ajax_retrieve_student_list')->name('admin.student.fetch');
         Route::get('ajax/student/profile/retrieve-archived', 'StudentProfileController@ajax_retrieve_archived_student_list');
         Route::post('ajax/student/profile/validate-studentNo', 'StudentProfileController@ajax_validate_studentNo');
-        Route::post('ajax/student/profile/restore', 'StudentProfileController@ajax_restore');
 
         Route::get('student/profile/add', 'StudentProfileController@create_profile')->name('admin.student.create');
-        Route::get('student/profile/{profile_uuid}', 'StudentProfileController@show_profile');
-        Route::get('student/profile/{profile_uuid}/edit', 'StudentProfileController@edit_profile');
+        Route::get('student/profile/{profile_uuid}/edit', 'StudentProfileController@edit_profile')->name('admin.student.edit');
 
         Route::post('student/profile/retrieve-documents', 'StudentProfileController@ajax_retrieve_documents');
         Route::post('student/profile/retrieve-prev-college', 'StudentProfileController@ajax_retrieve_prevCollege');
 
-        Route::get('students/{student}/generate/envelope-document-evaluation', 'StudentProfileController@generateEnvelopeDocumentEvaluation')->name('admin.student.generate.envelope-document-evaluation');
-        Route::get('students/{student}/generate/scholastic-data', 'StudentProfileController@generateScholasticData')->name('admin.student.generate.scholastic-data');
+       
 
-        // Students
+        // Gradesheets
         Route::resource('gradesheets', 'GradesheetController');
 
         // Students
         Route::resource('students', 'StudentController');
+        Route::post('students/{student}/archive', 'StudentController@archive')->name('students.archive');
+        Route::post('students/{student}/unarchive', 'StudentController@unarchive')->name('students.unarchive');
+        Route::get('students/{student}/export/envelope-document-evaluation', 'StudentController@exportDocuments')->name('students.export.envelope-document-evaluation');
+        Route::get('students/{student}/export/scholastic-data', 'StudentController@exportScholastic')->name('students.export.scholastic-data');
 
         // User Accounts
         Route::patch('users/{user}/status', 'UsersController@updateStatus')->name('users.update-status');
