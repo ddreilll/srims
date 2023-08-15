@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'version' => '0.3.0-alpha',
+    'version' => '0.6.0-alpha',
 
     'version_changelog_link' => env('APP_CHANGELOG_LINK', '#'),
 
