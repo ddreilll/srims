@@ -18,7 +18,7 @@
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     @can('student_generate_scholastic_data')
-                        <a href="{{ route('admin.student.generate.scholastic-data', $student->stud_id) }}" target="_blank"
+                        <a href="{{ route('students.export.scholastic-data', $student->stud_id) }}" target="_blank"
                             class="btn fw-bold btn-primary">Export to PDF </a>
                     @endcan
                 </div>

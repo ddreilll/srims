@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use App\Observers\StudentActionObserver;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use Faker\Generator;
-use Spatie\Activitylog\Models\Activity;
+use App\Traits\Archivable;
+use Illuminate\Database\Eloquent\Model;
+use App\Observers\StudentActionObserver;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StudentProfile extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Archivable;
 
     public static function boot()
     {
@@ -58,6 +59,11 @@ class StudentProfile extends Model
         'stud_createdAt',
         'stud_updatedAt',
         'stud_deletedAt',
+        'archived_at',
+    ];
+
+    protected $cast = [
+        'stud_isHonorableDismissed' => 'bool'
     ];
 
     public function getFullNameAttribute()
@@ -65,17 +71,17 @@ class StudentProfile extends Model
         return sprintf('%s, %s %s', $this->stud_lastName, $this->stud_firstName, $this->stud_middleName);
     }
 
-    public function course()
+    public function getArchivedAtAttribute($value)
     {
-        return $this->hasOne(Course::class, 'cour_id', 'cour_stud_id');
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
-    public function documents()
+    public function setArchivedAtAttribute($value)
     {
-        return $this->belongsToMany(Document::class, 't_submitted_documents', 'subm_student', 'subm_document')->withPivot([
-            'subm_documentType', 'subm_documentType_1', 'subm_documentType_2', 'subm_documentType_3', 'subm_documentCategory', 'subm_remarks', 'subm_dateSubmitted'
-        ]);
+        $this->attributes['archived_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
+
+
 
     public function getEntranceDocuments()
     {
@@ -152,15 +158,33 @@ class StudentProfile extends Model
         return $totalSemesters;
     }
 
+    public function getActivityLogs()
+    {
+        return ActivityLog::with(['user'])->where(['subject_type' => 'App\Models\StudentProfile', 'subject_id' => $this->stud_id])->orderBy('created_at', 'desc')->limit(4)->get();
+    }
+
+    public function honor()
+    {
+        return $this->hasOne(Honor::class, 'honor_id', 'stud_honor');
+    }
+
+    public function course()
+    {
+        return $this->hasOne(Course::class, 'cour_id', 'cour_stud_id');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 't_submitted_documents', 'subm_student', 'subm_document')->withPivot([
+            'subm_documentType', 'subm_documentType_1', 'subm_documentType_2', 'subm_documentType_3', 'subm_documentCategory', 'subm_remarks', 'subm_dateSubmitted'
+        ]);
+    }
+
     public function schools()
     {
         return $this->hasMany(PreviousSchool::class, 'extsch_stud_id', 'stud_id');
     }
 
-    public function getActivityLogs()
-    {
-        return ActivityLog::with(['user'])->where(['subject_type' => 'App\Models\StudentProfile', 'subject_id' => $this->stud_id])->orderBy('created_at', 'desc')->limit(4)->get();
-    }
 
 
     // Subject details

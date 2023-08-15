@@ -22,12 +22,20 @@
                                     class="form-label fs-6 fw-semibold">{{ __('cruds.student.fields.stud_academicStatus') }}</label>
                                 <input class="form-control" value="" id="filterAcademicStatus" />
                             </div>
+
+                            <div class="mb-5">
+                                <label
+                                    class="form-label fs-6 fw-semibold">{{ __('cruds.student.fields.stud_admissionType') }}</label>
+                                <input class="form-control" value="" id="filterAdmissionType" />
+                            </div>
+
                             <div class="mb-5">
                                 <label
                                     class="form-label fs-6 fw-semibold">{{ __('cruds.student.fields.stud_yearOfAdmission') }}</label>
                                 <input class="form-control" value="" id="filterYearOfAdmission" />
                             </div>
-                            <div class="mb-5">
+
+                            <div class="mb-7">
                                 <label
                                     class="form-label fs-6 fw-semibold">{{ __('cruds.student.fields.stud_recordType') }}</label>
                                 <div class="d-flex">
@@ -50,6 +58,20 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="rounded border p-7 bg-white mb-10">
+                                <div class="d-flex flex-stack">
+                                    <div class="me-5">
+                                        <label
+                                            class="fs-6 fw-semibold form-label">{{ __('Show Honorable Dismissed') }}</label>
+                                    </div>
+
+                                    <label class="form-check form-switch form-check-custom form-check-solid">
+                                        <input id="filterShowHonorableDismissed" class="form-check-input" type="checkbox">
+                                    </label>
+                                </div>
+                            </div>
+
                             <div class="separator my-10 opacity-75"></div>
                             <div class="mb-5">
                                 <label class="form-label fw-semibold">Created at</label>
@@ -65,7 +87,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-10">
+                            <div class="mb-5">
                                 <label class="form-label fw-semibold">Updated at</label>
                                 <div class="d-flex">
                                     <div class="input-group">
@@ -79,58 +101,98 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @can('student_archive_access')
+                                <div class="mb-10" hidden>
+                                    <label class="form-label fw-semibold">Archived at</label>
+                                    <div class="d-flex">
+                                        <div class="input-group">
+                                            <input class="form-control  rounded rounded-end-0" id="filterArchivedAt"
+                                                placeholder="Pick date range" />
+                                            <button class="btn btn-icon btn-light">
+                                                <span class="svg-icon svg-icon-5">
+                                                    <i class="fa-light fa-xmark"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endcan
+
                             <button class="btn btn-primary d-block w-100 fw-semibold px-6 mb-2" id="filterApplyBtn">Apply
                                 filter</button>
 
                         </div>
                     </div>
                 </div>
+
                 <div class="flex-lg-row-fluid ms-lg-15">
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active">
-                            <div class="card mb-6 mb-xl-9">
-                                <div class="card-header border-0 pt-6">
-                                    <div class="card-title">
-                                        @include('partials.dataTables.search', [
+
+                    @can('student_archive_access')
+                        <div class="rounded border p-10 bg-white mb-10">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{ __('Show archived students') }}</label>
+                                    <div class="fs-7 fw-semibold text-muted">{{ __('Only archived students will be shown') }}
+                                    </div>
+                                </div>
+
+                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <input id="showArchived" class="form-check-input" type="checkbox">
+                                    <span class="form-check-label fw-semibold text-nowrap text-muted" id="showArchivedLabel">
+                                        Hidden
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    @endcan
+
+                    <div class="card mb-6 mb-xl-9">
+                        <div class="card-header border-0 pt-6">
+                            <div class="card-title">
+                                @include('partials.dataTables.search', [
+                                    'resource' => convertToSnakeCase(__('cruds.student.title_singular')),
+                                    'resourceDisplay' => __('cruds.student.title_singular'),
+                                ])
+                            </div>
+                            <div class="card-toolbar">
+                                @can('student_create')
+                                    <div class="d-flex justify-content-end">
+                                        @include('partials.buttons.create', [
+                                            'createRoute' => url('student/profile/add'),
                                             'resource' => convertToSnakeCase(__('cruds.student.title_singular')),
                                             'resourceDisplay' => __('cruds.student.title_singular'),
                                         ])
                                     </div>
-                                    <div class="card-toolbar">
-                                        @can('student_create')
-                                            <div class="d-flex justify-content-end">
-                                                @include('partials.buttons.create', [
-                                                    'createRoute' => url('student/profile/add'),
-                                                    'resource' => convertToSnakeCase(
-                                                        __('cruds.student.title_singular')),
-                                                    'resourceDisplay' => __('cruds.student.title_singular'),
-                                                ])
-                                            </div>
-                                        @endcan
-                                    </div>
-                                </div>
-
-                                <div class="card-body py-3">
-
-                                    <table id="dataTable" class="table border table-rounded table-row-bordered gy-5 gs-7">
-                                        <thead>
-                                            <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                                                <th>{{ __('cruds.student.fields.stud_studentNo') }}</th>
-                                                <th>{{ __('cruds.student.fields.stud_name') }}</th>
-                                                <th>{{ __('cruds.student.fields.stud_cour_stud_id') }}</th>
-                                                <th>{{ __('cruds.student.fields.stud_academicStatus') }}</th>
-                                                <th>{{ __('cruds.student.fields.stud_yearOfAdmission') }}</th>
-                                                <th>{{ __('cruds.student.fields.stud_recordType') }}</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                @endcan
                             </div>
                         </div>
+
+                        <div class="card-body py-3">
+
+                            <table id="dataTable" class="table border table-rounded table-row-bordered gy-5 gs-7">
+                                <thead>
+                                    <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                        <th>{{ __('cruds.student.fields.stud_studentNo') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_name') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_cour_stud_id') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_admissionType') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_yearOfAdmission') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_academicStatus') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_recordType') }}</th>
+                                        <th>{{ __('cruds.student.fields.remarks') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_createdAt') }}</th>
+                                        <th>{{ __('cruds.student.fields.stud_updatedAt') }}</th>
+                                        <th>{{ __('cruds.student.fields.archived_at') }}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -142,70 +204,16 @@
     <script type="text/javascript">
         KTUtil.onDOMContentLoaded((function() {
 
-            var courses = @json($filterCourses);
-            var filterCourse = document.querySelector("#filterCourse");
-            new Tagify(filterCourse, {
-                whitelist: courses,
-                enforceWhitelist: true,
-                originalInputValueFormat: valuesArr => valuesArr.map(item => item.id).join(','),
-                dropdown: {
-                    maxItems: 20, // <- mixumum allowed rendered suggestions
-                    classname: "tagify__inline__suggestions", // <- custom classname for this dropdown, so it could be targeted
-                    enabled: 0, // <- show suggestions on focus
-                    closeOnSelect: false // <- do not hide the suggestions dropdown once an item has been selected
-                }
-            });
+            initializedTagify(document.querySelector("#filterCourse"), @json($filterCourses), true);
+            initializedTagify(document.querySelector("#filterAcademicStatus"), @json($filterAcademicStatus),
+                true);
+            initializedTagify(document.querySelector("#filterAdmissionType"), @json($filterAdmissionType),
+                true);
+            initializedTagify(document.querySelector("#filterYearOfAdmission"), @json($filterYearOfAdmission));
 
-            var academicStatus = @json($filterAcademicStatus);
-            var filterAcademicStatus = document.querySelector("#filterAcademicStatus");
-            new Tagify(filterAcademicStatus, {
-                whitelist: academicStatus,
-                enforceWhitelist: true,
-                originalInputValueFormat: valuesArr => valuesArr.map(item => item.id).join(','),
-                dropdown: {
-                    maxItems: 20, // <- mixumum allowed rendered suggestions
-                    classname: "tagify__inline__suggestions", // <- custom classname for this dropdown, so it could be targeted
-                    enabled: 0, // <- show suggestions on focus
-                    closeOnSelect: false // <- do not hide the suggestions dropdown once an item has been selected
-                }
-            });
-
-            var yearOfAdmission = @json($filterYearOfAdmission);
-            var filterYearOfAdmission = document.querySelector("#filterYearOfAdmission");
-            new Tagify(filterYearOfAdmission, {
-                whitelist: yearOfAdmission,
-                enforceWhitelist: true,
-                originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(','),
-                dropdown: {
-                    maxItems: 20, // <- mixumum allowed rendered suggestions
-                    enabled: 0, // <- show suggestions on focus
-                    closeOnSelect: false // <- do not hide the suggestions dropdown once an item has been selected
-                }
-            });
-
-            var filterCreatedAt = $("#filterCreatedAt").flatpickr({
-                altInput: !0,
-                altFormat: 'm/d/Y',
-                dateFormat: 'Y-m-d',
-                mode: 'range',
-            });
-
-            $($('#filterCreatedAt').closest("div.input-group")).find("button").on("click", function() {
-                filterCreatedAt.clear();
-            });
-
-            var fitlerUpdatedAt = $('#filterUpdatedAt').flatpickr({
-                altInput: !0,
-                altFormat: 'm/d/Y',
-                dateFormat: 'Y-m-d',
-                mode: 'range',
-            });
-
-            $($('#filterUpdatedAt').closest("div.input-group")).find("button").on("click", function() {
-                fitlerUpdatedAt.clear();
-            });
-
-
+            var filterCreatedAt = initializedFlatpickr("#filterCreatedAt", "range", true);
+            var filterUpdatedAt = initializedFlatpickr("#filterUpdatedAt", "range", true);
+            var filterArchivedAt = initializedFlatpickr("#filterArchivedAt", "range", true);
 
             const resource = "student";
 
@@ -224,52 +232,32 @@
                         "academic_status": function() {
                             return $("#filterAcademicStatus").val()
                         },
+                        "admission_type": function() {
+                            return $("#filterAdmissionType").val();
+                        },
                         "admission_year": function() {
                             return $("#filterYearOfAdmission").val();
                         },
                         "record_type": function() {
-                            return $(".filterRecordType:checked")
-                                .map(function() {
-                                    return this.value;
-                                })
-                                .get()
-                                .join(",");
+                            return getCheckedValues(".filterRecordType");
+                        },
+                        "honorable_dismissed": function() {
+                            return getToggleValues("#filterShowHonorableDismissed");
                         },
                         "created_at": function() {
-                            var selectedDates = filterCreatedAt.selectedDates;
-                            if (selectedDates.length >= 1) {
-
-                                var filterData = moment(selectedDates[0]).format("YYYY-MM-DD");
-
-                                if (selectedDates.length == 2) {
-                                    filterData += "," + moment(selectedDates[1]).format(
-                                        "YYYY-MM-DD");
-                                } else {
-                                    filterData += "," + moment(selectedDates[0]).format(
-                                        "YYYY-MM-DD");
-                                }
-
-                                return filterData;
-                            }
-
+                            getFlatpickrDates(filterCreatedAt);
                         },
                         "updated_at": function() {
-                            var selectedDates = fitlerUpdatedAt.selectedDates;
-                            if (selectedDates.length >= 1) {
-
-                                var filterData = moment(selectedDates[0]).format("YYYY-MM-DD");
-
-                                if (selectedDates.length == 2) {
-                                    filterData += "," + moment(selectedDates[1]).format(
-                                        "YYYY-MM-DD");
-                                } else {
-                                    filterData += "," + moment(selectedDates[0]).format(
-                                        "YYYY-MM-DD");
-                                }
-
-                                return filterData;
-                            }
-                        }
+                            getFlatpickrDates(filterUpdatedAt);
+                        },
+                        "archived_at": function() {
+                            return !$($("#filterArchivedAt").parent().parent().parent()).is(
+                                ":hidden") ? getFlatpickrDates(filterArchivedAt) : "";
+                        },
+                        "show_archived": function() {
+                            return !$($("#filterArchivedAt").parent().parent().parent()).is(
+                                ":hidden") ? "1" : "0";
+                        },
                     }
                 },
                 columns: [{
@@ -287,9 +275,8 @@
                         className: "align-middle"
                     },
                     {
-                        data: 'stud_academicStatus',
+                        data: 'stud_admissionType',
                         searchable: false,
-                        orderable: false,
                         className: "align-middle"
                     },
                     {
@@ -298,10 +285,38 @@
                         className: "align-middle"
                     },
                     {
+                        data: 'stud_academicStatus',
+                        searchable: false,
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
                         data: 'stud_recordType',
                         searchable: false,
                         orderable: false,
                         className: "align-middle"
+                    },
+                    {
+                        data: 'remarks',
+                        searchable: false,
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'stud_createdAt',
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'stud_updatedAt',
+                        orderable: false,
+                        className: "align-middle"
+                    },
+                    {
+                        data: 'archived_at',
+                        orderable: false,
+                        className: "align-middle",
+                        visible: false
                     },
                     {
                         data: 'actions',
@@ -322,9 +337,15 @@
                 drawCallback: function(settings, json) {
                     KTMenu.createInstances();
 
-                    initializedFormSubmitConfirmation(`[${resource}-destroy="true"]`,
-                        `-${resource}-destroy`,
-                        "archive", "danger", "warning");
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+
+                    initializedFormSubmitConfirmation(`[${resource}-unarchive="true"]`,
+                        `-${resource}-unarchive`,
+                        "unarchive", "warning", "warning");
+
+                    initializedFormSubmitConfirmation(`[${resource}-archive="true"]`,
+                        `-${resource}-archive`,
+                        "archive", "dark", "warning");
                 }
             });
 
@@ -335,6 +356,24 @@
             $("#filterApplyBtn").on("click", function() {
                 table.ajax.reload();
             });
+
+            @can('student_archive_access')
+                $("#showArchived").on("click", function(e) {
+                    var parent = $("#filterArchivedAt").parent().parent().parent();
+
+                    if (!$(parent).is(":hidden")) {
+                        $(parent).prop("hidden", true);
+                        $("#showArchivedLabel").text("Hidden");
+                        table.column(10).visible(false);
+                    } else {
+                        $(parent).prop("hidden", false);
+                        $("#showArchivedLabel").text("Showing");
+                        table.column(10).visible(true);
+                    }
+
+                    table.ajax.reload();
+                });
+            @endcan
         }));
     </script>
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 if (!function_exists('formatDatetime')) {
@@ -332,5 +333,25 @@ if (!function_exists('convertToSnakeCase')) {
         $string = strtolower($string);
 
         return $string;
+    }
+}
+
+if (! function_exists('previousRoute')) {
+    /**
+     * Generate a route name for the previous request.
+     *
+     * @return string|null
+     */
+    function previousRoute()
+    {
+        $previousRequest = app('request')->create(app('url')->previous());
+
+        try {
+            $routeName = app('router')->getRoutes()->match($previousRequest)->getName();
+        } catch (NotFoundHttpException $exception) {
+            return null;
+        }
+
+        return $routeName;
     }
 }

@@ -8,7 +8,6 @@
     </style>
 
     @yield('student-styles')
-
 @endsection
 
 @section('content')
@@ -155,6 +154,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header pt-7 pb-5">
                         <h3 class="card-title align-items-start flex-column">
@@ -195,10 +195,158 @@
                         @endif
                     </div>
                 </div>
+
+                @can('student_archive')
+                    @if (!$student->archived())
+                        <form action="{{ route('students.archive', $student->stud_id) }}" method="POST"
+                            id="{{ $student->stud_id }}-student-archive">
+                            @method('POST')
+                            @csrf
+                            <div class="rounded p-6 bg-white my-5">
+                                <div class="d-flex flex-stack">
+                                    <div class="me-5">
+                                        <label
+                                            class="fs-6 fw-semibold form-label">{{ __('Archive this Student Record') }}</label>
+                                        <div class="fs-7 fw-semibold text-muted">
+                                            {{ __('Mark this student record as archived and read-only.') }}
+                                        </div>
+                                    </div>
+
+                                    <button type="button" student-archive="true" class="btn btn-secondary btn-active-dark"
+                                        data-id="{{ $student->stud_id }}">
+                                        <i class="fa-solid fa-folder-arrow-down me-1"></i>
+                                        {{ __('global.archive') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
+                @endcan
+
+                @can('student_delete')
+                    <form action="{{ route('students.destroy', $student->stud_id) }}" method="POST"
+                        id="{{ $student->stud_id }}-student-destroy">
+                        @method('DELETE')
+                        @csrf
+                        <div class="rounded border p-6 border border-dashed border-danger bg-white my-5">
+                            <div class="d-flex flex-stack">
+                                <div class="me-5">
+                                    <label class="fs-6 fw-semibold form-label">{{ __('Delete this Student Record') }}</label>
+                                    <div class="fs-7 fw-semibold text-muted">
+                                        {{ __('Once you delete a student record, there is no going back. Please be certain.') }}
+                                    </div>
+                                </div>
+
+                                <button type="button" student-destroy="true"
+                                    class="btn btn-secondary text-danger btn-active-danger text-hover-light text-active-light"
+                                    data-id="{{ $student->stud_id }}">
+                                    {{ __('Delete') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                @endcan
+
             </div>
+
             <div class="col-sm-8">
+                @if ($student->archived())
+                    <div class="alert bg-dark d-flex flex-column flex-sm-row p-5 mb-10">
+                        <i class="fa-duotone fa-square-info fs-2hx text-light me-4 mb-5 mb-sm-0"></i>
+
+                        <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                            <h4 class="mb-2 text-light">{{ __('panel.archived_record_viewing') }}</h4>
+
+                            <span>{!! __('panel.viewing_archived_advisory', ['attribute' => 'student']) !!}</span>
+
+                            @can('student_archive_unarchive')
+
+                                <form action="{{ route('students.unarchive', $student->stud_id) }}" method="POST"
+                                    id="{{ $student->stud_id }}-student-unarchive">
+                                    @method('POST')
+                                    @csrf
+                                    <button type="button" student-unarchive="true"
+                                        class="btn btn-secondary btn-active-warning text-hover-light text-active-light mt-5"
+                                        data-id="{{ $student->stud_id }}">
+                                        <i class="fa-solid fa-folder-arrow-up me-1"></i>
+                                        {{ __('global.unarchive') }}
+                                    </button>
+                                </form>
+                            @endcan
+
+                        </div>
+                    </div>
+                @endif
+
                 @yield('student-content')
             </div>
         </div>
     </div>
-@stop
+
+    @if ($student->archived() && previousRoute() != 'students.show')
+        <div class="modal fade" tabindex="-1" id="viewing-archived-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                        <h3 class="modal-title text-light">{{ __('panel.archived_record_viewing') }}</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>{!! __('panel.viewing_archived_advisory', ['attribute' => 'student']) !!}</p>
+                    </div>
+
+                    <div class="modal-footer text-center d-block">
+                        <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">{{ __('global.i_understand') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+@endsection
+
+@section('scripts')
+    @parent
+
+    @if ($student->archived() && previousRoute() != 'students.show')
+        <script type="text/javascript">
+            $(function() {
+                $("#viewing-archived-modal").modal("show");
+            });
+        </script>
+    @endif
+
+    @can('student_delete')
+        <script type="text/javascript">
+            $(function() {
+                initializedFormSubmitConfirmation(`[student-destroy="true"]`,
+                    `-student-destroy`,
+                    "delete", "danger", "warning");
+            });
+        </script>
+    @endcan
+
+    @can('student_archive')
+        @if (!$student->archived())
+            <script type="text/javascript">
+                $(function() {
+                    initializedFormSubmitConfirmation(`[student-archive="true"]`,
+                        `-student-archive`,
+                        "archive", "dark", "warning");
+                });
+            </script>
+        @endif
+    @endcan
+
+    @can('student_archive_unarchive')
+        @if ($student->archived())
+            <script type="text/javascript">
+                $(function() {
+                    initializedFormSubmitConfirmation(`[student-unarchive="true"]`,
+                        `-student-unarchive`,
+                        "unarchive", "warning", "warning");
+                });
+            </script>
+        @endif
+    @endcan
+@endsection

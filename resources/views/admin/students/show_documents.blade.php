@@ -30,14 +30,16 @@
             <div class="d-flex align-items-center gap-2 gap-lg-3">
 
                 @can('student_edit')
-                    @include('partials.buttons.edit', [
-                        'editRoute' => url('/student/profile') . '/' . $student->stud_uuid . '/edit',
-                    ])
+                    @if (!$student->archived())
+                        @include('partials.buttons.edit', [
+                            'editRoute' => url('/student/profile') . '/' . $student->stud_uuid . '/edit',
+                        ])
+                    @endif
                 @endcan
 
                 @can('student_generate_document_evaluation')
-                    <a href="{{ route('admin.student.generate.envelope-document-evaluation', $student->stud_id) }}" target="_blank"
-                        class="btn fw-bold btn-primary">Export to PDF </a>
+                    <a href="{{ route('students.export.envelope-document-evaluation', $student->stud_id) }}"
+                        target="_blank" class="btn fw-bold btn-primary">Export to PDF </a>
                 @endcan
             </div>
         </div>
