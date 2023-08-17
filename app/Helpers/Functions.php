@@ -3,6 +3,12 @@
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+if (!function_exists('theme')) {
+    function theme()
+    {
+        return app(App\Core\Theme::class);
+    }
+}
 
 if (!function_exists('formatDatetime')) {
 
@@ -336,7 +342,7 @@ if (!function_exists('convertToSnakeCase')) {
     }
 }
 
-if (! function_exists('previousRoute')) {
+if (!function_exists('previousRoute')) {
     /**
      * Generate a route name for the previous request.
      *
@@ -353,5 +359,140 @@ if (! function_exists('previousRoute')) {
         }
 
         return $routeName;
+    }
+}
+
+
+
+// Themes
+if (!function_exists('getGlobalAssets')) {
+    /**
+     * Get the global assets
+     *
+     * @param $type
+     *
+     * @return array
+     */
+    function getGlobalAssets($type = 'js')
+    {
+        return theme()->getGlobalAssets($type);
+    }
+}
+
+if (!function_exists('addVendors')) {
+    /**
+     * Add multiple vendors to the page by name. Refer to settings KT_THEME_VENDORS
+     *
+     * @param $vendors
+     *
+     * @return void
+     */
+    function addVendors($vendors)
+    {
+        theme()->addVendors($vendors);
+    }
+}
+
+if (!function_exists('addVendor')) {
+    /**
+     * Add single vendor to the page by name. Refer to settings KT_THEME_VENDORS
+     *
+     * @param $vendor
+     *
+     * @return void
+     */
+    function addVendor($vendor)
+    {
+        theme()->addVendor($vendor);
+    }
+}
+
+if (!function_exists('getVendors')) {
+    /**
+     * Get vendor files from settings. Refer to settings KT_THEME_VENDORS
+     *
+     * @param $type
+     *
+     * @return array
+     */
+    function getVendors($type)
+    {
+        return theme()->getVendors($type);
+    }
+}
+
+if (!function_exists('addHtmlClass')) {
+    /**
+     * Add HTML class by scope
+     *
+     * @param $scope
+     * @param $value
+     *
+     * @return void
+     */
+    function addHtmlClass($scope, $value)
+    {
+        theme()->addHtmlClass($scope, $value);
+    }
+}
+
+if (!function_exists('printHtmlClasses')) {
+    /**
+     * Print HTML classes for the HTML template
+     *
+     * @param $scope
+     * @param $full
+     *
+     * @return string
+     */
+    function printHtmlClasses($scope, $full = true)
+    {
+        return theme()->printHtmlClasses($scope, $full);
+    }
+}
+
+if (!function_exists('printHtmlAttributes')) {
+    /**
+     * Print HTML attributes for the HTML template
+     *
+     * @param $scope
+     *
+     * @return string
+     */
+    function printHtmlAttributes($scope)
+    {
+        return theme()->printHtmlAttributes($scope);
+    }
+}
+
+if (!function_exists('addHtmlAttribute')) {
+    /**
+     * Add HTML attributes by scope
+     *
+     * @param $scope
+     * @param $name
+     * @param $value
+     *
+     * @return void
+     */
+    function addHtmlAttribute($scope, $name, $value)
+    {
+        theme()->addHtmlAttribute($scope, $name, $value);
+    }
+}
+
+
+if (!function_exists('addHtmlAttributes')) {
+    /**
+     * Add multiple HTML attributes by scope
+     *
+     * @param $scope
+     * @param $attributes
+     *
+     * @return void
+     */
+    function addHtmlAttributes($scope, $attributes)
+    {
+        theme()->addHtmlAttributes($scope, $attributes);
     }
 }

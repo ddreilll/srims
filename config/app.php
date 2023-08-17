@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'version' => '0.6.0-alpha',
+    'version' => '0.8.3-alpha',
 
     'version_changelog_link' => env('APP_CHANGELOG_LINK', '#'),
 
@@ -202,6 +202,7 @@ return [
         /*
          * Application Service Providers...
          */
+        App\Providers\HelperServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

@@ -46,11 +46,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'deleted_at',
         'two_factor_expires_at',
         'last_seen',
-        'is_active'
+        'is_active',
+        'is_approved'
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_approved' => 'boolean',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -64,6 +66,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $query->whereDate('last_seen', $targetDatetime->toDateString())
             ->whereTime('last_seen', '>=', $targetDatetime->toTimeString());
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('is_approved', '1');
     }
 
     public function generateTwoFactorCode()

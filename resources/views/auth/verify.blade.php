@@ -1,52 +1,44 @@
-@extends('layouts.app-2')
+<x-auth-layout title="{{ __('Verify Your Email Address') }}">
+    <x-slot:content>
 
-@section('title')
-    <title>{{ __('Verify Your Email Address') }}</title>
-@endsection
-
-@section('content')
-    <div class="card card-md">
-
-        <div class="card-body bg-primary text-white py-15">
-
-            <div class="text-center">
-                <a href="." class="navbar-brand navbar-brand-autodark"><img src="{{ asset('/assets/media/logo/logo_white.png') }}"
-                        height="30" alt=""></a>
-            </div>
-        </div>
-
-        <div class="card-body">
-            @if (session()->has('message'))
-                <p class="alert alert-dark mb-10">
-                    {{ session()->get('message') }}
+        <div class="text-center mb-11">
+            <h1 class="text-dark fw-bolder mb-3">{{ __('Verify Your Email Address') }}</h1>
+            <div class="text-gray-500 fw-semibold fs-6">
+                <p>{{ __('Before proceeding, please check your email for a verification link.') }}</p>
+                <p class="text-muted my-10">
+                    {{ __('global.two_factor.sent_to', ['email' => maskEmail(Auth::user()->email)]) }}
                 </p>
-            @endif
-
-            <h2 class="card-title text-center mb-20">{{ __('Verify Your Email Address') }}</h2>
-
-            {{ __('Before proceeding, please check your email for a verification link.') }}
-
-            <p class="text-muted my-10">{{ __('global.two_factor.sent_to', ['email' => maskEmail(Auth::user()->email)]) }}
-            </p>
-
-            <div class="form-footer">
-
-                <form method="POST" action="{{ route('verification.resend') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-secondary w-100">
-                        {{ __('Not received? Request another') }}
-                    </button>.
-                </form>
             </div>
         </div>
-    </div>
+        <form method="POST" action="{{ route('verification.resend') }}">
+            @csrf
+            <div class="d-grid mb-10">
+                <button type="submit" id="sendBtn" class="btn btn-primary">
+                    <span class="indicator-label">{{ __('Not received? Request another') }}</span>
+                    <span class="indicator-progress">{{ __('Sending..') }}
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+            </div>
+        </form>
 
-    <div class="text-center text-muted mt-3">
-        Forget it, <a class="text-primary" onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
-            href="#">send me back</a> to the log in screen.
-    </div>
+        <div class="text-gray-500 text-center fw-semibold fs-6"> {{ __('Forget it,') }}
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();"
+                class="link-primary">{{ __('global.return_to', ['attribute' => __('global.login')]) }}</a>
+        </div>
 
-    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
-        {{ csrf_field() }}
-    </form>
-@endsection
+        <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+    </x-slot:content>
+
+    <x-slot:scripts>
+        <script type="text/javascript">
+            $(function() {
+
+                $("#sendBtn").on("click", function() {
+                    $(this).attr("data-kt-indicator", "on");
+                });
+            });
+        </script>
+    </x-slot:scripts>
+</x-auth-layout>

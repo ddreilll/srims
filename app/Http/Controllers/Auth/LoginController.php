@@ -45,7 +45,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if ($user->is_active && Config::get('panel.2fa') == "on") {
+        if (($user->is_active && $user->is_approved) && Config::get('panel.2fa') == "on") {
             $user->generateTwoFactorCode();
             $user->notify(new TwoFactorCodeNotification());
         }

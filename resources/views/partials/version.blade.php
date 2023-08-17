@@ -1,4 +1,3 @@
-<span class="fw-bold">v{{ config('app.version') }} </span>|
-<a href="{{ config('app.version_changelog_link') }}" class="link-dark" rel="noopener">
-    Changelogs
+<a href="{{ config('app.version_changelog_link') }}" class="fw-bold link-dark" rel="noopener" target="_blank">
+    v{{ config('app.version') }}
 </a>

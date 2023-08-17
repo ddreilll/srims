@@ -10,7 +10,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('name')->nullable()->unique();
             $table->string('email')->nullable()->unique();
             $table->datetime('email_verified_at')->nullable();
             $table->string('password')->nullable();
@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('remember_token')->nullable();
             $table->datetime('two_factor_expires_at')->nullable();
             $table->datetime('last_seen')->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->boolean('is_approved')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

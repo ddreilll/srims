@@ -1,56 +1,70 @@
-@extends('layouts.app')
-@section('content')
-<div class="login-box">
-    <div class="login-logo">
-        <div class="login-logo">
-            <a href="{{ route('home') }}">
-                {{ trans('panel.site_title') }}
-            </a>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg">
-                {{ trans('global.reset_password') }}
-            </p>
-
-            <form method="POST" action="{{ route('password.request') }}">
+<x-auth-layout title="{{ __('global.reset_password') }}">
+    <x-slot:content>
+        @if ($validToken)
+            <form method="POST" action="{{ route('password.update') }}" class="form w-100">
                 @csrf
 
                 <input name="token" value="{{ $token }}" type="hidden">
 
-                <div>
-                    <div class="form-group">
-                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}">
-
-                        @if($errors->has('email'))
-                            <span class="text-danger">
-                                {{ $errors->first('email') }}
-                            </span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required placeholder="{{ trans('global.login_password') }}">
-
-                        @if($errors->has('password'))
-                            <span class="text-danger">
-                                {{ $errors->first('password') }}
-                            </span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="{{ trans('global.login_password_confirmation') }}">
-                    </div>
+                <div class="text-center mb-11">
+                    <h1 class="text-dark fw-bolder mb-3">{{ __('global.reset_password') }}</h1>
+                    <div class="text-gray-500 fw-semibold fs-6">{{ __('Create your new password') }}</div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-flat btn-block">
-                            {{ trans('global.reset_password') }}
-                        </button>
-                    </div>
+                <div class="fv-row mb-5">
+                    <input class="form-control bg-transparent {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                        type="email" name="email" required autocomplete="off"
+                        value="{{ $email ? $email : old('email', '') }}" placeholder="{{ __('global.login_email') }}" />
+                    @if ($errors->has('email'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('email') }}
+                        </div>
+                    @endif
+                </div>
+
+                <x-inputs.password name="password" placeholder="{{ __('global.login_password') }}" :$errors
+                    class="mb-5" passwordMeter="true" />
+
+                <x-inputs.password name="password_confirmation" placeholder="{{ __('Confirm Password') }}" :$errors
+                    class="mb-5" passwordMeter="false" />
+
+                <div class="d-grid mb-10">
+                    <button type="submit" id="submitBtn" class="btn btn-primary">
+                        <span class="indicator-label">{{ __('global.submit') }}</span>
+                        <span class="indicator-progress">{{ __('Submitting..') }}
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+
+                <div class="text-gray-500 text-center fw-semibold fs-6"> {{ __('Remember your access?') }}
+                    <a href="{{ route('login') }}"
+                        class="link-primary">{{ __('global.go_to', ['attribute' => __('global.login')]) }}</a>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-@endsection
+        @else
+            <x-alerts.message title="Invalid Password Reset" icon="fa-circle-xmark" class="w-100">
+                <x-slot:message>
+                    <span>{{ $message }}</span>
+                </x-slot:message>
+            </x-alerts.message>
+
+            <div class="d-grid">
+                <a href="{{ route('login') }}"
+                    class="btn btn-primary"><i class="fa-solid fa-arrow-left me-1"></i> {{ __('global.return_to', ['attribute' => __('global.login')]) }}
+                </a>
+            </div>
+        @endif
+    </x-slot:content>
+
+    @if ($validToken)
+        <x-slot:scripts>
+            <script type="text/javascript">
+                $(function() {
+
+                    $("#submitBtn").on("click", function() {
+                        $(this).attr("data-kt-indicator", "on");
+                    });
+                });
+            </script>
+        </x-slot:scripts>
+    @endif
+</x-auth-layout>

@@ -8,5 +8,14 @@ return [
         'en' => 'English',
     ],
     "2fa" => 'off',
-    "email_verified" => 'on'
+    "email_verified" => 'on',
+    'password' =>
+    [
+        'min' => 6,
+        'lowecase' => 'on',
+        'uppercase' => 'on',
+        'digits' => 'on',
+        'special' => 'on',
+    ],
+    'registration' => 'on'
 ];

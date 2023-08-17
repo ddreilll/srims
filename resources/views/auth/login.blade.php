@@ -1,97 +1,77 @@
-@extends('layouts.app')
+<x-auth-layout title="{{ __('global.login') }}">
+    <x-slot:content>
+        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"action="{{ route('login') }}" method="POST">
 
-@section('content')
-    <div class="d-flex flex-column flex-root">
-        <div class="d-flex flex-column flex-lg-row flex-column-fluid">
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative" style="background-color: #009ef7">
-                <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
-                    <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
-                        <a href="#" class="py-9 mb-5">
-                            <img alt="Logo" src="{{ asset('/assets/media/logo/logo_main.png') }}" class="h-60px" />
-                        </a>
-                    </div>
-                    <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                        style="background-image: url(assets/media/illustrations/sketchy-1/13.png"></div>
+            {{ csrf_field() }}
+
+            <div class="text-center mb-11">
+                <h1 class="text-dark fw-bolder mb-3">{{ __('global.login') }}</h1>
+                <div class="text-gray-500 fw-semibold fs-6">
+                    {{ sprintf(
+                        'Enter your details to get %s to your
+                                                                                                                        account',
+                        strtolower(__('global.log_in')),
+                    ) }}
                 </div>
             </div>
-            <div class="d-flex flex-column flex-lg-row-fluid py-10">
 
-                <div class="d-flex flex-center flex-column flex-column-fluid">
-                    <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+            <div class="fv-row mb-8">
+                <input class="form-control bg-transparent {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                    type="email" name="email" placeholder="{{ __('global.login_email') }}" required
+                    autocomplete="off" />
+                @if ($errors->has('email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+            </div>
 
-                        @if (strtoupper(config('app.env')) == 'TEST')
-                            <div class="container-fluid mb-9 ">
-                                <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
-                                    <div class="d-flex flex-stack flex-grow-1 ">
-                                        <div class="fs-6 text-danger fw-semibold"><i
-                                                class="fa-solid fa-triangle-exclamation fs-3 me-2 text-danger"></i>
-                                            {!! __('panel.test_environment_advisory') !!}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
+            <div class="fv-row mb-5">
+                <input class="form-control bg-transparent {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                    type="password" name="password" required autocomplete="off"
+                    placeholder="{{ __('global.login_password') }}" />
+                @if ($errors->has('password'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('password') }}
+                    </div>
+                @endif
+            </div>
 
-                        @if (\Session::has('message'))
-                            <p class="alert alert-secondary mb-10">
-                                {{ \Session::get('message') }}
-                            </p>
-                        @endif
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}"
-                            method="POST">
-                            {{ csrf_field() }}
-
-                            <div class="text-center mb-10">
-                                <h1 class="text-dark mb-3">{{ __('global.login') }}</h1>
-                            </div>
-                            <div class="fv-row mb-10">
-                                <label class="form-label fs-6 fw-bolder text-dark">{{ __('global.login_email') }}</label>
-                                <input
-                                    class="form-control form-control-lg  {{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                    required autofocus type="text" name="email" autocomplete="off"
-                                    value="{{ old('email', null) }}" />
-                                @if ($errors->has('email'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('email') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="fv-row mb-10">
-                                <div class="d-flex flex-stack mb-2">
-                                    <label
-                                        class="form-label fw-bolder text-dark fs-6 mb-0">{{ __('global.login_password') }}</label>
-                                </div>
-                                <input
-                                    class="form-control form-control-lg  {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                    type="password" name="password" required autocomplete="off" />
-                                @if ($errors->has('password'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('password') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="mb-8">
-                                <label class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="remember" />
-                                    <span class="form-check-label">{{ trans('global.remember_me') }}</span>
-                                </label>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-                                    {{ __('global.proceed_to', ['attribute' => __('global.login')]) }}
-                                </button>
-                            </div>
-
-                            <p class="text-center mt-5"> &copy; {{ date('Y') }}
-                                <a href="." class="link-dark">{{ config('app.name') }}</a>. <br>
-                                {{ __('global.allRightsReserved') }}
-                            </p>
-                            <p class="text-center">
-                                @include('partials.version')
-                            </p>
-                        </form>
+            <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                <div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remeberMeChecked" />
+                        <label class="form-check-label" for="remeberMeChecked">
+                            {{ __('global.remember_me') }}
+                        </label>
                     </div>
                 </div>
+                <a href="{{ route('password.request') }}" class="link-primary">{{ __('global.forgot_password') }}</a>
             </div>
-        </div>
-    </div>
-@endsection
+
+
+            <div class="d-grid mb-10">
+                <button type="submit" id="loginBtn" class="btn btn-primary">
+                    <span
+                        class="indicator-label">{{ __('global.proceed_to', ['attribute' => __('global.log_in')]) }}</span>
+                    <span class="indicator-progress">{{ __('global.logging_in') }}
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+            </div>
+            <div class="text-gray-500 text-center fw-semibold fs-6">{{ __('Don\'t have an access yet?') }}
+                <a href="{{ route('register') }}"
+                    class="link-primary">{{ __('global.go_to', ['attribute' => __('global.register')]) }}</a>
+            </div>
+        </form>
+    </x-slot:content>
+    <x-slot:scripts>
+        <script type="text/javascript">
+            $(function() {
+
+                $("#loginBtn").on("click", function() {
+                    $(this).attr("data-kt-indicator", "on");
+                });
+            });
+        </script>
+    </x-slot:scripts>
+</x-auth-layout>

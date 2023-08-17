@@ -14,8 +14,6 @@ Route::get('/home', function () {
     return redirect()->route('home');
 });
 
-Auth::routes(['register' => false]);
-
 $defaultMiddlewares = ['auth', 'user.status'];
 
 Route::group(['middleware' => $defaultMiddlewares, 'namespace' => 'Admin'], function () {
