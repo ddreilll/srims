@@ -63,6 +63,11 @@
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                 </div>
+
+                <div class="text-gray-500 text-center fw-semibold fs-6"> {{ __('Aleady have an access?') }}
+                    <a href="{{ route('login') }}"
+                        class="link-primary">{{ __('global.go_to', ['attribute' => __('global.login')]) }}</a>
+                </div>
             </form>
         @else
             <x-alerts.message title="Access Request Available Soon" icon="fa-circle-xmark" class="w-100">
@@ -70,13 +75,14 @@
                     <span>{{ __('This service is temporarily unavailable') }}</span>
                 </x-slot:message>
             </x-alerts.message>
+
+            <div class="d-grid">
+                <a href="{{ route('login') }}" class="btn btn-primary"><i class="fa-solid fa-arrow-left me-1"></i>
+                    {{ __('global.return_to', ['attribute' => __('global.login')]) }}
+                </a>
+            </div>
         @endif
 
-        <div class="d-grid">
-            <a href="{{ route('login') }}" class="btn btn-primary"><i class="fa-solid fa-arrow-left me-1"></i>
-                {{ __('global.return_to', ['attribute' => __('global.login')]) }}
-            </a>
-        </div>
     </x-slot:content>
 
     @if (config('panel.registration') == 'on')
