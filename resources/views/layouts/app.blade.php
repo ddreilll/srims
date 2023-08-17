@@ -15,6 +15,12 @@
     <link rel="manifest" href="{{ asset('/assets/media/logo/favicon_io/site.webmanifest') }}">
     <meta name="theme-color" content="#ffffff">
 
+    <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="{{ asset('/assets/plugins/custom/fontawesome-pro/css/all.min.css') }}" rel="stylesheet"
+        type="text/css" />
+
     <style>
         /* poppins-200 - latin */
         @font-face {
@@ -74,12 +80,6 @@
         }
     </style>
 
-    <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
-
-    <link href="{{ asset('/assets/plugins/custom/fontawesome-pro/css/all.min.css') }}" rel="stylesheet"
-        type="text/css" />
-
     <script type="text/javascript">
         window.$sleek = [];
         window.SLEEK_PRODUCT_ID = 887606659;
@@ -98,6 +98,7 @@
     @yield('content')
 
     <script src="{{ asset('/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('/assets/js/scripts.bundle.js') }}"></script>
     @yield('scripts')
 </body>
 
