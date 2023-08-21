@@ -147,7 +147,7 @@ class InstructorController extends Controller
             $term = trim($request->term);
             $instructor = Instructor::select(
                 DB::raw('inst_id as id'),
-                DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as full_name'),
+                DB::raw('CONCAT(inst_firstName, COALESCE(CONCAT(" ", SUBSTRING(inst_middleName, 1, 1), "."), ""), " ", inst_lastName) as fullname'),
                 DB::raw('inst_empNo as emp_no'),
             )->where('inst_empNo', 'LIKE',  '%' . $term . '%')
                 ->orWhere('inst_firstName', 'LIKE',  '%' . $term . '%')

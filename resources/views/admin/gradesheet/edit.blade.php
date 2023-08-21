@@ -644,7 +644,7 @@
                     template += '<div class="d-flex flex-column">'
                     template += '<span class="lh-2">ENo.: <span class="fw-bolder">' + item.emp_no +
                         '</span></span>';
-                    template += '<span class="fw-bold">' + item.full_name + '</span>';
+                    template += '<span class="fw-bold">' + item.fullname + '</span>';
                     template += '</div>';
                     template += '</div>';
 
@@ -654,11 +654,11 @@
                 },
                 templateSelection: function(item) {
 
-                    if (!item.full_name) {
+                    if (!item.fullname) {
                         return item.text;
                     }
 
-                    return item.full_name;
+                    return item.fullname;
                 },
                 language: {
                     searching: function() {
