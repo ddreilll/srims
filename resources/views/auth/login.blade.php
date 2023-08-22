@@ -26,16 +26,8 @@
                 @endif
             </div>
 
-            <div class="fv-row mb-5">
-                <input class="form-control bg-transparent {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                    type="password" name="password" required autocomplete="off"
-                    placeholder="{{ __('global.login_password') }}" />
-                @if ($errors->has('password'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('password') }}
-                    </div>
-                @endif
-            </div>
+            <x-inputs.password name="password" placeholder="{{ __('global.login_password') }}" :$errors
+            class="mb-5" passwordMeter="false" />
 
             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                 <div>
