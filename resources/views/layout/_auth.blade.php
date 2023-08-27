@@ -32,13 +32,11 @@
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
 
                             @if (strtoupper(config('app.env')) == 'TEST')
-                                <div
-                                    class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6 mb-10">
-                                    <div class="d-flex flex-stack flex-grow-1 ">
-                                        <div class="fs-6 text-danger fw-semibold"><i
-                                                class="fa-solid fa-triangle-exclamation fs-3 me-2 text-danger"></i>
-                                            {!! __('panel.test_environment_advisory') !!}</div>
-                                    </div>
+                                <div class="bg-light-danger rounded border-danger border border-dashed p-6 mb-10">
+                                    <span class="fs-6 text-danger fw-semibold">
+                                        <i class="fa-solid fa-triangle-exclamation fs-3 me-2 text-danger"></i>
+                                        {!! __('panel.test_environment_advisory') !!}
+                                    </span>
                                 </div>
                             @endif
 
@@ -54,7 +52,7 @@
 
                         </div>
                         <div class="d-flex flex-stack">
-                            @include('partials.version')
+                            <x-version />
 
                             <div class="d-flex fw-semibold text-primary fs-base gap-5">
                                 <a href="#" target="_blank">Terms</a>

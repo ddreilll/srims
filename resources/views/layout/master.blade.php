@@ -92,6 +92,16 @@
         }
     </style>
 
+    <!--begin::Custom Stylesheets(optional)-->
+    @foreach (getCustomCss() as $path)
+        {!! sprintf('<link rel="stylesheet" href="%s">', asset($path)) !!}
+    @endforeach
+    <!--end::Custom Stylesheets-->
+
+    <!--begin::Custom Javascript(optional)-->
+    @stack('styles')
+    <!--end::Custom Javascript-->
+
     <script type="text/javascript">
         window.$sleek = [];
         window.SLEEK_PRODUCT_ID = 887606659;
@@ -121,6 +131,12 @@
         {!! sprintf('<script src="%s"></script>', asset($path)) !!}
     @endforeach
     <!--end::Vendors Javascript-->
+
+    <!--begin::Custom Javascript(optional)-->
+    @foreach (getCustomJs() as $path)
+        {!! sprintf('<script src="%s"></script>', asset($path)) !!}
+    @endforeach
+    <!--end::Custom Javascript-->
 
     <!--begin::Custom Javascript(optional)-->
     @stack('scripts')

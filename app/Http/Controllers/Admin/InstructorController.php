@@ -60,6 +60,7 @@ class InstructorController extends Controller
             return $table->make(true);
         }
 
+        addJavascriptFile(asset('assets/js/datatables.js'));
         return view('admin.instructors.index');
     }
 

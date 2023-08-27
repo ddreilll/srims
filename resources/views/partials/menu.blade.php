@@ -48,8 +48,8 @@
                 id="#kt_aside_menu" data-kt-menu="true">
 
                 <div class="menu-item">
-                    <a class="menu-link {{ request()->routeIs('home*') ? 'active' : '' }}"
-                        href="{{ route('home') }}">
+                    <a class="menu-link {{ request()->routeIs('dashboard*') ? 'active' : '' }}"
+                        href="{{ route('dashboard') }}">
                         <span class="menu-icon">
                             <i class="fa-duotone fa-chart-mixed"></i>
                         </span>
@@ -59,7 +59,7 @@
 
                 <div class="menu-item">
                     <a class="menu-link {{ request()->routeIs('messenger*') ? 'active' : '' }}"
-                        href="{{ route('messenger.index') }}">
+                        href="{{ route('messages.index') }}">
                         <span class="menu-icon">
                             <i class="fa-duotone fa-inbox"></i>
                         </span>

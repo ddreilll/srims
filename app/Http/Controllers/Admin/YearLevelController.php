@@ -60,7 +60,8 @@ class YearLevelController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.year_levels.index');
+        addJavascriptFile(asset('assets/js/datatables.js'));
+        return view('admin.year-levels.index');
     }
 
     /**
@@ -72,7 +73,7 @@ class YearLevelController extends Controller
     {
         abort_if(Gate::denies('year_level_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.year_levels.create');
+        return view('admin.year-levels.create');
     }
 
     /**
@@ -100,7 +101,7 @@ class YearLevelController extends Controller
     {
         abort_if(Gate::denies('year_level_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.year_levels.edit', compact('yearLevel'));
+        return view('admin.year-levels.edit', compact('yearLevel'));
     }
 
     /**

@@ -32,6 +32,9 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'profile_password_edit',
             ],
             [
+                'title' => 'profile_details_edit',
+            ],
+            [
                 'title' => 'user_management_access',
             ],
             [

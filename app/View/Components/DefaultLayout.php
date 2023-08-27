@@ -11,7 +11,7 @@ class DefaultLayout extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $title = '')
+    public function __construct(public string $title = '', public string $pageTitle = '')
     {
         /// Init layout file
         app(config('settings.THEME_BOOTSTRAP.default'))->init();

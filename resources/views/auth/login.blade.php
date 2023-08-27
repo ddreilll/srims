@@ -56,6 +56,7 @@
             </div>
         </form>
     </x-slot:content>
+    
     <x-slot:scripts>
         <script type="text/javascript">
             $(function() {

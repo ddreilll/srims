@@ -1,9 +1,9 @@
-<div class="fv-row {{ $class }}" data-kt-password-meter="{{ $passwordMeter }}">
+<div class="fv-row {{ isset($class) ? $class : '' }}" data-kt-password-meter="{{ $passwordMeter }}">
     <div class="mb-1">
 
         <div class="position-relative mb-3">
             <input class="form-control bg-transparent {{ $errors->has($name) ? ' is-invalid' : '' }}" type="password"
-                placeholder="{{ $placeholder }}" name="{{ $name }}" autocomplete="off" />
+                @if(isset($placeholder))placeholder="{{ $placeholder }}"@endif name="{{ $name }}" autocomplete="off" />
 
             <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                 data-kt-password-meter-control="visibility">

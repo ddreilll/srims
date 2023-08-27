@@ -26,6 +26,22 @@ if (!function_exists('formatDatetime')) {
     }
 }
 
+if (!function_exists('formatDate')) {
+
+    /**
+     * Format datetime
+     *
+     * @param int $timestamp Time timestamp parameter is an integer Unix timerstamp
+     */
+
+    function formatDate($timestamp)
+    {
+        // Get configuration from db
+
+        return date('m/d/Y', strtotime($timestamp));
+    }
+}
+
 if (!function_exists('pluralized')) {
 
     function pluralized($word, $size)
@@ -481,7 +497,6 @@ if (!function_exists('addHtmlAttribute')) {
     }
 }
 
-
 if (!function_exists('addHtmlAttributes')) {
     /**
      * Add multiple HTML attributes by scope
@@ -494,5 +509,57 @@ if (!function_exists('addHtmlAttributes')) {
     function addHtmlAttributes($scope, $attributes)
     {
         theme()->addHtmlAttributes($scope, $attributes);
+    }
+}
+
+if (!function_exists('addJavascriptFile')) {
+    /**
+     * Add custom javascript file to the page
+     *
+     * @param $file
+     *
+     * @return void
+     */
+    function addJavascriptFile($file)
+    {
+        theme()->addJavascriptFile($file);
+    }
+}
+
+if (!function_exists('getCustomJs')) {
+    /**
+     * Get custom js files from the settings
+     *
+     * @return array
+     */
+    function getCustomJs()
+    {
+        return theme()->getCustomJs();
+    }
+}
+
+if (!function_exists('addCssFile')) {
+    /**
+     * Add custom CSS file to the page
+     *
+     * @param $file
+     *
+     * @return void
+     */
+    function addCssFile($file)
+    {
+        theme()->addCssFile($file);
+    }
+}
+
+if (!function_exists('getCustomCss')) {
+    /**
+     * Get custom css files from the settings
+     *
+     * @return array
+     */
+    function getCustomCss()
+    {
+        return theme()->getCustomCss();
     }
 }

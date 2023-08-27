@@ -29,7 +29,15 @@ class UpdatePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required', 'confirmed', 'string',
+                'min:' . config('panel.password.min'),
+                config('panel.password.lowercase') == "on" ? 'regex:/[a-z]/' : '',
+                config('panel.password.uppercase') == "on" ? 'regex:/[A-Z]/' : '',
+                config('panel.password.digits') == "on" ? 'regex:/[0-9]/' : '',
+                config('panel.password.special') == "on" ? 'regex:/[@$!%*#?&]/' : '',
+            ],
+            'password_confirmation' => ['required', 'string'],
         ];
     }
 }

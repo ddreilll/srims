@@ -70,9 +70,9 @@ class StudentController extends Controller
                     return $row->course->cour_code;
                 })
                 ->addColumn('remarks', function ($row) {
-                    $hasHonor = $row->honor && $row->stud_academicStatus == AcademicStatusEnum::GRADUATED ? sprintf('<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="%s"><i class="fa-duotone fa-file-certificate text-warning fs-4"></i></span>', $row->honor->honor_name) : "";
+                    $hasHonor = $row->honor && $row->stud_academicStatus == AcademicStatusEnum::GRADUATED ? sprintf('<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="%s"><i class="fa-duotone fa-file-certificate text-warning fs-4"></i></span>', $row->honor->honor_name) : "";
 
-                    return $row->stud_isHonorableDismissed ? sprintf('%s <span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="%s"><i class="fa-duotone fa-arrow-right-from-bracket ms-2 text-danger fs-4"></i></span>', $hasHonor, __('Honorable Dismissed')) : "";
+                    return $row->stud_isHonorableDismissed ? sprintf('%s <span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="%s"><i class="fa-duotone fa-arrow-right-from-bracket ms-2 text-danger fs-4"></i></span>', $hasHonor, __('Honorable Dismissed')) : "";
                 })
                 ->addColumn('actions', function ($row) {
                     $viewGate      = 'student_show';
@@ -162,6 +162,7 @@ class StudentController extends Controller
             DB::raw('`syear_year` as `value`'),
         ])->get()->toArray();
 
+        addJavascriptFile(asset('assets/js/datatables.js'));
         return view('admin.students.index', compact('filterCourses', 'filterAcademicStatus', 'filterYearOfAdmission', 'filterAdmissionType'));
     }
 
@@ -192,7 +193,7 @@ class StudentController extends Controller
             case 'personal':
                 (new StudentActionObserver)->viewed($student, 'Personal & Student profile');
 
-                return view('admin.students.show_personal', compact('student', 'activityLogs'));
+                return view('admin.students.show-personal', compact('student', 'activityLogs'));
 
                 break;
 
@@ -201,7 +202,7 @@ class StudentController extends Controller
 
                 (new StudentActionObserver)->viewed($student, 'Documents');
 
-                return view('admin.students.show_documents', compact('student', 'activityLogs'));
+                return view('admin.students.show-documents', compact('student', 'activityLogs'));
 
                 break;
 
@@ -213,7 +214,7 @@ class StudentController extends Controller
 
                     (new StudentActionObserver)->viewed($student, 'Scholastic data');
 
-                    return view('admin.students.show_scholastic', compact('student', 'activityLogs'));
+                    return view('admin.students.show-scholastic', compact('student', 'activityLogs'));
                 } else {
                     abort(Response::HTTP_NOT_FOUND);
                 }

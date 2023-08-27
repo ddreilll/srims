@@ -1,4 +1,4 @@
-@extends('layouts.fluid')
+@extends('layout.old')
 
 @section('content')
     <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -37,7 +37,7 @@
                                         </span>
                                     </span>
                                 </div>
-                                <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-trigger="hover"
+                                <span data-bs-toggle="tooltip" data-bs-custom-class="tooltip-inverse" data-bs-trigger="hover"
                                     title="Edit gradesheet details">
                                     <a href="{{ route('admin.gradesheet.edit', $class->class_id) }}"
                                         class="btn btn-sm btn-light-warning">Edit</a>

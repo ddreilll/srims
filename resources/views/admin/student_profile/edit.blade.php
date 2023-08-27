@@ -1,4 +1,4 @@
-@extends('layouts.fluid')
+@extends('layout.old')
 
 @section('styles')
     <style>

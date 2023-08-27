@@ -18,6 +18,8 @@ class Theme
      *
      * @var array
      */
+    public static $javascriptFiles = [];
+    public static $cssFiles = [];
     public static $vendorFiles = [];
 
 
@@ -195,5 +197,49 @@ class Theme
     function getHtmlAttribute($scope, $attribute)
     {
         return self::$htmlAttributes[$scope][$attribute] ?? [];
+    }
+
+    /**
+     * Add custom javascript file to the page
+     *
+     * @param $file
+     *
+     * @return void
+     */
+    function addJavascriptFile($file)
+    {
+        self::$javascriptFiles[] = $file;
+    }
+
+    /**
+     * Get custom js files from the settings
+     *
+     * @return array
+     */
+    function getCustomJs()
+    {
+        return self::$javascriptFiles;
+    }
+
+    /**
+     * Add custom CSS file to the page
+     *
+     * @param $file
+     *
+     * @return void
+     */
+    function addCssFile($file)
+    {
+        self::$cssFiles[] = $file;
+    }
+
+    /**
+     * Get custom css files from the settings
+     *
+     * @return array
+     */
+    function getCustomCss()
+    {
+        return self::$cssFiles;
     }
 }

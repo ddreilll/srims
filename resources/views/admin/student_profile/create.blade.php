@@ -1,4 +1,4 @@
-@extends('layouts.fluid')
+@extends('layout.old')
 
 @section('content')
     <div class="post" id="kt_post">

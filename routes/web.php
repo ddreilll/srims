@@ -8,11 +8,37 @@ use Illuminate\Support\Facades\Schema;
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
-        return redirect()->route('home')->with('status', session('status'));
+        return redirect()->route('dashboard')->with('status', session('status'));
     }
 
-    return redirect()->route('home');
+    return redirect()->route('dashboard');
+})->name('home');
+
+Auth::routes();
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'email', 'as' => "verification."], function () {
+
+    Route::get('/email/verify', function () {
+        return view('auth.verify');
+    })->name('notice');
+
+    Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\EmailVerificationRequest $request) {
+        $request->fulfill();
+
+        return redirect('/home')->with('verified', true);
+    })->middleware(['signed'])->name('verify');
+
+    Route::post('/email/verification-notification', function (\Illuminate\Http\Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Verification link has been sent.');
+    })->middleware(['throttle:6,1'])->name('send');
+
+    Route::get('/email/verification-notification', function (\Illuminate\Http\Request $request) {
+        return view('auth.verify');
+    })->name('resend');
 });
+
 
 $defaultMiddlewares = ['auth', 'user.status'];
 
@@ -41,9 +67,48 @@ if (Schema::hasTable((new Configuration())->table)) {
 Route::group(['middleware' => $defaultMiddlewares], function () {
 
     Route::group(['namespace' => 'Admin'], function () {
-        Route::get('/dashboard', 'HomeController@index')->name('home');
 
+        // Dashboard
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('ajax/student-per-year', 'DashboardController@ajax_retrieve_total_student_per_year');
+
+        // Global Search
+        Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+
+        // Gradesheets
+        Route::resource('gradesheets', 'GradesheetController');
+
+        // Students
+        Route::resource('students', 'StudentController');
+        Route::post('students/{student}/archive', 'StudentController@archive')->name('students.archive');
+        Route::post('students/{student}/unarchive', 'StudentController@unarchive')->name('students.unarchive');
+        Route::get('students/{student}/export/envelope-document-evaluation', 'StudentController@exportDocuments')->name('students.export.envelope-document-evaluation');
+        Route::get('students/{student}/export/scholastic-data', 'StudentController@exportScholastic')->name('students.export.scholastic-data');
+
+        // User Accounts
+        Route::patch('users/{user}/status', 'UsersController@updateStatus')->name('users.update-status');
+        Route::put('users/config/{configKey}', 'UsersController@updateConfig')->name('users.updateConfig');
+        Route::resource('users', 'UsersController');
+
+        // Roles
+        Route::resource('roles', 'RolesController');
+
+        // User Alerts
+        Route::get('user-alerts/read', 'UserAlertsController@read');
+        Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
+
+        // In-app Messaging
+        Route::get('messages', 'MessagesController@index')->name('messages.index');
+        Route::get('messages/create', 'MessagesController@createTopic')->name('messages.createTopic');
+        Route::post('messages', 'MessagesController@storeTopic')->name('messages.storeTopic');
+        Route::get('messages/inbox', 'MessagesController@showInbox')->name('messages.showInbox');
+        Route::get('messages/outbox', 'MessagesController@showOutbox')->name('messages.showOutbox');
+        Route::get('messages/{topic}', 'MessagesController@showMessages')->name('messages.showMessages');
+        Route::delete('messages/{topic}', 'MessagesController@destroyTopic')->name('messages.destroyTopic');
+        Route::post('messages/{topic}/reply', 'MessagesController@replyToTopic')->name('messages.reply');
+        Route::get('messages/{topic}/reply', 'MessagesController@showReply')->name('messages.showReply');
+
+
 
         Route::get('gradesheet/create', 'GradesheetsController@create')->name('admin.gradesheet.create');
         Route::get('gradesheet/{gradesheet}', 'GradesheetsController@show')->whereNumber('gradesheet')->name('admin.gradesheet.show');
@@ -77,23 +142,6 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         Route::post('student/profile/retrieve-documents', 'StudentProfileController@ajax_retrieve_documents');
         Route::post('student/profile/retrieve-prev-college', 'StudentProfileController@ajax_retrieve_prevCollege');
 
-       
-
-        // Gradesheets
-        Route::resource('gradesheets', 'GradesheetController');
-
-        // Students
-        Route::resource('students', 'StudentController');
-        Route::post('students/{student}/archive', 'StudentController@archive')->name('students.archive');
-        Route::post('students/{student}/unarchive', 'StudentController@unarchive')->name('students.unarchive');
-        Route::get('students/{student}/export/envelope-document-evaluation', 'StudentController@exportDocuments')->name('students.export.envelope-document-evaluation');
-        Route::get('students/{student}/export/scholastic-data', 'StudentController@exportScholastic')->name('students.export.scholastic-data');
-
-        // User Accounts
-        Route::patch('users/{user}/status', 'UsersController@updateStatus')->name('users.update-status');
-        Route::put('users/config/{configKey}', 'UsersController@updateConfig')->name('users.updateConfig');
-        Route::resource('users', 'UsersController');
-
         // Subject
         Route::post('subject/select2', 'SubjectController@ajax_select2_search');
 
@@ -112,36 +160,15 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
 
         // School Year
         Route::post('select2/settings/school-year/base', 'SchoolYearController@ajax_select2_base_search');
-
-        // Roles
-        Route::resource('roles', 'RolesController');
-
-        // User Alerts
-        Route::get('user-alerts/read', 'UserAlertsController@read');
-        Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
-
-        Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
-        Route::get('messenger', 'MessengerController@index')->name('messenger.index');
-        Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');
-        Route::post('messenger', 'MessengerController@storeTopic')->name('messenger.storeTopic');
-        Route::get('messenger/inbox', 'MessengerController@showInbox')->name('messenger.showInbox');
-        Route::get('messenger/outbox', 'MessengerController@showOutbox')->name('messenger.showOutbox');
-        Route::get('messenger/{topic}', 'MessengerController@showMessages')->name('messenger.showMessages');
-        Route::delete('messenger/{topic}', 'MessengerController@destroyTopic')->name('messenger.destroyTopic');
-        Route::post('messenger/{topic}/reply', 'MessengerController@replyToTopic')->name('messenger.reply');
-        Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
     });
 
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
-        Route::resource('backups', 'BackupController');
-        Route::get('backups/download/{file_name}', 'BackupController@download')->name('backups.export');
-
 
         Route::group(['namespace' => 'Admin'], function () {
 
-            Route::get('/', function () {
+            Route::get('/', function() {
                 return view('admin.settings.index');
-            });
+            })->name('index');
 
             // Documents
             Route::resource('documents', 'DocumentController');
@@ -171,16 +198,19 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
             // School year
             Route::resource('school-years', 'SchoolYearController');
             Route::post('school-year/select2', 'SchoolYearController@ajax_select2_plus_search');
+
+            // Backups
+            Route::resource('backups', 'BackupController');
+            Route::get('backups/download/{file_name}', 'BackupController@download')->name('backups.export');
         });
     });
 
-    Route::group(['prefix' => 'my-profile', 'as' => 'my-profile.', 'namespace' => 'Auth'], function () {
-        // Change password
+    Route::group(['prefix' => 'account-settings', 'as' => 'account-settings.', 'namespace' => 'Auth'], function () {
+        // Account Settings
         if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
-            Route::get('edit', 'ChangePasswordController@edit')->name('edit');
+            Route::get('/', 'ChangePasswordController@edit')->name('edit');
             Route::post('edit', 'ChangePasswordController@update')->name('update');
             Route::post('/', 'ChangePasswordController@updateProfile')->name('updateProfile');
-            Route::post('two-factor', 'ChangePasswordController@toggleTwoFactor')->name('toggleTwoFactor');
         }
     });
 
@@ -192,29 +222,4 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
             Route::get('two-factor/resend', 'TwoFactorController@resend')->name('twoFactor.resend');
         }
     });
-});
-
-Auth::routes();
-
-Route::group(['middleware' => ['auth'], 'prefix' => 'email', 'as' => "verification."], function () {
-
-    Route::get('/email/verify', function () {
-        return view('auth.verify');
-    })->name('notice');
-
-    Route::get('/email/verify/{id}/{hash}', function (\Illuminate\Foundation\Auth\EmailVerificationRequest $request) {
-        $request->fulfill();
-
-        return redirect('/home')->with('verified', true);
-    })->middleware(['signed'])->name('verify');
-
-    Route::post('/email/verification-notification', function (\Illuminate\Http\Request $request) {
-        $request->user()->sendEmailVerificationNotification();
-
-        return back()->with('message', 'Verification link has been sent.');
-    })->middleware(['throttle:6,1'])->name('send');
-
-    Route::get('/email/verification-notification', function (\Illuminate\Http\Request $request) {
-        return view('auth.verify');
-    })->name('resend');
 });

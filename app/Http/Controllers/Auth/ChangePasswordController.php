@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdatePasswordRequest;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\UpdateProfileRequest;
-use Gate;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdatePasswordRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class ChangePasswordController extends Controller
@@ -22,7 +21,7 @@ class ChangePasswordController extends Controller
     {
         auth()->user()->update($request->validated());
 
-        return redirect()->route('my-profile.edit')->with('message', __('global.change_password_success'));
+        return redirect()->route('account-settings.edit')->with('message', __('global.change_password_success'));
     }
 
     public function updateProfile(UpdateProfileRequest $request)
@@ -31,23 +30,6 @@ class ChangePasswordController extends Controller
 
         $user->update($request->validated());
 
-        return redirect()->route('my-profile.edit')->with('message', __('global.update_profile_success'));
-    }
-
-    public function toggleTwoFactor(Request $request)
-    {
-        $user = auth()->user();
-
-        if ($user->two_factor) {
-            $message = __('global.two_factor.disabled');
-        } else {
-            $message = __('global.two_factor.enabled');
-        }
-
-        $user->two_factor = ! $user->two_factor;
-
-        $user->save();
-
-        return redirect()->route('my-profile.edit')->with('message', $message);
+        return redirect()->route('account-settings.edit')->with('message', __('global.update_profile_success'));
     }
 }

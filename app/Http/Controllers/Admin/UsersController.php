@@ -50,7 +50,7 @@ class UsersController extends Controller
             });
 
             $table->editColumn('is_active', function ($row) {
-                return view('admin.users.partials.datatableIsActive', compact('row'));
+                return view('admin.users.partials.datatable-is-active', compact('row'));
             });
 
             $table->addColumn('actions', function ($row) {
@@ -85,13 +85,11 @@ class UsersController extends Controller
                     ];
                 } else {
                     $viewData = [
-                        "editGate" => $editGate,
                         "crudRoutePart" => $crudRoutePart,
                         "resource" => $resource,
                         "row" => $row,
                     ];
                 }
-
 
                 return view('partials.dataTables.actionBtns', $viewData);
             });
@@ -110,6 +108,7 @@ class UsersController extends Controller
         $activityLogs = Activity::where('causer_type', 'App\Models\User')->orderBy('created_at', 'desc')->limit(4)->get();
         $onlineUsers = User::online(5)->count();
 
+        addJavascriptFile(asset('assets/js/datatables.js'));
         return view('admin.users.index', compact('twoFactor', 'twoFactorKey', 'emailVerified', 'emailVerifiedKey', 'activityLogs', 'onlineUsers'));
     }
 

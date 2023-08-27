@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Room;
+use App\Models\Term;
 use App\Models\Subject;
 use App\Models\Gradesheet;
+use App\Models\Instructor;
+use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use App\Enums\GradesheetFileStorageEnum;
-use App\Models\Instructor;
-use App\Models\Room;
-use App\Models\SchoolYear;
-use App\Models\Term;
 use Yajra\DataTables\Facades\DataTables;
 
 class GradesheetController extends Controller
@@ -152,6 +151,7 @@ class GradesheetController extends Controller
             return $gradesheet->pages_sum_grdsheetpg_row_no;
         })->max();
 
+        addJavascriptFile(asset('assets/js/datatables.js'));
         return view('admin.gradesheets.index', compact('filterSubjects', 'filterRooms', 'filterSemesters', 'filterAcadYears', 'filterInstructors', 'filterMaxStudent', 'filterMaxSlots'));
     }
 

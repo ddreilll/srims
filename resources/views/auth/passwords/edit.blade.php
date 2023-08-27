@@ -1,93 +1,101 @@
-@extends('layouts.admin')
-@section('content')
+@extends('auth.passwords.partials.account-settings-template')
 
-<div class="row">
-    <div class="col-md-6">
+@section('account-settings-title')
+    {{ __('Account Settings') }}
+@endsection
+
+@section('account-settings-page-title')
+    {{ __('Account Settings') }}
+@endsection
+
+@section('account-settings-content')
+
+    @can('profile_details_edit')
         <div class="card">
             <div class="card-header">
-                {{ trans('global.my_profile') }}
-            </div>
-
-            <div class="card-body">
-                <form method="POST" action="{{ route("my-profile.updateProfile") }}">
-                    @csrf
-                    <div class="form-group">
-                        <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
-                        <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', auth()->user()->name) }}" required>
-                        @if($errors->has('name'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('name') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label class="required" for="title">{{ trans('cruds.user.fields.email') }}</label>
-                        <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="text" name="email" id="email" value="{{ old('email', auth()->user()->email) }}" required>
-                        @if($errors->has('email'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('email') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-danger" type="submit">
-                            {{ trans('global.save') }}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                {{ trans('global.change_password') }}
-            </div>
-            <div class="card-body">
-                <form method="POST" action="{{ route("my-profile.update") }}">
-                    @csrf
-                    <div class="form-group">
-                        <label class="required" for="password">New {{ trans('cruds.user.fields.password') }}</label>
-                        <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" required>
-                        @if($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label class="required" for="password_confirmation">Repeat New {{ trans('cruds.user.fields.password') }}</label>
-                        <input class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" type="password" name="password_confirmation" id="password_confirmation" required>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-danger" type="submit">
-                            {{ trans('global.save') }}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    
-    @if(Route::has('my-profile.toggleTwoFactor') && Config::get('panel.2fa') == "on")
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    {{ trans('global.two_factor.title') }}
+                <div class="card-title">
+                    <h2>{{ __('global.update_profile') }}</h2>
                 </div>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('account-settings.updateProfile') }}" enctype="multipart/form-data">
+                    @csrf
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route("my-profile.toggleTwoFactor") }}">
-                        @csrf
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
-                                {{ auth()->user()->two_factor ? trans('global.two_factor.disable') : trans('global.two_factor.enable') }}
-                            </button>
+                    <div class="row mb-7">
+                        <label
+                            class="col-lg-4 col-form-label required required fs-6 fw-bold">{{ __('cruds.user.fields.name') }}</label>
+                        <div class="col-lg-8 fv-row">
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                name="name" value="{{ old('name', auth()->user()->name) }}" required />
+                            @if ($errors->has('name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="row mb-7">
+                        <label
+                            class="col-lg-4 col-form-label required required fs-6 fw-bold">{{ __('cruds.user.fields.email') }}</label>
+                        <div class="col-lg-8 fv-row">
+                            <input type="text" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                                name="email" value="{{ old('email', auth()->user()->email) }}" required />
+                            @if ($errors->has('email'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('email') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <a href="{{ url('/home') }}" class="btn btn-light me-3">{{ __('global.cancel') }}</a>
+                        <button type="submit" class="btn btn-primary">
+                            <span>{{ __('global.save_changes') }}</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    @endif
-</div>
+    @endcan
+
+    @can('profile_password_edit')
+        <div class="card {{ Gate::check(['profile_details_edit']) ? 'mt-10' : '' }}">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2>{{ __('global.change_password') }}</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('account-settings.update') }}" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="row mb-7">
+                        <label class="col-lg-4 col-form-label required required fs-6 fw-bold">New
+                            {{ __('cruds.user.fields.password') }}</label>
+                        <div class="col-lg-8 fv-row">
+                            <x-inputs.password name="password" :$errors passwordMeter="true" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-7">
+                        <label class="col-lg-4 col-form-label required required fs-6 fw-bold">Confirm New
+                            {{ trans('cruds.user.fields.password') }}</label>
+                        <div class="col-lg-8 fv-row">
+                            <x-inputs.password name="password_confirmation" :$errors passwordMeter="false" />
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <a href="{{ url('/home') }}" class="btn btn-light me-3">{{ __('global.cancel') }}</a>
+                        <button type="submit" class="btn btn-primary">
+                            <span>{{ __('global.save_changes') }}</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endcan
+
 @endsection

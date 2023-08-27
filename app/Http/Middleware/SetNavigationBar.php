@@ -26,8 +26,8 @@ class SetNavigationBar
         $navigation = [
             [
                 "title" => "Dashboard",
-                "url" => route('home'),
-                "active" => request()->routeIs('home'),
+                "url" => route('dashboard'),
+                "active" => request()->routeIs('dasboard'),
                 "icon_class" => "fa-light fa-chart-mixed",
                 "children" => []
             ]

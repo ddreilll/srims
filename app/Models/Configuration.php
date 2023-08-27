@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
+use Sushi\Sushi;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Configuration extends Model
 {
-    use HasFactory;
-
     public $table = 'configurations';
 
     protected $dates = [

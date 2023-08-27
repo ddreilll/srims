@@ -104,6 +104,7 @@ class DocumentController extends Controller
             return $table->make(true);
         }
 
+        addJavascriptFile(asset('assets/js/datatables.js'));
         return view('admin.documents.index');
     }
 
