@@ -39,15 +39,14 @@
                         <!--begin::Heading-->
                         <div class="my-auto">
                             <!--begin::Illustration-->
-                            <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center card-rounded-bottom h-60px mh-50px my-5 mb-lg-12 mb-10"
-                                style="background-image:url('{{ asset('/assets/media/logo/logo_main.png') }}')"></div>
+                            <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center card-rounded-bottom h-70px mh-70px my-5 mb-lg-12 mb-10"
+                                style="background-image:url('{{ asset('/assets/media/logo/logo-primary-white-no-background.svg') }}')"></div>
                             <!--end::Illustration-->
 
                             <!--begin::Title-->
                             <h1 class="fw-bold text-center text-white fs-2qx">Streamline. Retrieve. Excel.
                                 <br />
-                                <span class="fw-semibold text-white fs-3">Your Student Journey,
-                                    Digitally Empowered</span>
+                                <span class="fw-semibold text-white fs-3">Transforming Records, Empowering Education</span>
                             </h1>
                             <!--end::Title-->
                         </div>

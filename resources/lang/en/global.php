@@ -68,7 +68,7 @@ return [
     'year'                                 => 'Year',
     'yes'                                  => 'Yes',
     'youAreLoggedIn'                       => 'You are logged in!',
-    'yourAccountNeedsAdminApproval'        => 'Your accounts needs an administrator approval in order to log in',
+    'yourAccountNeedsAdminApproval'        => 'Your accounts needs an administrator approval in order to log in.',
     'submit'                               => 'Submit',
     'all_messages'                   => 'All Messages',
     'new_message'                    => 'New message',

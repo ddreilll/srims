@@ -10,9 +10,9 @@ class VerifyAccountStatus
     {
         // Check if user account is active
         if (auth()->check() && !auth()->user()->is_active) {
-            if (!$request->routeIs('users.deactivated')) {
-                return redirect()->route('users.deactivated');
-            }
+            auth()->logout();
+
+            return redirect()->route('login')->with('error', __('auth.account_deactivated'));
         }
 
         return $next($request);

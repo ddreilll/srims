@@ -3,7 +3,7 @@
     <!--begin::Brand-->
     <div class="header-brand">
         <!--begin::Logo-->
-        <img alt="{{ config('app.name_short') }}" src="{{ asset('/assets/media/logo/logo_main.png') }}"
+        <img alt="{{ config('app.name_short') }}" src="{{ asset('/assets/media/logo/logo-icon-no-background.svg') }}"
             class="h-25px h-lg-25px" />
         <!--end::Logo-->
         <!--begin::Aside minimize-->

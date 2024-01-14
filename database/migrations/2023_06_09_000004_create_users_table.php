@@ -10,6 +10,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->longText('avatar')->nullable();
+            $table->string('avatar_source')->default('local');
             $table->string('name')->nullable()->unique();
             $table->string('email')->nullable()->unique();
             $table->datetime('email_verified_at')->nullable();
@@ -21,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->datetime('last_seen')->nullable();
             $table->boolean('is_active')->default(1);
             $table->boolean('is_approved')->default(0);
+            $table->string('registration_type')->default('local');
+            $table->string('has_sso')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

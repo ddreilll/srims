@@ -188,12 +188,7 @@ class UsersController extends Controller
 
         return back();
     }
-
-    public function showDeactivated()
-    {
-        return view('auth.deactivated');
-    }
-
+    
     public function updateConfig($configKey, Request $request)
     {
         $configService = new ConfigurationService();

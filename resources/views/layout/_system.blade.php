@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-    <title>{{ $title ? $title . ' | ' . config('app.name_short') : config('app.name_short') }}</title>
+    <title>{{ $title && $title != '' ? $title . ' | ' . config('app.name_short') : config('app.name_short') }}</title>
 @endsection
 
 @section('content')

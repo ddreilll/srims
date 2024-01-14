@@ -4,6 +4,7 @@ use App\Models\Configuration;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\Auth\SSOController;
 
 Route::redirect('/', '/login');
 Route::get('/home', function () {
@@ -14,6 +15,11 @@ Route::get('/home', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
 Auth::routes();
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'email', 'as' => "verification."], function () {
@@ -39,12 +45,19 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'email', 'as' => "verificati
     })->name('resend');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Google SSO Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'auth', 'as' => 'sso.'], function () {
+
+    Route::get('{provider}', [SSOController::class, 'login'])->name('login');
+    Route::get('redirect/{provider}', [SSOController::class, 'redirect'])->name('redirect');
+    Route::get('register/{provider}/{token}', [SSOController::class, 'register'])->name('register');
+});
 
 $defaultMiddlewares = ['auth', 'user.status'];
-
-Route::group(['middleware' => $defaultMiddlewares, 'namespace' => 'Admin'], function () {
-    Route::get('deactivated', 'UsersController@showDeactivated')->name('users.deactivated');
-});
 
 if (Schema::hasTable((new Configuration())->table)) {
     foreach (Configuration::select('key', 'value')->whereIn('key', ['panel.2fa', 'panel.email_verified'])->get() as $config) {
@@ -166,7 +179,7 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
 
         Route::group(['namespace' => 'Admin'], function () {
 
-            Route::get('/', function() {
+            Route::get('/', function () {
                 return view('admin.settings.index');
             })->name('index');
 
@@ -205,12 +218,13 @@ Route::group(['middleware' => $defaultMiddlewares], function () {
         });
     });
 
-    Route::group(['prefix' => 'account-settings', 'as' => 'account-settings.', 'namespace' => 'Auth'], function () {
+    Route::group(['prefix' => 'account', 'as' => 'account.', 'namespace' => 'Auth'], function () {
         // Account Settings
-        if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
-            Route::get('/', 'ChangePasswordController@edit')->name('edit');
-            Route::post('edit', 'ChangePasswordController@update')->name('update');
-            Route::post('/', 'ChangePasswordController@updateProfile')->name('updateProfile');
+        if (file_exists(app_path('Http/Controllers/Auth/UserAccountController.php'))) {
+            Route::get('overview', 'UserAccountController@overview')->name('overview');
+            Route::get('settings', 'UserAccountController@settings')->name('settings');
+            Route::post('edit/password', 'UserAccountController@updatePassword')->name('update_password');
+            Route::post('edit/profile', 'UserAccountController@updateProfile')->name('update_profile');
         }
     });
 

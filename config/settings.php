@@ -2,6 +2,19 @@
 
 return [
 
+    'auto_assign_role_id' => '2',
+    'allowed_domain' => 'iskolarngbayan.pup.edu.ph',
+    'SSO_STATUS' => [
+        'google' => 'on',
+        'azure' => 'on',
+    ],
+    'SSO_NAME' => [
+        'google' => 'Google',
+        'azure' => 'PUP WebMail',
+    ],
+
+
+    # THEME SETTINGS
     'THEME_BOOTSTRAP' => [
         'default' => \App\Core\Bootstrap\BootstrapDefault::class,
         'auth' => \App\Core\Bootstrap\BootstrapAuth::class,
@@ -9,10 +22,9 @@ return [
     ],
 
     # Theme layout templates directory
-
     'THEME_LAYOUT_DIR' => 'layout',
-    # Theme Assets
 
+    # Theme Assets
     'THEME_ASSETS' => [
         'global' => [
             'css' => [
@@ -29,7 +41,6 @@ return [
 
 
     # Theme Vendors
-
     'THEME_VENDORS' => [
         'datatables' => [
             'css' => [

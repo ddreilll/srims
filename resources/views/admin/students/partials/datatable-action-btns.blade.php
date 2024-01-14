@@ -74,7 +74,6 @@
             <form action="{{ route('students.archive', $row->stud_id) }}" method="POST"
                 id="{{ $formId }}-{{ $resource }}-archive" data-bs-toggle="tooltip" data-bs-placement="right"
                 data-bs-custom-class="tooltip-inverse" title="{{ __('global.archive') }}">
-                @method('DELETE')
                 @csrf
                 <button type="button" {{ $resource }}-archive="true"
                     class="btn btn-icon btn-light btn-active-dark btn-sm" data-id="{{ $formId }}">

@@ -1,8 +1,22 @@
 @extends('layout.master')
 
 @section('title')
-    <title>{{ sprintf('%s | %s', $title, config('app.name_short')) }}</title>
+    <title>{{ $title && $title != '' ? $title . ' | ' . config('app.name_short') : config('app.name_short') }}</title>
 @endsection
+
+@push('headers')
+    <script type="text/javascript">
+        window.$sleek = [];
+        window.SLEEK_PRODUCT_ID = 887606659;
+        (function() {
+            d = document;
+            s = d.createElement("script");
+            s.src = "https://client.sleekplan.com/sdk/e.js";
+            s.async = 1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+    </script>
+@endpush
 
 @isset($styles)
     @push('styles')
@@ -24,7 +38,7 @@
                     <!--begin::Post-->
                     <div class="post d-flex flex-column-fluid" id="kt_post">
                         <!--begin::Container-->
-                        <div id="kt_content_container" class=" container-fluid">
+                        <div id="kt_content_container" {!! printHtmlClasses('container') !!}>
 
                             @if (strtoupper(config('app.env')) == 'TEST')
                                 <div class="bg-light-danger rounded border-danger border border-dashed p-6 mb-10">

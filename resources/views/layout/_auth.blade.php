@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-    <title>{{ $title ? $title . ' | ' . config('app.name_short') : config('app.name_short') }}</title>
+    <title>{{ $title && $title != '' ? $title . ' | ' . config('app.name_short') : config('app.name_short') }}</title>
 @endsection
 
 @section('content')
@@ -10,9 +10,6 @@
         <style>
             body {
                 background-image: url('{{ asset('/assets/media/auth/background.jpeg') }}');
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
             }
         </style>
 
@@ -20,9 +17,9 @@
             <div class="d-flex flex-lg-row-fluid">
                 <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
                     <img class="mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20 text-dark"
-                        src="{{ asset('/assets/media/logo/logo_main_color.svg') }}" alt="" />
+                        src="{{ asset('/assets/media/logo/logo-primary-no-background.svg') }}" alt="" />
                     <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-3">Streamline. Retrieve. Excel.</h1>
-                    <div class="text-gray-600 fs-3 text-center fw-semibold">Your Student Journey, Digitally Empowered
+                    <div class="text-gray-600 fs-3 text-center fw-semibold">Transforming Records, Empowering Education
                     </div>
                 </div>
             </div>
@@ -44,6 +41,14 @@
                                 <x-alerts.message class="w-100">
                                     <x-slot:message>
                                         {!! session()->has('message') ? session()->get('message') : session()->get('status') !!}
+                                    </x-slot:message>
+                                </x-alerts.message>
+                            @endif
+
+                            @if (session()->has('error'))
+                                <x-alerts.message class="w-100" bgColor="danger">
+                                    <x-slot:message>
+                                        {!! session()->get('error') !!}
                                     </x-slot:message>
                                 </x-alerts.message>
                             @endif

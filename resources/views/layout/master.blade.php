@@ -98,21 +98,11 @@
     @endforeach
     <!--end::Custom Stylesheets-->
 
+    @stack('headers')
+
     <!--begin::Custom Javascript(optional)-->
     @stack('styles')
     <!--end::Custom Javascript-->
-
-    <script type="text/javascript">
-        window.$sleek = [];
-        window.SLEEK_PRODUCT_ID = 887606659;
-        (function() {
-            d = document;
-            s = d.createElement("script");
-            s.src = "https://client.sleekplan.com/sdk/e.js";
-            s.async = 1;
-            d.getElementsByTagName("head")[0].appendChild(s);
-        })();
-    </script>
 </head>
 
 <body {!! printHtmlClasses('body') !!} {!! printHtmlAttributes('body') !!}>

@@ -14,17 +14,24 @@
             <div class="menu-content d-flex align-items-center px-3">
                 <!--begin::Avatar-->
                 <div class="symbol symbol-50px me-5">
-                    <div
-                        class="symbol-label fs-3 {{ app(\App\Actions\GetThemeType::class)->handle('bg-light-? text-?', Auth::user()->name) }}">
-                        {{ substr(Auth::user()->name, 0, 1) }}
-                    </div>
+                    @php $avatar = auth()->user()->avatar; @endphp
+
+                    @if (!$avatar)
+                        <div
+                            class="symbol-label fs-3 {{ app(\App\Actions\GetThemeType::class)->handle('bg-light-? text-?', Auth::user()->name) }}">
+                            {{ substr(Auth::user()->name, 0, 1) }}
+                        </div>
+                    @else
+                        <img src="{{ $avatar }}" alt="">
+                    @endif
                 </div>
                 <!--end::Avatar-->
                 <!--begin::Username-->
                 <div class="d-flex flex-column">
                     <div class="fw-bold d-flex align-items-center fs-5">{{ Auth::user()->name }}
                     </div>
-                    <span class="fw-semibold text-muted fs-7">{{ Auth::user()->email }}</span>
+                    <span
+                        class="fw-semibold text-muted fs-7">{{ substr_replace(Auth::user()->email, '..', 23) }}</span>
                 </div>
                 <!--end::Username-->
             </div>
@@ -36,7 +43,7 @@
         <!--begin::Menu item-->
         @if (Gate::check(['profile_details_edit']) || Gate::check(['profile_password_edit']))
             <div class="menu-item px-5 my-1">
-                <a href="{{ route('account-settings.edit') }}"
+                <a href="{{ route('account.settings') }}"
                     class="menu-link px-5 {{ request()->routeIs('account-settings*') ? 'active' : '' }}">Account
                     Settings</a>
             </div>

@@ -1232,7 +1232,8 @@
                                 display_axios_success(respond.data.message);
 
                                 setInterval(() => {
-                                    window.location = "{{ url('/student/profile/add') }}";
+                                    window.location =
+                                        "{{ url('/student/profile/add') }}";
                                 }, 1500);
                             } else {
 
@@ -1275,7 +1276,7 @@
                                 setInterval(() => {
                                     window.location = (
                                         "{{ route('students.show', ['student' => ':student']) }}"
-                                        ).replace(':student', respond.data.id);
+                                    ).replace(':student', respond.data.id);
                                 }, 1500);
                             } else {
 

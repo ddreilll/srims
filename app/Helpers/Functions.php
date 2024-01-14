@@ -378,7 +378,25 @@ if (!function_exists('previousRoute')) {
     }
 }
 
+if (!function_exists('getAvatarPlaceholder')) {
 
+    function getAvatarPlaceholder()
+    {
+        return asset('assets/media/avatar/avatar_main.jpg');
+    }
+}
+
+if (!function_exists('strToArray')) {
+
+    function strToArray($separator, $string)
+    {
+        if (!$string || $string == "") {
+            return [];
+        }
+
+        return explode($separator, $string);
+    }
+}
 
 // Themes
 if (!function_exists('getGlobalAssets')) {
@@ -449,6 +467,21 @@ if (!function_exists('addHtmlClass')) {
     function addHtmlClass($scope, $value)
     {
         theme()->addHtmlClass($scope, $value);
+    }
+}
+
+if (!function_exists('removeHtmlClass')) {
+    /**
+     * Remove HTML class by scope
+     *
+     * @param $scope
+     * @param $value
+     *
+     * @return void
+     */
+    function removeHtmlClass($scope, $value)
+    {
+        theme()->removeHtmlClass($scope, $value);
     }
 }
 

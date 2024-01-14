@@ -41,6 +41,12 @@ Breadcrumbs::for('students', function (BreadcrumbTrail $trail) {
 });
 
 // List of Students > Show Student
+Breadcrumbs::for('students.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('students');
+    $trail->push(__('global.add') . " " . __('cruds.student.title_singular'), route('students.create'));
+});
+
+// List of Students > Show Student
 Breadcrumbs::for('students.show', function (BreadcrumbTrail $trail, $student) {
     $trail->parent('students');
     $trail->push(__('global.view') . " " . __('cruds.student.title_singular'), route('students.show', $student));
