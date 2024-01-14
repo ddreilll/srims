@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-    <title>{{ $title ? $title . ' | ' . config('app.name_short') : config('app.name_short') }}</title>
+    <title>{{ $title && $title != '' ? $title . ' | ' . config('app.name_short') : config('app.name_short') }}</title>
 @endsection
 
 @section('content')
@@ -10,9 +10,6 @@
         <style>
             body {
                 background-image: url('{{ asset('/assets/media/auth/background.jpeg') }}');
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
             }
         </style>
 
@@ -20,9 +17,9 @@
             <div class="d-flex flex-lg-row-fluid">
                 <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
                     <img class="mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20 text-dark"
-                        src="{{ asset('/assets/media/logo/logo_main_color.svg') }}" alt="" />
+                        src="{{ asset('/assets/media/logo/logo-primary-no-background.svg') }}" alt="" />
                     <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-3">Streamline. Retrieve. Excel.</h1>
-                    <div class="text-gray-600 fs-3 text-center fw-semibold">Your Student Journey, Digitally Empowered
+                    <div class="text-gray-600 fs-3 text-center fw-semibold">Transforming Records, Empowering Education
                     </div>
                 </div>
             </div>
@@ -32,13 +29,11 @@
                         <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
 
                             @if (strtoupper(config('app.env')) == 'TEST')
-                                <div
-                                    class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6 mb-10">
-                                    <div class="d-flex flex-stack flex-grow-1 ">
-                                        <div class="fs-6 text-danger fw-semibold"><i
-                                                class="fa-solid fa-triangle-exclamation fs-3 me-2 text-danger"></i>
-                                            {!! __('panel.test_environment_advisory') !!}</div>
-                                    </div>
+                                <div class="bg-light-danger rounded border-danger border border-dashed p-6 mb-10">
+                                    <span class="fs-6 text-danger fw-semibold">
+                                        <i class="fa-solid fa-triangle-exclamation fs-3 me-2 text-danger"></i>
+                                        {!! __('panel.test_environment_advisory') !!}
+                                    </span>
                                 </div>
                             @endif
 
@@ -50,11 +45,19 @@
                                 </x-alerts.message>
                             @endif
 
+                            @if (session()->has('error'))
+                                <x-alerts.message class="w-100" bgColor="danger">
+                                    <x-slot:message>
+                                        {!! session()->get('error') !!}
+                                    </x-slot:message>
+                                </x-alerts.message>
+                            @endif
+
                             {{ $content }}
 
                         </div>
                         <div class="d-flex flex-stack">
-                            @include('partials.version')
+                            <x-version />
 
                             <div class="d-flex fw-semibold text-primary fs-base gap-5">
                                 <a href="#" target="_blank">Terms</a>

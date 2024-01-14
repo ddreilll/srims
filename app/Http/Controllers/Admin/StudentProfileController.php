@@ -732,7 +732,7 @@ class StudentProfileController extends Controller
 
                 return '<div class="d-flex justify-content-start flex-shrink-0">
 
-                    <button type="button" kt_student_profile_table_restore class="btn btn-icon btn-light-warning btn-sm mx-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="Restore">
+                    <button type="button" kt_student_profile_table_restore class="btn btn-icon btn-light-warning btn-sm mx-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="Restore">
                         <i class="fa-solid fa-rotate-left fs-6"></i>
                     </button>
                 </div>';

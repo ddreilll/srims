@@ -117,7 +117,10 @@ class StudentProfile extends Model
     {
         $studentGrades = [];
 
-        $studentGradesQuery = $this->with(['gradesheets', 'gradesheets.subject', 'gradesheets.instructor', 'gradesheets.semester'])->whereHas('gradesheets', function ($query) {
+        $studentGradesQuery = $this->with(['gradesheets'
+        , 'gradesheets.subject'
+        , 'gradesheets.instructor'
+        , 'gradesheets.semester'])->whereHas('gradesheets', function ($query) {
             $query->where('stud_enrsub_id', $this->stud_id);
         })->get()->map(function ($student) {
             return $student->gradesheets->groupBy('class_acadYear')->map(function ($gradesheets) {

@@ -54,33 +54,13 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
-        'bdr_mysql' => [
-            'driver' => 'mysql',
-            'url' => env('BDR_DATABASE_URL'),
-            'host' => env('BDR_DB_HOST', '127.0.0.1'),
-            'port' => env('BDR_DB_PORT', '3306'),
-            'database' => env('BDR_DB_DATABASE', 'forge'),
-            'username' => env('BDR_DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('BDR_DB_PASSWORD', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'url' => env('DATABASE_URL'),
+            'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
-            'prefix_indexes' => true,
-            'strict' => true,
-            'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
-        // 'sqlite' => [
-        //     'driver' => 'sqlite',
-        //     'url' => env('DATABASE_URL'),
-        //     'database' => env('DB_DATABASE', database_path('database.sqlite')),
-        //     'prefix' => '',
-        //     'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-        // ],
 
         // 'pgsql' => [
         //     'driver' => 'pgsql',

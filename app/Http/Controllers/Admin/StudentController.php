@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use App\Models\Term;
+use App\Models\Honor;
 use App\Models\Course;
+use App\Models\Document;
+use App\Models\YearLevel;
 use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use App\Enums\RecordTypeEnum;
+use App\Models\DocumentsType;
 use App\Models\StudentGrades;
 use Illuminate\Http\Response;
 use App\Models\PreviousSchool;
@@ -70,9 +75,9 @@ class StudentController extends Controller
                     return $row->course->cour_code;
                 })
                 ->addColumn('remarks', function ($row) {
-                    $hasHonor = $row->honor && $row->stud_academicStatus == AcademicStatusEnum::GRADUATED ? sprintf('<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="%s"><i class="fa-duotone fa-file-certificate text-warning fs-4"></i></span>', $row->honor->honor_name) : "";
+                    $hasHonor = $row->honor && $row->stud_academicStatus == AcademicStatusEnum::GRADUATED ? sprintf('<span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="%s"><i class="fa-duotone fa-file-certificate text-warning fs-4"></i></span>', $row->honor->honor_name) : "";
 
-                    return $row->stud_isHonorableDismissed ? sprintf('%s <span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="%s"><i class="fa-duotone fa-arrow-right-from-bracket ms-2 text-danger fs-4"></i></span>', $hasHonor, __('Honorable Dismissed')) : "";
+                    return $row->stud_isHonorableDismissed ? sprintf('%s <span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="%s"><i class="fa-duotone fa-arrow-right-from-bracket ms-2 text-danger fs-4"></i></span>', $hasHonor, __('Honorable Dismissed')) : "";
                 })
                 ->addColumn('actions', function ($row) {
                     $viewGate      = 'student_show';
@@ -162,6 +167,7 @@ class StudentController extends Controller
             DB::raw('`syear_year` as `value`'),
         ])->get()->toArray();
 
+        addJavascriptFile(asset('assets/js/datatables.js'));
         return view('admin.students.index', compact('filterCourses', 'filterAcademicStatus', 'filterYearOfAdmission', 'filterAdmissionType'));
     }
 
@@ -170,7 +176,38 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $acadYears = SchoolYear::all();
+        $course = Course::all();
+        $honors = Honor::all();
+        $terms = Term::all();
+        $yearLevel = YearLevel::all();
+
+
+        $dti = new Document();
+        $dtsi = new DocumentsType();
+
+        $dt_ent = $dti->where(["docu_category" => "ENTRANCE"])
+            ->get();
+        if (sizeOf($dt_ent) >= 1) {
+            $dt_ent[0]["types"] = $dtsi->where(["docuType_document" => $dt_ent[0]['docu_id']])->get();
+        }
+
+        $dt_rec = $dti->where(["docu_category" => "RECORDS", "docu_isPermanent" => "NO"])
+            ->get();
+        if (sizeOf($dt_rec) >= 1) {
+            $dt_rec[0]["types"] = $dtsi->where(["docuType_document" => $dt_rec[0]['docu_id']])->get();
+        }
+
+        $dt_ext = $dti->where(["docu_category" => "EXIT"])
+            ->get();
+        if (sizeOf($dt_ext) >= 1) {
+            $dt_ext[0]["types"] = $dtsi->where(["docuType_document" => $dt_ext[0]['docu_id']])->get();
+        }
+
+
+        addHtmlClass('container', 'container-xxl');
+
+        return view('admin.students.create', ['title' => 'Add Student Profile', "menu" => "student-profile", "formData_honors" => $honors, "formData_course" => $course, "formData_year" => $acadYears, "formData_terms" => $terms, "formData_yrLevel" => $yearLevel, "formData_docu_ent" => $dt_ent, "formData_docu_rec" => $dt_rec, "formData_docu_ext" => $dt_ext, "breadcrumb" => [["name" => "List of Student Profile", "url" => "/student/profile/"], ["name" => "Add Student Profile"]]]);
     }
 
     /**
@@ -192,7 +229,7 @@ class StudentController extends Controller
             case 'personal':
                 (new StudentActionObserver)->viewed($student, 'Personal & Student profile');
 
-                return view('admin.students.show_personal', compact('student', 'activityLogs'));
+                return view('admin.students.show-personal', compact('student', 'activityLogs'));
 
                 break;
 
@@ -201,7 +238,7 @@ class StudentController extends Controller
 
                 (new StudentActionObserver)->viewed($student, 'Documents');
 
-                return view('admin.students.show_documents', compact('student', 'activityLogs'));
+                return view('admin.students.show-documents', compact('student', 'activityLogs'));
 
                 break;
 
@@ -213,7 +250,7 @@ class StudentController extends Controller
 
                     (new StudentActionObserver)->viewed($student, 'Scholastic data');
 
-                    return view('admin.students.show_scholastic', compact('student', 'activityLogs'));
+                    return view('admin.students.show-scholastic', compact('student', 'activityLogs'));
                 } else {
                     abort(Response::HTTP_NOT_FOUND);
                 }

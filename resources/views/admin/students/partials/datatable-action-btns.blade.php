@@ -3,7 +3,7 @@
     @isset($viewGate)
         @can($viewGate)
             <a href="{{ route('students.show', $row->stud_id) }}"
-                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark"
+                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-inverse"
                 title="{{ __('global.view') }}" class="btn btn-icon btn-light btn-active-dark btn-sm me-1">
                 <span class="svg-icon">
                     <i class="fa-solid fa-eye"></i>
@@ -16,7 +16,7 @@
         @can($editGate)
             <a href="{{ route('admin.student.edit', $row->stud_uuid) }}"
                 class="btn btn-icon btn-light-warning btn-active-warning btn-sm me-1" data-bs-toggle="tooltip"
-                data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="{{ __('global.edit') }}">
+                data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="{{ __('global.edit') }}">
                 <span class="svg-icon">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
@@ -28,7 +28,7 @@
         @if (Gate::check([$docuEvalGate]) || Gate::check([$scholasticGate]))
             <a href="#" class="btn btn-sm btn-icon btn-light btn-active-secondary me-1"
                 data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-toggle="tooltip"
-                data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="{{ __('global.export') }}">
+                data-bs-placement="right" data-bs-custom-class="tooltip-inverse" title="{{ __('global.export') }}">
                 <span class="svg-icon">
                     <i class="fa-solid fa-file-arrow-down"></i>
                 </span>
@@ -73,8 +73,7 @@
 
             <form action="{{ route('students.archive', $row->stud_id) }}" method="POST"
                 id="{{ $formId }}-{{ $resource }}-archive" data-bs-toggle="tooltip" data-bs-placement="right"
-                data-bs-custom-class="tooltip-dark" title="{{ __('global.archive') }}">
-                @method('DELETE')
+                data-bs-custom-class="tooltip-inverse" title="{{ __('global.archive') }}">
                 @csrf
                 <button type="button" {{ $resource }}-archive="true"
                     class="btn btn-icon btn-light btn-active-dark btn-sm" data-id="{{ $formId }}">
@@ -94,7 +93,7 @@
 
             <form action="{{ route('students.unarchive', $row->stud_id) }}" method="POST"
                 id="{{ $formId }}-{{ $resource }}-unarchive" data-bs-toggle="tooltip" data-bs-placement="right"
-                data-bs-custom-class="tooltip-dark" title="{{ __('global.unarchive') }}">
+                data-bs-custom-class="tooltip-inverse" title="{{ __('global.unarchive') }}">
                 @method('POST')
                 @csrf
                 <button type="button" {{ $resource }}-unarchive="true"

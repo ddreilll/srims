@@ -33,6 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $fillable = [
+        'avatar',
+        'avatar_source',
         'name',
         'email',
         'email_verified_at',
@@ -47,12 +49,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_expires_at',
         'last_seen',
         'is_active',
-        'is_approved'
+        'is_approved',
+        'has_sso',
+        'google_auth_id',
+        'google_auth_email',
+        'azure_auth_id',
+        'azure_auth_email',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'is_approved' => 'boolean',
+        'has_sso' => 'boolean'
     ];
 
     protected function serializeDate(DateTimeInterface $date)

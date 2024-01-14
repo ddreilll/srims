@@ -63,7 +63,7 @@ class UserAlertsController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.userAlerts.index');
+        return view('admin.notifications.index');
     }
 
     public function create()
@@ -72,7 +72,7 @@ class UserAlertsController extends Controller
 
         $users = User::pluck('name', 'id');
 
-        return view('admin.userAlerts.create', compact('users'));
+        return view('admin.notifications.create', compact('users'));
     }
 
     public function store(StoreUserAlertRequest $request)
@@ -89,7 +89,7 @@ class UserAlertsController extends Controller
 
         $userAlert->load('users');
 
-        return view('admin.userAlerts.show', compact('userAlert'));
+        return view('admin.notifications.show', compact('userAlert'));
     }
 
     public function destroy(UserAlert $userAlert)

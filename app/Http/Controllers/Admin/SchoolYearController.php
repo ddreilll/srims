@@ -33,7 +33,6 @@ class SchoolYearController extends Controller
             });
 
             $table->addColumn('actions', function ($row) {
-                $editGate      = 'school_year_edit';
                 $deleteGate    = 'school_year_delete';
 
                 $crudRoutePart = 'settings.school-years';
@@ -41,7 +40,6 @@ class SchoolYearController extends Controller
                 $resource = 'schoolyear';
 
                 return view('partials.dataTables.actionBtns', compact(
-                    'editGate',
                     'deleteGate',
                     'crudRoutePart',
                     'primaryKey',
@@ -55,7 +53,7 @@ class SchoolYearController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.school_years.index');
+        return view('admin.school-years.index');
     }
 
     /**
@@ -67,7 +65,7 @@ class SchoolYearController extends Controller
     {
         abort_if(Gate::denies('school_year_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.school_years.create');
+        return view('admin.school-years.create');
     }
 
     /**

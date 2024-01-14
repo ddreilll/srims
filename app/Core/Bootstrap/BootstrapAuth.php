@@ -8,6 +8,6 @@ class BootstrapAuth
     {
         // See also starterkit/app/View/Components/SystemLayout.php to change the layout
 
-        addHtmlClass('body', 'app-blank');
+        addHtmlClass('body', 'auth-bg bgi-size-cover bgi-attachment-fixed bgi-position-center');
     }
 }

@@ -92,17 +92,17 @@
         }
     </style>
 
-    <script type="text/javascript">
-        window.$sleek = [];
-        window.SLEEK_PRODUCT_ID = 887606659;
-        (function() {
-            d = document;
-            s = d.createElement("script");
-            s.src = "https://client.sleekplan.com/sdk/e.js";
-            s.async = 1;
-            d.getElementsByTagName("head")[0].appendChild(s);
-        })();
-    </script>
+    <!--begin::Custom Stylesheets(optional)-->
+    @foreach (getCustomCss() as $path)
+        {!! sprintf('<link rel="stylesheet" href="%s">', asset($path)) !!}
+    @endforeach
+    <!--end::Custom Stylesheets-->
+
+    @stack('headers')
+
+    <!--begin::Custom Javascript(optional)-->
+    @stack('styles')
+    <!--end::Custom Javascript-->
 </head>
 
 <body {!! printHtmlClasses('body') !!} {!! printHtmlAttributes('body') !!}>
@@ -121,6 +121,12 @@
         {!! sprintf('<script src="%s"></script>', asset($path)) !!}
     @endforeach
     <!--end::Vendors Javascript-->
+
+    <!--begin::Custom Javascript(optional)-->
+    @foreach (getCustomJs() as $path)
+        {!! sprintf('<script src="%s"></script>', asset($path)) !!}
+    @endforeach
+    <!--end::Custom Javascript-->
 
     <!--begin::Custom Javascript(optional)-->
     @stack('scripts')

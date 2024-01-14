@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'update_profile_success'                              => 'Profile updated successfully.',
+    'change_password_success'                              => 'Password updated successfully.',
     'actions'                              => 'Actions',
     'continue'                              => 'Continue',
     'proceed_to'                              => 'Proceed to :attribute',
@@ -51,6 +53,8 @@ return [
     'results_could_not_be_loaded'          => 'The results could not be loaded',
     'search_input_too_short'               => 'Please enter :count or more characters',
     'show'                                 => 'Show',
+    'view'                                 => 'View',
+    'show_details'                                 => 'Show :attribute details',
     'systemCalendar'                       => 'Calendar',
     'thankYouForUsingOurApplication'       => 'Thank you for using our website',
     'timeFrom'                             => 'From',
@@ -64,7 +68,7 @@ return [
     'year'                                 => 'Year',
     'yes'                                  => 'Yes',
     'youAreLoggedIn'                       => 'You are logged in!',
-    'yourAccountNeedsAdminApproval'        => 'Your accounts needs an administrator approval in order to log in',
+    'yourAccountNeedsAdminApproval'        => 'Your accounts needs an administrator approval in order to log in.',
     'submit'                               => 'Submit',
     'all_messages'                   => 'All Messages',
     'new_message'                    => 'New message',
@@ -309,4 +313,5 @@ return [
     'archive'         => 'Archive',
     'unarchive'         => 'Unarchive',
     'i_understand'         => 'I Understand',
+    'update_profile'         => 'Update Profile',
 ];

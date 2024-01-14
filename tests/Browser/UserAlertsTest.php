@@ -14,7 +14,7 @@ class UserAlertsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($admin) {
             $browser->loginAs($admin);
             $browser->visit(route('useralerts.index'));
-            $browser->assertRouteIs('admin.useralerts.index');
+            $browser->assertRouteIs('admin.notifications.index');
         });
     }
 }

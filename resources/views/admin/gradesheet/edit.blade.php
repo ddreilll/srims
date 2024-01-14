@@ -1,4 +1,4 @@
-@extends('layouts.fluid')
+@extends('layout.old')
 
 @section('content')
     <div class="post" id="kt_post">
@@ -192,14 +192,14 @@
                                                                 kt-class-timeslot-component="clearTimeBtn"
                                                                 class="btn btn-icon btn-warning btn-sm me-1"
                                                                 data-bs-toggle="tooltip" data-bs-placement="right"
-                                                                data-bs-custom-class="tooltip-dark" title="Clear time">
+                                                                data-bs-custom-class="tooltip-inverse" title="Clear time">
                                                                 <i class="fa-solid fa-delete-left fs-6"></i>
                                                             </button>
 
                                                             <button type="button" kt-class-timeslot-component="removeBtn"
                                                                 class="btn btn-icon btn-light-danger btn-sm"
                                                                 data-bs-toggle="tooltip" data-bs-placement="right"
-                                                                data-bs-custom-class="tooltip-dark" title="Remove">
+                                                                data-bs-custom-class="tooltip-inverse" title="Remove">
                                                                 <i class="fa-duotone fa-trash fs-6"></i>
                                                             </button>
                                                         </div>
@@ -306,12 +306,12 @@
                                                         <th class="required">Total rows</th>
                                                         <th kt-class-gradesheet-file-component="filePathName">File path <i
                                                                 class="bi bi-info-circle-fill ms-1 text-gray-600"
-                                                                data-bs-custom-class="tooltip-dark"
+                                                                data-bs-custom-class="tooltip-inverse"
                                                                 data-bs-toggle="tooltip"
                                                                 title="Provide if the page(s) is separated .pdf file"></i>
                                                         </th>
                                                         <th>File name <i class="bi bi-info-circle-fill ms-1 text-gray-600"
-                                                                data-bs-custom-class="tooltip-dark"
+                                                                data-bs-custom-class="tooltip-inverse"
                                                                 data-bs-toggle="tooltip"
                                                                 title="Provide if the page(s) is separated .pdf file"></i>
                                                         </th>
@@ -353,7 +353,7 @@
                                                                     kt-class-gradesheet-file-component="createBtn"
                                                                     class="btn btn-icon btn-success btn-sm me-1"
                                                                     data-bs-toggle="tooltip" data-bs-placement="right"
-                                                                    data-bs-custom-class="tooltip-dark" title="Add Page">
+                                                                    data-bs-custom-class="tooltip-inverse" title="Add Page">
                                                                     <i class="fa-duotone fa-file-circle-plus fs-6"></i>
                                                                 </button>
 
@@ -397,7 +397,7 @@
                                                                     kt-class-gradesheet-file-component="removeBtn"
                                                                     class="btn btn-icon btn-light-danger btn-sm me-1"
                                                                     data-bs-toggle="tooltip" data-bs-placement="right"
-                                                                    data-bs-custom-class="tooltip-dark" title="Remove">
+                                                                    data-bs-custom-class="tooltip-inverse" title="Remove">
                                                                     <i class="fa-solid fa-minus fs-6"></i>
                                                                 </button>
 
@@ -898,13 +898,13 @@
                 if (storage_type == "LOCAL") {
                     $('#kt_class_gradesheet_file [kt-class-gradesheet-file-component="filePathName"]')
                         .empty().append(
-                            `File path <i class="bi bi-info-circle-fill ms-1 text-gray-600" data-bs-custom-class="tooltip-dark" data-bs-toggle="tooltip" title="Provide if the page(s) is separated .pdf file"></i>`
+                            `File path <i class="bi bi-info-circle-fill ms-1 text-gray-600" data-bs-custom-class="tooltip-inverse" data-bs-toggle="tooltip" title="Provide if the page(s) is separated .pdf file"></i>`
                         );
                 } else if (storage_type == "ONLINE") {
                     $('#kt_class_gradesheet_file [kt-class-gradesheet-file-component="filePathName"]')
                         .empty().append(
                             `File access link 
-                        <i class="bi bi-info-circle-fill ms-1 text-gray-600" data-bs-custom-class="tooltip-dark" data-bs-toggle="tooltip" title="Provide if the page(s) is separated .pdf file"></i>`
+                        <i class="bi bi-info-circle-fill ms-1 text-gray-600" data-bs-custom-class="tooltip-inverse" data-bs-toggle="tooltip" title="Provide if the page(s) is separated .pdf file"></i>`
                         );
                 }
 
